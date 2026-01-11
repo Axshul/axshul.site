@@ -659,3 +659,49 @@ specific requirements.
 if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
+
+
+
+// GNU Affero General Public License v3 (GPL-3.0) - Large and Detailed License Notice
+// Copyright (C) 2024 Anshul Namdev
+// This file is part of the project "axshul.site".
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero
+// General Public License for more details.
+
+// You should have received a copy of the GNU Affero General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+// HOW TO APPLY THIS LICENSE:
+//
+// To apply this license to your project "axshul.site", include this entire notice in each source file.
+// It is recommended to place it at the beginning of each file, especially for scripts and code.
+// Additionally, include a copy of the full license text in your project's root directory, e.g., as LICENSE.txt.
+//
+// CONTACT INFORMATION:
+//
+// Email: ansulnamdev@example.com
+// Mailing Address: 123 Your Street, Your City, Your Country (if applicable)
+//
+// WEB AND NETWORK INTERACTION:
+//
+// If your project is a web application or interacts remotely with users,
+// you should provide a way for users to access the source code.
+// For example, include a "Source" link in your website footer or interface that points to an accessible archive or repository.
+//
+// This ensures compliance with the license's requirements for networked applications.
+//
+// ADDITIONAL NOTES:
+//
+// For more information on how to comply with the GNU Affero General Public License,
+// or to understand your rights and obligations, visit: <https://www.gnu.org/licenses/>.
+//
+// Remember, by using, modifying, or distributing this software, you agree to abide by the terms of this license.
+// Your contributions and modifications also fall under the same license, ensuring the software remains free and open for the community.
