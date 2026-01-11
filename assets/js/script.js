@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Loader
     const loader = document.querySelector('.loader');
     const loaderLine = document.querySelector('.loader-line');
-    
+
     // Simulate loading
     setTimeout(() => {
-        if(loaderLine) loaderLine.style.width = '100%';
+        if (loaderLine) loaderLine.style.width = '100%';
     }, 100);
 
     setTimeout(() => {
-        if(loader) loader.classList.add('hidden');
+        if (loader) loader.classList.add('hidden');
         document.body.classList.add('loaded');
     }, 800);
 
@@ -61,13 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mobile Menu
     const mobileToggle = document.querySelector('.mobile-toggle');
-    // Note: CSS for mobile menu overlay would be needed for full functionality
-    // simpler implementation for now
-    if(mobileToggle) {
+    const navLinks = document.querySelector('.nav-links');
+    const links = document.querySelectorAll('.nav-links a');
+
+    if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', () => {
-            // Logic to open mobile menu
-            console.log('Toggle menu');
-            // For now, let's toggle a class on the nav-links if we were to implement the overlay
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+            document.body.classList.toggle('no-scroll'); // Prevent body scroll when menu open
+        });
+
+        // Close menu when link is clicked
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
         });
     }
 

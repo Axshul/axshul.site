@@ -681,16 +681,102 @@ img {
 }
 
 @media (max-width: 768px) {
+
+    /* Mobile Menu Logic */
     .nav-links {
-        display: none;
+        display: flex;
+        /* Keep flex context */
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100%;
+        background: var(--bg-color);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+        z-index: 90;
+        /* Below toggle but above content */
     }
 
-    /* Add mobile menu logic later */
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    .nav-links a {
+        font-size: 2rem;
+        font-family: var(--font-serif);
+    }
+
     .mobile-toggle {
         display: flex;
+        z-index: 100;
+        /* Above overlay */
+    }
+
+    .mobile-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    .mobile-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
     }
 
     .container {
         padding: 0 1.5rem;
+    }
+
+    /* Typography & Spacing Fixes */
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    .section-title.big {
+        font-size: 3rem;
+    }
+
+    .hero {
+        padding-top: 100px;
+        min-height: auto;
+        padding-bottom: 4rem;
+    }
+
+    .section {
+        padding: 4rem 0;
+    }
+
+    .hero-visual {
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+
+    .image-wrapper {
+        width: 100%;
+    }
+
+    .timeline {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .timeline-item::before {
+        display: none;
+    }
+
+    .timeline-item {
+        border-left: 2px solid var(--accent-blue);
+        padding-left: 1.5rem;
     }
 }
