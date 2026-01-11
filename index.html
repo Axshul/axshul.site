@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anshul Namdev | Technical Architect & AI Automation Expert</title>
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="Portfolio of Anshul Namdev - Technical Architect and AI Automation Expert. Specializing in modern web development and workflow automation.">
+    <meta property="og:title" content="Anshul Namdev | Technical Architect">
+    <meta property="og:description" content="Building next-level digital experiences and AI solutions.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="loading">
+
+    <!-- Loading Overlay -->
+    <div class="loader">
+        <div class="loader-line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">AN.</a>
+
+            <button class="mobile-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="cta-item"><a href="resume.pdf" class="btn-nav" target="_blank">Resume</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-content" data-scroll>
+                <h1 class="hero-title">
+                    <span class="line-reveal">Anshul</span><br>
+                    <span class="line-reveal">Namdev</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Technical Architect & <br>
+                    <span class="highlight-text">AI Automation Expert</span>
+                </p>
+                <div class="hero-actions">
+                    <a href="#work" class="btn-primary">View My Work</a>
+                    <a href="#contact" class="btn-secondary">Let's Talk</a>
+                </div>
+            </div>
+
+            <div class="hero-visual" data-scroll data-speed="2">
+                <div class="image-wrapper">
+                    <!-- Photo path moved to assets/img per plan -->
+                    <img src="assets/img/Photo.jpg" alt="Anshul Namdev" class="hero-img">
+                    <div class="floating-badge">
+                        <span>Available for Hire</span>
+                    </div>
+                </div>
+                <!-- Abstract Tech Graphics -->
+                <svg class="tech-graphic" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" stroke="var(--accent-blue)" stroke-width="1" fill="none"
+                        class="anim-circle" />
+                    <path d="M20,100 L180,100" stroke="var(--accent-blue)" stroke-width="1" class="anim-line" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container about-grid">
+            <div class="section-header" data-scroll>
+                <span class="section-label">01 / About</span>
+                <h2 class="section-title">Bridging the gap between <br><i>Concept</i> & <i>Code</i>.</h2>
+            </div>
+
+            <div class="about-content" data-scroll>
+                <p class="lead">I'm a passionate Full Stack Developer and AI enthusiast based in Bhopal, India.</p>
+                <p>Currently a 3rd Semester B.Tech CSE Student, I combine deep technical expertise with creative
+                    problem-solving. My focus extends beyond traditional web development into the realm of <strong>AI
+                        automation</strong> and <strong>workflow optimization</strong>.</p>
+
+                <h4 style="margin-top: 2rem; margin-bottom: 1rem; font-family: var(--font-serif);">Core Technologies
+                </h4>
+                <div class="tech-stack-preview">
+                    <span>Java</span>
+                    <span>Rust</span>
+                    <span>Web Development</span>
+                    <span>AI Automation</span>
+                    <span>Linux</span>
+                    <span>Spring Boot</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work / Projects Section -->
+    <section class="section work" id="work">
+        <div class="container">
+            <div class="section-header" data-scroll>
+                <span class="section-label">02 / Selected Work</span>
+                <h2 class="section-title">Digital Creations</h2>
+            </div>
+
+            <div class="projects-grid">
+
+                <!-- CodeProb Showcase (Prominent Iframe) -->
+                <article class="project-card featured" data-scroll
+                    style="padding: 0; overflow: hidden; min-height: 500px; grid-template-columns: 1fr;">
+                    <iframe src="https://codeprob.github.io/CodeProb/profiles/axshul/"
+                        style="width: 100%; height: 100%; border: none; min-height: 500px;"
+                        title="CodeProb Profile"></iframe>
+                </article>
+
+                <!-- TechFeed -->
+                <article class="project-card" data-scroll>
+                    <div class="card-content">
+                        <span class="project-cat">News Platform</span>
+                        <h3 class="project-title">TechFeed</h3>
+                        <p class="project-desc">A live news aggregation platform delivering the latest tech updates.</p>
+                        <a href="https://tech-feed-ochre.vercel.app/" target="_blank" class="project-link">View Live App
+                            &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- LLMsIDE -->
+                <article class="project-card" data-scroll>
+                    <div class="card-content">
+                        <span class="project-cat">Dev Tool</span>
+                        <h3 class="project-title">LLMsIDE</h3>
+                        <p class="project-desc">Java Spring application designed for AI-driven development workflows.
+                        </p>
+                        <a href="https://github.com/LLMsIDE" target="_blank" class="project-link">View Github &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- AI Automations -->
+                <article class="project-card" data-scroll>
+                    <div class="card-content">
+                        <span class="project-cat">Business Solutions</span>
+                        <h3 class="project-title">AI Automations</h3>
+                        <p class="project-desc">Custom AI automation workflows tailored for business efficiency.</p>
+                        <a href="#" class="project-link">Explore Solutions &rarr;</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience / Timeline -->
+    <section class="section experience" id="experience">
+        <div class="container">
+            <div class="section-header" data-scroll>
+                <span class="section-label">03 / Experience</span>
+                <h2 class="section-title">The Journey</h2>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item" data-scroll>
+                    <span class="year">2024 - 2028</span>
+                    <div class="timeline-content">
+                        <h3>B.Tech in CSE</h3>
+                        <p>Pursuing Computer Science Engineering. Building a strong foundation in core computing
+                            principles.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-scroll>
+                    <span class="year">Present</span>
+                    <div class="timeline-content">
+                        <h3>Technical Architect</h3>
+                        <p>Architecting scalable solutions and project structures. Leading development on AI-driven
+                            platforms like CodeProb and LLMsIDE.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container contact-grid">
+            <div class="contact-info" data-scroll>
+                <h2 class="section-title big">Let's work <br><i>together</i>.</h2>
+                <p>Have a project in mind? reach out.</p>
+
+                <a href="mailto:anshul2006n@gmail.com" class="email-link">anshul2006n@gmail.com</a>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/axshul" target="_blank">GitHub</a>
+                    <a href="https://twitter.com/Axshul" target="_blank">Twitter</a>
+                </div>
+            </div>
+
+            <form class="contact-form" data-scroll>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="4" placeholder="Tell me about your project..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <span class="copyright">&copy; 2026 Anshul Namdev.</span>
+                <a href="#" class="back-to-top">Back to Top &uarr;</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
