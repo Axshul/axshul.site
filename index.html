@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
         rel="stylesheet">
 
     <!-- CSS -->
@@ -32,6 +32,10 @@
     <div class="loader">
         <div class="loader-line"></div>
     </div>
+
+    <!-- Background Ambience -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -58,32 +62,36 @@
         <div class="container hero-grid">
             <div class="hero-content" data-scroll>
                 <h1 class="hero-title">
-                    <span class="line-reveal">Anshul</span><br>
-                    <span class="line-reveal">Namdev</span>
+                    Anshul<br><i>Namdev</i>
                 </h1>
                 <p class="hero-subtitle">
-                    Technical Architect & <br>
-                    <span class="highlight-text">AI Automation Expert</span>
+                    Technical Architect & AI Automation Expert.<br>
+                    Crafting digital experiences with precision.
                 </p>
                 <div class="hero-actions">
-                    <a href="#work" class="btn-primary">View My Work</a>
-                    <a href="#contact" class="btn-secondary">Let's Talk</a>
+                    <a href="#work" class="btn-primary">
+                        <span class="btn-text">View My Work</span>
+                        <span class="btn-icon">&rarr;</span>
+                    </a>
+                    <a href="#contact" class="btn-secondary">
+                        <span class="btn-text">Let's Talk</span>
+                        <span class="btn-icon">&rarr;</span>
+                    </a>
                 </div>
             </div>
 
             <div class="hero-visual" data-scroll data-speed="2">
                 <div class="image-wrapper">
-                    <!-- Photo path moved to assets/img per plan -->
                     <img src="assets/img/Photo.jpg" alt="Anshul Namdev" class="hero-img">
-                    <div class="floating-badge">
-                        <span>Available for Hire</span>
-                    </div>
                 </div>
-                <!-- Abstract Tech Graphics -->
+                <!-- Abstract Tech Graphics (Rotating Circle) -->
                 <svg class="tech-graphic" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="100" cy="100" r="90" stroke="var(--accent-blue)" stroke-width="1" fill="none"
                         class="anim-circle" />
-                    <path d="M20,100 L180,100" stroke="var(--accent-blue)" stroke-width="1" class="anim-line" />
+                    <circle cx="100" cy="100" r="40" stroke="var(--accent-blue)" stroke-width="0.5" fill="none"
+                        class="anim-inner-circle" style="opacity: 0.5;" />
+                    <path d="M100,10 L100,190" stroke="var(--accent-blue)" stroke-width="0.5" class="anim-line" />
+                    <path d="M10,100 L190,100" stroke="var(--accent-blue)" stroke-width="0.5" class="anim-line" />
                 </svg>
             </div>
         </div>
@@ -96,27 +104,37 @@
 
     <!-- About Section -->
     <section class="section about" id="about">
-        <div class="container about-grid">
+        <div class="container">
             <div class="section-header" data-scroll>
                 <span class="section-label">01 / About</span>
-                <h2 class="section-title">Bridging the gap between <br><i>Concept</i> & <i>Code</i>.</h2>
+                <!-- Title moved to split layout below -->
             </div>
 
-            <div class="about-content" data-scroll>
-                <p class="lead">I'm a passionate Full Stack Developer and AI enthusiast based in Bhopal, India.</p>
-                <p>Currently a 3rd Semester B.Tech CSE Student, I combine deep technical expertise with creative
-                    problem-solving. My focus extends beyond traditional web development into the realm of <strong>AI
-                        automation</strong> and <strong>workflow optimization</strong>.</p>
+            <div class="about-split" data-scroll>
+                <div class="about-left">
+                    <h2 class="about-headline">Bridging the gap between <br><i>Concept</i> & <i>Code</i>.</h2>
+                </div>
 
-                <h4 style="margin-top: 2rem; margin-bottom: 1rem; font-family: var(--font-serif);">Core Technologies
-                </h4>
-                <div class="tech-stack-preview">
-                    <span>Java</span>
-                    <span>Rust</span>
-                    <span>Web Development</span>
-                    <span>AI Automation</span>
-                    <span>Linux</span>
-                    <span>Spring Boot</span>
+                <div class="about-right">
+                    <p class="lead">I'm a passionate Full Stack Developer and AI enthusiast based in Bhopal, India.</p>
+                    <p>Currently a 3rd Semester B.Tech CSE Student, I combine deep technical expertise with creative
+                        problem-solving. My focus extends beyond traditional web development into the realm of
+                        <strong>AI
+                            automation</strong> and <strong>workflow optimization</strong>.
+                    </p>
+
+                    <h4
+                        style="margin-top: 3rem; margin-bottom: 1.5rem; font-family: var(--font-serif); font-size: 1.2rem;">
+                        Core Technologies
+                    </h4>
+                    <div class="tech-stack-preview">
+                        <span>Java</span>
+                        <span>Rust</span>
+                        <span>Web Development</span>
+                        <span>AI Automation</span>
+                        <span>Linux</span>
+                        <span>Spring Boot</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,6 +160,9 @@
 
                 <!-- TechFeed -->
                 <article class="project-card" data-scroll>
+                    <div class="project-visual">
+                        <img src="assets/img/project-techfeed.png" alt="TechFeed Abstract Art">
+                    </div>
                     <div class="card-content">
                         <span class="project-cat">News Platform</span>
                         <h3 class="project-title">TechFeed</h3>
@@ -153,6 +174,9 @@
 
                 <!-- LLMsIDE -->
                 <article class="project-card" data-scroll>
+                    <div class="project-visual">
+                        <img src="assets/img/project-llmside.png" alt="LLMsIDE Abstract Art">
+                    </div>
                     <div class="card-content">
                         <span class="project-cat">Dev Tool</span>
                         <h3 class="project-title">LLMsIDE</h3>
@@ -164,6 +188,9 @@
 
                 <!-- AI Automations -->
                 <article class="project-card" data-scroll>
+                    <div class="project-visual">
+                        <img src="assets/img/project-ai.png" alt="AI Automations Abstract Art">
+                    </div>
                     <div class="card-content">
                         <span class="project-cat">Business Solutions</span>
                         <h3 class="project-title">AI Automations</h3>
@@ -209,10 +236,10 @@
     <section class="section contact" id="contact">
         <div class="container contact-grid">
             <div class="contact-info" data-scroll>
-                <h2 class="section-title big">Let's work <br><i>together</i>.</h2>
+                <h2 class="section-title big">Let's <i>work</i> <br>together.</h2>
                 <p>Have a project in mind? reach out.</p>
 
-                <a href="mailto:anshul2006n@gmail.com" class="email-link">anshul2006n@gmail.com</a>
+                <a href="mailto:anshul@axshul.site" class="email-link">anshul@axshul.site</a>
 
                 <div class="social-links">
                     <a href="https://www.linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
@@ -223,18 +250,21 @@
 
             <form class="contact-form" data-scroll>
                 <div class="form-group">
+                    <input type="text" id="name" placeholder=" " required>
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="John Doe" required>
                 </div>
                 <div class="form-group">
+                    <input type="email" id="email" placeholder=" " required>
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="john@example.com" required>
                 </div>
                 <div class="form-group">
+                    <textarea id="message" rows="4" placeholder=" " required></textarea>
                     <label for="message">Message</label>
-                    <textarea id="message" rows="4" placeholder="Tell me about your project..." required></textarea>
                 </div>
-                <button type="submit" class="btn-submit">Send Message</button>
+                <button type="submit" class="btn-submit">
+                    <span class="btn-text">Send Message</span>
+                    <span class="btn-icon">&rarr;</span>
+                </button>
             </form>
         </div>
     </section>

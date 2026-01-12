@@ -13,6 +13,61 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('loaded');
     }, 800);
 
+    // Contact Form Handler
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = contactForm.querySelector('#name').value.trim();
+            const email = contactForm.querySelector('#email').value.trim();
+            const message = contactForm.querySelector('#message').value.trim();
+
+            if (name && email && message) {
+                const btn = contactForm.querySelector('.btn-submit');
+                const originalText = btn.innerHTML;
+
+                // Loading State
+                btn.innerHTML = '<span class="btn-text">Sending...</span>';
+                btn.disabled = true;
+
+                const webhookUrl = 'https://71245c5b4176.ngrok-free.app/webhook/Portfolio-Agent';
+                const finalUrl = `${webhookUrl}?Name=${encodeURIComponent(name)}&Email=${encodeURIComponent(email)}&Message=${encodeURIComponent(message)}`;
+
+                try {
+                    // Using no-cors mode as it's a simple webhook trigger
+                    await fetch(finalUrl, {
+                        method: 'GET',
+                        mode: 'no-cors'
+                    });
+
+                    // Success State
+                    btn.innerHTML = '<span class="btn-text">Message Sent</span><span class="btn-icon">✓</span>';
+                    btn.style.background = '#000'; // Black for success
+                    contactForm.reset();
+
+                    // Reset after delay
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        btn.style.background = '';
+                    }, 5000);
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    btn.innerHTML = '<span class="btn-text">Error. Try Again.</span>';
+                    btn.style.background = 'red';
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        btn.style.background = '';
+                    }, 3000);
+                }
+            }
+        });
+    }
+
     // Scroll Observer
     const scrollElements = document.querySelectorAll('[data-scroll]');
 
