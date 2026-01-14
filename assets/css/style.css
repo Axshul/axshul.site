@@ -46,6 +46,7 @@ body {
     min-height: 100%;
     /* Subtle Grain/Vignette */
     background-image: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+    overflow-x: hidden;
 }
 
 h1,
@@ -221,14 +222,6 @@ ul {
     font-style: italic;
 }
 
-font-size: 1.1rem;
-color: var(--text-secondary);
-margin-bottom: 4rem;
-max-width: 450px;
-border-left: 2px solid var(--accent-blue);
-padding-left: 1.5rem;
-line-height: 1.6;
-}
 
 /* Interludio Button Style */
 .hero-actions {
