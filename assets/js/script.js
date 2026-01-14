@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
 
     // Contact Form Handler
-    const contactForm = document.querySelector('#contact-form');
+    const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
