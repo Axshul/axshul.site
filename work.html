@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-graphic-shape="triangle">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Anshul Namdev - Developer & AI Engineer</title>
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://axshul.site/work">
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="Explore projects by Anshul Namdev, a developer and AI engineer. From AI automation systems and developer tools to web products built with Java, Spring Boot, JavaScript and automation platforms.">
+    <meta property="og:title" content="Projects | Anshul Namdev - Developer & AI Engineer">
+    <meta property="og:description" content="Selected AI automation, developer tools and web projects by Anshul Namdev.">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon_io/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        @media (max-width: 768px) {
+            .work-page-title {
+                font-size: 2.5rem !important;
+                margin-top: 1rem !important;
+            }
+
+            .work-page-subtitle {
+                font-size: 1rem !important;
+                max-width: 100% !important;
+                margin-top: 1.5rem !important;
+            }
+
+            .section-header h2.section-title {
+                font-size: 2.5rem !important;
+            }
+
+            .project-card[style*="padding"] {
+                padding: 2rem 0 !important;
+            }
+
+            .n8n-community-card {
+                padding: 2rem 1.5rem !important;
+            }
+
+            .n8n-community-card h3 {
+                font-size: 2rem !important;
+            }
+
+            .n8n-community-card p {
+                font-size: 1rem !important;
+            }
+
+            .project-card.featured iframe,
+            .codeprob-iframe {
+                min-height: 400px !important;
+                height: 400px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .work-page-title {
+                font-size: 2rem !important;
+            }
+
+            .work-page-subtitle {
+                font-size: 0.95rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading" data-graphic-shape="triangle">
+
+    <!-- Loading Overlay -->
+    <div class="loader">
+        <div class="loader-line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">AN.</a>
+
+            <button class="mobile-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="work.html" class="active">Work</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="cta-item"><a href="RESUME.pdf" class="btn-nav" target="_blank">Resume</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Work Hero -->
+    <section class="hero" id="work-hero" style="padding-top: 12rem;">
+        <div class="container hero-grid">
+            <div class="hero-content" data-scroll>
+                <h1 class="hero-title work-page-title" style="font-size: 6rem; margin-top: 2rem;">
+                    Digital<br><i>Creations</i>.
+                </h1>
+                <p class="hero-subtitle work-page-subtitle"
+                    style="max-width: 650px; margin-top: 2rem; font-size: 1.1rem; line-height: 1.7;">
+                    From AI-powered automation systems to experimental web interfaces, this is where technical precision
+                    meets creative exploration. Each project represents a commitment to pushing boundaries and solving
+                    real problems with elegant code.
+                </p>
+            </div>
+
+            <div class="hero-visual" data-scroll data-speed="2">
+                <div class="image-wrapper">
+                    <div class="tech-graphic"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Major Projects -->
+    <section class="section" style="padding-top: 6rem;">
+        <div class="container">
+            <div class="section-header" data-scroll style="border-top: none;">
+                <span class="section-label">01 / Major Works</span>
+                <h2 class="section-title" style="font-size: 4rem;">Core Projects</h2>
+            </div>
+
+            <div class="projects-grid" style="margin-left: 0; border-left: none;">
+
+                <!-- LLM Council -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="assets/img/project-llmcouncil.png" alt="LLM Council"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">AI / CLI Tool</span>
+                        <h3 class="project-title">LLM Council</h3>
+                        <p class="project-desc">A Java & Maven-based CLI tool for interacting with a council of 21
+                            different LLMs. Built for developers who need multi-model consensus and diverse AI
+                            perspectives.</p>
+                        <a href="https://github.com/Axshul/LLM-JAVARENA" target="_blank" class="project-link">View on
+                            GitHub &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- TechFeed -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="assets/img/project-techfeed.png" alt="TechFeed News Platform">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">News Platform</span>
+                        <h3 class="project-title">TechFeed</h3>
+                        <p class="project-desc">A live news aggregation platform delivering the latest tech updates.
+                            Built with React and Node.js for real-time content delivery.</p>
+                        <a href="https://tech-feed-ochre.vercel.app/" target="_blank" class="project-link">View Live App
+                            &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- LLMsIDE -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="assets/img/project-llmside.png" alt="LLMsIDE AI Dev Tool">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">Dev Tool</span>
+                        <h3 class="project-title">LLMsIDE</h3>
+                        <p class="project-desc">Java Spring application designed for AI-driven development workflows.
+                            Integration with multiple LLM providers for intelligent code assistance.</p>
+                        <a href="https://github.com/LLMsIDE" target="_blank" class="project-link">View Github &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- AI Automations -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="assets/img/project-ai.png" alt="AI Automations">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">Business Solutions</span>
+                        <h3 class="project-title">AI Automations</h3>
+                        <p class="project-desc">Custom AI automation workflows tailored for business efficiency using
+                            Python, n8n, and OpenAI. Deployed across multiple production environments.</p>
+                        <a href="#" class="project-link">Explore Solutions &rarr;</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Profiles -->
+    <section class="section" style="padding-top: 4rem;">
+        <div class="container">
+            <div class="section-header" data-scroll style="border-top: none;">
+                <span class="section-label">02 / Community</span>
+                <h2 class="section-title" style="font-size: 4rem;">Contributions</h2>
+            </div>
+
+            <div class="projects-grid" style="margin-left: 0; border-left: none;">
+
+                <!-- CodeProb Profile -->
+                <article class="project-card featured" data-scroll
+                    style="padding: 0; overflow: hidden; min-height: 500px; grid-template-columns: 1fr; margin-bottom: 4rem;">
+                    <iframe src="https://codeprob.github.io/CodeProb/profiles/axshul/"
+                        class="codeprob-iframe" style="width: 100%; height: 600px; border: none;" title="CodeProb Profile"></iframe>
+                </article>
+
+                <!-- n8n Community Link Card -->
+                <article class="project-card n8n-community-card" data-scroll
+                    style="padding-left: 0; padding-right: 0; background: linear-gradient(135deg, #FF6D6D 0%, #FF4E50 100%); color: white; border-radius: 8px; padding: 4rem !important; margin-bottom: 4rem;">
+                    <div class="card-content" style="text-align: center; max-width: 100%;">
+                        <span class="project-cat" style="color: rgba(255,255,255,0.9);">Community Engagement</span>
+                        <h3 class="project-title" style="color: white; font-size: 3.5rem; margin-bottom: 1.5rem;">n8n
+                            Community</h3>
+                        <p class="project-desc"
+                            style="color: rgba(255,255,255,0.95); max-width: 600px; margin: 0 auto 2.5rem; font-size: 1.2rem;">
+                            Active contributor to the n8n automation community. Sharing workflows, helping developers,
+                            and pushing the boundaries of what's possible with no-code automation.
+                        </p>
+                        <a href="https://community.n8n.io/u/anshul_namdev/summary" target="_blank"
+                            style="display: inline-block; padding: 1.2rem 3rem; background: white; color: #FF4E50; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; border-radius: 4px; text-decoration: none; transition: all 0.3s;">
+                            View Community Profile &rarr;
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experimental / Minor Projects -->
+    <section class="section" style="padding-top: 4rem; padding-bottom: 8rem;">
+        <div class="container">
+            <div class="section-header" data-scroll style="border-top: none;">
+                <span class="section-label">03 / Experimental</span>
+                <h2 class="section-title" style="font-size: 4rem;">Side Projects</h2>
+            </div>
+
+            <div class="projects-grid" style="margin-left: 0; border-left: none;">
+
+                <!-- Hacker Terminal -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual" style="background: #000;">
+                        <img src="assets/img/project-terminal.png" alt="Hacker Terminal"
+                            style="mix-blend-mode: screen;">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">Interactive Game</span>
+                        <h3 class="project-title">H4CK3R Terminal</h3>
+                        <p class="project-desc">An interactive retro-styled terminal game with authentic hacker
+                            aesthetics. Test your skills in this immersive command-line experience built with pure HTML,
+                            CSS, and JavaScript.</p>
+                        <a href="https://axshul.github.io/H4CK3R-TERMINAL/" target="_blank" class="project-link">Launch
+                            Terminal &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- DownStar -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="assets/img/project-downstar.png" alt="DownStar Component Library">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">Web Components</span>
+                        <h3 class="project-title">DownStar</h3>
+                        <p class="project-desc">A lightweight web component library for rapid prototyping. Modular,
+                            reusable, and framework-agnostic.</p>
+                        <a href="https://github.com/Axshul/DownStar" target="_blank" class="project-link">View on GitHub
+                            &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- AI Note Taking -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop"
+                            alt="AI Note Taking App" style="object-fit: cover;">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">Productivity</span>
+                        <h3 class="project-title">NoteIt</h3>
+                        <p class="project-desc">AI-powered note-taking application with intelligent organization and
+                            search. Built on Perchance platform.</p>
+                        <a href="https://perchance.org/noteit-shanks" target="_blank" class="project-link">Try It Out
+                            &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Seek Art Gallery -->
+                <article class="project-card" data-scroll style="padding-left: 0; padding-right: 0;">
+                    <div class="project-visual">
+                        <img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&h=600&fit=crop"
+                            alt="Seek Art Gallery" style="object-fit: cover;">
+                    </div>
+                    <div class="card-content">
+                        <span class="project-cat">Digital Art</span>
+                        <h3 class="project-title">Seek</h3>
+                        <p class="project-desc">A minimalist art gallery created in 2019. An early experiment in
+                            web-based visual storytelling.</p>
+                        <a href="https://axshul.github.io/seek/" target="_blank" class="project-link">View Gallery
+                            &rarr;</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+                <div>
+                    <h3 style="margin-bottom: 1.5rem;">Quick Links</h3>
+                    <ul class="footer-links" style="display: flex; gap: 2rem;">
+                        <li><a href="work.html"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Projects</a>
+                        </li>
+                        <li><a href="about.html"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">About</a></li>
+                        <li><a href="index.html#contact"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social-section" style="text-align: right;">
+                    <h3 style="margin-bottom: 1.5rem;">Social</h3>
+                    <div class="footer-socials" style="display: flex; gap: 1.5rem; justify-content: flex-end;">
+                        <a href="https://github.com/axshul" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
+                        <a href="https://twitter.com/Axshul" target="_blank">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content" style="border-top: 1px solid var(--border-light); padding-top: 2rem;">
+                <span class="copyright">&copy; 2026 Anshul Namdev. All Rights Reserved.</span>
+                <a href="#" class="back-to-top">Back to Top &uarr;</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/scroll-3d.js"></script>
+</body>
+
+</html>

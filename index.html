@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anshul Namdev | Technical Architect & AI Automation Expert</title>
+    <title>Anshul Namdev | Technical Architect, Developer & AI Engineer</title>
 
     <!-- Canonical Link -->
     <link rel="canonical" href="https://axshul.site/">
 
     <!-- Meta Tags -->
     <meta name="description"
-        content="Portfolio of Anshul Namdev - Technical Architect and AI Automation Expert. Specializing in modern web development and workflow automation.">
-    <meta property="og:title" content="Anshul Namdev | Technical Architect">
-    <meta property="og:description" content="Building next-level digital experiences and AI solutions.">
+        content="Personal portfolio of Anshul Namdev, a Technical Architect, developer and AI engineer based in Bhopal, India. Showcasing modern web, backend and AI automation work.">
+    <meta property="og:title" content="Anshul Namdev | Technical Architect, Developer & AI Engineer">
+    <meta property="og:description" content="Developer and AI engineer building modern products, automation and developer tools.">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
@@ -73,11 +73,11 @@
             </button>
 
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#work">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="work.html">Work</a></li>
                 <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="cta-item"><a href="resume.pdf" class="btn-nav" target="_blank">Resume</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="cta-item"><a href="RESUME.pdf" class="btn-nav" target="_blank">Resume</a></li>
             </ul>
         </div>
     </nav>
@@ -131,13 +131,15 @@
     <section class="section about" id="about">
         <div class="container">
             <div class="section-header" data-scroll>
-                <span class="section-label">01 / About</span>
+                <a href="about.html" style="text-decoration: none;"><span class="section-label">01 / About</span></a>
                 <!-- Title moved to split layout below -->
             </div>
 
             <div class="about-split" data-scroll>
                 <div class="about-left">
-                    <h2 class="about-headline">Bridging the gap between <br><i>Concept</i> & <i>Code</i>.</h2>
+                    <a href="about.html" style="text-decoration: none;">
+                        <h2 class="about-headline">Bridging the gap between <br><i>Concept</i> & <i>Code</i>.</h2>
+                    </a>
                 </div>
 
                 <div class="about-right">
@@ -169,7 +171,8 @@
     <section class="section work" id="work">
         <div class="container">
             <div class="section-header" data-scroll>
-                <span class="section-label">02 / Selected Work</span>
+                <a href="work.html" style="text-decoration: none;"><span class="section-label">02 / Selected
+                        Work</span></a>
                 <h2 class="section-title">Digital Creations</h2>
             </div>
 
@@ -179,7 +182,7 @@
                 <article class="project-card featured" data-scroll
                     style="padding: 0; overflow: hidden; min-height: 500px; grid-template-columns: 1fr;">
                     <iframe src="https://codeprob.github.io/CodeProb/profiles/axshul/"
-                        style="width: 100%; height: 100%; border: none; min-height: 500px;"
+                        class="codeprob-iframe" style="width: 100%; height: 100%; border: none; min-height: 500px;"
                         title="CodeProb Profile"></iframe>
                 </article>
 
@@ -273,31 +276,41 @@
                 </div>
             </div>
 
-            <form class="contact-form" data-scroll>
-                <div class="form-group">
-                    <input type="text" id="name" placeholder=" " required>
-                    <label for="name">Name</label>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" placeholder=" " required>
-                    <label for="email">Email</label>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" rows="4" placeholder=" " required></textarea>
-                    <label for="message">Message</label>
-                </div>
-                <button type="submit" class="btn-submit">
-                    <span class="btn-text">Send Message</span>
-                    <span class="btn-icon">&rarr;</span>
-                </button>
-            </form>
+            <div class="contact-form" data-scroll
+                style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <iframe src="https://71245c5b4176.ngrok-free.app/form/4a00170a-0b1e-4ced-bdc6-56f0fc3352a8"
+                    class="contact-form-iframe" style="width: 100%; height: 700px; border: none;" title="Contact form"></iframe>
+            </div>
         </div>
     </section>
 
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <span class="copyright">&copy; 2026 Anshul Namdev.</span>
+            <div class="footer-grid"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+                <div>
+                    <h3 style="margin-bottom: 1.5rem;">Quick Links</h3>
+                    <ul class="footer-links" style="display: flex; gap: 2rem;">
+                        <li><a href="#work"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Projects</a>
+                        </li>
+                        <li><a href="about.html"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">About</a></li>
+                        <li><a href="#contact"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social-section" style="text-align: right;">
+                    <h3 style="margin-bottom: 1.5rem;">Social</h3>
+                    <div class="footer-socials" style="display: flex; gap: 1.5rem; justify-content: flex-end;">
+                        <a href="https://github.com/axshul" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
+                        <a href="https://twitter.com/Axshul" target="_blank">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content" style="border-top: 1px solid var(--border-light); padding-top: 2rem;">
+                <span class="copyright">&copy; 2026 Anshul Namdev. All Rights Reserved.</span>
                 <a href="#" class="back-to-top">Back to Top &uarr;</a>
             </div>
         </div>

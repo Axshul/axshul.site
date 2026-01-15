@@ -22,13 +22,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     wrapper.appendChild(sphereGroup);
 
+    // --- DETECT SHAPE ---
+    const shape = document.body.getAttribute('data-graphic-shape');
+    const isSquare = shape === 'square';
+    const isTriangle = shape === 'triangle';
+    const isRectangle = shape === 'rectangle';
+
+    const borderRadius = (isSquare || isTriangle || isRectangle) ? '0%' : '50%';
+    const clipPath = isTriangle ? 'polygon(50% 10%, 10% 90%, 90% 90%)' : 'none';
+
     // --- HELPERS ---
     const createRing = (size, border, brightness = 1, glow = false) => {
         const ring = document.createElement('div');
         ring.style.position = 'absolute';
         ring.style.width = `${size}px`;
         ring.style.height = `${size}px`;
-        ring.style.borderRadius = '50%';
+        ring.style.borderRadius = borderRadius;
+        ring.style.clipPath = clipPath;
         ring.style.border = `${border}px solid ${accentColor}`;
         ring.style.opacity = brightness;
         ring.style.transformStyle = 'preserve-3d';
@@ -48,14 +58,53 @@ document.addEventListener('DOMContentLoaded', () => {
     crossLines.style.width = '240px';
     crossLines.style.height = '240px';
     crossLines.style.transformStyle = 'preserve-3d';
-    crossLines.innerHTML = `
-        <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
-            <path d="M120,0 L120,240" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
-            <path d="M0,120 L240,120" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
-            <circle cx="120" cy="120" r="40" stroke="${accentColor}" stroke-width="0.5" fill="none" opacity="0.4" />
-        </svg>
-    `;
 
+
+    if (isTriangle) {
+        crossLines.innerHTML = `
+            <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
+                <!-- Outer triangle -->
+                <path d="M120,30 L30,190 L210,190 Z" stroke="${accentColor}" stroke-width="1" fill="none" opacity="0.7" />
+                <!-- Middle triangle -->
+                <path d="M120,60 L50,175 L190,175 Z" stroke="${accentColor}" stroke-width="0.8" fill="none" opacity="0.5" />
+                <!-- Inner triangle -->
+                <path d="M120,90 L70,160 L170,160 Z" stroke="${accentColor}" stroke-width="0.6" fill="none" opacity="0.4" />
+                <!-- Center lines -->
+                <path d="M120,30 L120,190" stroke="${accentColor}" stroke-width="0.5" opacity="0.3" />
+                <path d="M30,190 L210,190" stroke="${accentColor}" stroke-width="0.5" opacity="0.3" />
+            </svg>
+        `;
+    } else if (isRectangle) {
+        crossLines.innerHTML = `
+            <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
+                <!-- Outer rectangle -->
+                <rect x="40" y="60" width="160" height="120" stroke="${accentColor}" stroke-width="1" fill="none" opacity="0.7" />
+                <!-- Middle rectangle -->
+                <rect x="60" y="75" width="120" height="90" stroke="${accentColor}" stroke-width="0.8" fill="none" opacity="0.5" />
+                <!-- Inner rectangle -->
+                <rect x="80" y="90" width="80" height="60" stroke="${accentColor}" stroke-width="0.6" fill="none" opacity="0.4" />
+                <!-- Center lines -->
+                <path d="M120,60 L120,180" stroke="${accentColor}" stroke-width="0.5" opacity="0.3" />
+                <path d="M40,120 L200,120" stroke="${accentColor}" stroke-width="0.5" opacity="0.3" />
+            </svg>
+        `;
+    } else if (isSquare) {
+        crossLines.innerHTML = `
+            <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
+                <path d="M120,0 L120,240" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
+                <path d="M0,120 L240,120" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
+                <rect x="80" y="80" width="80" height="80" stroke="${accentColor}" stroke-width="0.5" fill="none" opacity="0.4" />
+            </svg>
+        `;
+    } else {
+        crossLines.innerHTML = `
+            <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
+                <path d="M120,0 L120,240" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
+                <path d="M0,120 L240,120" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
+                <circle cx="120" cy="120" r="40" stroke="${accentColor}" stroke-width="0.5" fill="none" opacity="0.4" />
+            </svg>
+        `;
+    }
     sphereGroup.appendChild(crossLines);
     sphereGroup.appendChild(ring1);
     sphereGroup.appendChild(ring2);
@@ -98,46 +147,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const loop = () => {
         requestAnimationFrame(loop);
 
-        // --- ONLY ANIMATE POSITION ON DESKTOP ---
-        // (Mobile needs it to stay put in the header)
-        if (!isDesktop) return;
-
         const scrollY = window.scrollY;
         const scrollVelocity = Math.abs(scrollY - lastScroll);
         lastScroll = scrollY;
         currentScroll += (scrollY - currentScroll) * 0.1;
 
+        // Desktop: full motion, Mobile: softer motion
+        const motionFactor = isDesktop ? 1 : 0.35;
+
         // 1. DYNAMIC SPEED
         if (baseSpin > 0.3) baseSpin *= 0.96;
-        const totalVelocity = baseSpin + (scrollVelocity * 0.5);
+        const totalVelocity = (baseSpin + (scrollVelocity * 0.5)) * motionFactor;
         spinAngle += totalVelocity;
 
         // 2. DYNAMIC SIZE
         const progress = Math.min(Math.max(currentScroll / 800, 0), 1);
-        const scale = 1 + (progress * 0.4); // Grow to 1.4x
-        const unfold = progress * 90;
+        const scaleBase = isDesktop ? 1 : 0.9;
+        const scale = scaleBase + (progress * (isDesktop ? 0.4 : 0.2));
+        const unfold = progress * (isDesktop ? 90 : 45);
 
-        // 3. POSITIONAL MOVEMENT ("Moves around")
-        // Use Sin/Cos based on Scroll to create a path
-        // driftX: Wanders left and right 100px
-        // driftY: Wanders up and down 50px
-        // Frequency: 0.002 * scroll
-
-        const driftX = Math.sin(currentScroll * 0.003) * 100;
-        const driftY = Math.cos(currentScroll * 0.004) * 50;
+        // 3. POSITIONAL MOVEMENT
+        const driftX = Math.sin(currentScroll * 0.003) * (isDesktop ? 100 : 35);
+        const driftY = Math.cos(currentScroll * 0.004) * (isDesktop ? 50 : 20);
 
         // APPLY
         sphereGroup.style.transform = `
             translate3d(${driftX}px, ${driftY}px, 0)
             scale(${scale}) 
             rotateZ(${spinAngle}deg) 
-            rotateX(${currentScroll * 0.05}deg) 
-            rotateY(${currentScroll * 0.05}deg)
+            rotateX(${currentScroll * 0.05 * motionFactor}deg) 
+            rotateY(${currentScroll * 0.05 * motionFactor}deg)
         `;
 
         ring2.style.transform = `rotateX(${unfold}deg)`;
         ring3.style.transform = `rotateY(${unfold}deg)`;
-        crossLines.style.transform = `rotateZ(${-spinAngle * 0.5}deg)`;
+        crossLines.style.transform = `rotateZ(${-spinAngle * 0.5 * motionFactor}deg)`;
     };
     loop();
 });
