@@ -27,12 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const isSquare = shape === 'square';
     const isTriangle = shape === 'triangle';
     const isRectangle = shape === 'rectangle';
+    const isDiamond = shape === 'diamond';
 
-    const borderRadius = (isSquare || isTriangle || isRectangle) ? '0%' : '50%';
-    const clipPath = isTriangle ? 'polygon(50% 10%, 10% 90%, 90% 90%)' : 'none';
+    const borderRadius = (isSquare || isTriangle || isRectangle || isDiamond) ? '0%' : '50%';
+    const clipPath = isTriangle ? 'polygon(50% 10%, 10% 90%, 90% 90%)'
+        : isDiamond ? 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
+            : 'none';
 
     // --- HELPERS ---
-    const createRing = (size, border, brightness = 1, glow = false) => {
+    const createRing = (size, border, brightness = 1, glow = false, zDepth = 0) => {
         const ring = document.createElement('div');
         ring.style.position = 'absolute';
         ring.style.width = `${size}px`;
@@ -43,14 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ring.style.opacity = brightness;
         ring.style.transformStyle = 'preserve-3d';
         ring.style.boxSizing = 'border-box';
+        ring.style.transform = `translateZ(${zDepth}px)`;
         if (glow) ring.style.boxShadow = `0 0 15px ${accentColor}40`;
         return ring;
     };
 
     // --- ELEMENTS ---
-    const ring1 = createRing(240, 1, 1, true); // Equator
-    const ring2 = createRing(230, 1, 0.8); // Meridian
-    const ring3 = createRing(220, 1, 0.8); // Cross
+    const ring1 = createRing(240, 1, 1, true, 0); // Equator (front)
+    const ring2 = createRing(230, 1, 0.8, false, -30); // Meridian (back)
+    const ring3 = createRing(220, 1, 0.8, false, -60); // Cross (further back)
 
     // Inner Lines
     const crossLines = document.createElement('div');
@@ -72,6 +76,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 <!-- Center lines -->
                 <path d="M120,30 L120,190" stroke="${accentColor}" stroke-width="0.5" opacity="0.3" />
                 <path d="M30,190 L210,190" stroke="${accentColor}" stroke-width="0.5" opacity="0.3" />
+            </svg>
+        `;
+    } else if (isDiamond) {
+        crossLines.innerHTML = `
+            <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
+                <!-- Outer diamond -->
+                <path d="M120,20 L220,120 L120,220 L20,120 Z" stroke="${accentColor}" stroke-width="1" fill="none" opacity="0.8" />
+                <!-- Middle diamond -->
+                <path d="M120,50 L190,120 L120,190 L50,120 Z" stroke="${accentColor}" stroke-width="0.9" fill="none" opacity="0.6" />
+                <!-- Inner diamond -->
+                <path d="M120,80 L160,120 L120,160 L80,120 Z" stroke="${accentColor}" stroke-width="0.7" fill="none" opacity="0.4" />
+                <!-- Center cross lines -->
+                <path d="M120,20 L120,220" stroke="${accentColor}" stroke-width="0.5" opacity="0.5" />
+                <path d="M20,120 L220,120" stroke="${accentColor}" stroke-width="0.5" opacity="0.5" />
+                <!-- Diagonal cross lines -->
+                <path d="M20,120 L120,20 L220,120" stroke="${accentColor}" stroke-width="0.4" opacity="0.3" />
+                <path d="M20,120 L120,220 L220,120" stroke="${accentColor}" stroke-width="0.4" opacity="0.3" />
             </svg>
         `;
     } else if (isRectangle) {
@@ -120,6 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper.style.top = '0';
             wrapper.style.height = '100vh';
             wrapper.style.zIndex = '-1';
+            wrapper.style.perspective = '1200px'; // Add perspective for 3D depth
+            wrapper.style.perspectiveOrigin = 'center center';
 
             const rect = heroVisual.getBoundingClientRect();
             wrapper.style.left = `${rect.left}px`;
@@ -132,6 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper.style.width = '100%';
             wrapper.style.height = '100%';
             wrapper.style.zIndex = '1';
+            wrapper.style.perspective = '800px'; // Smaller perspective for mobile
+            wrapper.style.perspectiveOrigin = 'center center';
             sphereGroup.style.transform = ''; // Reset transform on mobile switch
         }
     };
@@ -179,9 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
             rotateY(${currentScroll * 0.05 * motionFactor}deg)
         `;
 
-        ring2.style.transform = `rotateX(${unfold}deg)`;
-        ring3.style.transform = `rotateY(${unfold}deg)`;
-        crossLines.style.transform = `rotateZ(${-spinAngle * 0.5 * motionFactor}deg)`;
+        // Apply 3D transforms to rings for depth
+        ring2.style.transform = `rotateX(${unfold}deg) translateZ(-30px)`;
+        ring3.style.transform = `rotateY(${unfold}deg) translateZ(-60px)`;
+        crossLines.style.transform = `rotateZ(${-spinAngle * 0.5 * motionFactor}deg) translateZ(10px)`;
     };
     loop();
 });
