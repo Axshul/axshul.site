@@ -1234,8 +1234,20 @@ ul {
         display: none;
     }
 
+    /* Keep background shapes visible on mobile but make them more subtle */
     .bg-shape {
-        display: none;
+        display: block;
+        opacity: 0.5;
+    }
+
+    .shape-1 {
+        width: 60vw;
+        height: 40vh;
+    }
+
+    .shape-2 {
+        width: 50vw;
+        height: 30vh;
     }
 }
 
