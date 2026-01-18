@@ -28,11 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const isTriangle = shape === 'triangle';
     const isRectangle = shape === 'rectangle';
     const isDiamond = shape === 'diamond';
+    const isSemiCircle = shape === 'semicircle'; // New Shape
 
+    // Determine Border Radius
     const borderRadius = (isSquare || isTriangle || isRectangle || isDiamond) ? '0%' : '50%';
-    const clipPath = isTriangle ? 'polygon(50% 10%, 10% 90%, 90% 90%)'
-        : isDiamond ? 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
-            : 'none';
+
+    // Determine Clip Path
+    let clipPath = 'none';
+    if (isTriangle) clipPath = 'polygon(50% 10%, 10% 90%, 90% 90%)';
+    else if (isDiamond) clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)';
+    else if (isSemiCircle) clipPath = 'polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)'; // Top Half
 
     // --- HELPERS ---
     const createRing = (size, border, brightness = 1, glow = false, zDepth = 0) => {
@@ -115,6 +120,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 <path d="M120,0 L120,240" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
                 <path d="M0,120 L240,120" stroke="${accentColor}" stroke-width="0.5" opacity="0.6" />
                 <rect x="80" y="80" width="80" height="80" stroke="${accentColor}" stroke-width="0.5" fill="none" opacity="0.4" />
+            </svg>
+        `;
+    } else if (isSemiCircle) {
+        crossLines.innerHTML = `
+            <svg viewBox="0 0 240 240" style="width:100%; height:100%; overflow:visible;">
+                <!-- Base Line -->
+                <path d="M0,120 L240,120" stroke="${accentColor}" stroke-width="1" opacity="0.8" />
+                <!-- Outer Arc -->
+                <path d="M0,120 A120,120 0 0,1 240,120" stroke="${accentColor}" stroke-width="1.2" fill="none" opacity="0.9" />
+                <!-- Middle Arc -->
+                <path d="M40,120 A80,80 0 0,1 200,120" stroke="${accentColor}" stroke-width="1" fill="none" opacity="0.7" />
+                <!-- Inner Arc -->
+                <path d="M80,120 A40,40 0 0,1 160,120" stroke="${accentColor}" stroke-width="0.8" fill="none" opacity="0.5" />
+                <!-- Radial Lines -->
+                <path d="M120,120 L120,0" stroke="${accentColor}" stroke-width="0.5" opacity="0.4" />
+                <path d="M120,120 L204.85,35.15" stroke="${accentColor}" stroke-width="0.5" opacity="0.4" /> <!-- 45 deg -->
+                <path d="M120,120 L35.15,35.15" stroke="${accentColor}" stroke-width="0.5" opacity="0.4" /> <!-- 135 deg -->
             </svg>
         `;
     } else {

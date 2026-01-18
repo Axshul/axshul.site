@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience | Anshul Namdev</title>
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://axshul.site/experience/">
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="Professional journey of Anshul Namdev. From B.Tech to Technical Architect and Principal Software Engineer, exploring the evolution of a developer.">
+    <meta property="og:title" content="Experience | Anshul Namdev">
+    <meta property="og:description" content="My journey from student to Technical Architect and AI Automation Expert.">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon_io/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <style>
+        /* Page Specific Overrides */
+        .hero {
+            min-height: 60vh;
+            padding-top: 120px;
+        }
+
+        /* Tree-Like Timeline Styles */
+        .timeline-container {
+            display: flex;
+            justify-content: center;
+            padding-bottom: 8rem;
+            position: relative;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            border-left: none;
+            /* Remove default border */
+            border-right: none;
+            padding-left: 0;
+            position: relative;
+            width: 100%;
+        }
+
+        /* The Trunk */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-blue), #667eea, var(--accent-blue));
+            transform: translateX(-50%);
+            border-radius: 4px;
+            opacity: 0.8;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 6rem;
+            width: 50%;
+            padding: 0 4rem;
+            /* Space for the branch */
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: auto;
+            text-align: left;
+            padding-left: 5rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-right: auto;
+            text-align: right;
+            padding-right: 5rem;
+        }
+
+        /* The Branch Connector */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            height: 4px;
+            background: var(--accent-blue);
+            transition: all 0.5s ease;
+        }
+
+        /* Right Branch (Odd Items) */
+        .timeline-item:nth-child(odd)::before {
+            left: 0;
+            width: 50px;
+            /* Branch length */
+            border-radius: 0 100px 100px 0;
+            /* Curve out */
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* Left Branch (Even Items) */
+        .timeline-item:nth-child(even)::before {
+            right: 0;
+            width: 50px;
+            border-radius: 100px 0 0 100px;
+            /* Curve out */
+            transform-origin: right;
+            transform: scaleX(0);
+        }
+
+        /* Reveal Branches */
+        .timeline-item.visible::before {
+            transform: scaleX(1);
+        }
+
+        /* Node at the trunk */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: calc(2rem - 6px);
+            /* Center on branch */
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            left: -8px;
+            /* Center on trunk (trunk is at left of this box) */
+            left: -8px;
+            /* Since width is 50%, left:0 is the center of container. 
+               BUT timeline-item is 50% width. 
+               Trunk is at 50% of container.
+               So for Odd (Right side), left edge is trunk.
+            */
+            left: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            right: -10px;
+        }
+
+        .timeline-item:hover::after {
+            background: var(--accent-blue);
+            transform: scale(1.3);
+            box-shadow: 0 0 15px rgba(0, 68, 255, 0.4);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2.5rem;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            /* Organic roundness */
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            /* Glassmorphism hint */
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 68, 255, 0.3);
+        }
+
+        .year {
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: #f0f4ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: var(--accent-blue);
+        }
+
+        .timeline-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .timeline-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Adjust shapes for this page */
+        .shape-1 {
+            top: 10%;
+            left: -10%;
+        }
+
+        .shape-2 {
+            top: 40%;
+            right: -5%;
+        }
+
+        /* Responsive Tree */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+                /* Move trunk to left */
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 80px;
+                padding-right: 0;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                margin-left: 0;
+                text-align: left;
+                padding-right: 0;
+            }
+
+            /* Reset Branches for Mobile */
+            .timeline-item:nth-child(odd)::before,
+            .timeline-item:nth-child(even)::before {
+                left: 30px;
+                width: 30px;
+                border-radius: 0;
+                transform-origin: left;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 22px;
+                /* Center on trunk line which is at 30px. 30 - 8 = 22 */
+                right: auto;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading" data-graphic-shape="semicircle">
+
+    <!-- Loading Overlay -->
+    <div class="loader">
+        <div class="loader-line"></div>
+    </div>
+
+    <!-- Background Ambience -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">AN.</a>
+
+            <button class="mobile-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../work.html">Work</a></li>
+                <li><a href="#" class="active">Experience</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+                <li class="cta-item"><a href="../RESUME.pdf" class="btn-nav" target="_blank">Resume</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content" data-scroll>
+                <h1 class="hero-title" style="font-size: 5rem;">
+                    The <br><i>Journey</i>
+                </h1>
+                <p class="hero-subtitle">
+                    Transforming ideas into architecture. <br>
+                    From the first line of code to scalable AI systems.
+                </p>
+            </div>
+
+            <div class="hero-visual" data-scroll data-speed="2">
+                <!-- Placeholder for 3D Graphic (Handled by JS) -->
+                <div class="tech-graphic"></div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- Experience / Timeline -->
+    <section class="section experience">
+        <div class="container timeline-container">
+            <div class="timeline">
+
+                <!-- B.Tech -->
+                <div class="timeline-item" data-scroll>
+                    <span class="year">2024 - 2028</span>
+                    <div class="timeline-content">
+                        <h3>B.Tech in CSE</h3>
+                        <p>Pursuing Bachelor of Technology in Computer Science & Engineering. laying the academic
+                            groundwork while simultaneously exploring advanced production environments.</p>
+                    </div>
+                </div>
+
+                <!-- FRVR Intern -->
+                <div class="timeline-item" data-scroll>
+                    <span class="year">Internship</span>
+                    <div class="timeline-content">
+                        <h3>Joined FRVR</h3>
+                        <p>Started my professional career as a Software Engineering Intern at FRVR. Gained hands-on
+                            experience in game ecosystems and high-performance web architecture.</p>
+                    </div>
+                </div>
+
+                <!-- Technical Architect -->
+                <div class="timeline-item" data-scroll>
+                    <span class="year">Growth</span>
+                    <div class="timeline-content">
+                        <h3>Technical Architect</h3>
+                        <p>Evolved into a Technical Architect role. Responsible for designing system structures,
+                            choosing technology stacks, and ensuring the scalability and maintainability of complex
+                            projects.</p>
+                    </div>
+                </div>
+
+                <!-- BlueWizard Digital -->
+                <div class="timeline-item" data-scroll>
+                    <span class="year">BlueWizard Digital</span>
+                    <div class="timeline-content">
+                        <h3>Principle Software Engineer</h3>
+                        <p>Joined BlueWizard Digital as a Principle Software Engineer. Led core development teams and
+                            drove the technical vision for key digital products involving high user concurrency.</p>
+                    </div>
+                </div>
+
+                <!-- AI Automations -->
+                <div class="timeline-item" data-scroll>
+                    <span class="year">Present</span>
+                    <div class="timeline-content">
+                        <h3>AI Automations & Innovation</h3>
+                        <p>Currently focused on the cutting edge of AI. Designing bespoke AI automation workflows and
+                            intelligent agents to revolutionize business efficiency and digital interactions.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
+                <div>
+                    <h3 style="margin-bottom: 1.5rem;">Quick Links</h3>
+                    <ul class="footer-links" style="display: flex; gap: 2rem;">
+                        <li><a href="../work.html"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Projects</a>
+                        </li>
+                        <li><a href="../about.html"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">About</a></li>
+                        <li><a href="../blog/"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Blog</a></li>
+                        <li><a href="../contact.html"
+                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social-section" style="text-align: right;">
+                    <h3 style="margin-bottom: 1.5rem;">Social</h3>
+                    <div class="footer-socials" style="display: flex; gap: 1.5rem; justify-content: flex-end;">
+                        <a href="https://github.com/axshul" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
+                        <a href="https://twitter.com/Axshul" target="_blank">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content" style="border-top: 1px solid var(--border-light); padding-top: 2rem;">
+                <span class="copyright">&copy; 2026 Anshul Namdev. All Rights Reserved.</span>
+                <a href="#" class="back-to-top">Back to Top &uarr;</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/scroll-3d.js"></script>
+</body>
+
+</html>
