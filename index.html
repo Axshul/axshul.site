@@ -286,10 +286,31 @@
             </div>
 
             <div class="contact-form" data-scroll
-                style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-                <iframe src="https://71245c5b4176.ngrok-free.app/form/4a00170a-0b1e-4ced-bdc6-56f0fc3352a8"
-                    class="contact-form-iframe" style="width: 100%; height: 700px; border: none;"
-                    title="Contact form"></iframe>
+                style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 3rem;">
+                <!-- Updated Title inside the form container since the previous one was outside or part of the iframe content which is now gone -->
+                <h3 style="font-size: 2rem; margin-bottom: 2rem;">Message Me</h3>
+                <form class="integrated-contact-form">
+                    <div class="form-group">
+                        <label for="Name-Home">Name</label>
+                        <input type="text" id="Name-Home" name="Name" required placeholder="Enter your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email-Home">Email</label>
+                        <input type="email" id="Email-Home" name="Email" required placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Message-Home">Message</label>
+                        <textarea id="Message-Home" name="Message" rows="4" required
+                            placeholder="Type your message..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -332,6 +353,7 @@
     <!-- Scripts -->
     <script src="assets/js/script.js"></script>
     <script src="assets/js/scroll-3d.js"></script>
+    <script src="assets/js/contact-form.js"></script>
 </body>
 
 </html>
