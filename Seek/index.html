@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEEK Gallery | Anshul Namdev</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="An immersive, infinite-scrolling visual gallery experience designed by Anshul Namdev. Explore curated visuals in a calm, ambient environment.">
+    <meta name="keywords"
+        content="seek gallery, visual gallery, infinite scroll, ambient web, anshul namdev, photography, design">
+    <meta name="author" content="Anshul Namdev">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SEEK Gallery | Anshul Namdev">
+    <meta property="og:description"
+        content="An immersive, infinite-scrolling visual gallery experience designed by Anshul Namdev.">
+    <meta property="og:url" content="https://axshul.site/Seek/">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://axshul.site/Seek/">
+</head>
+
+<body>
+
+    <!-- Header with Branding -->
+    <header style="
+  position: sticky; 
+  top: 0; 
+  z-index: 100; 
+  background: rgba(9, 9, 9, 0.85); 
+  backdrop-filter: blur(10px); 
+  padding: 15px 20px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  border-bottom: 1px solid #333;
+">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: #fff; letter-spacing: 2px;">SEEK</div>
+            <div style="font-size: 0.75rem; color: #666;">Made by Anshul Namdev</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button id="soundToggleBtn" style="
+      background: transparent;
+      color: #ccc;
+      border: 1px solid #444;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 101;
+    " onmouseover="this.style.background='#fff'; this.style.color='#000'"
+                onmouseout="this.style.background='transparent'; this.style.color='#ccc'"
+                title="Click to play/pause, double-click to change track">
+                <span id="soundIcon">🔊</span>
+                <span id="currentTrackName">Track 1</span>
+            </button>
+            <a href="https://axshul.site" target="_blank" id="axshulLink" style="
+      color: #ccc; 
+      text-decoration: none; 
+      font-size: 0.9rem; 
+      border: 1px solid #444; 
+      padding: 8px 16px; 
+      border-radius: 20px; 
+      transition: all 0.3s;
+      z-index: 101;
+      pointer-events: auto;
+    " onmouseover="this.style.background='#fff'; this.style.color='#000'"
+                onmouseout="this.style.background='transparent'; this.style.color='#ccc'">
+                axshul.site
+            </a>
+        </div>
+    </header>
+
+    <!-- Audio Elements (Hidden) -->
+    <audio id="ambientAudio1" loop preload="auto">
+        <!-- Using a calm, royalty-free ambient sound -->
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=forest-lullaby-110624.mp3"
+            type="audio/mpeg">
+    </audio>
+    <audio id="ambientAudio2" loop preload="auto">
+        <!-- Using another calm track -->
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=relaxing-piano-110855.mp3"
+            type="audio/mpeg">
+    </audio>
+    <audio id="ambientAudio3" loop preload="auto">
+        <!-- Using another calm track -->
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=meditation-impulse-3000.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <!-- Audio Overlay (Browser requires user interaction to play audio) -->
+    <div id="audioOverlay" style="
+  position: fixed; 
+  top: 0; left: 0; width: 100%; height: 100%; 
+  background: #090909; 
+  z-index: 9999; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  transition: opacity 0.8s ease;
+">
+        <h1 style="color: #fff; font-weight: 300; margin-bottom: 20px;">Welcome to SEEK Gallery</h1>
+        <button id="startBtn" style="
+    padding: 15px 40px; 
+    font-size: 1.2rem; 
+    background: transparent; 
+    color: #fff; 
+    border: 2px solid #fff; 
+    border-radius: 50px; 
+    cursor: pointer; 
+    transition: all 0.3s;
+  " onmouseover="this.style.background='#fff'; this.style.color='#000'"
+            onmouseout="this.style.background='transparent'; this.style.color='#fff'">
+            Enter Gallery
+        </button>
+        <p style="color: #666; margin-top: 20px; font-size: 0.9rem;">Click to enable sound & experience</p>
+    </div>
+
+    <!-- Main Gallery Container -->
+    <div id="galleryCtn" style="min-height:100vh;"></div>
+
+    <!-- Sentinel for Infinite Scroll -->
+    <div id="scrollSentinel" style="height: 20px; margin-top: 20px;"></div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicatorEl" hidden style="text-align:center; padding:20px; color:#666;">Loading...</div>
+
+    <!-- Lightbox Modal for Viewing and Exporting -->
+    <div id="lightbox" hidden style="
+  position: fixed; 
+  top: 0; left: 0; width: 100%; height: 100%; 
+  background: rgba(0, 0, 0, 0.9); 
+  z-index: 1000; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  flex-direction: column;
+  opacity: 0; 
+  transition: opacity 0.3s ease;
+">
+        <button id="closeLightboxBtn" style="
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    background: none; 
+    border: none; 
+    color: #fff; 
+    font-size: 2rem; 
+    cursor: pointer;
+    z-index: 1001;
+  ">&times;</button>
+
+        <img id="lightboxImg" src="" style="
+    max-width: 90%; 
+    max-height: 80vh; 
+    border-radius: 4px; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  ">
+
+        <div style="margin-top: 20px; display: flex; gap: 15px;">
+            <a id="downloadBtn" href="#" download style="
+      padding: 10px 25px; 
+      background: #222; 
+      color: #ddd; 
+      border: 1px solid #444; 
+      border-radius: 4px; 
+      text-decoration: none; 
+      transition: background 0.2s;
+      z-index: 1001;
+    " onmouseover="this.style.background='#444'" onmouseout="this.style.background='#222'">
+                Export / Download Image
+            </a>
+        </div>
+    </div>
+
+    <style>
+        body {
+            background-color: #090909;
+            /* Very dark background */
+            color: #ccc;
+            margin: 0;
+            padding: 0;
+            /* Removed padding to let header stick */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding-top: 20px;
+            /* Space for header */
+        }
+
+        /* Masonry Layout using CSS Columns */
+        #galleryCtn {
+            column-count: 5;
+            /* Desktop default */
+            column-gap: 16px;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1400px) {
+            #galleryCtn {
+                column-count: 4;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            #galleryCtn {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 700px) {
+            #galleryCtn {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #galleryCtn {
+                column-count: 1;
+            }
+        }
+
+        /* Image Items */
+        .imgItem {
+            break-inside: avoid;
+            /* Prevents image from splitting across columns */
+            margin-bottom: 16px;
+            background-color: #1a1a1a;
+            /* Placeholder bg while loading */
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            opacity: 0;
+            /* Hidden until loaded */
+            transform: translateY(20px);
+            /* Start slightly lower for entrance effect */
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .imgItem.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .imgItem:hover {
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .imgItem img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        /* Subtle zoom on hover */
+        .imgItem:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Lightbox visible state */
+        #lightbox:not([hidden]) {
+            opacity: 1;
+        }
+    </style>
+
+    <script>
+        const loadingIndicator = loadingIndicatorEl;
+        const audioTracks = [
+            document.getElementById('ambientAudio1'),
+            document.getElementById('ambientAudio2'),
+            document.getElementById('ambientAudio3')
+        ];
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const soundToggleBtn = document.getElementById('soundToggleBtn');
+        const soundIcon = document.getElementById('soundIcon');
+        const currentTrackName = document.getElementById('currentTrackName');
+
+        // Sound track names
+        const trackNames = ['Forest Lullaby', 'Relaxing Piano', 'Meditation Impulse'];
+
+        // Initialize audio elements
+        audioTracks.forEach((audio, index) => {
+            audio.volume = 0.5;
+            audio.addEventListener('ended', () => {
+                // Auto-play next track when current ends
+                if (isPlaying) {
+                    toggleTrack();
+                }
+            });
+        });
+
+        // Handle Start Experience (Audio + Hide Overlay)
+        startBtn.onclick = () => {
+            audioTracks[currentTrackIndex].play().catch(e => console.log("Audio play failed (interaction needed):", e));
+            isPlaying = true;
+            audioOverlay.style.opacity = '0';
+            setTimeout(() => {
+                audioOverlay.style.display = 'none';
+            }, 800);
+        };
+
+        // Toggle between sound tracks (play/pause on single click)
+        soundToggleBtn.onclick = () => {
+            if (isPlaying) {
+                // Pause current track
+                audioTracks[currentTrackIndex].pause();
+                isPlaying = false;
+                soundIcon.textContent = '🔇';
+            } else {
+                // Play current track
+                audioTracks[currentTrackIndex].play().catch(e => console.log("Audio play failed:", e));
+                isPlaying = true;
+                soundIcon.textContent = '🔊';
+            }
+        };
+
+        // Function to switch to next track
+        function toggleTrack() {
+            // Stop current track
+            audioTracks[currentTrackIndex].pause();
+            audioTracks[currentTrackIndex].currentTime = 0;
+
+            // Move to next track
+            currentTrackIndex = (currentTrackIndex + 1) % audioTracks.length;
+            currentTrackName.textContent = trackNames[currentTrackIndex];
+
+            // Play new track if we were playing before
+            if (isPlaying) {
+                audioTracks[currentTrackIndex].play().catch(e => console.log("Audio play failed:", e));
+            }
+        }
+
+        // Add double-click to change track
+        soundToggleBtn.ondblclick = (e) => {
+            e.stopPropagation(); // Prevent triggering the click event
+            toggleTrack();
+        };
+
+        // Close Lightbox
+        closeLightboxBtn.onclick = () => {
+            lightbox.hidden = true;
+            lightbox.style.opacity = '0';
+        };
+
+        // Close on background click
+        lightbox.onclick = (e) => {
+            if (e.target === lightbox) {
+                lightbox.hidden = true;
+                lightbox.style.opacity = '0';
+            }
+        };
+
+        // Configuration
+        const BATCH_SIZE = 10; // Slightly smaller batch for smoother infinite scroll performance
+
+        // Helper to get random integer
+        let getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+        // Calculate dimensions based on screen size for better responsive fetching
+        function getResponsiveDimensions() {
+            // Rough approximation of column width
+            let colCount = 5;
+            if (window.innerWidth <= 1400) colCount = 4;
+            if (window.innerWidth <= 1000) colCount = 3;
+            if (window.innerWidth <= 700) colCount = 2;
+            if (window.innerWidth <= 400) colCount = 1;
+
+            // Target width roughly equal to column width (minus gap)
+            let gap = 16;
+            let padding = 40;
+            let availableWidth = window.innerWidth - padding - (gap * (colCount - 1));
+            let targetWidth = Math.floor(availableWidth / colCount);
+
+            // Ensure min and max constraints for sanity, but responsive to screen
+            let w = Math.max(300, Math.min(targetWidth, 800));
+
+            // Random aspect ratio height (0.8 to 1.5)
+            let h = Math.floor(w * (Math.random() * 0.7 + 0.8));
+
+            return { w, h };
+        }
+
+        // Function to create and append images
+        async function addImages() {
+            loadingIndicator.hidden = false; // Show loading indicator
+
+            // Small delay to allow UI to update before heavy rendering
+            await new Promise(r => setTimeout(r, 100));
+
+            for (let i = 0; i < BATCH_SIZE; i++) {
+                let { w, h } = getResponsiveDimensions();
+
+                // Random seed ensures we get different images
+                let seed = Math.random().toString(36).substring(7);
+                let src = `https://picsum.photos/seed/${seed}/${w}/${h}.jpg`;
+
+                // Create container
+                let item = document.createElement('div');
+                item.className = 'imgItem';
+
+                // Create image
+                let img = document.createElement('img');
+                img.loading = "lazy"; // Native lazy loading for performance
+                img.alt = "Random Gallery Image";
+                img.crossOrigin = "anonymous"; // Required for canvas/download access if needed later
+
+                // Handle load event for smooth fade-in
+                img.onload = () => {
+                    item.classList.add('loaded');
+                };
+
+                img.src = src;
+
+                // Add click event for Lightbox
+                item.onclick = () => openLightbox(src);
+
+                item.appendChild(img);
+                galleryCtn.appendChild(item);
+            }
+
+            loadingIndicator.hidden = true;
+        }
+
+        // Lightbox Logic
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            downloadBtn.href = src;
+            lightbox.hidden = false;
+            // Force reflow for transition
+            void lightbox.offsetWidth;
+            lightbox.style.opacity = '1';
+        }
+
+        // Infinite Scroll Logic using IntersectionObserver
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '200px', // start loading 200px before bottom
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                addImages();
+            }
+        }, observerOptions);
+
+        // Initial load
+        addImages().then(() => {
+            // Start observing after first batch loads
+            observer.observe(scrollSentinel);
+        });
+    </script>
+</body>
+
+</html>

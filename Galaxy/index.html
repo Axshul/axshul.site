@@ -1,4 +1,31 @@
-<!--
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galaxy of Thoughts | Anshul Namdev</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Interactive 3D Galaxy of Thoughts visualization with bloom effects and orbital mechanics, designed and built by Anshul Namdev.">
+  <meta name="keywords" content="3d galaxy, three.js, visualization, anshul namdev, interactive web, cosmos">
+  <meta name="author" content="Anshul Namdev">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Galaxy of Thoughts | Anshul Namdev">
+  <meta property="og:description"
+    content="Interactive 3D Galaxy of Thoughts visualization with bloom effects and orbital mechanics.">
+  <meta property="og:url" content="https://axshul.site/Galaxy/">
+  <meta property="og:type" content="website">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://axshul.site/Galaxy/">
+</head>
+
+<body style="margin: 0; overflow: hidden; background-color: #000;">
+
+  <!--
 Project: Galaxy of Thoughts (Enhanced)
 Features:
   - 3D Interactive Galaxy using Three.js
@@ -16,621 +43,697 @@ Features:
   - Fixed Modal Close functionality
 -->
 
-<div id="loadingScreenEl" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; color:#fff; display:flex; align-items:center; justify-content:center; z-index:9999; font-family:sans-serif; transition:opacity 0.8s;">
-  <div style="text-align:center;">
-    <div class="spinner"></div>
-    <h1 style="margin:20px 0 10px; font-family:'Courier New', monospace; letter-spacing:4px; text-shadow:0 0 10px #4f8aff;">GALAXY OF THOUGHTS</h1>
-    <p style="opacity:0.7; font-size:0.9rem;">Initializing Universe...</p>
-  </div>
-</div>
-
-<div id="canvasContainerEl" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; background:#000;"></div>
-
-<div id="ui-layer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10; display:flex; flex-direction:column; justify-content:space-between; padding:20px; box-sizing:border-box;">
-  
-  <!-- Header -->
-  <header style="pointer-events:auto; display:flex; justify-content:space-between; align-items:center;">
-    <div style="color:white; text-shadow:0 0 20px rgba(100,200,255,0.8), 0 0 40px rgba(100,200,255,0.4);">
-      <h1 style="margin:0; font-family:'Courier New', monospace; font-size:1.8rem; letter-spacing:3px; background:linear-gradient(135deg, #fff, #88ccff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">GALAXY OF THOUGHTS</h1>
-      <p id="thoughtCountEl" style="margin:5px 0 0; font-size:0.85rem; opacity:0.7; letter-spacing:1px;">0 thoughts in the cosmos</p>
+  <div id="loadingScreenEl"
+    style="position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; color:#fff; display:flex; align-items:center; justify-content:center; z-index:9999; font-family:sans-serif; transition:opacity 0.8s;">
+    <div style="text-align:center;">
+      <div class="spinner"></div>
+      <h1
+        style="margin:20px 0 10px; font-family:'Courier New', monospace; letter-spacing:4px; text-shadow:0 0 10px #4f8aff;">
+        GALAXY OF THOUGHTS</h1>
+      <p style="opacity:0.7; font-size:0.9rem;">Initializing Universe...</p>
     </div>
-    <div style="display:flex; gap:10px;">
-      <button id="resetViewBtn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:white; padding:10px 15px; border-radius:30px; cursor:pointer; backdrop-filter:blur(5px); transition:all 0.3s; font-family:sans-serif; font-size:0.9rem;">
-        ↺ Reset View
-      </button>
-      <button id="list-toggle-btn" style="background:linear-gradient(135deg, rgba(79,138,255,0.2), rgba(100,200,255,0.1)); border:1px solid rgba(100,200,255,0.3); color:white; padding:10px 20px; border-radius:30px; cursor:pointer; backdrop-filter:blur(10px); transition:all 0.3s; font-family:sans-serif; box-shadow:0 0 20px rgba(79,138,255,0.2);">
-        <span style="margin-right:5px;">☰</span> Thought Log
-      </button>
+  </div>
+
+  <div id="canvasContainerEl"
+    style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; background:#000;"></div>
+
+  <div id="ui-layer"
+    style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10; display:flex; flex-direction:column; justify-content:space-between; padding:20px; box-sizing:border-box;">
+
+    <!-- Header -->
+    <header style="pointer-events:auto; display:flex; justify-content:space-between; align-items:center;">
+      <div style="color:white; text-shadow:0 0 20px rgba(100,200,255,0.8), 0 0 40px rgba(100,200,255,0.4);">
+        <h1
+          style="margin:0; font-family:'Courier New', monospace; font-size:1.8rem; letter-spacing:3px; background:linear-gradient(135deg, #fff, #88ccff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+          GALAXY OF THOUGHTS</h1>
+        <p id="thoughtCountEl" style="margin:5px 0 0; font-size:0.85rem; opacity:0.7; letter-spacing:1px;">0 thoughts in
+          the cosmos <span style="opacity: 0.5;">| By Anshul Namdev</span></p>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button id="resetViewBtn"
+          style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.15); color:white; padding:10px 15px; border-radius:30px; cursor:pointer; backdrop-filter:blur(5px); transition:all 0.3s; font-family:sans-serif; font-size:0.9rem;">
+          ↺ Reset View
+        </button>
+        <button id="list-toggle-btn"
+          style="background:linear-gradient(135deg, rgba(79,138,255,0.2), rgba(100,200,255,0.1)); border:1px solid rgba(100,200,255,0.3); color:white; padding:10px 20px; border-radius:30px; cursor:pointer; backdrop-filter:blur(10px); transition:all 0.3s; font-family:sans-serif; box-shadow:0 0 20px rgba(79,138,255,0.2);">
+          <span style="margin-right:5px;">☰</span> Thought Log
+        </button>
+      </div>
+    </header>
+
+    <!-- Input Area -->
+    <div id="input-ctn"
+      style="pointer-events:auto; align-self:center; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1); padding:18px 20px; border-radius:16px; backdrop-filter:blur(20px); display:flex; gap:12px; width:100%; max-width:560px; box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5); transition:transform 0.3s, box-shadow 0.3s;">
+      <input id="thoughtInputEl" type="text" placeholder="Launch a new thought into the cosmos..."
+        style="flex:1; background:transparent; border:none; color:white; font-size:1.1rem; outline:none; font-family:sans-serif; letter-spacing:0.5px;">
+      <button id="launchBtnEl"
+        style="background:linear-gradient(135deg, #4f8aff, #6ba3ff); border:none; color:white; padding:12px 30px; border-radius:10px; cursor:pointer; font-weight:bold; font-size:1rem; letter-spacing:0.5px; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 4px 15px rgba(79,138,255,0.4);">LAUNCH</button>
     </div>
-  </header>
-
-  <!-- Input Area -->
-  <div id="input-ctn" style="pointer-events:auto; align-self:center; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1); padding:18px 20px; border-radius:16px; backdrop-filter:blur(20px); display:flex; gap:12px; width:100%; max-width:560px; box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5); transition:transform 0.3s, box-shadow 0.3s;">
-    <input id="thoughtInputEl" type="text" placeholder="Launch a new thought into the cosmos..." style="flex:1; background:transparent; border:none; color:white; font-size:1.1rem; outline:none; font-family:sans-serif; letter-spacing:0.5px;">
-    <button id="launchBtnEl" style="background:linear-gradient(135deg, #4f8aff, #6ba3ff); border:none; color:white; padding:12px 30px; border-radius:10px; cursor:pointer; font-weight:bold; font-size:1rem; letter-spacing:0.5px; transition:transform 0.2s, box-shadow 0.2s; box-shadow:0 4px 15px rgba(79,138,255,0.4);">LAUNCH</button>
   </div>
-</div>
 
-<!-- Side List Panel -->
-<div id="listPanelEl" style="position:fixed; top:0; right:0; width:380px; height:100%; background:linear-gradient(180deg, rgba(5,5,10,0.98), rgba(0,0,5,0.98)); backdrop-filter:blur(20px); border-left:1px solid rgba(255,255,255,0.1); box-shadow:-10px 0 40px rgba(0,0,0,0.8); transform:translateX(100%); transition:transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index:20; display:flex; flex-direction:column; color:white;">
-  <div style="padding:25px; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02);">
-    <div>
-      <h2 style="margin:0; font-family:sans-serif; font-size:1.3rem; letter-spacing:1px; color:#ccc;">Thought Log</h2>
-      <p style="margin:5px 0 0; font-size:0.8rem; opacity:0.4;">Explore your cosmic memories</p>
+  <!-- Side List Panel -->
+  <div id="listPanelEl"
+    style="position:fixed; top:0; right:0; width:380px; height:100%; background:linear-gradient(180deg, rgba(5,5,10,0.98), rgba(0,0,5,0.98)); backdrop-filter:blur(20px); border-left:1px solid rgba(255,255,255,0.1); box-shadow:-10px 0 40px rgba(0,0,0,0.8); transform:translateX(100%); transition:transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index:20; display:flex; flex-direction:column; color:white;">
+    <div
+      style="padding:25px; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.02);">
+      <div>
+        <h2 style="margin:0; font-family:sans-serif; font-size:1.3rem; letter-spacing:1px; color:#ccc;">Thought Log</h2>
+        <p style="margin:5px 0 0; font-size:0.8rem; opacity:0.4;">Explore your cosmic memories</p>
+      </div>
+      <button id="closeListBtn"
+        style="background:none; border:none; color:white; font-size:1.8rem; cursor:pointer; opacity:0.5; transition:opacity 0.2s; padding:5px;">×</button>
     </div>
-    <button id="closeListBtn" style="background:none; border:none; color:white; font-size:1.8rem; cursor:pointer; opacity:0.5; transition:opacity 0.2s; padding:5px;">×</button>
+    <div id="listContentEl" style="flex:1; overflow-y:auto; padding:10px; font-family:sans-serif; font-size:0.9rem;">
+      <!-- List items injected here -->
+    </div>
+    <div
+      style="padding:20px; border-top:1px solid rgba(255,255,255,0.05); font-size:0.8rem; text-align:center; opacity:0.3; background:rgba(0,0,0,0.5);">
+      ✨ Click "Focus" to travel to a thought star
+    </div>
   </div>
-  <div id="listContentEl" style="flex:1; overflow-y:auto; padding:10px; font-family:sans-serif; font-size:0.9rem;">
-    <!-- List items injected here -->
+
+  <!-- Thought Detail Modal -->
+  <dialog id="viewModalEl"
+    style="background:linear-gradient(135deg, rgba(10,10,15,0.98), rgba(5,5,10,0.98)); color:white; border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:40px; max-width:420px; width:90%; text-align:center; backdrop-filter:blur(30px); box-shadow:0 0 100px rgba(0,0,0,0.95), 0 0 50px rgba(79,138,255,0.1);">
+    <div
+      style="width:60px; height:60px; margin:0 auto 25px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,0.3), transparent); animation:pulse 2s infinite;">
+    </div>
+    <h2 id="modalDateEl"
+      style="font-size:0.8rem; opacity:0.4; margin-bottom:25px; font-weight:normal; letter-spacing:1px;"></h2>
+    <p id="modalTextEl"
+      style="font-size:1.3rem; line-height:1.6; margin-bottom:35px; white-space:pre-wrap; font-weight:300; color:#eee;">
+    </p>
+    <div style="display:flex; gap:15px; justify-content:center;">
+      <button id="close-modal-btn"
+        style="background:linear-gradient(135deg, #4f8aff, #6ba3ff); color:white; border:none; padding:12px 35px; border-radius:25px; cursor:pointer; font-weight:bold; font-size:1rem; box-shadow:0 4px 20px rgba(79,138,255,0.4); transition:transform 0.2s;">Close</button>
+      <button id="delete-modal-btn"
+        style="background:rgba(255,80,80,0.15); color:#ff6060; border:1px solid rgba(255,80,80,0.2); padding:12px 25px; border-radius:25px; cursor:pointer; font-size:0.9rem; transition:all 0.2s;">Delete</button>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Container -->
+  <div id="toastCtnEl"
+    style="position:fixed; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:12px; z-index:100; pointer-events:none;">
   </div>
-  <div style="padding:20px; border-top:1px solid rgba(255,255,255,0.05); font-size:0.8rem; text-align:center; opacity:0.3; background:rgba(0,0,0,0.5);">
-    ✨ Click "Focus" to travel to a thought star
-  </div>
-</div>
 
-<!-- Thought Detail Modal -->
-<dialog id="viewModalEl" style="background:linear-gradient(135deg, rgba(10,10,15,0.98), rgba(5,5,10,0.98)); color:white; border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:40px; max-width:420px; width:90%; text-align:center; backdrop-filter:blur(30px); box-shadow:0 0 100px rgba(0,0,0,0.95), 0 0 50px rgba(79,138,255,0.1);">
-  <div style="width:60px; height:60px; margin:0 auto 25px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,0.3), transparent); animation:pulse 2s infinite;"></div>
-  <h2 id="modalDateEl" style="font-size:0.8rem; opacity:0.4; margin-bottom:25px; font-weight:normal; letter-spacing:1px;"></h2>
-  <p id="modalTextEl" style="font-size:1.3rem; line-height:1.6; margin-bottom:35px; white-space:pre-wrap; font-weight:300; color:#eee;"></p>
-  <div style="display:flex; gap:15px; justify-content:center;">
-    <button id="close-modal-btn" style="background:linear-gradient(135deg, #4f8aff, #6ba3ff); color:white; border:none; padding:12px 35px; border-radius:25px; cursor:pointer; font-weight:bold; font-size:1rem; box-shadow:0 4px 20px rgba(79,138,255,0.4); transition:transform 0.2s;">Close</button>
-    <button id="delete-modal-btn" style="background:rgba(255,80,80,0.15); color:#ff6060; border:1px solid rgba(255,80,80,0.2); padding:12px 25px; border-radius:25px; cursor:pointer; font-size:0.9rem; transition:all 0.2s;">Delete</button>
-  </div>
-</dialog>
-
-<!-- Toast Notification Container -->
-<div id="toastCtnEl" style="position:fixed; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:12px; z-index:100; pointer-events:none;"></div>
-
-<style>
-  body { margin: 0; overflow: hidden; background-color: #000; }
-  
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
-
-  ::placeholder { color: rgba(255,255,255,0.2); font-style: italic; }
-
-  /* List Item Styles */
-  .list-item {
-    padding: 16px;
-    border-bottom:1px solid rgba(255,255,255,0.03);
-    transition:all 0.2s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px;
-    margin: 5px;
-    cursor: pointer;
-  }
-  .list-item:hover { 
-    background: rgba(255,255,255,0.05); 
-    transform: translateX(-3px);
-  }
-  .list-item-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 220px;
-    color: rgba(255,255,255,0.8);
-  }
-  .list-item-actions { display: flex; gap: 10px; }
-  .action-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.7);
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-weight: 500;
-    transition: all 0.3s;
-    letter-spacing: 0.5px;
-  }
-  .action-btn:hover { 
-    background: rgba(79,138,255,0.2); 
-    border-color: #4f8aff; 
-    color: #fff;
-  }
-
-  /* Spinner */
-  .spinner {
-    width: 50px; height: 50px;
-    border: 2px solid rgba(255,255,255,0.05);
-    border-top: 2px solid #4f8aff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-    box-shadow: 0 0 15px rgba(79,138,255,0.3);
-  }
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.1); opacity: 0.6; }
-  }
-
-  #delete-modal-btn:hover { background: rgba(255,80,80,0.25); border-color: #ff5050; }
-
-  .focus-active {
-    background: rgba(79,138,255,0.1) !important;
-    border: 1px solid rgba(79,138,255,0.3) !important;
-  }
-</style>
-
-<script type="module">
-  import * as THREE from 'https://esm.sh/three@0.177.0';
-  import { OrbitControls } from 'https://esm.sh/three@0.177.0/examples/jsm/controls/OrbitControls.js';
-  import { EffectComposer } from 'https://esm.sh/three@0.177.0/examples/jsm/postprocessing/EffectComposer.js';
-  import { RenderPass } from 'https://esm.sh/three@0.177.0/examples/jsm/postprocessing/RenderPass.js';
-  import { UnrealBloomPass } from 'https://esm.sh/three@0.177.0/examples/jsm/postprocessing/UnrealBloomPass.js';
-
-  // --- DOM Element References ---
-  const els = {
-    loading: document.getElementById('loadingScreenEl'),
-    container: document.getElementById('canvasContainerEl'),
-    input: document.getElementById('thoughtInputEl'),
-    launchBtn: document.getElementById('launchBtnEl'),
-    count: document.getElementById('thoughtCountEl'),
-    listPanel: document.getElementById('listPanelEl'),
-    listContent: document.getElementById('listContentEl'),
-    modal: document.getElementById('viewModalEl'),
-    modalText: document.getElementById('modalTextEl'),
-    modalDate: document.getElementById('modalDateEl'),
-    closeListBtn: document.getElementById('closeListBtn'),
-    listToggleBtn: document.getElementById('list-toggle-btn'),
-    resetViewBtn: document.getElementById('resetViewBtn'),
-    closeModalBtn: document.getElementById('close-modal-btn'),
-    deleteModalBtn: document.getElementById('delete-modal-btn'),
-    toastCtn: document.getElementById('toastCtnEl')
-  };
-
-  // --- Global Exports for Inline Handlers ---
-  window.closeModal = () => els.modal.close();
-  window.deleteCurrentThought = deleteCurrentThought;
-  window.focusOnThought = focusOnThought;
-
-  // --- Configuration & State ---
-  let scene, camera, renderer, controls, composer, raycaster, mouse;
-  let thoughts = []; 
-  let thoughtSprites = []; 
-  let starField, coreLight;
-  let animationId;
-  let currentFocusedId = null;
-  
-  // --- KV Storage Setup ---
-  const STORAGE_KEY = 'galaxyThoughts';
-  
-  async function loadThoughts() {
-    try {
-      const stored = await root.kv.galaxy.get(STORAGE_KEY);
-      if (stored) thoughts = stored;
-      updateThoughtCount();
-    } catch(e) { console.error("Storage error", e); }
-  }
-  
-  async function saveThoughts() {
-    try {
-      await root.kv.galaxy.set(STORAGE_KEY, thoughts);
-    } catch(e) { console.error("Storage save error", e); }
-  }
-
-  // --- Three.js Initialization ---
-  async function init() {
-    // Scene setup
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x020205); // Deep space black
-    scene.fog = new THREE.FogExp2(0x020205, 0.002);
-    
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 40, 80);
-    
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
-    els.container.appendChild(renderer.domElement);
-    
-    // Post-Processing (Bloom for the "Legit" Look)
-    const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0;
-    bloomPass.strength = 1.8; // High bloom for glow
-    bloomPass.radius = 0.5;
-    
-    composer = new EffectComposer(renderer);
-    composer.addPass(renderScene);
-    composer.addPass(bloomPass);
-    
-    // Controls
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
-    controls.maxDistance = 200;
-    controls.minDistance = 10;
-    controls.enablePan = false;
-    
-    // Interaction
-    raycaster = new THREE.Raycaster();
-    raycaster.params.Points.threshold = 2;
-    mouse = new THREE.Vector2();
-    
-    // Lighting (Mainly for the Core if we used meshes, but helps fog)
-    const ambientLight = new THREE.AmbientLight(0x404060, 0.2);
-    scene.add(ambientLight);
-    
-    // Create Scene Objects
-    createGalaxyCore();
-    createStarfield();
-    
-    // Load data & build galaxy
-    await loadThoughts();
-    buildGalaxyFromData();
-    renderList();
-    
-    // Event Listeners
-    window.addEventListener('resize', onWindowResize);
-    renderer.domElement.addEventListener('pointermove', onPointerMove);
-    renderer.domElement.addEventListener('click', onCanvasClick);
-    
-    // UI Listeners
-    els.launchBtn.addEventListener('click', addThought);
-    els.input.addEventListener('keypress', (e) => { if(e.key === 'Enter') addThought(); });
-    els.closeListBtn.addEventListener('click', toggleList);
-    els.listToggleBtn.addEventListener('click', toggleList);
-    els.resetViewBtn.addEventListener('click', resetCameraView);
-    els.closeModalBtn.addEventListener('click', window.closeModal);
-    els.deleteModalBtn.addEventListener('click', deleteCurrentThought);
-    
-    // Remove loading screen
-    els.loading.style.opacity = '0';
-    setTimeout(() => els.loading.remove(), 800);
-    
-    animate();
-  }
-  
-  // --- Procedural Textures & Objects ---
-  
-  function createGalaxyCore() {
-    // A strong central light
-    coreLight = new THREE.PointLight(0xaaccff, 5, 100);
-    coreLight.position.set(0, 0, 0);
-    scene.add(coreLight);
-    
-    // Visual Core Sprite
-    const size = 512;
-    const canvas = document.createElement('canvas');
-    canvas.width = size; canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    
-    // Radial Gradient for Core
-    const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.1, 'rgba(200, 220, 255, 0.8)');
-    grad.addColorStop(0.4, 'rgba(100, 150, 255, 0.2)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, size, size);
-    
-    const tex = new THREE.CanvasTexture(canvas);
-    const material = new THREE.SpriteMaterial({ 
-      map: tex, 
-      color: 0xffffff,
-      transparent: true, 
-      blending: THREE.AdditiveBlending 
-    });
-    
-    const core = new THREE.Sprite(material);
-    core.scale.set(25, 25, 1);
-    scene.add(core);
-  }
-  
-  function createStarfield() {
-    const count = 8000;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
-    const sizes = new Float32Array(count);
-    
-    const color = new THREE.Color();
-    
-    for(let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      // Sphere distribution
-      const r = 100 + Math.random() * 400;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      
-      positions[i3] = r * Math.sin(phi) * Math.cos(theta);
-      positions[i3+1] = r * Math.sin(phi) * Math.sin(theta);
-      positions[i3+2] = r * Math.cos(phi);
-      
-      // Star Colors: Blue-ish to White
-      const starType = Math.random();
-      if(starType > 0.9) color.setHex(0xaaaaff);
-      else if(starType > 0.7) color.setHex(0xccddff);
-      else color.setHex(0xffffff);
-      
-      colors[i3] = color.r;
-      colors[i3+1] = color.g;
-      colors[i3+2] = color.b;
-      
-      sizes[i] = Math.random() * 1.5;
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
     }
-    
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-    
-    // Use a simple shader material or PointsMaterial
-    const material = new THREE.PointsMaterial({ 
-      size: 0.8, 
-      vertexColors: true, 
-      transparent: true, 
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-      sizeAttenuation: true
-    });
-    
-    starField = new THREE.Points(geometry, material);
-    scene.add(starField);
-  }
-  
-  function createThoughtTexture(colorHue) {
-    const size = 256;
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    
-    const center = size / 2;
-    const color = new THREE.Color().setHSL(colorHue, 1.0, 0.6);
-    
-    // Glow
-    const grad = ctx.createRadialGradient(center, center, 0, center, center, size/2);
-    grad.addColorStop(0, 'rgba(255,255,255,1)');
-    grad.addColorStop(0.2, `rgba(${color.r*255}, ${color.g*255}, ${color.b*255}, 0.8)`);
-    grad.addColorStop(0.5, `rgba(${color.r*255}, ${color.g*255}, ${color.b*255}, 0.2)`);
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, size, size);
-    
-    const tex = new THREE.CanvasTexture(canvas);
-    return tex;
-  }
-  
-  // --- Galaxy Logic ---
-  
-  function buildGalaxyFromData() {
-    thoughtSprites.forEach(s => scene.remove(s));
-    thoughtSprites = [];
-    
-    thoughts.forEach((thought, index) => {
-      addThoughtToScene(thought, index);
-    });
-  }
-  
-  function addThoughtToScene(thoughtData, index) {
-    // Logarithmic Spiral Math
-    const branches = 3;
-    const spin = 4; 
-    const radius = 80;
-    const randomnessPower = 2;
-    
-    // Determine position based on index (simulated density)
-    const branchIndex = index % branches;
-    const radiusStep = 10 + (index * 1.5) % radius; // Distribute along radius
-    
-    const angle = (Math.PI * 2 * branchIndex) / branches + (radiusStep * spin) / 10;
-    
-    const randomX = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * 10;
-    const randomY = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * 10;
-    const randomZ = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * 10;
 
-    const x = Math.cos(angle) * radiusStep + randomX;
-    const y = (Math.random() - 0.5) * 5 + randomY; // Flattened galaxy
-    const z = Math.sin(angle) * radiusStep + randomZ;
-    
-    const material = new THREE.SpriteMaterial({ 
-      map: createThoughtTexture(thoughtData.hue),
-      color: 0xffffff,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    });
-    
-    const sprite = new THREE.Sprite(material);
-    sprite.position.set(x, y, z);
-    
-    const scale = 3 + Math.random() * 2;
-    sprite.scale.set(scale, scale, 1);
-    
-    // Animation metadata
-    sprite.userData = { 
-      id: thoughtData.id,
-      radius: radiusStep,
-      angle: angle,
-      rotationSpeed: 0.0005 + Math.random() * 0.0005,
-      yBase: y,
-      wobbleSpeed: Math.random() * 2,
-      wobbleOffset: Math.random() * Math.PI * 2,
-      text: thoughtData.text,
-      date: thoughtData.createdAt,
-      hue: thoughtData.hue
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+      font-style: italic;
+    }
+
+    /* List Item Styles */
+    .list-item {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .list-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(-3px);
+    }
+
+    .list-item-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .list-item-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    .action-btn:hover {
+      background: rgba(79, 138, 255, 0.2);
+      border-color: #4f8aff;
+      color: #fff;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      border-top: 2px solid #4f8aff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+      box-shadow: 0 0 15px rgba(79, 138, 255, 0.3);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+      }
+    }
+
+    #delete-modal-btn:hover {
+      background: rgba(255, 80, 80, 0.25);
+      border-color: #ff5050;
+    }
+
+    .focus-active {
+      background: rgba(79, 138, 255, 0.1) !important;
+      border: 1px solid rgba(79, 138, 255, 0.3) !important;
+    }
+  </style>
+
+  <script type="module">
+    import * as THREE from 'https://esm.sh/three@0.177.0';
+    import { OrbitControls } from 'https://esm.sh/three@0.177.0/examples/jsm/controls/OrbitControls.js';
+    import { EffectComposer } from 'https://esm.sh/three@0.177.0/examples/jsm/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'https://esm.sh/three@0.177.0/examples/jsm/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'https://esm.sh/three@0.177.0/examples/jsm/postprocessing/UnrealBloomPass.js';
+
+    // --- DOM Element References ---
+    const els = {
+      loading: document.getElementById('loadingScreenEl'),
+      container: document.getElementById('canvasContainerEl'),
+      input: document.getElementById('thoughtInputEl'),
+      launchBtn: document.getElementById('launchBtnEl'),
+      count: document.getElementById('thoughtCountEl'),
+      listPanel: document.getElementById('listPanelEl'),
+      listContent: document.getElementById('listContentEl'),
+      modal: document.getElementById('viewModalEl'),
+      modalText: document.getElementById('modalTextEl'),
+      modalDate: document.getElementById('modalDateEl'),
+      closeListBtn: document.getElementById('closeListBtn'),
+      listToggleBtn: document.getElementById('list-toggle-btn'),
+      resetViewBtn: document.getElementById('resetViewBtn'),
+      closeModalBtn: document.getElementById('close-modal-btn'),
+      deleteModalBtn: document.getElementById('delete-modal-btn'),
+      toastCtn: document.getElementById('toastCtnEl')
     };
-    
-    scene.add(sprite);
-    thoughtSprites.push(sprite);
-  }
-  
-  function animate() {
-    animationId = requestAnimationFrame(animate);
-    
-    const time = Date.now() * 0.001;
-    
-    // Rotate starfield slowly
-    if(starField) starField.rotation.y -= 0.0002;
-    
-    // Animate Thoughts
-    thoughtSprites.forEach(sprite => {
-      // Orbit
-      sprite.userData.angle += sprite.userData.rotationSpeed;
-      sprite.position.x = Math.cos(sprite.userData.angle) * sprite.userData.radius;
-      sprite.position.z = Math.sin(sprite.userData.angle) * sprite.userData.radius;
-      
-      // Vertical Wobble
-      sprite.position.y = sprite.userData.yBase + Math.sin(time * sprite.userData.wobbleSpeed + sprite.userData.wobbleOffset) * 1;
-      
-      // Pulsate
-      const scale = 1 + Math.sin(time * 3 + sprite.userData.radius) * 0.1;
-      sprite.scale.setScalar(3 * scale);
-    });
-    
-    controls.update();
-    
-    // Use composer for bloom
-    composer.render();
-  }
-  
-  // --- Interaction Logic ---
-  
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
-  }
-  
-  function onPointerMove(event) {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(thoughtSprites);
-    
-    if(intersects.length > 0) {
-      document.body.style.cursor = 'pointer';
-      const target = intersects[0].object;
-      target.scale.multiplyScalar(1.2);
-    } else {
-      document.body.style.cursor = 'default';
-      thoughtSprites.forEach(s => {
-        const baseScale = 3 + Math.sin(Date.now() * 0.001 * s.userData.wobbleSpeed) * 0.5;
-        // Reset to dynamic scale handled in animate
+
+    // --- Global Exports for Inline Handlers ---
+    window.closeModal = () => els.modal.close();
+    window.deleteCurrentThought = deleteCurrentThought;
+    window.focusOnThought = focusOnThought;
+
+    // --- Configuration & State ---
+    let scene, camera, renderer, controls, composer, raycaster, mouse;
+    let thoughts = [];
+    let thoughtSprites = [];
+    let starField, coreLight;
+    let animationId;
+    let currentFocusedId = null;
+
+    // --- KV Storage Setup ---
+    const STORAGE_KEY = 'galaxyThoughts';
+
+    async function loadThoughts() {
+      try {
+        const stored = await root.kv.galaxy.get(STORAGE_KEY);
+        if (stored) thoughts = stored;
+        updateThoughtCount();
+      } catch (e) { console.error("Storage error", e); }
+    }
+
+    async function saveThoughts() {
+      try {
+        await root.kv.galaxy.set(STORAGE_KEY, thoughts);
+      } catch (e) { console.error("Storage save error", e); }
+    }
+
+    // --- Three.js Initialization ---
+    async function init() {
+      // Scene setup
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x020205); // Deep space black
+      scene.fog = new THREE.FogExp2(0x020205, 0.002);
+
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 40, 80);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.1;
+      els.container.appendChild(renderer.domElement);
+
+      // Post-Processing (Bloom for the "Legit" Look)
+      const renderScene = new RenderPass(scene, camera);
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+      bloomPass.threshold = 0;
+      bloomPass.strength = 1.8; // High bloom for glow
+      bloomPass.radius = 0.5;
+
+      composer = new EffectComposer(renderer);
+      composer.addPass(renderScene);
+      composer.addPass(bloomPass);
+
+      // Controls
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.5;
+      controls.maxDistance = 200;
+      controls.minDistance = 10;
+      controls.enablePan = false;
+
+      // Interaction
+      raycaster = new THREE.Raycaster();
+      raycaster.params.Points.threshold = 2;
+      mouse = new THREE.Vector2();
+
+      // Lighting (Mainly for the Core if we used meshes, but helps fog)
+      const ambientLight = new THREE.AmbientLight(0x404060, 0.2);
+      scene.add(ambientLight);
+
+      // Create Scene Objects
+      createGalaxyCore();
+      createStarfield();
+
+      // Load data & build galaxy
+      await loadThoughts();
+      buildGalaxyFromData();
+      renderList();
+
+      // Event Listeners
+      window.addEventListener('resize', onWindowResize);
+      renderer.domElement.addEventListener('pointermove', onPointerMove);
+      renderer.domElement.addEventListener('click', onCanvasClick);
+
+      // UI Listeners
+      els.launchBtn.addEventListener('click', addThought);
+      els.input.addEventListener('keypress', (e) => { if (e.key === 'Enter') addThought(); });
+      els.closeListBtn.addEventListener('click', toggleList);
+      els.listToggleBtn.addEventListener('click', toggleList);
+      els.resetViewBtn.addEventListener('click', resetCameraView);
+      els.closeModalBtn.addEventListener('click', window.closeModal);
+      els.deleteModalBtn.addEventListener('click', deleteCurrentThought);
+
+      // Remove loading screen
+      els.loading.style.opacity = '0';
+      setTimeout(() => els.loading.remove(), 800);
+
+      animate();
+    }
+
+    // --- Procedural Textures & Objects ---
+
+    function createGalaxyCore() {
+      // A strong central light
+      coreLight = new THREE.PointLight(0xaaccff, 5, 100);
+      coreLight.position.set(0, 0, 0);
+      scene.add(coreLight);
+
+      // Visual Core Sprite
+      const size = 512;
+      const canvas = document.createElement('canvas');
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      // Radial Gradient for Core
+      const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      grad.addColorStop(0.1, 'rgba(200, 220, 255, 0.8)');
+      grad.addColorStop(0.4, 'rgba(100, 150, 255, 0.2)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+
+      const tex = new THREE.CanvasTexture(canvas);
+      const material = new THREE.SpriteMaterial({
+        map: tex,
+        color: 0xffffff,
+        transparent: true,
+        blending: THREE.AdditiveBlending
+      });
+
+      const core = new THREE.Sprite(material);
+      core.scale.set(25, 25, 1);
+      scene.add(core);
+    }
+
+    function createStarfield() {
+      const count = 8000;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+      const sizes = new Float32Array(count);
+
+      const color = new THREE.Color();
+
+      for (let i = 0; i < count; i++) {
+        const i3 = i * 3;
+        // Sphere distribution
+        const r = 100 + Math.random() * 400;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+
+        positions[i3] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i3 + 2] = r * Math.cos(phi);
+
+        // Star Colors: Blue-ish to White
+        const starType = Math.random();
+        if (starType > 0.9) color.setHex(0xaaaaff);
+        else if (starType > 0.7) color.setHex(0xccddff);
+        else color.setHex(0xffffff);
+
+        colors[i3] = color.r;
+        colors[i3 + 1] = color.g;
+        colors[i3 + 2] = color.b;
+
+        sizes[i] = Math.random() * 1.5;
+      }
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+      // Use a simple shader material or PointsMaterial
+      const material = new THREE.PointsMaterial({
+        size: 0.8,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true
+      });
+
+      starField = new THREE.Points(geometry, material);
+      scene.add(starField);
+    }
+
+    function createThoughtTexture(colorHue) {
+      const size = 256;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      const center = size / 2;
+      const color = new THREE.Color().setHSL(colorHue, 1.0, 0.6);
+
+      // Glow
+      const grad = ctx.createRadialGradient(center, center, 0, center, center, size / 2);
+      grad.addColorStop(0, 'rgba(255,255,255,1)');
+      grad.addColorStop(0.2, `rgba(${color.r * 255}, ${color.g * 255}, ${color.b * 255}, 0.8)`);
+      grad.addColorStop(0.5, `rgba(${color.r * 255}, ${color.g * 255}, ${color.b * 255}, 0.2)`);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+
+      const tex = new THREE.CanvasTexture(canvas);
+      return tex;
+    }
+
+    // --- Galaxy Logic ---
+
+    function buildGalaxyFromData() {
+      thoughtSprites.forEach(s => scene.remove(s));
+      thoughtSprites = [];
+
+      thoughts.forEach((thought, index) => {
+        addThoughtToScene(thought, index);
       });
     }
-  }
-  
-  function onCanvasClick(event) {
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(thoughtSprites);
-    
-    if(intersects.length > 0) {
-      const target = intersects[0].object;
-      focusOnThought(target.userData.id);
+
+    function addThoughtToScene(thoughtData, index) {
+      // Logarithmic Spiral Math
+      const branches = 3;
+      const spin = 4;
+      const radius = 80;
+      const randomnessPower = 2;
+
+      // Determine position based on index (simulated density)
+      const branchIndex = index % branches;
+      const radiusStep = 10 + (index * 1.5) % radius; // Distribute along radius
+
+      const angle = (Math.PI * 2 * branchIndex) / branches + (radiusStep * spin) / 10;
+
+      const randomX = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * 10;
+      const randomY = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * 10;
+      const randomZ = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * 10;
+
+      const x = Math.cos(angle) * radiusStep + randomX;
+      const y = (Math.random() - 0.5) * 5 + randomY; // Flattened galaxy
+      const z = Math.sin(angle) * radiusStep + randomZ;
+
+      const material = new THREE.SpriteMaterial({
+        map: createThoughtTexture(thoughtData.hue),
+        color: 0xffffff,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+
+      const sprite = new THREE.Sprite(material);
+      sprite.position.set(x, y, z);
+
+      const scale = 3 + Math.random() * 2;
+      sprite.scale.set(scale, scale, 1);
+
+      // Animation metadata
+      sprite.userData = {
+        id: thoughtData.id,
+        radius: radiusStep,
+        angle: angle,
+        rotationSpeed: 0.0005 + Math.random() * 0.0005,
+        yBase: y,
+        wobbleSpeed: Math.random() * 2,
+        wobbleOffset: Math.random() * Math.PI * 2,
+        text: thoughtData.text,
+        date: thoughtData.createdAt,
+        hue: thoughtData.hue
+      };
+
+      scene.add(sprite);
+      thoughtSprites.push(sprite);
     }
-  }
-  
-  function toggleList() {
-    const isOpen = els.listPanel.style.transform === 'translateX(0%)';
-    els.listPanel.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0%)';
-    controls.autoRotate = isOpen;
-  }
-  
-  function resetCameraView() {
-    const startPos = camera.position.clone();
-    const startTarget = controls.target.clone();
-    const endPos = new THREE.Vector3(0, 40, 80);
-    const endTarget = new THREE.Vector3(0, 0, 0);
-    
-    animateCamera(startPos, endPos, startTarget, endTarget, 1000);
-    controls.autoRotate = true;
-    currentFocusedId = null;
-  }
-  
-  async function addThought() {
-    const text = els.input.value.trim();
-    if(!text) return;
-    
-    // UI Feedback
-    els.input.value = '';
-    els.input.disabled = true;
-    els.launchBtn.textContent = '...';
-    
-    // Create Data
-    const newThought = {
-      id: Date.now(),
-      text: text,
-      createdAt: Date.now(),
-      hue: Math.random(),
-    };
-    
-    // Update State
-    thoughts.push(newThought);
-    await saveThoughts();
-    updateThoughtCount();
-    
-    // Update Scene
-    addThoughtToScene(newThought, thoughts.length - 1);
-    
-    // Update List
-    addListItem(newThought, true);
-    
-    // Reset UI
-    els.input.disabled = false;
-    els.launchBtn.textContent = 'LAUNCH';
-    els.input.focus();
-    
-    showToast('✨ Thought launched into the cosmos');
-    
-    setTimeout(() => focusOnThought(newThought.id), 500);
-  }
-  
-  let currentModalThoughtId = null;
-  
-  function openThoughtModal(data) {
-    els.modalText.textContent = data.text;
-    els.modalDate.textContent = new Date(data.date).toLocaleString();
-    currentModalThoughtId = data.id;
-    els.modal.showModal();
-  }
-  
-  async function deleteCurrentThought() {
-    if(!currentModalThoughtId) return;
-    
-    thoughts = thoughts.filter(t => t.id !== currentModalThoughtId);
-    
-    const spriteIndex = thoughtSprites.findIndex(s => s.userData.id === currentModalThoughtId);
-    if(spriteIndex !== -1) {
-      scene.remove(thoughtSprites[spriteIndex]);
-      thoughtSprites.splice(spriteIndex, 1);
+
+    function animate() {
+      animationId = requestAnimationFrame(animate);
+
+      const time = Date.now() * 0.001;
+
+      // Rotate starfield slowly
+      if (starField) starField.rotation.y -= 0.0002;
+
+      // Animate Thoughts
+      thoughtSprites.forEach(sprite => {
+        // Orbit
+        sprite.userData.angle += sprite.userData.rotationSpeed;
+        sprite.position.x = Math.cos(sprite.userData.angle) * sprite.userData.radius;
+        sprite.position.z = Math.sin(sprite.userData.angle) * sprite.userData.radius;
+
+        // Vertical Wobble
+        sprite.position.y = sprite.userData.yBase + Math.sin(time * sprite.userData.wobbleSpeed + sprite.userData.wobbleOffset) * 1;
+
+        // Pulsate
+        const scale = 1 + Math.sin(time * 3 + sprite.userData.radius) * 0.1;
+        sprite.scale.setScalar(3 * scale);
+      });
+
+      controls.update();
+
+      // Use composer for bloom
+      composer.render();
     }
-    
-    await saveThoughts();
-    updateThoughtCount();
-    renderList();
-    
-    els.modal.close();
-    resetCameraView();
-    
-    showToast('Thought dissolved into the void');
-  }
-  
-  function updateThoughtCount() {
-    els.count.textContent = `${thoughts.length} thought${thoughts.length !== 1 ? 's' : ''} in the cosmos`;
-  }
-  
-  function showToast(msg) {
-    const el = document.createElement('div');
-    el.textContent = msg;
-    el.style.cssText = `
+
+    // --- Interaction Logic ---
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      composer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function onPointerMove(event) {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(thoughtSprites);
+
+      if (intersects.length > 0) {
+        document.body.style.cursor = 'pointer';
+        const target = intersects[0].object;
+        target.scale.multiplyScalar(1.2);
+      } else {
+        document.body.style.cursor = 'default';
+        thoughtSprites.forEach(s => {
+          const baseScale = 3 + Math.sin(Date.now() * 0.001 * s.userData.wobbleSpeed) * 0.5;
+          // Reset to dynamic scale handled in animate
+        });
+      }
+    }
+
+    function onCanvasClick(event) {
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(thoughtSprites);
+
+      if (intersects.length > 0) {
+        const target = intersects[0].object;
+        focusOnThought(target.userData.id);
+      }
+    }
+
+    function toggleList() {
+      const isOpen = els.listPanel.style.transform === 'translateX(0%)';
+      els.listPanel.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0%)';
+      controls.autoRotate = isOpen;
+    }
+
+    function resetCameraView() {
+      const startPos = camera.position.clone();
+      const startTarget = controls.target.clone();
+      const endPos = new THREE.Vector3(0, 40, 80);
+      const endTarget = new THREE.Vector3(0, 0, 0);
+
+      animateCamera(startPos, endPos, startTarget, endTarget, 1000);
+      controls.autoRotate = true;
+      currentFocusedId = null;
+    }
+
+    async function addThought() {
+      const text = els.input.value.trim();
+      if (!text) return;
+
+      // UI Feedback
+      els.input.value = '';
+      els.input.disabled = true;
+      els.launchBtn.textContent = '...';
+
+      // Create Data
+      const newThought = {
+        id: Date.now(),
+        text: text,
+        createdAt: Date.now(),
+        hue: Math.random(),
+      };
+
+      // Update State
+      thoughts.push(newThought);
+      await saveThoughts();
+      updateThoughtCount();
+
+      // Update Scene
+      addThoughtToScene(newThought, thoughts.length - 1);
+
+      // Update List
+      addListItem(newThought, true);
+
+      // Reset UI
+      els.input.disabled = false;
+      els.launchBtn.textContent = 'LAUNCH';
+      els.input.focus();
+
+      showToast('✨ Thought launched into the cosmos');
+
+      setTimeout(() => focusOnThought(newThought.id), 500);
+    }
+
+    let currentModalThoughtId = null;
+
+    function openThoughtModal(data) {
+      els.modalText.textContent = data.text;
+      els.modalDate.textContent = new Date(data.date).toLocaleString();
+      currentModalThoughtId = data.id;
+      els.modal.showModal();
+    }
+
+    async function deleteCurrentThought() {
+      if (!currentModalThoughtId) return;
+
+      thoughts = thoughts.filter(t => t.id !== currentModalThoughtId);
+
+      const spriteIndex = thoughtSprites.findIndex(s => s.userData.id === currentModalThoughtId);
+      if (spriteIndex !== -1) {
+        scene.remove(thoughtSprites[spriteIndex]);
+        thoughtSprites.splice(spriteIndex, 1);
+      }
+
+      await saveThoughts();
+      updateThoughtCount();
+      renderList();
+
+      els.modal.close();
+      resetCameraView();
+
+      showToast('Thought dissolved into the void');
+    }
+
+    function updateThoughtCount() {
+      els.count.textContent = `${thoughts.length} thought${thoughts.length !== 1 ? 's' : ''} in the cosmos`;
+    }
+
+    function showToast(msg) {
+      const el = document.createElement('div');
+      el.textContent = msg;
+      el.style.cssText = `
       background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.2); color: white;
       padding: 12px 24px; border-radius: 25px;
@@ -638,29 +741,29 @@ Features:
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       animation: fadeUp 0.4s ease-out forwards;
     `;
-    els.toastCtn.appendChild(el);
-    setTimeout(() => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(10px)';
-      el.style.transition = 'all 0.5s';
-      setTimeout(() => el.remove(), 500);
-    }, 3000);
-  }
-  
-  function renderList() {
-    els.listContent.innerHTML = '';
-    [...thoughts].reverse().forEach(t => addListItem(t, false));
-  }
-  
-  function addListItem(thought, animate) {
-    const el = document.createElement('div');
-    el.className = 'list-item';
-    el.dataset.thoughtId = thought.id;
-    
-    const color = new THREE.Color().setHSL(thought.hue, 1.0, 0.6);
-    const glow = color.getStyle();
-    
-    el.innerHTML = `
+      els.toastCtn.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+        el.style.transition = 'all 0.5s';
+        setTimeout(() => el.remove(), 500);
+      }, 3000);
+    }
+
+    function renderList() {
+      els.listContent.innerHTML = '';
+      [...thoughts].reverse().forEach(t => addListItem(t, false));
+    }
+
+    function addListItem(thought, animate) {
+      const el = document.createElement('div');
+      el.className = 'list-item';
+      el.dataset.thoughtId = thought.id;
+
+      const color = new THREE.Color().setHSL(thought.hue, 1.0, 0.6);
+      const glow = color.getStyle();
+
+      el.innerHTML = `
       <div style="display:flex; align-items:center; gap:12px; flex:1;">
         <div style="width:10px; height:10px; border-radius:50%; background:${glow}; box-shadow: 0 0 10px ${glow};"></div>
         <div class="list-item-text" title="${thought.text}">${thought.text}</div>
@@ -669,71 +772,74 @@ Features:
         <button class="action-btn" onclick="window.focusOnThought(${thought.id})">Focus</button>
       </div>
     `;
-    
-    if(animate) {
-      el.style.animation = 'fadeUp 0.4s ease-out';
-    }
-    
-    els.listContent.insertBefore(el, els.listContent.firstChild);
-  }
-  
-  function animateCamera(startPos, endPos, startTarget, endTarget, duration) {
-    const startTime = Date.now();
-    
-    function step() {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      
-      // Cubic Ease Out
-      const ease = 1 - Math.pow(1 - progress, 3);
-      
-      camera.position.lerpVectors(startPos, endPos, ease);
-      controls.target.lerpVectors(startTarget, endTarget, ease);
-      controls.update();
-      
-      if(progress < 1) requestAnimationFrame(step);
-    }
-    
-    step();
-  }
-  
-  function focusOnThought(id) {
-    const sprite = thoughtSprites.find(s => s.userData.id === id);
-    if(!sprite) return;
-    
-    document.querySelectorAll('.list-item').forEach(el => {
-      el.classList.remove('focus-active');
-      if(parseInt(el.dataset.thoughtId) === id) el.classList.add('focus-active');
-    });
-    
-    openThoughtModal(sprite.userData);
-    currentFocusedId = id;
-    
-    const targetPos = sprite.position.clone();
-    const offset = targetPos.clone().normalize().multiplyScalar(12);
-    const cameraPos = targetPos.clone().add(offset).add(new THREE.Vector3(0, 5, 0));
-    
-    controls.autoRotate = false;
-    animateCamera(camera.position.clone(), cameraPos, controls.target.clone(), targetPos, 1200);
-    
-    // Resume rotation after 10s
-    setTimeout(() => { 
-      if(currentFocusedId === id) {
-        controls.autoRotate = true;
-        document.querySelectorAll('.list-item').forEach(el => el.classList.remove('focus-active'));
+
+      if (animate) {
+        el.style.animation = 'fadeUp 0.4s ease-out';
       }
-    }, 10000);
-  }
-  
-  // Add keyframes
-  const styleSheet = document.createElement("style");
-  styleSheet.innerText = `
+
+      els.listContent.insertBefore(el, els.listContent.firstChild);
+    }
+
+    function animateCamera(startPos, endPos, startTarget, endTarget, duration) {
+      const startTime = Date.now();
+
+      function step() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Cubic Ease Out
+        const ease = 1 - Math.pow(1 - progress, 3);
+
+        camera.position.lerpVectors(startPos, endPos, ease);
+        controls.target.lerpVectors(startTarget, endTarget, ease);
+        controls.update();
+
+        if (progress < 1) requestAnimationFrame(step);
+      }
+
+      step();
+    }
+
+    function focusOnThought(id) {
+      const sprite = thoughtSprites.find(s => s.userData.id === id);
+      if (!sprite) return;
+
+      document.querySelectorAll('.list-item').forEach(el => {
+        el.classList.remove('focus-active');
+        if (parseInt(el.dataset.thoughtId) === id) el.classList.add('focus-active');
+      });
+
+      openThoughtModal(sprite.userData);
+      currentFocusedId = id;
+
+      const targetPos = sprite.position.clone();
+      const offset = targetPos.clone().normalize().multiplyScalar(12);
+      const cameraPos = targetPos.clone().add(offset).add(new THREE.Vector3(0, 5, 0));
+
+      controls.autoRotate = false;
+      animateCamera(camera.position.clone(), cameraPos, controls.target.clone(), targetPos, 1200);
+
+      // Resume rotation after 10s
+      setTimeout(() => {
+        if (currentFocusedId === id) {
+          controls.autoRotate = true;
+          document.querySelectorAll('.list-item').forEach(el => el.classList.remove('focus-active'));
+        }
+      }, 10000);
+    }
+
+    // Add keyframes
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   `;
-  document.head.appendChild(styleSheet);
+    document.head.appendChild(styleSheet);
 
-  init();
-</script>
+    init();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,4613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Terminal | Anshul Namdev</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Interactive hacker terminal simulator. Test your skills in this gamified command-line experience created by Anshul Namdev.">
+    <meta name="keywords"
+        content="hacker terminal, interactive terminal, web based terminal, anshul namdev, gamified coding">
+    <meta name="author" content="Anshul Namdev">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Hacker Terminal | Anshul Namdev">
+    <meta property="og:description"
+        content="Interactive hacker terminal simulator. Test your skills in this gamified command-line experience created by Anshul Namdev.">
+    <meta property="og:url" content="https://axshul.site/Terminal/">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://axshul.site/Terminal/">
+</head>
+
+<body style="margin: 0; background-color: black; overflow: hidden;">
+
+    <div id="gameContainer" style="
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    color: #0f0;
+    font-family: monospace;
+    text-align: left;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  ">
+        <div id="terminalHeader" style="
+      border-bottom: 1px solid #0f0;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    ">
+            <div style="display: flex; justify-content: space-between">
+                <span>H4CK3R TERMINAL v1.0 <span style="font-size: 0.8em; opacity: 0.7;">| By Anshul
+                        Namdev</span></span>
+                <span id="statusDisplayEl">STATUS: DISCONNECTED</span>
+            </div>
+            <div id="ipDisplayEl">IP: ----.----.----.----</div>
+        </div>
+
+        <div id="terminalOutputEl" style="
+      flex-grow: 1;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+    "></div>
+
+        <div id="inputContainer" style="display: flex; border-top: 1px solid #0f0; padding-top: 10px">
+            <span id="promptEl">guest@h4ck3r:~$</span>
+            <input id="terminalInputEl" type="text" style="
+        flex-grow: 1;
+        background: transparent;
+        border: none;
+        color: #0f0;
+        font-family: monospace;
+        outline: none;
+        margin-left: 5px;
+      " autofocus />
+        </div>
+
+        <div id="gameScreenEl" style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: black;
+      display: none;
+    "></div>
+    </div>
+
+    <style>
+        body {
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0f0;
+            border-radius: 4px;
+        }
+
+        #terminalOutputEl::-webkit-scrollbar-thumb {
+            background: #0a0;
+        }
+
+        @keyframes textGlitch {
+            0% {
+                text-shadow: 1px 0 0 #0f8, -1px 0 0 #0f0;
+            }
+
+            25% {
+                text-shadow: -1px 0 0 #0f8, 1px 0 0 #0f0;
+            }
+
+            50% {
+                text-shadow: 0.5px 0 0 #0f8, -0.5px 0 0 #0f0;
+            }
+
+            75% {
+                text-shadow: -0.5px 0 0 #0f8, 0.5px 0 0 #0f0;
+            }
+
+            100% {
+                text-shadow: 1px 0 0 #0f8, -1px 0 0 #0f0;
+            }
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(0px);
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        .glitch-text {
+            animation: textGlitch 0.3s infinite;
+        }
+
+        .success-text {
+            color: #0f0;
+        }
+
+        .error-text {
+            color: #f00;
+        }
+
+        .warning-text {
+            color: #ff0;
+        }
+
+        .system-text {
+            color: #0ff;
+        }
+
+        .help-text {
+            color: #0af;
+        }
+
+        .filename-text {
+            color: #f0f;
+        }
+
+        #gameContainer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: rgba(15, 255, 0, 0.1);
+            pointer-events: none;
+            animation: scanline 3s linear infinite;
+            z-index: 999;
+        }
+
+        #gameContainer::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+                    rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 998;
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .progress-bar {
+            height: 4px;
+            width: 100%;
+            background: #111;
+            margin: 5px 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #0f0;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .map-cell {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+        }
+
+        .hint-text {
+            color: #f60;
+            font-style: italic;
+        }
+    </style>
+
+    <script>
+        // Game state
+        let gameState = {
+            level: 0,
+            username: "guest",
+            currentSystem: null,
+            connected: false,
+            completedSystems: [],
+            inventory: [],
+            commandHistory: [],
+            historyIndex: -1,
+            tutorialStep: 0,
+            lastCommand: "",
+            skillPoints: 0,
+            skills: {
+                cracking: 0,
+                stealth: 0,
+                networking: 0,
+                cryptography: 0,
+            },
+            discoveredIPs: [],
+            logs: [],
+            reputation: 0,
+            hints: true,
+            activeSessions: [], // Track active processes/intervals
+            isProcessing: false, // Flag to prevent multiple operations
+        };
+
+        // Available systems to hack
+        const systems = [
+            {
+                id: "tutorial",
+                name: "Tutorial System",
+                ip: "192.168.1.1",
+                difficulty: "Tutorial",
+                securityLevel: 0,
+                ports: [22, 80],
+                services: {
+                    22: "OpenSSH 6.2",
+                    80: "Apache 2.2.14",
+                },
+                vulnerabilities: ["weak_password"],
+                password: "password123",
+                files: [
+                    {
+                        name: "readme.txt",
+                        content:
+                            "Welcome to the tutorial system. Your goal is to gain access to systems by exploiting vulnerabilities.",
+                    },
+                    {
+                        name: "tutorial.txt",
+                        content:
+                            "Basic commands:\n- help: Show available commands\n- scan: Scan a system for open ports\n- connect [ip]: Connect to a system\n- crack: Attempt to crack the password\n- ls: List files\n- cat [file]: Read file contents",
+                    },
+                    {
+                        name: ".secret",
+                        content:
+                            "Congratulations on finding this hidden file! Hint: Many systems have hidden files. Try 'ls -a' to see hidden files.",
+                    },
+                ],
+                processes: [
+                    { pid: 1, name: "init", user: "root", cpu: "0.1", mem: "0.3" },
+                    { pid: 234, name: "apache2", user: "www-data", cpu: "0.4", mem: "2.1" },
+                    { pid: 432, name: "sshd", user: "root", cpu: "0.1", mem: "0.5" },
+                ],
+                users: [
+                    { name: "root", home: "/root" },
+                    { name: "admin", home: "/home/admin" },
+                    { name: "guest", home: "/home/guest" },
+                ],
+                logs: [
+                    { timestamp: "2023-05-12 13:45:22", message: "User 'admin' logged in" },
+                    {
+                        timestamp: "2023-05-12 13:48:10",
+                        message: "Password changed for user 'admin'",
+                    },
+                ],
+                map: [
+                    "┌───────────────┐",
+                    "│  Main Server  │",
+                    "│               │",
+                    "│    [SSH]      │",
+                    "│    [HTTP]     │",
+                    "└───────┬───────┘",
+                    "        │        ",
+                    "┌───────┴───────┐",
+                    "│    Firewall   │",
+                    "└───────────────┘",
+                ],
+                hacked: false,
+                hint: "This is a tutorial system with basic security. Look for the obvious password. Try 'help' for available commands and 'scan' to discover open ports.",
+            },
+            {
+                id: "mailserver",
+                name: "Corporate Mail Server",
+                ip: "10.45.132.7",
+                difficulty: "Easy",
+                securityLevel: 1,
+                ports: [25, 110, 143],
+                services: {
+                    25: "Postfix 2.10.1",
+                    110: "Dovecot POP3 2.2.13",
+                    143: "Dovecot IMAP 2.2.13",
+                },
+                vulnerabilities: ["outdated_software", "weak_password"],
+                password: "admin1234",
+                files: [
+                    {
+                        name: "mail_config.txt",
+                        content:
+                            "Mail server configuration. Username: admin, Password: [REDACTED]",
+                    },
+                    { name: "users.db", content: "User database (encrypted)" },
+                    {
+                        name: "secret_memo.txt",
+                        content: "The password for the financial server is: money$talks",
+                    },
+                    {
+                        name: ".admin_notes",
+                        content:
+                            "Remember to change the default admin1234 password as mentioned in the security memo!",
+                    },
+                ],
+                processes: [
+                    { pid: 1, name: "init", user: "root", cpu: "0.1", mem: "0.3" },
+                    { pid: 125, name: "postfix", user: "mail", cpu: "1.4", mem: "3.1" },
+                    { pid: 287, name: "dovecot", user: "mail", cpu: "0.9", mem: "2.5" },
+                ],
+                users: [
+                    { name: "root", home: "/root" },
+                    { name: "admin", home: "/home/admin" },
+                    { name: "mail", home: "/var/mail" },
+                ],
+                logs: [
+                    {
+                        timestamp: "2023-06-15 08:12:45",
+                        message: "Failed login attempt: user 'admin'",
+                    },
+                    {
+                        timestamp: "2023-06-15 08:12:50",
+                        message: "Failed login attempt: user 'admin'",
+                    },
+                    {
+                        timestamp: "2023-06-15 08:13:01",
+                        message: "Successful login: user 'admin'",
+                    },
+                ],
+                map: [
+                    "┌───────────────┐",
+                    "│   Mail Server │",
+                    "│               │",
+                    "│    [SMTP]     │",
+                    "│    [POP3]     │",
+                    "│    [IMAP]     │",
+                    "└───────┬───────┘",
+                    "        │        ",
+                    "        ▼        ",
+                    "   Financial DB  ",
+                ],
+                hacked: false,
+                hint: "Mail servers often contain valuable information. Look for configuration files and check for default credentials. The 'brute' command might be effective here.",
+            },
+            {
+                id: "financial",
+                name: "Financial Database",
+                ip: "172.16.254.12",
+                difficulty: "Medium",
+                securityLevel: 2,
+                ports: [1433, 3306],
+                services: {
+                    1433: "MS-SQL Server 2012",
+                    3306: "MySQL 5.5.62",
+                },
+                vulnerabilities: ["sql_injection"],
+                password: "money$talks",
+                files: [
+                    {
+                        name: "transactions.db",
+                        content: "Financial transactions (encrypted)",
+                    },
+                    {
+                        name: "backdoor.sh",
+                        content:
+                            "#!/bin/bash\n# This backdoor grants access to the security system\n# IP: 10.10.10.10",
+                    },
+                    {
+                        name: "customers.sql",
+                        content:
+                            "-- Database dump\nCREATE TABLE customers (id INT, name VARCHAR(100), balance DECIMAL(10,2));\nINSERT INTO customers VALUES (1, 'Smith Corp', 25000.00);\nINSERT INTO customers VALUES (2, 'Johnson LLC', 42500.50);\n-- Security note: SQL server accessible without proper authentication on port 1433",
+                    },
+                ],
+                processes: [
+                    { pid: 1, name: "init", user: "root", cpu: "0.1", mem: "0.3" },
+                    { pid: 501, name: "mysqld", user: "mysql", cpu: "5.4", mem: "12.1" },
+                    { pid: 650, name: "sqlservr", user: "mssql", cpu: "4.2", mem: "15.5" },
+                ],
+                users: [
+                    { name: "root", home: "/root" },
+                    { name: "mysql", home: "/var/lib/mysql" },
+                    { name: "mssql", home: "/var/opt/mssql" },
+                ],
+                logs: [
+                    {
+                        timestamp: "2023-07-02 23:15:33",
+                        message: "Database backup completed",
+                    },
+                    {
+                        timestamp: "2023-07-03 02:45:10",
+                        message: "SQL query error: syntax error in query",
+                    },
+                    {
+                        timestamp: "2023-07-03 03:01:22",
+                        message: "Suspicious query detected - possible SQL injection attempt",
+                    },
+                ],
+                map: [
+                    "┌───────────────┐",
+                    "│  Financial DB │",
+                    "│               │",
+                    "│    [MSSQL]    │",
+                    "│    [MySQL]    │",
+                    "└───────┬───────┘",
+                    "        │        ",
+                    "        ▼        ",
+                    "     Security    ",
+                    "    Mainframe    ",
+                ],
+                hacked: false,
+                hint: "Database servers are vulnerable to SQL injection. Try the 'exploit sql_injection' command or inspect files for password information. Look for backdoor scripts as well.",
+            },
+            {
+                id: "security",
+                name: "Security Mainframe",
+                ip: "10.10.10.10",
+                difficulty: "Hard",
+                securityLevel: 3,
+                ports: [22, 443],
+                services: {
+                    22: "OpenSSH 8.2",
+                    443: "Nginx 1.18.0 (SSL)",
+                },
+                vulnerabilities: ["buffer_overflow", "firewall_bypass"],
+                password: "S3cur1tyM@tters!",
+                files: [
+                    {
+                        name: "security_log.txt",
+                        content:
+                            "Multiple failed login attempts detected from IPs:\n192.168.1.1\n10.45.132.7",
+                    },
+                    {
+                        name: "master_key.pem",
+                        content:
+                            "-----BEGIN ENCRYPTION KEY-----\nTh1sIsTheF1n@lSyst3mK3y!\n-----END ENCRYPTION KEY-----",
+                    },
+                    {
+                        name: "firewall_config.conf",
+                        content:
+                            "# Firewall configuration\nDENY ALL\nALLOW 10.0.0.0/8\nALLOW 192.168.0.0/16\n# Known vulnerability in version 2.3.4 - buffer overflow in authentication module",
+                    },
+                ],
+                processes: [
+                    { pid: 1, name: "init", user: "root", cpu: "0.1", mem: "0.3" },
+                    { pid: 334, name: "sshd", user: "root", cpu: "0.2", mem: "0.8" },
+                    { pid: 512, name: "nginx", user: "www-data", cpu: "0.7", mem: "2.3" },
+                    { pid: 890, name: "firewall", user: "root", cpu: "1.2", mem: "4.1" },
+                ],
+                users: [
+                    { name: "root", home: "/root" },
+                    { name: "admin", home: "/home/admin" },
+                    { name: "security", home: "/home/security" },
+                ],
+                logs: [
+                    { timestamp: "2023-08-01 10:22:15", message: "Firewall updated" },
+                    { timestamp: "2023-08-01 14:10:33", message: "Certificate renewed" },
+                    {
+                        timestamp: "2023-08-01 15:46:09",
+                        message: "Failed buffer overflow attempt detected",
+                    },
+                ],
+                map: [
+                    "┌───────────────┐",
+                    "│    Security   │",
+                    "│   Mainframe   │",
+                    "│               │",
+                    "│     [SSH]     │",
+                    "│     [SSL]     │",
+                    "└───────┬───────┘",
+                    "        │        ",
+                    "        ▼        ",
+                    "   Government    ",
+                    "    Mainframe    ",
+                ],
+                hacked: false,
+                hint: "This system has advanced security. Try to use the 'exploit buffer_overflow' command or 'solve' the security puzzle. Check configuration files for vulnerabilities.",
+            },
+            {
+                id: "mainframe",
+                name: "Government Mainframe",
+                ip: "8.8.8.8",
+                difficulty: "Final Boss",
+                securityLevel: 4,
+                ports: [22, 443, 8080],
+                services: {
+                    22: "OpenSSH 9.0",
+                    443: "Apache 2.4.54 (SSL)",
+                    8080: "Custom Government Service",
+                },
+                vulnerabilities: ["zero_day", "certificate_forging"],
+                password: "Th1sIsTheF1n@lSyst3mK3y!",
+                files: [
+                    {
+                        name: "classified.txt",
+                        content:
+                            "Congratulations, hacker! You've completed the game and accessed the most secure system!",
+                    },
+                    {
+                        name: "credits.txt",
+                        content: "Thanks for playing this hacking simulation game!",
+                    },
+                    {
+                        name: "top_secret.pgp",
+                        content:
+                            "-----BEGIN PGP MESSAGE-----\nThis message contains the highest level of classified information.\nOnly authorized personnel with proper clearance should read this.\n-----END PGP MESSAGE-----",
+                    },
+                ],
+                processes: [
+                    { pid: 1, name: "init", user: "root", cpu: "0.1", mem: "0.3" },
+                    { pid: 201, name: "sshd", user: "root", cpu: "0.2", mem: "0.8" },
+                    { pid: 305, name: "apache2", user: "www-data", cpu: "0.9", mem: "3.3" },
+                    {
+                        pid: 512,
+                        name: "gov_service",
+                        user: "system",
+                        cpu: "10.5",
+                        mem: "25.1",
+                    },
+                    { pid: 890, name: "monitoring", user: "admin", cpu: "2.2", mem: "5.1" },
+                ],
+                users: [
+                    { name: "root", home: "/root" },
+                    { name: "admin", home: "/home/admin" },
+                    { name: "system", home: "/system" },
+                    { name: "classified", home: "/home/classified" },
+                ],
+                logs: [
+                    {
+                        timestamp: "2023-09-10 08:00:00",
+                        message: "System maintenance started",
+                    },
+                    {
+                        timestamp: "2023-09-10 09:30:15",
+                        message: "Security audit completed",
+                    },
+                    {
+                        timestamp: "2023-09-10 12:00:00",
+                        message: "All systems operational",
+                    },
+                ],
+                map: [
+                    "┌───────────────┐",
+                    "│  Government   │",
+                    "│   Mainframe   │",
+                    "│               │",
+                    "│     [SSH]     │",
+                    "│     [SSL]     │",
+                    "│   [CUSTOM]    │",
+                    "└───────────────┘",
+                ],
+                hacked: false,
+                hint: "This is the most secure system in the network. You'll need the encryption key from the Security Mainframe. Try using advanced techniques like 'exploit zero_day' or 'exploit certificate_forging'.",
+            },
+            {
+                id: "honeypot",
+                name: "Unknown Server",
+                ip: "1.2.3.4",
+                difficulty: "Unknown",
+                securityLevel: 1,
+                ports: [21, 22, 23, 25, 80, 443, 3306],
+                services: {
+                    21: "ProFTPD 1.3.5",
+                    22: "OpenSSH 7.5",
+                    23: "Telnet",
+                    25: "Sendmail 8.15.2",
+                    80: "Apache 2.4.29",
+                    443: "Apache 2.4.29 (SSL)",
+                    3306: "MySQL 5.7.30",
+                },
+                vulnerabilities: ["honeypot"],
+                password: "letmein",
+                files: [
+                    {
+                        name: "warning.txt",
+                        content:
+                            "WARNING: This system is monitored. All unauthorized access attempts are logged and reported.",
+                    },
+                    {
+                        name: "trap.sh",
+                        content:
+                            '#!/bin/bash\n# This script is triggered when unauthorized access is detected\nalert_security_team()\n{\n  echo "Intruder detected!"\n}\n\nalert_security_team',
+                    },
+                ],
+                processes: [
+                    { pid: 1, name: "init", user: "root", cpu: "0.1", mem: "0.3" },
+                    { pid: 123, name: "monitor", user: "root", cpu: "1.2", mem: "2.0" },
+                    { pid: 456, name: "logger", user: "system", cpu: "0.5", mem: "1.1" },
+                ],
+                users: [
+                    { name: "root", home: "/root" },
+                    { name: "admin", home: "/home/admin" },
+                ],
+                logs: [
+                    { timestamp: "2023-05-01 00:00:00", message: "Honeypot initialized" },
+                    { timestamp: "2023-05-01 00:00:01", message: "Monitoring started" },
+                ],
+                map: [
+                    "┌───────────────┐",
+                    "│    Unknown    │",
+                    "│     Server    │",
+                    "│               │",
+                    "│ [MANY PORTS]  │",
+                    "└───────────────┘",
+                ],
+                hacked: false,
+                consequence: "reputation_loss",
+                hint: "This system seems suspicious with too many open ports. It might be a honeypot designed to trap hackers.",
+            },
+        ];
+
+        // Additional networks that can be discovered
+        const hiddenSystems = [
+            {
+                id: "personal",
+                name: "Personal Computer",
+                ip: "192.168.1.100",
+                difficulty: "Easy",
+                securityLevel: 0,
+                ports: [139, 445],
+                services: {
+                    139: "Samba 3.6.25",
+                    445: "Samba 3.6.25",
+                },
+                vulnerabilities: ["default_credentials"],
+                password: "admin",
+                files: [
+                    {
+                        name: "to-do.txt",
+                        content:
+                            "1. Change default passwords\n2. Update software\n3. Back up documents",
+                    },
+                    { name: "notes.txt", content: "Wi-Fi password: HomeNetwork2023" },
+                ],
+                hacked: false,
+                hint: "Personal computers often have weak security. Try simple passwords like 'admin' or 'password'.",
+            },
+            {
+                id: "isp",
+                name: "ISP Gateway",
+                ip: "203.0.113.1",
+                difficulty: "Medium",
+                securityLevel: 2,
+                ports: [22, 80, 443],
+                services: {
+                    22: "OpenSSH 7.4",
+                    80: "nginx 1.16.1",
+                    443: "nginx 1.16.1 (SSL)",
+                },
+                vulnerabilities: ["outdated_software", "weak_configuration"],
+                password: "ISP@admin2023",
+                files: [
+                    { name: "customers.db", content: "Customer database (encrypted)" },
+                    {
+                        name: "routes.conf",
+                        content:
+                            "# Network Routing Configuration\n10.0.0.0/8 -> 203.0.113.0/24\n192.168.0.0/16 -> 203.0.113.0/24",
+                    },
+                ],
+                hacked: false,
+                hint: "ISP gateways manage network routing. Looking for routing configuration files might reveal new network segments.",
+            },
+        ];
+
+        // Vulnerabilities
+        const vulnerabilities = {
+            weak_password: {
+                name: "Weak Password",
+                description: "The system uses a common or easily guessable password.",
+                exploitSuccess: 0.9,
+                tools: ["brute", "crack"],
+                hint: "Try using common passwords or the 'brute' force command.",
+            },
+            sql_injection: {
+                name: "SQL Injection",
+                description:
+                    "The system's database is vulnerable to SQL injection attacks.",
+                exploitSuccess: 0.7,
+                tools: ["sqlmap"],
+                hint: "Look for database services and try 'exploit sql_injection' command.",
+            },
+            buffer_overflow: {
+                name: "Buffer Overflow",
+                description:
+                    "The system has applications vulnerable to buffer overflow attacks.",
+                exploitSuccess: 0.5,
+                tools: ["exploit"],
+                hint: "Applications with buffer overflow vulnerabilities often crash when given unexpected input lengths.",
+            },
+            outdated_software: {
+                name: "Outdated Software",
+                description:
+                    "The system uses old versions of software with known vulnerabilities.",
+                exploitSuccess: 0.8,
+                tools: ["exploit", "scan"],
+                hint: "Scan for service versions and exploit known vulnerabilities in older software.",
+            },
+            firewall_bypass: {
+                name: "Firewall Bypass",
+                description:
+                    "The system's firewall can be bypassed using specific techniques.",
+                exploitSuccess: 0.6,
+                tools: ["tunnel", "proxy"],
+                hint: "Firewall configurations may contain rules that can be bypassed.",
+            },
+            zero_day: {
+                name: "Zero-Day Exploit",
+                description:
+                    "An undisclosed vulnerability that even the system vendor doesn't know about.",
+                exploitSuccess: 0.4,
+                tools: ["advanced_exploit"],
+                hint: "Zero-day exploits are rare and powerful. You need high hacking skills to use them.",
+            },
+            certificate_forging: {
+                name: "Certificate Forging",
+                description: "The system accepts forged security certificates.",
+                exploitSuccess: 0.5,
+                tools: ["forge"],
+                hint: "Systems with SSL might accept forged certificates if not properly configured.",
+            },
+            default_credentials: {
+                name: "Default Credentials",
+                description:
+                    "The system uses default username and password combinations.",
+                exploitSuccess: 0.95,
+                tools: ["crack", "brute"],
+                hint: "Try common default credentials like 'admin/admin' or 'root/root'.",
+            },
+            weak_configuration: {
+                name: "Weak Configuration",
+                description:
+                    "The system has security misconfigurations that can be exploited.",
+                exploitSuccess: 0.8,
+                tools: ["scan", "exploit"],
+                hint: "Check configuration files for security misconfigurations.",
+            },
+            honeypot: {
+                name: "Honeypot",
+                description:
+                    "This system is designed to trap hackers and log their activities.",
+                exploitSuccess: 0.1,
+                tools: [],
+                hint: "Systems with too many open ports and services may be honeypots. Avoid them.",
+            },
+        };
+
+        // Tools and upgrades
+        const tools = {
+            portscanner: {
+                name: "Advanced Port Scanner",
+                description: "Scan ports more efficiently and detect service versions.",
+                level: 1,
+                price: 1,
+                effect: "Improves 'scan' and 'nmap' commands",
+            },
+            bruteforcer: {
+                name: "Brute Force Accelerator",
+                description: "Increases speed and success rate of brute force attacks.",
+                level: 2,
+                price: 2,
+                effect: "Improves 'brute' command",
+            },
+            exploit_pack: {
+                name: "Exploit Pack",
+                description: "A collection of exploits for common vulnerabilities.",
+                level: 2,
+                price: 2,
+                effect: "Adds more options to 'exploit' command",
+            },
+            proxy_chain: {
+                name: "Proxy Chain",
+                description:
+                    "Route your connection through multiple proxies to avoid detection.",
+                level: 3,
+                price: 3,
+                effect: "Reduces chance of being detected",
+            },
+            crypto_breaker: {
+                name: "Cryptography Breaker",
+                description: "Advanced tool for breaking encryption.",
+                level: 4,
+                price: 4,
+                effect: "Allows decryption of secure files",
+            },
+        };
+
+        // Terminal elements
+        const terminalOutput = document.getElementById("terminalOutputEl");
+        const terminalInput = document.getElementById("terminalInputEl");
+        const prompt = document.getElementById("promptEl");
+        const statusDisplay = document.getElementById("statusDisplayEl");
+        const ipDisplay = document.getElementById("ipDisplayEl");
+        const gameScreen = document.getElementById("gameScreenEl");
+
+        // Initialize the game
+        function initGame() {
+            writeToTerminal(
+                "██╗  ██╗██╗  ██╗ ██████╗██╗  ██╗██████╗ ██████╗ ",
+                "system-text"
+            );
+            writeToTerminal(
+                "██║  ██║██║  ██║██╔════╝██║ ██╔╝╚════██╗██╔══██╗",
+                "system-text"
+            );
+            writeToTerminal(
+                "███████║███████║██║     █████╔╝  █████╔╝██████╔╝",
+                "system-text"
+            );
+            writeToTerminal(
+                "██╔══██║╚════██║██║     ██╔═██╗  ╚═══██╗██╔══██╗",
+                "system-text"
+            );
+            writeToTerminal(
+                "██║  ██║     ██║╚██████╗██║  ██╗██████╔╝██║  ██║",
+                "system-text"
+            );
+            writeToTerminal(
+                "╚═╝  ╚═╝     ╚═╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝",
+                "system-text"
+            );
+            writeToTerminal("TERMINAL v1.0 - INITIALIZING SYSTEMS...", "system-text");
+            writeToTerminal(
+                "===========================================",
+                "system-text"
+            );
+
+            // Simulate system initialization
+            let timeout1 = setTimeout(() => {
+                writeToTerminal("• Kernel loaded...", "success-text");
+            }, 300);
+
+            let timeout2 = setTimeout(() => {
+                writeToTerminal("• Network interfaces initialized...", "success-text");
+            }, 600);
+
+            let timeout3 = setTimeout(() => {
+                writeToTerminal("• Security modules loaded...", "success-text");
+            }, 900);
+
+            let timeout4 = setTimeout(() => {
+                writeToTerminal("• Terminal ready.", "success-text");
+                writeToTerminal("", "");
+                writeToTerminal("Welcome to the Hacking Simulator", "system-text");
+                writeToTerminal(
+                    "Type 'help' to see available commands or 'tutorial' to start the tutorial.",
+                    "system-text"
+                );
+                writeToTerminal("", "");
+                updatePrompt();
+            }, 1200);
+
+            // Track timeouts for potential cleanup
+            gameState.activeSessions.push({ type: "timeout", id: timeout1 });
+            gameState.activeSessions.push({ type: "timeout", id: timeout2 });
+            gameState.activeSessions.push({ type: "timeout", id: timeout3 });
+            gameState.activeSessions.push({ type: "timeout", id: timeout4 });
+
+            // Handle keyboard input
+            terminalInput.addEventListener("keydown", handleInput);
+
+            // Generate random IPs for systems
+            generateRandomIPs();
+
+            // Add a little hint after 5 seconds if user hasn't entered a command
+            let hintTimeout = setTimeout(() => {
+                if (gameState.commandHistory.length === 0) {
+                    writeToTerminal(
+                        "HINT: Try typing 'help' and pressing Enter to see available commands.",
+                        "hint-text"
+                    );
+                }
+            }, 5000);
+            gameState.activeSessions.push({ type: "timeout", id: hintTimeout });
+
+            // Focus the input element
+            setTimeout(() => terminalInput.focus(), 100);
+        }
+
+        // Cleanup function to prevent memory leaks
+        function cleanupActiveSessions() {
+            gameState.activeSessions.forEach((session) => {
+                if (session.type === "interval") {
+                    clearInterval(session.id);
+                } else if (session.type === "timeout") {
+                    clearTimeout(session.id);
+                }
+            });
+            gameState.activeSessions = [];
+        }
+
+        // Generate random IP addresses for the systems
+        function generateRandomIPs() {
+            let usedIPs = new Set();
+
+            // Add fixed IPs to the used set
+            usedIPs.add("192.168.1.1"); // tutorial
+            usedIPs.add("1.2.3.4"); // honeypot
+            usedIPs.add("8.8.8.8"); // mainframe
+
+            systems.forEach((system) => {
+                if (
+                    system.id !== "tutorial" &&
+                    system.id !== "honeypot" &&
+                    system.id !== "mainframe"
+                ) {
+                    let ip;
+                    do {
+                        ip = generateRandomIP();
+                    } while (usedIPs.has(ip));
+
+                    system.ip = ip;
+                    usedIPs.add(ip);
+                }
+            });
+
+            // Add the honeypot system's IP to discovered IPs so it shows up
+            gameState.discoveredIPs.push(systems.find((s) => s.id === "honeypot").ip);
+        }
+
+        // Generate a random IP address
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 223) + 1}.${Math.floor(
+                Math.random() * 256
+            )}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+        }
+
+        // Handle user input
+        function handleInput(e) {
+            if (e.key === "Enter") {
+                const command = terminalInput.value.trim();
+                if (command) {
+                    // Add to command history
+                    gameState.commandHistory.push(command);
+                    gameState.historyIndex = gameState.commandHistory.length;
+                    gameState.lastCommand = command;
+
+                    // Echo command
+                    writeToTerminal(`${prompt.textContent} ${command}`, "");
+
+                    // Process command
+                    processCommand(command);
+
+                    // Clear input
+                    terminalInput.value = "";
+                }
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                if (gameState.historyIndex > 0) {
+                    gameState.historyIndex--;
+                    terminalInput.value = gameState.commandHistory[gameState.historyIndex];
+
+                    // Place cursor at the end
+                    setTimeout(() => {
+                        terminalInput.selectionStart = terminalInput.selectionEnd =
+                            terminalInput.value.length;
+                    }, 0);
+                }
+            } else if (e.key === "ArrowDown") {
+                e.preventDefault();
+                if (gameState.historyIndex < gameState.commandHistory.length - 1) {
+                    gameState.historyIndex++;
+                    terminalInput.value = gameState.commandHistory[gameState.historyIndex];
+
+                    // Place cursor at the end
+                    setTimeout(() => {
+                        terminalInput.selectionStart = terminalInput.selectionEnd =
+                            terminalInput.value.length;
+                    }, 0);
+                } else {
+                    gameState.historyIndex = gameState.commandHistory.length;
+                    terminalInput.value = "";
+                }
+            } else if (e.key === "Tab") {
+                e.preventDefault();
+                autocompleteCommand();
+            } else if (e.key === "Escape") {
+                // Clear current input
+                terminalInput.value = "";
+            }
+        }
+
+        // Autocomplete command
+        function autocompleteCommand() {
+            const input = terminalInput.value.trim();
+            if (!input) return;
+
+            const commands = [
+                "help",
+                "clear",
+                "scan",
+                "systems",
+                "connect",
+                "disconnect",
+                "crack",
+                "ls",
+                "cat",
+                "exploit",
+                "status",
+                "nmap",
+                "brute",
+                "solve",
+                "tutorial",
+                "skills",
+                "ping",
+                "trace",
+                "network",
+                "ps",
+                "kill",
+                "wget",
+                "cd",
+                "pwd",
+                "whoami",
+                "ifconfig",
+                "grep",
+                "find",
+                "man",
+                "ssh",
+                "ftp",
+                "telnet",
+                "traceroute",
+                "whois",
+                "netstat",
+                "top",
+                "hints",
+            ];
+
+            // If it's a cat command, suggest files
+            if (input.startsWith("cat ")) {
+                const partialFile = input.substring(4);
+                if (gameState.connected && gameState.currentSystem.hacked) {
+                    const files = gameState.currentSystem.files.map((f) => f.name);
+                    const matches = files.filter((f) => f.startsWith(partialFile));
+
+                    if (matches.length === 1) {
+                        terminalInput.value = `cat ${matches[0]}`;
+                    } else if (matches.length > 1) {
+                        writeToTerminal("Possible completions:", "system-text");
+                        matches.forEach((match) => writeToTerminal(`  ${match}`, ""));
+                    }
+                }
+                return;
+            }
+
+            // If it's an exploit command, suggest vulnerabilities
+            if (input.startsWith("exploit ")) {
+                const partialVuln = input.substring(8);
+                const vulns = Object.keys(vulnerabilities);
+                const matches = vulns.filter((v) => v.startsWith(partialVuln));
+
+                if (matches.length === 1) {
+                    terminalInput.value = `exploit ${matches[0]}`;
+                } else if (matches.length > 1) {
+                    writeToTerminal("Possible vulnerabilities:", "system-text");
+                    matches.forEach((match) => writeToTerminal(`  ${match}`, ""));
+                }
+                return;
+            }
+
+            // If it's a connect command, suggest IPs
+            if (input.startsWith("connect ")) {
+                const partialIP = input.substring(8);
+                const knownIPs = systems.map((s) => s.ip).concat(gameState.discoveredIPs);
+                const matches = knownIPs.filter((ip) => ip.startsWith(partialIP));
+
+                if (matches.length === 1) {
+                    terminalInput.value = `connect ${matches[0]}`;
+                } else if (matches.length > 1) {
+                    writeToTerminal("Possible IP addresses:", "system-text");
+                    matches.forEach((match) => writeToTerminal(`  ${match}`, ""));
+                }
+                return;
+            }
+
+            // Default autocomplete for commands
+            const matchingCommands = commands.filter((cmd) => cmd.startsWith(input));
+            if (matchingCommands.length === 1) {
+                terminalInput.value = matchingCommands[0];
+            } else if (matchingCommands.length > 1) {
+                writeToTerminal("Possible commands:", "system-text");
+                matchingCommands.forEach((cmd) => writeToTerminal(`  ${cmd}`, ""));
+            }
+        }
+
+        // Process user command
+        function processCommand(command) {
+            // Prevent processing commands if another operation is in progress
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Terminal busy. Please wait for the current operation to complete.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            const args = command.split(" ");
+            const cmd = args[0].toLowerCase();
+
+            // Check for tutorial progression
+            checkTutorialProgress(cmd, args);
+
+            try {
+                switch (cmd) {
+                    case "help":
+                        showHelp(args[1]);
+                        break;
+                    case "clear":
+                        clearTerminal();
+                        break;
+                    case "scan":
+                        scanSystem();
+                        break;
+                    case "systems":
+                        listSystems();
+                        break;
+                    case "connect":
+                        connectToSystem(args[1]);
+                        break;
+                    case "disconnect":
+                        disconnectFromSystem();
+                        break;
+                    case "crack":
+                        crackPassword();
+                        break;
+                    case "ls":
+                        listFiles(args[1]);
+                        break;
+                    case "cat":
+                        readFile(args[1]);
+                        break;
+                    case "exploit":
+                        exploitSystem(args[1]);
+                        break;
+                    case "status":
+                        showStatus();
+                        break;
+                    case "nmap":
+                        nmapScan(args[1]);
+                        break;
+                    case "brute":
+                        bruteForce();
+                        break;
+                    case "solve":
+                        solvePuzzle();
+                        break;
+                    case "tutorial":
+                        startTutorial();
+                        break;
+                    case "skills":
+                        if (args.length > 1) {
+                            upgradeSkill(args[1]);
+                        } else {
+                            showSkills();
+                        }
+                        break;
+                    case "ping":
+                        pingSystem(args[1]);
+                        break;
+                    case "trace":
+                        traceRoute(args[1]);
+                        break;
+                    case "network":
+                        showNetwork();
+                        break;
+                    case "ps":
+                        listProcesses();
+                        break;
+                    case "kill":
+                        killProcess(args[1]);
+                        break;
+                    case "wget":
+                        downloadFile(args[1]);
+                        break;
+                    case "cd":
+                        changeDirectory(args[1]);
+                        break;
+                    case "pwd":
+                        printWorkingDirectory();
+                        break;
+                    case "whoami":
+                        whoami();
+                        break;
+                    case "ifconfig":
+                        showNetworkConfig();
+                        break;
+                    case "grep":
+                        grepFile(args[1], args.slice(2).join(" "));
+                        break;
+                    case "find":
+                        findFiles(args[1]);
+                        break;
+                    case "man":
+                        showManual(args[1]);
+                        break;
+                    case "ssh":
+                        sshConnect(args[1]);
+                        break;
+                    case "hints":
+                        toggleHints();
+                        break;
+                    default:
+                        writeToTerminal(
+                            `Command not found: ${cmd}. Type 'help' for available commands.`,
+                            "error-text"
+                        );
+                }
+            } catch (error) {
+                console.error("Error processing command:", error);
+                writeToTerminal(
+                    `Error executing command: ${error.message}`,
+                    "error-text"
+                );
+            }
+        }
+
+        // Upgrade a skill
+        function upgradeSkill(skillName) {
+            if (gameState.skillPoints <= 0) {
+                writeToTerminal(
+                    "You don't have any skill points to spend.",
+                    "error-text"
+                );
+                return;
+            }
+
+            const validSkills = ["cracking", "stealth", "networking", "cryptography"];
+            if (!validSkills.includes(skillName)) {
+                writeToTerminal(
+                    `Invalid skill: ${skillName}. Valid skills are: ${validSkills.join(
+                        ", "
+                    )}`,
+                    "error-text"
+                );
+                return;
+            }
+
+            // Upgrade the skill
+            gameState.skills[skillName]++;
+            gameState.skillPoints--;
+
+            writeToTerminal(
+                `Skill upgraded: ${skillName} is now level ${gameState.skills[skillName]}`,
+                "success-text"
+            );
+            writeToTerminal(
+                `Skill points remaining: ${gameState.skillPoints}`,
+                "system-text"
+            );
+
+            // Show skill effect
+            let effect = "";
+            switch (skillName) {
+                case "cracking":
+                    effect = "Password cracking speed and success rate improved.";
+                    break;
+                case "stealth":
+                    effect = "Reduced chance of being detected during hacking attempts.";
+                    break;
+                case "networking":
+                    effect = "Network scanning and connection capabilities enhanced.";
+                    break;
+                case "cryptography":
+                    effect = "Improved ability to handle encrypted files and data.";
+                    break;
+            }
+
+            writeToTerminal(`Effect: ${effect}`, "success-text");
+        }
+
+        // Show help menu
+        function showHelp(topic) {
+            if (!topic) {
+                writeToTerminal(
+                    "Available commands (type 'help [command]' for more info):",
+                    "system-text"
+                );
+                writeToTerminal("  BASIC COMMANDS:", "help-text");
+                writeToTerminal("  help         - Show this help menu", "");
+                writeToTerminal("  clear        - Clear terminal output", "");
+                writeToTerminal("  tutorial     - Start interactive tutorial", "");
+                writeToTerminal("  hints        - Toggle hint messages", "");
+                writeToTerminal("", "");
+                writeToTerminal("  NETWORK COMMANDS:", "help-text");
+                writeToTerminal("  systems      - List available systems", "");
+                writeToTerminal(
+                    "  scan         - Scan current system for open ports",
+                    ""
+                );
+                writeToTerminal("  nmap [ip]    - Scan specific IP address", "");
+                writeToTerminal("  connect [ip] - Connect to a system", "");
+                writeToTerminal("  disconnect   - Disconnect from current system", "");
+                writeToTerminal("  ping [ip]    - Check if a system is online", "");
+                writeToTerminal("  trace [ip]   - Trace route to a system", "");
+                writeToTerminal("  network      - Display network map", "");
+                writeToTerminal("", "");
+                writeToTerminal("  HACKING COMMANDS:", "help-text");
+                writeToTerminal("  crack        - Attempt to crack system password", "");
+                writeToTerminal("  brute        - Brute force password", "");
+                writeToTerminal(
+                    "  exploit [v]  - Exploit vulnerability (e.g. exploit sql_injection)",
+                    ""
+                );
+                writeToTerminal(
+                    "  solve        - Solve security puzzle if available",
+                    ""
+                );
+                writeToTerminal("", "");
+                writeToTerminal("  SYSTEM COMMANDS:", "help-text");
+                writeToTerminal(
+                    "  ls [-a]      - List files (use -a to show hidden files)",
+                    ""
+                );
+                writeToTerminal("  cat [file]   - Read file contents", "");
+                writeToTerminal("  ps           - List running processes", "");
+                writeToTerminal("  kill [pid]   - Terminate a process", "");
+                writeToTerminal("  grep [str]   - Search for string in files", "");
+                writeToTerminal("  find [pat]   - Find files matching pattern", "");
+                writeToTerminal("", "");
+                writeToTerminal("  STATUS COMMANDS:", "help-text");
+                writeToTerminal("  status       - Show current status and progress", "");
+                writeToTerminal("  skills       - Show your hacking skills", "");
+                writeToTerminal("  whoami       - Display current user", "");
+                writeToTerminal("  ifconfig     - Show network configuration", "");
+
+                if (gameState.hints) {
+                    writeToTerminal("", "");
+                    writeToTerminal(
+                        "HINT: Type 'help [command]' for detailed help on a specific command.",
+                        "hint-text"
+                    );
+                }
+            } else {
+                // Detailed help for specific commands
+                switch (topic.toLowerCase()) {
+                    case "scan":
+                        writeToTerminal("COMMAND: scan", "help-text");
+                        writeToTerminal("SYNTAX:  scan", "");
+                        writeToTerminal(
+                            "Scans the current system for open ports and running services.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "You must be connected to a system to use this command.",
+                            ""
+                        );
+                        writeToTerminal("Example: scan", "");
+                        break;
+                    case "nmap":
+                        writeToTerminal("COMMAND: nmap", "help-text");
+                        writeToTerminal("SYNTAX:  nmap [ip-address]", "");
+                        writeToTerminal(
+                            "Performs a detailed scan of the specified IP address.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "Reveals open ports, services, and potential vulnerabilities.",
+                            ""
+                        );
+                        writeToTerminal("Example: nmap 192.168.1.1", "");
+                        break;
+                    case "connect":
+                        writeToTerminal("COMMAND: connect", "help-text");
+                        writeToTerminal("SYNTAX:  connect [ip-address]", "");
+                        writeToTerminal(
+                            "Establishes a connection to the specified system.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "You cannot access files or exploit a system without connecting first.",
+                            ""
+                        );
+                        writeToTerminal("Example: connect 192.168.1.1", "");
+                        break;
+                    case "crack":
+                        writeToTerminal("COMMAND: crack", "help-text");
+                        writeToTerminal("SYNTAX:  crack", "");
+                        writeToTerminal(
+                            "Attempts to crack the password of the connected system.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "Presents a password challenge that you must solve.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "Success rate depends on system security and your skills.",
+                            ""
+                        );
+                        writeToTerminal("Example: crack", "");
+                        break;
+                    case "exploit":
+                        writeToTerminal("COMMAND: exploit", "help-text");
+                        writeToTerminal("SYNTAX:  exploit [vulnerability]", "");
+                        writeToTerminal(
+                            "Attempts to exploit a specific vulnerability on the connected system.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "The system must have the vulnerability to be exploitable.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "Common vulnerabilities: weak_password, sql_injection, buffer_overflow",
+                            ""
+                        );
+                        writeToTerminal("Example: exploit sql_injection", "");
+                        break;
+                    case "ls":
+                        writeToTerminal("COMMAND: ls", "help-text");
+                        writeToTerminal("SYNTAX:  ls [-a]", "");
+                        writeToTerminal(
+                            "Lists files in the current directory of the connected system.",
+                            ""
+                        );
+                        writeToTerminal("Options:", "");
+                        writeToTerminal(
+                            "  -a : Show hidden files (those starting with .)",
+                            ""
+                        );
+                        writeToTerminal(
+                            "You must have hacked the system to use this command.",
+                            ""
+                        );
+                        writeToTerminal("Example: ls -a", "");
+                        break;
+                    case "cat":
+                        writeToTerminal("COMMAND: cat", "help-text");
+                        writeToTerminal("SYNTAX:  cat [filename]", "");
+                        writeToTerminal("Displays the contents of the specified file.", "");
+                        writeToTerminal(
+                            "You must have hacked the system to use this command.",
+                            ""
+                        );
+                        writeToTerminal("Example: cat readme.txt", "");
+                        break;
+                    case "skills":
+                        writeToTerminal("COMMAND: skills", "help-text");
+                        writeToTerminal("SYNTAX:  skills [skill-name]", "");
+                        writeToTerminal(
+                            "Without arguments, displays your current hacking skills and available skill points.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "With a skill name, upgrades that skill if you have available skill points.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "Available skills: cracking, stealth, networking, cryptography",
+                            ""
+                        );
+                        writeToTerminal("Example: skills", "");
+                        writeToTerminal("Example: skills cracking", "");
+                        break;
+                    case "ps":
+                        writeToTerminal("COMMAND: ps", "help-text");
+                        writeToTerminal("SYNTAX:  ps", "");
+                        writeToTerminal(
+                            "Lists running processes on the connected system.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "Shows process ID (PID), name, user, CPU and memory usage.",
+                            ""
+                        );
+                        writeToTerminal(
+                            "You must have hacked the system to use this command.",
+                            ""
+                        );
+                        writeToTerminal("Example: ps", "");
+                        break;
+                    case "hints":
+                        writeToTerminal("COMMAND: hints", "help-text");
+                        writeToTerminal("SYNTAX:  hints", "");
+                        writeToTerminal("Toggles hint messages on/off.", "");
+                        writeToTerminal(
+                            "Hints provide guidance on how to use commands and progress in the game.",
+                            ""
+                        );
+                        writeToTerminal("Example: hints", "");
+                        break;
+                    default:
+                        writeToTerminal(
+                            `No detailed help available for '${topic}'. Type 'help' for a list of commands.`,
+                            "error-text"
+                        );
+                }
+            }
+        }
+
+        // Start tutorial
+        function startTutorial() {
+            // Reset tutorial state if restarting
+            gameState.tutorialStep = 1;
+
+            writeToTerminal("Starting interactive tutorial...", "system-text");
+            writeToTerminal(
+                "This tutorial will guide you through the basics of hacking.",
+                "system-text"
+            );
+            writeToTerminal("", "");
+            writeToTerminal("TUTORIAL STEP 1: View available systems", "help-text");
+            writeToTerminal(
+                "Type 'systems' to see a list of systems you can hack.",
+                "system-text"
+            );
+        }
+
+        // Check tutorial progress
+        function checkTutorialProgress(cmd, args) {
+            if (gameState.tutorialStep === 0) return;
+
+            switch (gameState.tutorialStep) {
+                case 1:
+                    if (cmd === "systems") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal(
+                                "TUTORIAL STEP 2: Connect to the tutorial system",
+                                "help-text"
+                            );
+                            writeToTerminal(
+                                "Type 'connect 192.168.1.1' to connect to the tutorial system.",
+                                "system-text"
+                            );
+                            gameState.tutorialStep = 2;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 2:
+                    if (cmd === "connect" && args[1] === "192.168.1.1") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal("TUTORIAL STEP 3: Scan the system", "help-text");
+                            writeToTerminal(
+                                "Type 'scan' to scan the system for open ports.",
+                                "system-text"
+                            );
+                            gameState.tutorialStep = 3;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 3:
+                    if (cmd === "scan") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal("TUTORIAL STEP 4: Crack the password", "help-text");
+                            writeToTerminal(
+                                "Type 'crack' to attempt to crack the system password.",
+                                "system-text"
+                            );
+                            gameState.tutorialStep = 4;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 4:
+                    if (cmd === "crack") {
+                        let tutorialTimeout = setTimeout(() => {
+                            if (gameState.currentSystem && gameState.currentSystem.hacked) {
+                                writeToTerminal("", "");
+                                writeToTerminal("TUTORIAL STEP 5: List files", "help-text");
+                                writeToTerminal(
+                                    "Type 'ls' to list files on the system.",
+                                    "system-text"
+                                );
+                                gameState.tutorialStep = 5;
+                            }
+                        }, 3000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 5:
+                    if (cmd === "ls") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal("TUTORIAL STEP 6: Read a file", "help-text");
+                            writeToTerminal(
+                                "Type 'cat tutorial.txt' to read the tutorial file.",
+                                "system-text"
+                            );
+                            gameState.tutorialStep = 6;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 6:
+                    if (cmd === "cat" && args[1] === "tutorial.txt") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal("TUTORIAL STEP 7: Try hidden files", "help-text");
+                            writeToTerminal(
+                                "Type 'ls -a' to list all files, including hidden ones.",
+                                "system-text"
+                            );
+                            gameState.tutorialStep = 7;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 7:
+                    if (cmd === "ls" && args[1] === "-a") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal("TUTORIAL STEP 8: Check your status", "help-text");
+                            writeToTerminal(
+                                "Type 'status' to see your current progress.",
+                                "system-text"
+                            );
+                            gameState.tutorialStep = 8;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+                case 8:
+                    if (cmd === "status") {
+                        let tutorialTimeout = setTimeout(() => {
+                            writeToTerminal("", "");
+                            writeToTerminal("TUTORIAL COMPLETE!", "success-text");
+                            writeToTerminal(
+                                "You have completed the basic tutorial. Now you're ready to hack on your own!",
+                                "system-text"
+                            );
+                            writeToTerminal(
+                                "Try connecting to other systems on the network.",
+                                "system-text"
+                            );
+                            writeToTerminal(
+                                "Remember to use 'help' if you need assistance with commands.",
+                                "system-text"
+                            );
+
+                            // Award skill point for completing tutorial
+                            gameState.skillPoints++;
+                            writeToTerminal("", "");
+                            writeToTerminal(
+                                "You earned 1 skill point! Type 'skills' to view and upgrade your skills.",
+                                "success-text"
+                            );
+
+                            gameState.tutorialStep = 0;
+                        }, 1000);
+                        gameState.activeSessions.push({
+                            type: "timeout",
+                            id: tutorialTimeout,
+                        });
+                    }
+                    break;
+            }
+        }
+
+        // Toggle hints
+        function toggleHints() {
+            gameState.hints = !gameState.hints;
+            if (gameState.hints) {
+                writeToTerminal(
+                    "Hints enabled. You will now see hints while playing.",
+                    "success-text"
+                );
+            } else {
+                writeToTerminal(
+                    "Hints disabled. You will no longer see hints.",
+                    "system-text"
+                );
+            }
+        }
+
+        // Clear terminal output
+        function clearTerminal() {
+            terminalOutput.innerHTML = "";
+        }
+
+        // List available systems
+        function listSystems() {
+            writeToTerminal("Available systems:", "system-text");
+            writeToTerminal(
+                "╔════════════════════════════════════════════════════════════════╗",
+                ""
+            );
+            writeToTerminal(
+                "║  STATUS  │     NAME                │     IP     │  DIFFICULTY  ║",
+                ""
+            );
+            writeToTerminal(
+                "╠════════════════════════════════════════════════════════════════╣",
+                ""
+            );
+
+            systems.forEach((system) => {
+                // Only show systems up to current level or that have been discovered
+                if (
+                    gameState.level >= system.securityLevel ||
+                    gameState.discoveredIPs.includes(system.ip)
+                ) {
+                    const status = system.hacked ? "[HACKED]" : "[SECURE]";
+                    const statusColor = system.hacked ? "success-text" : "error-text";
+                    const name = system.name.padEnd(20, " ");
+                    const ip = system.ip.padEnd(10, " ");
+                    const difficulty = system.difficulty.padEnd(12, " ");
+
+                    writeToTerminal(
+                        `║ ${status} │ ${name} │ ${ip} │ ${difficulty} ║`,
+                        statusColor
+                    );
+                }
+            });
+
+            writeToTerminal(
+                "╚════════════════════════════════════════════════════════════════╝",
+                ""
+            );
+
+            if (gameState.hints) {
+                writeToTerminal(
+                    "HINT: Use 'connect [ip]' to connect to a system",
+                    "hint-text"
+                );
+            }
+        }
+
+        // Scan the current system for open ports
+        function scanSystem() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(
+                `Scanning system ${gameState.currentSystem.ip}...`,
+                "system-text"
+            );
+
+            // Create a progress bar
+            const progressBarContainer = document.createElement("div");
+            progressBarContainer.className = "progress-bar";
+            const progressBarFill = document.createElement("div");
+            progressBarFill.className = "progress-bar-fill";
+            progressBarContainer.appendChild(progressBarFill);
+
+            terminalOutput.appendChild(progressBarContainer);
+
+            // Simulate scanning delay with progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                progressBarFill.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    progressBarContainer.remove();
+
+                    writeToTerminal("PORT SCAN COMPLETE", "success-text");
+                    writeToTerminal("╔══════════════════════════════════════╗", "");
+                    writeToTerminal("║  PORT  │  SERVICE                    ║", "");
+                    writeToTerminal("╠══════════════════════════════════════╣", "");
+
+                    if (gameState.currentSystem.ports.length === 0) {
+                        writeToTerminal("║  No open ports found.                ║", "");
+                    } else {
+                        gameState.currentSystem.ports.forEach((port) => {
+                            let service = "";
+                            if (
+                                gameState.currentSystem.services &&
+                                gameState.currentSystem.services[port]
+                            ) {
+                                service = gameState.currentSystem.services[port];
+                            } else {
+                                service = getServiceName(port);
+                            }
+                            writeToTerminal(
+                                `║  ${port.toString().padEnd(5)}│  ${service.padEnd(26)} ║`,
+                                ""
+                            );
+                        });
+                    }
+
+                    writeToTerminal("╚══════════════════════════════════════╝", "");
+
+                    // Random chance to discover a vulnerability
+                    if (
+                        Math.random() < 0.3 &&
+                        gameState.currentSystem.vulnerabilities.length > 0
+                    ) {
+                        const randomVuln =
+                            gameState.currentSystem.vulnerabilities[
+                            Math.floor(
+                                Math.random() * gameState.currentSystem.vulnerabilities.length
+                            )
+                            ];
+                        writeToTerminal(
+                            `Potential vulnerability detected: ${randomVuln}`,
+                            "warning-text"
+                        );
+                    }
+
+                    if (gameState.hints) {
+                        writeToTerminal(
+                            "HINT: Try 'crack' to attempt password cracking or 'exploit [vulnerability]' to use an exploit",
+                            "hint-text"
+                        );
+                    }
+
+                    gameState.isProcessing = false;
+                }
+            }, 100);
+
+            gameState.activeSessions.push({ type: "interval", id: progressInterval });
+        }
+
+        // Get service name for port
+        function getServiceName(port) {
+            const services = {
+                21: "FTP",
+                22: "SSH",
+                23: "Telnet",
+                25: "SMTP",
+                53: "DNS",
+                67: "DHCP",
+                80: "HTTP",
+                110: "POP3",
+                123: "NTP",
+                139: "NetBIOS",
+                143: "IMAP",
+                161: "SNMP",
+                443: "HTTPS",
+                445: "SMB",
+                465: "SMTPS",
+                514: "Syslog",
+                587: "SMTP Submission",
+                993: "IMAPS",
+                995: "POP3S",
+                1433: "MSSQL",
+                1521: "Oracle",
+                3306: "MySQL",
+                3389: "RDP",
+                5432: "PostgreSQL",
+                5900: "VNC",
+                6667: "IRC",
+                8080: "HTTP-Alt",
+            };
+
+            return services[port] || "Unknown";
+        }
+
+        // Connect to a system
+        function connectToSystem(ip) {
+            if (!ip) {
+                writeToTerminal(
+                    "Please specify an IP address to connect to.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            const system =
+                systems.find((s) => s.ip === ip) ||
+                hiddenSystems.find((s) => s.ip === ip);
+
+            if (!system) {
+                writeToTerminal(
+                    `Connection failed: System with IP ${ip} not found.`,
+                    "error-text"
+                );
+                return;
+            }
+
+            if (
+                system.securityLevel > gameState.level &&
+                !gameState.discoveredIPs.includes(ip)
+            ) {
+                writeToTerminal(
+                    `Connection failed: Your hacking level is too low for this system.`,
+                    "error-text"
+                );
+                return;
+            }
+
+            // Disconnect from current system first if connected
+            if (gameState.connected) {
+                disconnectFromSystem();
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(`Connecting to ${ip}...`, "system-text");
+
+            // Create a progress bar for connection
+            const progressBarContainer = document.createElement("div");
+            progressBarContainer.className = "progress-bar";
+            const progressBarFill = document.createElement("div");
+            progressBarFill.className = "progress-bar-fill";
+            progressBarContainer.appendChild(progressBarFill);
+
+            terminalOutput.appendChild(progressBarContainer);
+
+            // Simulate connection with progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                progressBarFill.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    progressBarContainer.remove();
+
+                    gameState.connected = true;
+                    gameState.currentSystem = system;
+                    updatePrompt();
+                    updateStatus();
+
+                    // Add honeypot consequence
+                    if (system.id === "honeypot" && !system.hacked) {
+                        writeToTerminal(
+                            `WARNING: This appears to be a HIGH SECURITY system!`,
+                            "warning-text"
+                        );
+                        writeToTerminal(
+                            `Connection established to ${system.name} (${system.ip})`,
+                            "system-text"
+                        );
+
+                        if (gameState.hints) {
+                            writeToTerminal(
+                                `HINT: This might be a honeypot - be careful!`,
+                                "hint-text"
+                            );
+                        }
+                    } else {
+                        writeToTerminal(
+                            `Connection established to ${system.name} (${system.ip})`,
+                            "success-text"
+                        );
+                        writeToTerminal(
+                            `System security level: ${system.difficulty}`,
+                            "system-text"
+                        );
+                    }
+
+                    if (system.hacked) {
+                        writeToTerminal(
+                            "This system has already been compromised. Full access granted.",
+                            "success-text"
+                        );
+                    } else {
+                        writeToTerminal(
+                            "Authentication required. Use 'crack' to attempt password bypass.",
+                            "warning-text"
+                        );
+                    }
+
+                    if (gameState.hints && !system.hacked) {
+                        writeToTerminal(`HINT: ${system.hint}`, "hint-text");
+                    }
+
+                    gameState.isProcessing = false;
+                }
+            }, 100);
+
+            gameState.activeSessions.push({ type: "interval", id: progressInterval });
+        }
+
+        // Disconnect from system
+        function disconnectFromSystem() {
+            if (!gameState.connected) {
+                writeToTerminal("Not connected to any system.", "error-text");
+                return;
+            }
+
+            writeToTerminal(
+                `Disconnecting from ${gameState.currentSystem.ip}...`,
+                "system-text"
+            );
+
+            // Simulate disconnection delay
+            const oldSystem = gameState.currentSystem;
+
+            // Clean up any active processes
+            cleanupActiveSessions();
+
+            setTimeout(() => {
+                gameState.connected = false;
+                gameState.currentSystem = null;
+                updatePrompt();
+                updateStatus();
+
+                writeToTerminal(
+                    `Disconnected from ${oldSystem.name} (${oldSystem.ip})`,
+                    "system-text"
+                );
+            }, 500);
+        }
+
+        // Attempt to crack the system password
+        function crackPassword() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "This system has already been compromised.",
+                    "success-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal("Initiating password cracking sequence...", "system-text");
+            writeToTerminal("Analyzing security protocols...", "system-text");
+
+            // Check if honeypot
+            if (gameState.currentSystem.id === "honeypot") {
+                setTimeout(() => {
+                    writeToTerminal("WARNING: INTRUSION DETECTION TRIGGERED", "error-text");
+                    writeToTerminal(
+                        "This system appears to be a honeypot designed to trap hackers!",
+                        "error-text"
+                    );
+                    writeToTerminal(
+                        "Your connection has been logged. Reputation damaged.",
+                        "error-text"
+                    );
+                    gameState.reputation -= 10;
+                    disconnectFromSystem();
+                    gameState.isProcessing = false;
+                }, 2000);
+                return;
+            }
+
+            // Enhanced password cracking minigame
+            gameScreen.style.display = "block";
+            gameScreen.innerHTML = `
+      <div style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:20px; background-color:#000;">
+        <h2 style="color:#0f0; margin-bottom:20px;">PASSWORD CRACKING MODULE</h2>
+        <div style="width:80%; max-width:600px; text-align:center; background:#111; padding:20px; border:1px solid #0f0; border-radius:5px;">
+          <div style="color:#0f0; margin-bottom:15px; text-align:left;">
+            <p>TARGET: ${gameState.currentSystem.name}</p>
+            <p>SECURITY LEVEL: ${gameState.currentSystem.difficulty}</p>
+            <p>SKILL BONUS: +${gameState.skills.cracking * 5
+                }% success chance</p>
+          </div>
+          <div style="width:100%; height:20px; background:#222; margin:15px 0;">
+            <div id="crackProgressBarEl" style="height:100%; width:0%; background:linear-gradient(to right, #ff0, #0f0); transition:width 0.3s;"></div>
+          </div>
+          <div style="margin-bottom:20px;">
+            <p style="color:#0f0;">Password Format:</p>
+            <div id="passwordFormatEl" style="font-family:monospace; letter-spacing:2px; font-size:24px; margin:10px 0; color:#0ff;"></div>
+          </div>
+          <p style="color:#0f0; margin-bottom:15px;">Enter Password:</p>
+          <input id="passwordInputEl" type="password" style="background:#222; color:#0f0; border:1px solid #0f0; padding:10px; width:100%; margin-bottom:15px; font-family:monospace; font-size:18px;">
+          <div style="color:#0f0; margin-bottom:15px;">Hint: <span id="passwordHintEl" style="color:#f60;"></span></div>
+          <div style="display:flex; justify-content:space-between; margin-top:20px;">
+            <button id="attemptBtn" style="background:#0f0; color:#000; border:none; padding:10px 20px; cursor:pointer; font-weight:bold;">ATTEMPT CRACK</button>
+            <button id="hintBtn" style="background:#00f; color:#fff; border:none; padding:10px 20px; cursor:pointer; margin:0 10px;">GET HINT</button>
+            <button id="cancelCrackBtn" style="background:#500; color:#fff; border:none; padding:10px 20px; cursor:pointer;">ABORT</button>
+          </div>
+          <div id="attemptsCounterEl" style="margin-top:15px; color:#0f0;">Attempts: 0/5</div>
+        </div>
+      </div>
+    `;
+
+            // Generate password format visualization
+            const password = gameState.currentSystem.password;
+            let format = "";
+            for (let i = 0; i < password.length; i++) {
+                format += "□ ";
+            }
+            document.getElementById("passwordFormatEl").textContent = format;
+
+            // Generate hint
+            const hint = generatePasswordHint(password);
+            document.getElementById("passwordHintEl").textContent = hint;
+
+            // Track attempts
+            let attempts = 0;
+            const maxAttempts = 5;
+            document.getElementById(
+                "attemptsCounterEl"
+            ).textContent = `Attempts: ${attempts}/${maxAttempts}`;
+
+            // Focus the password input field
+            setTimeout(() => document.getElementById("passwordInputEl").focus(), 100);
+
+            // Add event listeners
+            document.getElementById("attemptBtn").addEventListener("click", () => {
+                const attempt = document.getElementById("passwordInputEl").value;
+                attempts++;
+                document.getElementById(
+                    "attemptsCounterEl"
+                ).textContent = `Attempts: ${attempts}/${maxAttempts}`;
+
+                // Update progress bar
+                const progressPercent = (attempts / maxAttempts) * 100;
+                document.getElementById(
+                    "crackProgressBarEl"
+                ).style.width = `${progressPercent}%`;
+
+                if (attempt === password) {
+                    document.getElementById("crackProgressBarEl").style.width = "100%";
+                    document.getElementById("crackProgressBarEl").style.background = "#0f0";
+
+                    // Success animation
+                    const passwordFormat = document.getElementById("passwordFormatEl");
+                    passwordFormat.textContent = password;
+                    passwordFormat.style.color = "#0f0";
+
+                    setTimeout(() => {
+                        gameScreen.style.display = "none";
+                        passwordSuccessful();
+                        gameState.isProcessing = false;
+                    }, 1500);
+                } else {
+                    // Provide feedback on incorrect password
+                    document.getElementById("passwordInputEl").value = "";
+                    document.getElementById("passwordInputEl").style.borderColor = "#f00";
+
+                    // Reveal a character for helping
+                    if (attempts < maxAttempts) {
+                        let formatChars = document
+                            .getElementById("passwordFormatEl")
+                            .textContent.split(" ");
+                        let randomIndex;
+                        do {
+                            randomIndex = Math.floor(Math.random() * password.length);
+                        } while (formatChars[randomIndex] !== "□");
+
+                        formatChars[randomIndex] = password[randomIndex];
+                        document.getElementById("passwordFormatEl").textContent =
+                            formatChars.join(" ");
+                    }
+
+                    setTimeout(() => {
+                        document.getElementById("passwordInputEl").style.borderColor = "#0f0";
+                    }, 500);
+
+                    // If max attempts reached, fail
+                    if (attempts >= maxAttempts) {
+                        setTimeout(() => {
+                            gameScreen.style.display = "none";
+                            writeToTerminal(
+                                "Password cracking failed. Maximum attempts reached.",
+                                "error-text"
+                            );
+                            writeToTerminal(
+                                "System security alerted. Try a different approach.",
+                                "warning-text"
+                            );
+                            gameState.isProcessing = false;
+                        }, 1000);
+                    }
+                }
+            });
+
+            document.getElementById("hintBtn").addEventListener("click", () => {
+                const betterHint = generateBetterPasswordHint(password);
+                document.getElementById("passwordHintEl").textContent = betterHint;
+                document.getElementById("hintBtn").disabled = true;
+                document.getElementById("hintBtn").style.opacity = "0.5";
+            });
+
+            document.getElementById("cancelCrackBtn").addEventListener("click", () => {
+                gameScreen.style.display = "none";
+                writeToTerminal("Password cracking attempt aborted.", "warning-text");
+                gameState.isProcessing = false;
+            });
+
+            // Allow Enter key to submit
+            document
+                .getElementById("passwordInputEl")
+                .addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        document.getElementById("attemptBtn").click();
+                    } else if (e.key === "Escape") {
+                        document.getElementById("cancelCrackBtn").click();
+                    }
+                });
+        }
+
+        // Password crack was successful
+        function passwordSuccessful() {
+            writeToTerminal(
+                "╔══════════════════════════════════════════════╗",
+                "success-text"
+            );
+            writeToTerminal(
+                "║              PASSWORD CRACKED!               ║",
+                "success-text"
+            );
+            writeToTerminal(
+                "╚══════════════════════════════════════════════╝",
+                "success-text"
+            );
+            writeToTerminal(
+                `System password: ${gameState.currentSystem.password}`,
+                "success-text"
+            );
+            writeToTerminal("Full access granted to the system.", "success-text");
+            gameState.currentSystem.hacked = true;
+
+            // Level up if this is first time hacking this system
+            if (!gameState.completedSystems.includes(gameState.currentSystem.id)) {
+                gameState.completedSystems.push(gameState.currentSystem.id);
+                gameState.level = Math.max(
+                    gameState.level,
+                    gameState.currentSystem.securityLevel + 1
+                );
+                gameState.skillPoints++;
+
+                writeToTerminal(
+                    `LEVEL UP! Your hacking level is now ${gameState.level}`,
+                    "success-text"
+                );
+                writeToTerminal(
+                    `You earned 1 skill point! Type 'skills' to view and upgrade your skills.`,
+                    "success-text"
+                );
+
+                // Random chance to discover a new IP
+                if (Math.random() < 0.5) {
+                    const unhackedSystems = systems.filter(
+                        (s) => !s.hacked && !gameState.discoveredIPs.includes(s.ip)
+                    );
+                    if (unhackedSystems.length > 0) {
+                        const randomSystem =
+                            unhackedSystems[Math.floor(Math.random() * unhackedSystems.length)];
+                        gameState.discoveredIPs.push(randomSystem.ip);
+                        writeToTerminal(
+                            `Found reference to another system: ${randomSystem.ip}`,
+                            "system-text"
+                        );
+                    }
+                }
+            }
+
+            updatePrompt();
+            updateStatus();
+
+            if (gameState.hints) {
+                writeToTerminal(
+                    "HINT: Use 'ls' to list files or 'ps' to see running processes",
+                    "hint-text"
+                );
+            }
+        }
+
+        // Generate password hint
+        function generatePasswordHint(password) {
+            const length = password.length;
+            let hint = `Length: ${length} | Contains: `;
+
+            let hasUppercase = false;
+            let hasLowercase = false;
+            let hasNumbers = false;
+            let hasSpecial = false;
+
+            for (let i = 0; i < length; i++) {
+                const char = password.charAt(i);
+                if (/[A-Z]/.test(char)) hasUppercase = true;
+                else if (/[a-z]/.test(char)) hasLowercase = true;
+                else if (/[0-9]/.test(char)) hasNumbers = true;
+                else hasSpecial = true;
+            }
+
+            let charTypes = [];
+            if (hasUppercase) charTypes.push("uppercase letters");
+            if (hasLowercase) charTypes.push("lowercase letters");
+            if (hasNumbers) charTypes.push("numbers");
+            if (hasSpecial) charTypes.push("special characters");
+
+            hint += charTypes.join(", ");
+
+            return hint;
+        }
+
+        // Generate better password hint
+        function generateBetterPasswordHint(password) {
+            const length = password.length;
+            let hint = `First char: ${password[0]}, Last char: ${password[length - 1]
+                } | Pattern: `;
+
+            for (let i = 0; i < length; i++) {
+                const char = password.charAt(i);
+                if (i === 0 || i === length - 1 || i % 3 === 0) {
+                    hint += char;
+                } else {
+                    if (/[0-9]/.test(char)) hint += "#";
+                    else if (/[A-Z]/.test(char)) hint += "A";
+                    else if (/[a-z]/.test(char)) hint += "a";
+                    else hint += "*";
+                }
+            }
+
+            return hint;
+        }
+
+        // List files on the current system
+        function listFiles(option) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            const showHidden = option === "-a";
+
+            writeToTerminal(
+                `Directory listing of ${gameState.currentSystem.name}:`,
+                "system-text"
+            );
+
+            if (
+                !gameState.currentSystem.files ||
+                gameState.currentSystem.files.length === 0
+            ) {
+                writeToTerminal("  No files found.", "");
+                return;
+            }
+
+            writeToTerminal("╔════════════════════════════════════════╗", "");
+            writeToTerminal("║  FILENAME                              ║", "");
+            writeToTerminal("╠════════════════════════════════════════╣", "");
+
+            gameState.currentSystem.files.forEach((file) => {
+                const isHidden = file.name.startsWith(".");
+                if (!isHidden || showHidden) {
+                    const className = isHidden ? "warning-text" : "filename-text";
+                    writeToTerminal(`║  ${file.name.padEnd(36)} ║`, className);
+                }
+            });
+
+            writeToTerminal("╚════════════════════════════════════════╝", "");
+
+            if (
+                !showHidden &&
+                gameState.currentSystem.files.some((f) => f.name.startsWith("."))
+            ) {
+                if (gameState.hints) {
+                    writeToTerminal(
+                        "HINT: Use 'ls -a' to show hidden files (those starting with .)",
+                        "hint-text"
+                    );
+                }
+            }
+        }
+
+        // Read file contents
+        function readFile(filename) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!filename) {
+                writeToTerminal(
+                    "Please specify a file to read. Usage: cat [filename]",
+                    "error-text"
+                );
+                return;
+            }
+
+            const file = gameState.currentSystem.files.find((f) => f.name === filename);
+
+            if (!file) {
+                writeToTerminal(`File not found: ${filename}`, "error-text");
+                return;
+            }
+
+            writeToTerminal(
+                `╔══ File: ${filename} ${"═".repeat(Math.max(0, 36 - filename.length))}╗`,
+                "system-text"
+            );
+            writeToTerminal(
+                file.content
+                    .split("\n")
+                    .map((line) => `║ ${line}`)
+                    .join("\n"),
+                ""
+            );
+            writeToTerminal(`╚${"═".repeat(42)}╝`, "system-text");
+
+            // Special case for discovering connections in files
+            if (file.content.includes("IP:") || file.content.includes("ip:")) {
+                const ipMatch = file.content.match(
+                    /(?:IP|ip):\s*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/
+                );
+                if (ipMatch && ipMatch[1]) {
+                    const foundIP = ipMatch[1];
+                    if (!gameState.discoveredIPs.includes(foundIP)) {
+                        gameState.discoveredIPs.push(foundIP);
+                        writeToTerminal(
+                            `Found IP address in file: ${foundIP}`,
+                            "success-text"
+                        );
+                        if (gameState.hints) {
+                            writeToTerminal(
+                                `HINT: Try connecting to this IP with 'connect ${foundIP}'`,
+                                "hint-text"
+                            );
+                        }
+                    }
+                }
+            }
+
+            // Special case for password discovery
+            if (
+                file.content.includes("password") ||
+                file.content.includes("Password")
+            ) {
+                const passwordMatch = file.content.match(
+                    /(?:password|Password).*?[is:|:]\s*([^\s\n]+)/
+                );
+                if (passwordMatch && passwordMatch[1]) {
+                    if (gameState.hints) {
+                        writeToTerminal(
+                            `HINT: The file appears to contain a password. This might be useful for another system.`,
+                            "hint-text"
+                        );
+                    }
+                }
+            }
+        }
+
+        // Exploit a vulnerability
+        function exploitSystem(vulnerability) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "This system has already been compromised.",
+                    "success-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            if (!vulnerability) {
+                writeToTerminal(
+                    "Please specify a vulnerability to exploit.",
+                    "error-text"
+                );
+                writeToTerminal("Available vulnerabilities:", "system-text");
+
+                writeToTerminal(
+                    "╔═════════════════════════════════════════════════════════════════════╗",
+                    ""
+                );
+                writeToTerminal(
+                    "║  VULNERABILITY         │  DESCRIPTION                               ║",
+                    ""
+                );
+                writeToTerminal(
+                    "╠═════════════════════════════════════════════════════════════════════╣",
+                    ""
+                );
+
+                Object.keys(vulnerabilities).forEach((v) => {
+                    const vuln = vulnerabilities[v];
+                    writeToTerminal(
+                        `║  ${v.padEnd(22)}│  ${vuln.description
+                            .substring(0, 40)
+                            .padEnd(40)} ║`,
+                        ""
+                    );
+                });
+
+                writeToTerminal(
+                    "╚═════════════════════════════════════════════════════════════════════╝",
+                    ""
+                );
+                writeToTerminal("Usage: exploit [vulnerability]", "system-text");
+                return;
+            }
+
+            // Check if this vulnerability exists
+            if (!Object.keys(vulnerabilities).includes(vulnerability)) {
+                writeToTerminal(`Unknown vulnerability: ${vulnerability}`, "error-text");
+                return;
+            }
+
+            // Check if the system has this vulnerability
+            if (!gameState.currentSystem.vulnerabilities.includes(vulnerability)) {
+                writeToTerminal(
+                    `Vulnerability '${vulnerability}' not found on this system.`,
+                    "error-text"
+                );
+                writeToTerminal(
+                    "Try scanning the system first or check system files for clues.",
+                    "system-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(`Attempting to exploit ${vulnerability}...`, "system-text");
+
+            // Create animated progress for exploitation
+            const vulnInfo = vulnerabilities[vulnerability];
+            let progress = 0;
+            let exploitStatus = "";
+
+            // Create a progress bar for exploit
+            const progressBarContainer = document.createElement("div");
+            progressBarContainer.className = "progress-bar";
+            const progressBarFill = document.createElement("div");
+            progressBarFill.className = "progress-bar-fill";
+            progressBarContainer.appendChild(progressBarFill);
+
+            terminalOutput.appendChild(progressBarContainer);
+
+            // Create status line
+            const statusLine = document.createElement("div");
+            statusLine.className = "system-text";
+            terminalOutput.appendChild(statusLine);
+
+            // Simulate exploit progress
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 5 + 5;
+                progressBarFill.style.width = `${Math.min(progress, 100)}%`;
+
+                // Update status messages
+                if (progress < 30) {
+                    exploitStatus = "Analyzing vulnerability...";
+                } else if (progress < 60) {
+                    exploitStatus = "Preparing exploit payload...";
+                } else if (progress < 90) {
+                    exploitStatus = "Executing exploit...";
+                } else {
+                    exploitStatus = "Finalizing exploitation...";
+                }
+
+                statusLine.textContent = exploitStatus;
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    gameState.activeSessions = gameState.activeSessions.filter(
+                        (session) => session.id !== progressInterval
+                    );
+                    progressBarContainer.remove();
+                    statusLine.remove();
+
+                    // Calculate success based on vulnerability and skills
+                    const baseSuccessChance = vulnInfo.exploitSuccess;
+                    const skillBonus =
+                        gameState.skills.networking * 0.05 + gameState.skills.cracking * 0.05;
+                    const successChance = Math.min(0.95, baseSuccessChance + skillBonus);
+
+                    if (Math.random() < successChance) {
+                        writeToTerminal(
+                            `┌─[ EXPLOIT SUCCESSFUL ]───────────────────────┐`,
+                            "success-text"
+                        );
+                        writeToTerminal(
+                            `│ Successfully exploited ${vulnerability.padEnd(24)}│`,
+                            "success-text"
+                        );
+                        writeToTerminal(
+                            `│ System security bypassed                     │`,
+                            "success-text"
+                        );
+                        writeToTerminal(
+                            `└───────────────────────────────────────────────┘`,
+                            "success-text"
+                        );
+
+                        gameState.currentSystem.hacked = true;
+
+                        // Level up if this is first time hacking this system
+                        if (
+                            !gameState.completedSystems.includes(gameState.currentSystem.id)
+                        ) {
+                            gameState.completedSystems.push(gameState.currentSystem.id);
+                            gameState.level = Math.max(
+                                gameState.level,
+                                gameState.currentSystem.securityLevel + 1
+                            );
+                            gameState.skillPoints++;
+
+                            writeToTerminal(
+                                `LEVEL UP! Your hacking level is now ${gameState.level}`,
+                                "success-text"
+                            );
+                            writeToTerminal(
+                                `You earned 1 skill point! Type 'skills' to view and upgrade your skills.`,
+                                "success-text"
+                            );
+                        }
+
+                        updatePrompt();
+                        updateStatus();
+                    } else {
+                        writeToTerminal(
+                            `┌─[ EXPLOIT FAILED ]─────────────────────────────┐`,
+                            "error-text"
+                        );
+                        writeToTerminal(
+                            `│ Failed to exploit ${vulnerability.padEnd(26)}│`,
+                            "error-text"
+                        );
+                        writeToTerminal(
+                            `│ System defenses blocked the attempt            │`,
+                            "error-text"
+                        );
+                        writeToTerminal(
+                            `└───────────────────────────────────────────────┘`,
+                            "error-text"
+                        );
+
+                        writeToTerminal(
+                            "Try a different approach or use 'crack' to brute force the password.",
+                            "system-text"
+                        );
+                    }
+
+                    gameState.isProcessing = false;
+                }
+            }, 200);
+
+            gameState.activeSessions.push({ type: "interval", id: progressInterval });
+        }
+
+        // Show current status
+        function showStatus() {
+            writeToTerminal(
+                "┌─[ SYSTEM STATUS ]───────────────────────┐",
+                "system-text"
+            );
+            writeToTerminal(
+                `│ Hacker Level: ${gameState.level.toString().padEnd(27)}│`,
+                ""
+            );
+            writeToTerminal(
+                `│ Skill Points: ${gameState.skillPoints.toString().padEnd(27)}│`,
+                ""
+            );
+            writeToTerminal(
+                `│ Reputation: ${gameState.reputation.toString().padEnd(29)}│`,
+                ""
+            );
+            writeToTerminal(
+                `│ Connected: ${(gameState.connected ? "Yes" : "No").padEnd(30)}│`,
+                ""
+            );
+
+            if (gameState.connected) {
+                writeToTerminal(
+                    `│ Current System: ${gameState.currentSystem.name.padEnd(24)}│`,
+                    ""
+                );
+                writeToTerminal(
+                    `│ System IP: ${gameState.currentSystem.ip.padEnd(30)}│`,
+                    ""
+                );
+                writeToTerminal(
+                    `│ System Hacked: ${(gameState.currentSystem.hacked
+                        ? "Yes"
+                        : "No"
+                    ).padEnd(27)}│`,
+                    ""
+                );
+            }
+
+            writeToTerminal(
+                `│ Systems Compromised: ${gameState.completedSystems.length}/${systems.length
+                }${" ".repeat(17)}│`,
+                ""
+            );
+            writeToTerminal(
+                "└───────────────────────────────────────────┘",
+                "system-text"
+            );
+
+            if (gameState.completedSystems.length === systems.length) {
+                writeToTerminal(
+                    "╔══════════════════════════════════════════════╗",
+                    "success-text"
+                );
+                writeToTerminal(
+                    "║      CONGRATULATIONS! GAME COMPLETED!        ║",
+                    "success-text"
+                );
+                writeToTerminal(
+                    "║  You've compromised all systems in the game! ║",
+                    "success-text"
+                );
+                writeToTerminal(
+                    "╚══════════════════════════════════════════════╝",
+                    "success-text"
+                );
+            }
+        }
+
+        // Perform an nmap scan on a specific IP
+        function nmapScan(ip) {
+            if (!ip) {
+                writeToTerminal(
+                    "Please specify an IP address to scan. Usage: nmap [ip]",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            const system =
+                systems.find((s) => s.ip === ip) ||
+                hiddenSystems.find((s) => s.ip === ip);
+
+            if (!system) {
+                writeToTerminal(`System with IP ${ip} not found.`, "error-text");
+                writeToTerminal(
+                    "The IP might be unreachable or not exist on this network.",
+                    "system-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(`Running advanced port scan on ${ip}...`, "system-text");
+
+            // Create a cool ASCII progress bar
+            let progress = 0;
+            let statusLine = null;
+
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                const progressBar =
+                    "[" + "█".repeat(progress / 5) + "░".repeat(20 - progress / 5) + "]";
+
+                // Update or create the status line
+                if (statusLine) {
+                    statusLine.textContent = `Scan progress: ${progressBar} ${progress}%`;
+                } else {
+                    statusLine = document.createElement("div");
+                    statusLine.className = "system-text";
+                    statusLine.textContent = `Scan progress: ${progressBar} ${progress}%`;
+                    terminalOutput.appendChild(statusLine);
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                }
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    gameState.activeSessions = gameState.activeSessions.filter(
+                        (session) => session.id !== progressInterval
+                    );
+
+                    // Remove the progress line
+                    if (statusLine) {
+                        statusLine.remove();
+                    }
+
+                    writeToTerminal(
+                        "╔═══════════════════ NMAP SCAN RESULTS ════════════════════╗",
+                        "success-text"
+                    );
+                    writeToTerminal(`║ Target: ${system.ip.padEnd(47)}║`, "system-text");
+                    writeToTerminal(`║ Host: ${system.name.padEnd(48)}║`, "system-text");
+                    writeToTerminal(
+                        "║ Status: Up                                               ║",
+                        "system-text"
+                    );
+                    writeToTerminal(
+                        "╠══════════════════════════════════════════════════════════╣",
+                        ""
+                    );
+                    writeToTerminal(
+                        "║ PORT    │ STATE  │ SERVICE                               ║",
+                        ""
+                    );
+                    writeToTerminal(
+                        "╠══════════════════════════════════════════════════════════╣",
+                        ""
+                    );
+
+                    if (system.ports.length === 0) {
+                        writeToTerminal(
+                            "║ No open ports found                                        ║",
+                            ""
+                        );
+                    } else {
+                        system.ports.forEach((port) => {
+                            let service = "";
+                            if (system.services && system.services[port]) {
+                                service = system.services[port];
+                            } else {
+                                service = getServiceName(port);
+                            }
+                            writeToTerminal(
+                                `║ ${port.toString().padEnd(7)}│ open   │ ${service.padEnd(36)}║`,
+                                ""
+                            );
+                        });
+                    }
+
+                    writeToTerminal(
+                        "╠══════════════════════════════════════════════════════════╣",
+                        ""
+                    );
+                    writeToTerminal(
+                        "║ OS Detection: Linux/Unix-based                           ║",
+                        "system-text"
+                    );
+
+                    // Detect and show some vulnerabilities
+                    if (system.vulnerabilities.length > 0) {
+                        const vulnToShow =
+                            system.vulnerabilities[
+                            Math.floor(Math.random() * system.vulnerabilities.length)
+                            ];
+                        const vulnInfo = vulnerabilities[vulnToShow];
+                        writeToTerminal(
+                            "╠══════════════════════════════════════════════════════════╣",
+                            ""
+                        );
+                        writeToTerminal(
+                            "║ VULNERABILITIES DETECTED                                 ║",
+                            "warning-text"
+                        );
+                        writeToTerminal(
+                            `║ ${vulnToShow}: ${vulnInfo.description
+                                .substring(0, 34)
+                                .padEnd(34)}  ║`,
+                            "warning-text"
+                        );
+                    }
+
+                    writeToTerminal(
+                        "╚══════════════════════════════════════════════════════════╝",
+                        ""
+                    );
+
+                    // If this system wasn't already in discovered IPs, add it
+                    if (!gameState.discoveredIPs.includes(system.ip)) {
+                        gameState.discoveredIPs.push(system.ip);
+                    }
+
+                    if (gameState.hints) {
+                        writeToTerminal(
+                            `HINT: You can now connect to this system with 'connect ${system.ip}'`,
+                            "hint-text"
+                        );
+                    }
+
+                    gameState.isProcessing = false;
+                }
+            }, 100);
+
+            gameState.activeSessions.push({ type: "interval", id: progressInterval });
+        }
+
+        // Brute force password
+        function bruteForce() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "This system has already been compromised.",
+                    "success-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal("Initiating brute force attack...", "system-text");
+            writeToTerminal("Trying common passwords...", "system-text");
+
+            // Check if honeypot
+            if (gameState.currentSystem.id === "honeypot") {
+                setTimeout(() => {
+                    writeToTerminal("WARNING: INTRUSION DETECTION TRIGGERED", "error-text");
+                    writeToTerminal(
+                        "This system appears to be a honeypot designed to trap hackers!",
+                        "error-text"
+                    );
+                    writeToTerminal(
+                        "Your connection has been logged. Reputation damaged.",
+                        "error-text"
+                    );
+                    gameState.reputation -= 10;
+                    disconnectFromSystem();
+                    gameState.isProcessing = false;
+                }, 2000);
+                return;
+            }
+
+            // Enhanced brute force minigame
+            gameScreen.style.display = "block";
+            gameScreen.innerHTML = `
+      <div style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:20px; background-color:#000;">
+        <h2 style="color:#0f0; margin-bottom:20px;">BRUTE FORCE ATTACK MODULE</h2>
+        <div style="width:80%; max-width:600px; text-align:center; background:#111; padding:20px; border:1px solid #0f0; border-radius:5px;">
+          <div style="color:#0f0; margin-bottom:15px; text-align:left;">
+            <p>TARGET: ${gameState.currentSystem.name}</p>
+            <p>SECURITY LEVEL: ${gameState.currentSystem.difficulty}</p>
+            <p>EFFICIENCY: +${gameState.skills.cracking * 10}% speed</p>
+          </div>
+          
+          <div style="background:#000; padding:10px; border:1px solid #0f0; font-family:monospace; height:200px; overflow-y:auto; text-align:left; margin-bottom:15px;">
+            <div id="bruteForceOutputEl" style="color:#0f0;"></div>
+          </div>
+          
+          <div style="margin-bottom:10px; color:#0f0;">Password Characters Found:</div>
+          <div id="foundCharsEl" style="font-family:monospace; letter-spacing:3px; background:#000; padding:10px; color:#0f0; font-size:20px; margin-bottom:15px;"></div>
+          
+          <div style="width:100%; height:20px; background:#222; margin:15px 0;">
+            <div id="progressBarEl" style="height:100%; width:0%; background:linear-gradient(to right, #f00, #ff0, #0f0); transition:width 0.3s;"></div>
+          </div>
+          
+          <div style="display:flex; justify-content:space-between; margin-top:20px;">
+            <button id="startBruteBtn" style="background:#0f0; color:#000; border:none; padding:10px 20px; cursor:pointer; font-weight:bold;">START ATTACK</button>
+            <button id="boostBtn" style="background:#00f; color:#fff; border:none; padding:10px 20px; cursor:pointer; margin:0 10px;">BOOST (+25%)</button>
+            <button id="cancelBruteBtn" style="background:#500; color:#fff; border:none; padding:10px 20px; cursor:pointer;">ABORT</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+            const password = gameState.currentSystem.password;
+            let foundChars = "_".repeat(password.length);
+            document.getElementById("foundCharsEl").textContent = foundChars;
+
+            const bruteForceOutput = document.getElementById("bruteForceOutputEl");
+
+            document.getElementById("startBruteBtn").addEventListener("click", () => {
+                document.getElementById("startBruteBtn").disabled = true;
+                document.getElementById("startBruteBtn").style.opacity = "0.5";
+
+                bruteForceOutput.innerHTML += "Initializing brute force attack...<br>";
+                bruteForceOutput.innerHTML += "Generating password combinations...<br>";
+
+                let progress = 0;
+                let foundPositions = new Set();
+                let charArray = foundChars.split("");
+
+                // Calculate speed based on skills
+                let speed = 300 - gameState.skills.cracking * 30;
+                speed = Math.max(50, speed); // Min 50ms
+
+                let bruteForceInterval = setInterval(() => {
+                    // Calculate progress based on number of characters found
+                    progress = (foundPositions.size / password.length) * 100;
+                    document.getElementById("progressBarEl").style.width = `${progress}%`;
+
+                    // Randomly find a character
+                    if (foundPositions.size < password.length) {
+                        let randomPosition;
+                        do {
+                            randomPosition = Math.floor(Math.random() * password.length);
+                        } while (foundPositions.has(randomPosition));
+
+                        foundPositions.add(randomPosition);
+                        charArray[randomPosition] = password.charAt(randomPosition);
+                        foundChars = charArray.join("");
+                        document.getElementById("foundCharsEl").textContent = foundChars;
+
+                        bruteForceOutput.innerHTML += `Character found at position ${randomPosition + 1
+                            }: ${password.charAt(randomPosition)}<br>`;
+                        bruteForceOutput.scrollTop = bruteForceOutput.scrollHeight;
+                    }
+
+                    // Check if all characters are found
+                    if (foundPositions.size === password.length) {
+                        clearInterval(bruteForceInterval);
+                        gameState.activeSessions = gameState.activeSessions.filter(
+                            (session) => session.id !== bruteForceInterval
+                        );
+
+                        bruteForceOutput.innerHTML += "Password successfully cracked!<br>";
+                        bruteForceOutput.innerHTML += `Complete password: ${password}<br>`;
+
+                        document.getElementById("progressBarEl").style.width = "100%";
+                        document.getElementById("progressBarEl").style.background = "#0f0";
+
+                        setTimeout(() => {
+                            gameScreen.style.display = "none";
+                            passwordSuccessful();
+                            gameState.isProcessing = false;
+                        }, 1500);
+                    }
+                }, speed);
+
+                gameState.activeSessions.push({
+                    type: "interval",
+                    id: bruteForceInterval,
+                });
+
+                document.getElementById("boostBtn").addEventListener("click", () => {
+                    const boostBtn = document.getElementById("boostBtn");
+                    boostBtn.disabled = true;
+                    boostBtn.style.opacity = "0.5";
+
+                    bruteForceOutput.innerHTML += "BOOSTING ATTACK SPEED BY 25%!<br>";
+                    clearInterval(bruteForceInterval);
+                    gameState.activeSessions = gameState.activeSessions.filter(
+                        (session) => session.id !== bruteForceInterval
+                    );
+
+                    // Boost speed by 25%
+                    speed = Math.max(50, Math.floor(speed * 0.75));
+
+                    // Restart interval with boosted speed
+                    bruteForceInterval = setInterval(() => {
+                        // Same logic as before but with faster speed
+                        progress = (foundPositions.size / password.length) * 100;
+                        document.getElementById("progressBarEl").style.width = `${progress}%`;
+
+                        if (foundPositions.size < password.length) {
+                            let randomPosition;
+                            do {
+                                randomPosition = Math.floor(Math.random() * password.length);
+                            } while (foundPositions.has(randomPosition));
+
+                            foundPositions.add(randomPosition);
+                            charArray[randomPosition] = password.charAt(randomPosition);
+                            foundChars = charArray.join("");
+                            document.getElementById("foundCharsEl").textContent = foundChars;
+
+                            bruteForceOutput.innerHTML += `Character found at position ${randomPosition + 1
+                                }: ${password.charAt(randomPosition)}<br>`;
+                            bruteForceOutput.scrollTop = bruteForceOutput.scrollHeight;
+                        }
+
+                        if (foundPositions.size === password.length) {
+                            clearInterval(bruteForceInterval);
+                            gameState.activeSessions = gameState.activeSessions.filter(
+                                (session) => session.id !== bruteForceInterval
+                            );
+
+                            bruteForceOutput.innerHTML += "Password successfully cracked!<br>";
+                            bruteForceOutput.innerHTML += `Complete password: ${password}<br>`;
+
+                            document.getElementById("progressBarEl").style.width = "100%";
+                            document.getElementById("progressBarEl").style.background = "#0f0";
+
+                            setTimeout(() => {
+                                gameScreen.style.display = "none";
+                                passwordSuccessful();
+                                gameState.isProcessing = false;
+                            }, 1500);
+                        }
+                    }, speed);
+
+                    gameState.activeSessions.push({
+                        type: "interval",
+                        id: bruteForceInterval,
+                    });
+                });
+            });
+
+            document.getElementById("cancelBruteBtn").addEventListener("click", () => {
+                cleanupActiveSessions(); // Clear any running intervals
+                gameScreen.style.display = "none";
+                writeToTerminal("Brute force attack aborted.", "warning-text");
+                gameState.isProcessing = false;
+            });
+
+            // Handle keyboard shortcuts
+            document.addEventListener("keydown", function bruteForceKeyHandler(e) {
+                if (e.key === "Escape") {
+                    document.getElementById("cancelBruteBtn").click();
+                    document.removeEventListener("keydown", bruteForceKeyHandler);
+                }
+            });
+        }
+
+        // Solve security puzzle
+        function solvePuzzle() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "This system has already been compromised.",
+                    "success-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal("Initiating security puzzle bypass...", "system-text");
+
+            // Check if honeypot
+            if (gameState.currentSystem.id === "honeypot") {
+                setTimeout(() => {
+                    writeToTerminal("WARNING: INTRUSION DETECTION TRIGGERED", "error-text");
+                    writeToTerminal(
+                        "This system appears to be a honeypot designed to trap hackers!",
+                        "error-text"
+                    );
+                    writeToTerminal(
+                        "Your connection has been logged. Reputation damaged.",
+                        "error-text"
+                    );
+                    gameState.reputation -= 10;
+                    disconnectFromSystem();
+                    gameState.isProcessing = false;
+                }, 2000);
+                return;
+            }
+
+            // Enhanced puzzle minigame - connect the circuits
+            gameScreen.style.display = "block";
+            gameScreen.innerHTML = `
+      <div style="height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:20px; background-color:#000;">
+        <h2 style="color:#0f0; margin-bottom:10px;">SECURITY CIRCUIT PUZZLE</h2>
+        <p style="color:#0f0; margin-bottom:20px;">Connect all circuits to bypass the security system. Click pieces to rotate them.</p>
+        
+        <div style="background:#111; padding:20px; border:1px solid #0f0; border-radius:5px; margin-bottom:20px;">
+          <div id="puzzleGridEl" style="display:grid; grid-template-columns:repeat(4, 80px); grid-template-rows:repeat(4, 80px); gap:5px; margin-bottom:20px;"></div>
+          
+          <div style="text-align:center; margin-top:10px;">
+            <p style="color:#0f0; margin-bottom:10px;">Goal: Create a continuous path from ⚡ to 🔒</p>
+            <div style="width:100%; height:20px; background:#222; margin:10px 0;">
+              <div id="puzzleProgressBarEl" style="height:100%; width:0%; background:linear-gradient(to right, #f00, #ff0, #0f0); transition:width 0.3s;"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display:flex; gap:10px;">
+          <button id="checkBtn" style="background:#0f0; color:#000; border:none; padding:8px 15px; cursor:pointer; font-weight:bold;">CHECK SOLUTION</button>
+          <button id="resetPuzzleBtn" style="background:#00f; color:#fff; border:none; padding:8px 15px; cursor:pointer;">RESET</button>
+          <button id="hintPuzzleBtn" style="background:#f90; color:#000; border:none; padding:8px 15px; cursor:pointer;">HINT</button>
+          <button id="cancelPuzzleBtn" style="background:#500; color:#fff; border:none; padding:8px 15px; cursor:pointer;">CANCEL</button>
+        </div>
+      </div>
+    `;
+
+            const puzzleGrid = document.getElementById("puzzleGridEl");
+
+            // Create puzzle pieces
+            const pieces = [
+                "╋",
+                "━",
+                "┃",
+                "┏",
+                "┓",
+                "┗",
+                "┛",
+                "┣",
+                "┫",
+                "┳",
+                "┻",
+                "╋",
+                "━",
+                "┃",
+                "┏",
+                "┓",
+            ];
+
+            // Define specific start and end points
+            const startPos = 0; // Top-left
+            const endPos = 15; // Bottom-right
+
+            // Shuffle middle pieces (keeping start and end fixed)
+            let middlePieces = pieces.slice(2);
+            middlePieces.sort(() => Math.random() - 0.5);
+            pieces[0] = "⚡"; // Start
+            pieces[15] = "🔒"; // End
+
+            // Create the solution path (this is a simplified example)
+            const solution = [0, 1, 2, 6, 10, 14, 15]; // Example path from start to end
+
+            // Add pieces to grid
+            for (let i = 0; i < 16; i++) {
+                const piece = document.createElement("div");
+                piece.style.cssText =
+                    "width:80px; height:80px; background-color:#111; color:#0f0; font-size:40px; display:flex; justify-content:center; align-items:center; cursor:pointer; user-select:none;";
+
+                // Special styling for start and end
+                if (i === startPos) {
+                    piece.textContent = "⚡";
+                    piece.style.backgroundColor = "#550";
+                } else if (i === endPos) {
+                    piece.textContent = "🔒";
+                    piece.style.backgroundColor = "#055";
+                } else {
+                    piece.textContent = i < 2 ? pieces[i] : middlePieces[i - 2];
+                }
+
+                piece.dataset.index = i;
+                if (i !== startPos && i !== endPos) {
+                    piece.onclick = () => rotatePiece(piece);
+                }
+                puzzleGrid.appendChild(piece);
+            }
+
+            // Track connections
+            let connections = new Set([startPos]);
+
+            // Add event listeners
+            document.getElementById("checkBtn").addEventListener("click", () => {
+                // Check if there's a valid path
+                let pathValid = checkPath();
+                updateProgress();
+
+                if (pathValid) {
+                    document.getElementById("puzzleProgressBarEl").style.width = "100%";
+                    document.getElementById("puzzleProgressBarEl").style.background =
+                        "#0f0";
+
+                    // Highlight the correct path
+                    solution.forEach((pos) => {
+                        puzzleGrid.children[pos].style.backgroundColor = "#050";
+                    });
+
+                    setTimeout(() => {
+                        gameScreen.style.display = "none";
+                        writeToTerminal("SECURITY CIRCUIT BYPASSED!", "success-text");
+                        writeToTerminal(
+                            "Security system disabled. Full access granted.",
+                            "success-text"
+                        );
+                        gameState.currentSystem.hacked = true;
+
+                        // Level up if this is first time hacking this system
+                        if (
+                            !gameState.completedSystems.includes(gameState.currentSystem.id)
+                        ) {
+                            gameState.completedSystems.push(gameState.currentSystem.id);
+                            gameState.level = Math.max(
+                                gameState.level,
+                                gameState.currentSystem.securityLevel + 1
+                            );
+                            gameState.skillPoints++;
+
+                            writeToTerminal(
+                                `LEVEL UP! Your hacking level is now ${gameState.level}`,
+                                "success-text"
+                            );
+                            writeToTerminal(
+                                `You earned 1 skill point! Type 'skills' to view and upgrade your skills.`,
+                                "success-text"
+                            );
+                        }
+
+                        updatePrompt();
+                        updateStatus();
+                        gameState.isProcessing = false;
+                    }, 1500);
+                } else {
+                    writeToTerminal("Puzzle solution incorrect. Try again.", "error-text");
+                }
+            });
+
+            document.getElementById("resetPuzzleBtn").addEventListener("click", () => {
+                // Reset all pieces except start and end
+                for (let i = 0; i < 16; i++) {
+                    if (i !== startPos && i !== endPos) {
+                        puzzleGrid.children[i].style.backgroundColor = "#111";
+                        // Randomize orientation
+                        const rotations = Math.floor(Math.random() * 4);
+                        for (let j = 0; j < rotations; j++) {
+                            rotatePiece(puzzleGrid.children[i]);
+                        }
+                    }
+                }
+                connections = new Set([startPos]);
+                updateProgress();
+            });
+
+            document.getElementById("hintPuzzleBtn").addEventListener("click", () => {
+                // Give a hint by correctly orienting one piece in the solution
+                let unsolvedPieces = solution.filter(
+                    (pos) => pos !== startPos && pos !== endPos && !connections.has(pos)
+                );
+
+                if (unsolvedPieces.length > 0) {
+                    const hintPos = unsolvedPieces[0];
+                    const correctPiece = getCorrectPieceForPosition(hintPos);
+
+                    // Set the piece to the correct orientation
+                    const piece = puzzleGrid.children[hintPos];
+                    piece.textContent = correctPiece;
+                    piece.style.backgroundColor = "#550";
+
+                    document.getElementById("hintPuzzleBtn").disabled = true;
+                    document.getElementById("hintPuzzleBtn").style.opacity = "0.5";
+
+                    updateProgress();
+                }
+            });
+
+            document.getElementById("cancelPuzzleBtn").addEventListener("click", () => {
+                gameScreen.style.display = "none";
+                writeToTerminal("Security puzzle attempt aborted.", "warning-text");
+                gameState.isProcessing = false;
+            });
+
+            // Handle keyboard shortcuts
+            document.addEventListener("keydown", function puzzleKeyHandler(e) {
+                if (e.key === "Escape") {
+                    document.getElementById("cancelPuzzleBtn").click();
+                    document.removeEventListener("keydown", puzzleKeyHandler);
+                }
+            });
+
+            // Check if path is valid
+            function checkPath() {
+                // This is a simplified check - in a real game, you'd trace the actual path
+                // through connected pieces
+
+                // For our simple example, we check if at least 5 pieces are correctly oriented
+                let correctPieces = 0;
+
+                for (let i = 0; i < solution.length; i++) {
+                    const pos = solution[i];
+                    if (pos === startPos || pos === endPos) {
+                        correctPieces++;
+                        continue;
+                    }
+
+                    const piece = puzzleGrid.children[pos];
+                    const correctPiece = getCorrectPieceForPosition(pos);
+
+                    if (piece.textContent === correctPiece) {
+                        correctPieces++;
+                    }
+                }
+
+                return correctPieces >= 5; // Consider it solved if at least 5 pieces are correct
+            }
+
+            // Get the correct piece for a position in the solution
+            function getCorrectPieceForPosition(pos) {
+                // This is a simplified example
+                const posIndex = solution.indexOf(pos);
+
+                if (posIndex === 0 || posIndex === solution.length - 1) {
+                    return pieces[pos]; // Start or end piece
+                }
+
+                const prev = solution[posIndex - 1];
+                const next = solution[posIndex + 1];
+
+                // Determine required connections based on previous and next positions
+                const needUp = prev === pos - 4 || next === pos - 4;
+                const needRight = prev === pos + 1 || next === pos + 1;
+                const needDown = prev === pos + 4 || next === pos + 4;
+                const needLeft = prev === pos - 1 || next === pos - 1;
+
+                // Return appropriate piece based on required connections
+                if (needUp && needRight && needDown && needLeft) return "╋";
+                if (needUp && needRight && needDown) return "┣";
+                if (needUp && needRight && needLeft) return "┻";
+                if (needUp && needDown && needLeft) return "┫";
+                if (needRight && needDown && needLeft) return "┳";
+                if (needUp && needDown) return "┃";
+                if (needRight && needLeft) return "━";
+                if (needUp && needRight) return "┗";
+                if (needUp && needLeft) return "┛";
+                if (needDown && needRight) return "┏";
+                if (needDown && needLeft) return "┓";
+
+                return "╋"; // Default fallback
+            }
+
+            // Update progress indicator
+            function updateProgress() {
+                // Count connected pieces
+                let connectedCount = 0;
+
+                for (let i = 0; i < solution.length; i++) {
+                    const pos = solution[i];
+                    const piece = puzzleGrid.children[pos];
+
+                    if (pos === startPos || connections.has(pos)) {
+                        connectedCount++;
+                    }
+                }
+
+                const progressPercent = (connectedCount / solution.length) * 100;
+                document.getElementById(
+                    "puzzleProgressBarEl"
+                ).style.width = `${progressPercent}%`;
+            }
+        }
+
+        // Rotate a puzzle piece
+        function rotatePiece(piece) {
+            const rotations = {
+                "━": "┃",
+                "┃": "━",
+                "┏": "┓",
+                "┓": "┛",
+                "┛": "┗",
+                "┗": "┏",
+                "┣": "┳",
+                "┳": "┫",
+                "┫": "┻",
+                "┻": "┣",
+                "╋": "╋",
+            };
+
+            piece.textContent = rotations[piece.textContent] || piece.textContent;
+
+            // Highlight the piece briefly
+            const originalColor = piece.style.backgroundColor;
+            piece.style.backgroundColor = "#050";
+            setTimeout(() => {
+                piece.style.backgroundColor = originalColor;
+            }, 200);
+        }
+
+        // Show skills and upgrades
+        function showSkills() {
+            writeToTerminal(
+                "┌─[ HACKER SKILLS ]─────────────────────────────┐",
+                "system-text"
+            );
+            writeToTerminal(
+                `│ Available Skill Points: ${gameState.skillPoints
+                    .toString()
+                    .padEnd(23)}│`,
+                ""
+            );
+            writeToTerminal("├───────────────────────────────────────────────┤", "");
+            writeToTerminal(
+                `│ Cracking: ${gameState.skills.cracking
+                } - Password and encryption breaking ${" ".repeat(7)}│`,
+                ""
+            );
+            writeToTerminal(
+                `│ Stealth: ${gameState.skills.stealth
+                } - Avoiding detection while hacking ${" ".repeat(7)}│`,
+                ""
+            );
+            writeToTerminal(
+                `│ Networking: ${gameState.skills.networking
+                } - Connection and scanning skills ${" ".repeat(8)}│`,
+                ""
+            );
+            writeToTerminal(
+                `│ Cryptography: ${gameState.skills.cryptography
+                } - Decoding encrypted data ${" ".repeat(9)}│`,
+                ""
+            );
+            writeToTerminal(
+                "└───────────────────────────────────────────────┘",
+                "system-text"
+            );
+
+            if (gameState.skillPoints > 0) {
+                writeToTerminal("Type one of the following to upgrade:", "system-text");
+                writeToTerminal(
+                    "  'skills cracking' - Improve password cracking speed and success rate",
+                    ""
+                );
+                writeToTerminal(
+                    "  'skills stealth' - Reduce chance of being detected",
+                    ""
+                );
+                writeToTerminal(
+                    "  'skills networking' - Improve scanning and connection capabilities",
+                    ""
+                );
+                writeToTerminal(
+                    "  'skills cryptography' - Better handling of encrypted files",
+                    ""
+                );
+            }
+        }
+
+        // Ping a remote system
+        function pingSystem(ip) {
+            if (!ip) {
+                writeToTerminal(
+                    "Please specify an IP address to ping. Usage: ping [ip]",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(`PING ${ip} (${ip}) 56(84) bytes of data.`, "system-text");
+
+            const system =
+                systems.find((s) => s.ip === ip) ||
+                hiddenSystems.find((s) => s.ip === ip);
+
+            if (!system) {
+                // No response
+                let timeout1 = setTimeout(() => {
+                    writeToTerminal(
+                        `64 bytes from ${ip}: icmp_seq=1 ttl=64 time=45.2 ms`,
+                        ""
+                    );
+                }, 500);
+                let timeout2 = setTimeout(() => {
+                    writeToTerminal("Request timeout for icmp_seq=2", "error-text");
+                }, 1500);
+                let timeout3 = setTimeout(() => {
+                    writeToTerminal("Request timeout for icmp_seq=3", "error-text");
+                }, 2500);
+                let timeout4 = setTimeout(() => {
+                    writeToTerminal("Request timeout for icmp_seq=4", "error-text");
+                }, 3500);
+                let timeout5 = setTimeout(() => {
+                    writeToTerminal(`--- ${ip} ping statistics ---`, "system-text");
+                    writeToTerminal(
+                        "4 packets transmitted, 1 received, 75% packet loss, time 3004ms",
+                        "error-text"
+                    );
+                    writeToTerminal(
+                        "rtt min/avg/max/mdev = 45.184/45.184/45.184/0.000 ms",
+                        ""
+                    );
+                    gameState.isProcessing = false;
+                }, 4000);
+
+                gameState.activeSessions.push({ type: "timeout", id: timeout1 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout2 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout3 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout4 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout5 });
+            } else {
+                // Response with random times
+                const times = [
+                    Math.round((Math.random() * 20 + 20) * 100) / 100,
+                    Math.round((Math.random() * 20 + 20) * 100) / 100,
+                    Math.round((Math.random() * 20 + 20) * 100) / 100,
+                    Math.round((Math.random() * 20 + 20) * 100) / 100,
+                ];
+
+                let timeout1 = setTimeout(() => {
+                    writeToTerminal(
+                        `64 bytes from ${ip}: icmp_seq=1 ttl=64 time=${times[0]} ms`,
+                        ""
+                    );
+                }, 500);
+                let timeout2 = setTimeout(() => {
+                    writeToTerminal(
+                        `64 bytes from ${ip}: icmp_seq=2 ttl=64 time=${times[1]} ms`,
+                        ""
+                    );
+                }, 1000);
+                let timeout3 = setTimeout(() => {
+                    writeToTerminal(
+                        `64 bytes from ${ip}: icmp_seq=3 ttl=64 time=${times[2]} ms`,
+                        ""
+                    );
+                }, 1500);
+                let timeout4 = setTimeout(() => {
+                    writeToTerminal(
+                        `64 bytes from ${ip}: icmp_seq=4 ttl=64 time=${times[3]} ms`,
+                        ""
+                    );
+                }, 2000);
+                let timeout5 = setTimeout(() => {
+                    writeToTerminal(`--- ${ip} ping statistics ---`, "system-text");
+                    writeToTerminal(
+                        "4 packets transmitted, 4 received, 0% packet loss, time 3005ms",
+                        "success-text"
+                    );
+
+                    const avg =
+                        Math.round((times.reduce((a, b) => a + b, 0) / 4) * 100) / 100;
+                    const min = Math.min(...times);
+                    const max = Math.max(...times);
+                    const mdev =
+                        Math.round(
+                            Math.sqrt(
+                                times
+                                    .map((x) => Math.pow(x - avg, 2))
+                                    .reduce((a, b) => a + b, 0) / 4
+                            ) * 100
+                        ) / 100;
+
+                    writeToTerminal(
+                        `rtt min/avg/max/mdev = ${min}/${avg}/${max}/${mdev} ms`,
+                        ""
+                    );
+
+                    // Add to discovered IPs if not already there
+                    if (!gameState.discoveredIPs.includes(ip)) {
+                        gameState.discoveredIPs.push(ip);
+                        writeToTerminal(`IP ${ip} added to known systems.`, "success-text");
+                    }
+
+                    gameState.isProcessing = false;
+                }, 2500);
+
+                gameState.activeSessions.push({ type: "timeout", id: timeout1 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout2 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout3 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout4 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout5 });
+            }
+        }
+
+        // Trace route to a system
+        function traceRoute(ip) {
+            if (!ip) {
+                writeToTerminal(
+                    "Please specify an IP address to trace. Usage: trace [ip]",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(
+                `traceroute to ${ip} (${ip}), 30 hops max, 60 byte packets`,
+                "system-text"
+            );
+
+            const system =
+                systems.find((s) => s.ip === ip) ||
+                hiddenSystems.find((s) => s.ip === ip);
+
+            if (!system) {
+                // Trace fails after some hops
+                let timeout1 = setTimeout(() => {
+                    writeToTerminal(`1  192.168.0.1  3.258 ms  4.118 ms  2.878 ms`, "");
+                }, 500);
+                let timeout2 = setTimeout(() => {
+                    writeToTerminal(`2  10.0.0.1  10.932 ms  12.597 ms  8.496 ms`, "");
+                }, 1000);
+                let timeout3 = setTimeout(() => {
+                    writeToTerminal(`3  172.16.0.1  22.384 ms  25.117 ms  20.880 ms`, "");
+                }, 1500);
+                let timeout4 = setTimeout(() => {
+                    writeToTerminal(`4  * * *`, "error-text");
+                }, 2000);
+                let timeout5 = setTimeout(() => {
+                    writeToTerminal(`5  * * *`, "error-text");
+                }, 2500);
+                let timeout6 = setTimeout(() => {
+                    writeToTerminal(`6  * * *`, "error-text");
+                }, 3000);
+                let timeout7 = setTimeout(() => {
+                    writeToTerminal(`Trace terminated - no route to host`, "error-text");
+                    gameState.isProcessing = false;
+                }, 3500);
+
+                gameState.activeSessions.push({ type: "timeout", id: timeout1 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout2 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout3 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout4 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout5 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout6 });
+                gameState.activeSessions.push({ type: "timeout", id: timeout7 });
+            } else {
+                // Generate random route
+                const hops = Math.floor(Math.random() * 5) + 3; // 3-7 hops
+
+                const hopIPs = [
+                    "192.168.0.1",
+                    "10.0.0.1",
+                    "172.16.0.1",
+                    "203.0.113.1",
+                    "198.51.100.1",
+                    "192.0.2.1",
+                ];
+
+                // Create timeouts for each hop
+                for (let i = 0; i < hops; i++) {
+                    const hopTime1 = Math.round((Math.random() * 20 + 5 * i) * 1000) / 1000;
+                    const hopTime2 = Math.round((Math.random() * 20 + 5 * i) * 1000) / 1000;
+                    const hopTime3 = Math.round((Math.random() * 20 + 5 * i) * 1000) / 1000;
+
+                    const hopIP = i < hops - 1 ? hopIPs[i % hopIPs.length] : ip;
+
+                    let timeout = setTimeout(() => {
+                        writeToTerminal(
+                            `${i + 1
+                            }  ${hopIP}  ${hopTime1} ms  ${hopTime2} ms  ${hopTime3} ms`,
+                            ""
+                        );
+
+                        // Last hop
+                        if (i === hops - 1) {
+                            writeToTerminal(
+                                `Trace completed - route to ${system.name} found.`,
+                                "success-text"
+                            );
+
+                            // Add to discovered IPs if not already there
+                            if (!gameState.discoveredIPs.includes(ip)) {
+                                gameState.discoveredIPs.push(ip);
+                                writeToTerminal(
+                                    `IP ${ip} added to known systems.`,
+                                    "success-text"
+                                );
+                            }
+
+                            // Randomly discover a new IP
+                            if (Math.random() < 0.3) {
+                                const undiscoveredSystems = systems.filter(
+                                    (s) => !gameState.discoveredIPs.includes(s.ip)
+                                );
+                                if (undiscoveredSystems.length > 0) {
+                                    const randomSystem =
+                                        undiscoveredSystems[
+                                        Math.floor(Math.random() * undiscoveredSystems.length)
+                                        ];
+                                    gameState.discoveredIPs.push(randomSystem.ip);
+                                    writeToTerminal(
+                                        `Found additional system in route: ${randomSystem.ip}`,
+                                        "success-text"
+                                    );
+                                }
+                            }
+
+                            gameState.isProcessing = false;
+                        }
+                    }, 500 * (i + 1));
+
+                    gameState.activeSessions.push({ type: "timeout", id: timeout });
+                }
+            }
+        }
+
+        // Show network map
+        function showNetwork() {
+            const knownSystems = systems.filter(
+                (s) =>
+                    gameState.level >= s.securityLevel ||
+                    gameState.discoveredIPs.includes(s.ip)
+            );
+
+            if (knownSystems.length === 0) {
+                writeToTerminal(
+                    "No systems discovered yet. Use 'systems' to view available systems.",
+                    "error-text"
+                );
+                return;
+            }
+
+            writeToTerminal("Network Map:", "system-text");
+            writeToTerminal("───────────────────────────────────────", "");
+
+            // Display ASCII map for current system if connected
+            if (gameState.connected && gameState.currentSystem.map) {
+                writeToTerminal("Current Location:", "system-text");
+                gameState.currentSystem.map.forEach((line) => {
+                    writeToTerminal(line, "");
+                });
+                writeToTerminal("───────────────────────────────────────", "");
+            }
+
+            // Display known connections
+            writeToTerminal("Network Topology:", "system-text");
+            writeToTerminal("", "");
+
+            // Create a simple ASCII network diagram
+            const diagram = [
+                "                     INTERNET                    ",
+                "                         │                       ",
+                "         ┌───────────────┼───────────────┐      ",
+                "         │               │               │      ",
+                "    ┌────┴────┐     ┌────┴────┐     ┌────┴────┐ ",
+            ];
+
+            // Add systems to diagram
+            for (let i = 0; i < Math.min(knownSystems.length, 5); i++) {
+                const system = knownSystems[i];
+                const statusIndicator = system.hacked ? "*" : " ";
+                const ipTrimmed = system.ip
+                    .split(".")
+                    .map((n) => n.padStart(3, " "))
+                    .join(".");
+                diagram.push(
+                    `    │${statusIndicator}${system.name
+                        .substring(0, 10)
+                        .padEnd(10, " ")}${statusIndicator}│     ` +
+                    (i < Math.min(knownSystems.length, 5) - 1 ? "│" : " ") +
+                    "         " +
+                    (i < Math.min(knownSystems.length, 5) - 1 ? "│" : " ")
+                );
+                diagram.push(
+                    `    │ ${ipTrimmed} │     ` +
+                    (i < Math.min(knownSystems.length, 5) - 1 ? "│" : " ") +
+                    "         " +
+                    (i < Math.min(knownSystems.length, 5) - 1 ? "│" : " ")
+                );
+                diagram.push(
+                    `    └───────────┘     ` +
+                    (i < Math.min(knownSystems.length, 5) - 1 ? "└────┬────┘" : " ") +
+                    "     " +
+                    (i < Math.min(knownSystems.length, 5) - 1 ? "└────┬────┘" : " ")
+                );
+                if (i < Math.min(knownSystems.length, 5) - 1) {
+                    diagram.push(`                         │               │      `);
+                }
+            }
+
+            // Add legend
+            diagram.push("");
+            diagram.push(" * = Compromised system");
+
+            // Display the diagram
+            diagram.forEach((line) => {
+                writeToTerminal(line, "");
+            });
+
+            if (gameState.hints) {
+                writeToTerminal("", "");
+                writeToTerminal(
+                    "HINT: Use 'ping [ip]' to check if a system is online",
+                    "hint-text"
+                );
+            }
+        }
+
+        // List processes
+        function listProcesses() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (
+                !gameState.currentSystem.processes ||
+                gameState.currentSystem.processes.length === 0
+            ) {
+                writeToTerminal("No processes found on this system.", "");
+                return;
+            }
+
+            writeToTerminal("Process List:", "system-text");
+            writeToTerminal(
+                "╔═════════════════════════════════════════════════════════╗",
+                ""
+            );
+            writeToTerminal(
+                "║  PID  │  USER      │  CPU %  │  MEM %  │  COMMAND      ║",
+                ""
+            );
+            writeToTerminal(
+                "╠═════════════════════════════════════════════════════════╣",
+                ""
+            );
+
+            gameState.currentSystem.processes.forEach((proc) => {
+                writeToTerminal(
+                    `║ ${proc.pid.toString().padEnd(5)}│ ${proc.user.padEnd(
+                        10
+                    )}│ ${proc.cpu.padEnd(7)}│ ${proc.mem.padEnd(7)}│ ${proc.name.padEnd(
+                        13
+                    )}║`,
+                    ""
+                );
+            });
+
+            writeToTerminal(
+                "╚═════════════════════════════════════════════════════════╝",
+                ""
+            );
+
+            if (gameState.hints) {
+                writeToTerminal(
+                    "HINT: Use 'kill [pid]' to terminate a process",
+                    "hint-text"
+                );
+            }
+        }
+
+        // Kill a process
+        function killProcess(pid) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!pid) {
+                writeToTerminal(
+                    "Please specify a PID to terminate. Usage: kill [pid]",
+                    "error-text"
+                );
+                return;
+            }
+
+            const pidInt = parseInt(pid);
+            if (isNaN(pidInt)) {
+                writeToTerminal(`Invalid PID: ${pid}. Must be a number.`, "error-text");
+                return;
+            }
+
+            if (
+                !gameState.currentSystem.processes ||
+                gameState.currentSystem.processes.length === 0
+            ) {
+                writeToTerminal("No processes found on this system.", "error-text");
+                return;
+            }
+
+            const process = gameState.currentSystem.processes.find(
+                (p) => p.pid === pidInt
+            );
+
+            if (!process) {
+                writeToTerminal(`Process with PID ${pid} not found.`, "error-text");
+                return;
+            }
+
+            // For demonstration, don't allow killing certain critical processes
+            if (process.pid === 1) {
+                writeToTerminal(
+                    "Cannot terminate PID 1 (init). This would crash the system.",
+                    "error-text"
+                );
+                return;
+            }
+
+            writeToTerminal(
+                `Terminating process ${process.name} (PID: ${process.pid})...`,
+                "system-text"
+            );
+
+            setTimeout(() => {
+                writeToTerminal(
+                    `Process ${process.name} (PID: ${process.pid}) terminated.`,
+                    "success-text"
+                );
+
+                // Remove the process from the list
+                gameState.currentSystem.processes =
+                    gameState.currentSystem.processes.filter((p) => p.pid !== pidInt);
+
+                // Special case - if this is a specific service, disable it
+                if (
+                    process.name === "firewall" &&
+                    gameState.currentSystem.id === "security"
+                ) {
+                    writeToTerminal(
+                        "WARNING: Firewall service terminated. Security level decreased.",
+                        "warning-text"
+                    );
+                    writeToTerminal(
+                        "New vulnerability available: 'firewall_bypass'",
+                        "success-text"
+                    );
+                }
+            }, 1000);
+        }
+
+        // Download a file
+        function downloadFile(filename) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!filename) {
+                writeToTerminal(
+                    "Please specify a file to download. Usage: wget [filename]",
+                    "error-text"
+                );
+                return;
+            }
+
+            const file = gameState.currentSystem.files.find((f) => f.name === filename);
+
+            if (!file) {
+                writeToTerminal(`File not found: ${filename}`, "error-text");
+                return;
+            }
+
+            if (gameState.isProcessing) {
+                writeToTerminal(
+                    "Another operation is in progress. Please wait.",
+                    "warning-text"
+                );
+                return;
+            }
+
+            gameState.isProcessing = true;
+            writeToTerminal(`Downloading ${filename}...`, "system-text");
+
+            // Create a progress bar for download
+            const progressBarContainer = document.createElement("div");
+            progressBarContainer.className = "progress-bar";
+            const progressBarFill = document.createElement("div");
+            progressBarFill.className = "progress-bar-fill";
+            progressBarContainer.appendChild(progressBarFill);
+
+            terminalOutput.appendChild(progressBarContainer);
+
+            // Simulate download progress
+            let progress = 0;
+            const fileSize = Math.floor(file.content.length / 10) + 5; // KB
+            let downloadSpeed = Math.floor(Math.random() * 50) + 50; // KB/s
+
+            const progressInterval = setInterval(() => {
+                progress += (downloadSpeed / fileSize) * 10;
+                progressBarFill.style.width = `${Math.min(progress, 100)}%`;
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    gameState.activeSessions = gameState.activeSessions.filter(
+                        (session) => session.id !== progressInterval
+                    );
+                    progressBarContainer.remove();
+
+                    writeToTerminal(
+                        `Download complete: ${filename} (${fileSize} KB)`,
+                        "success-text"
+                    );
+
+                    // Add to inventory
+                    if (!gameState.inventory.some((item) => item.name === file.name)) {
+                        gameState.inventory.push(file);
+                        writeToTerminal(`File added to your inventory.`, "success-text");
+                    }
+
+                    gameState.isProcessing = false;
+                }
+            }, 100);
+
+            gameState.activeSessions.push({ type: "interval", id: progressInterval });
+        }
+
+        // Change directory
+        function changeDirectory(dir) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            // This is a simplified version since we don't have a real directory structure
+            if (!dir || dir === "~" || dir === "/") {
+                writeToTerminal("Changed to home directory.", "system-text");
+            } else if (dir === "..") {
+                writeToTerminal("Changed to parent directory.", "system-text");
+            } else if (dir === ".") {
+                writeToTerminal("Current directory unchanged.", "system-text");
+            } else {
+                writeToTerminal(`Directory '${dir}' not found.`, "error-text");
+            }
+        }
+
+        // Print working directory
+        function printWorkingDirectory() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            // Simplified, just show home directory of current user
+            const user = gameState.currentSystem.hacked ? "root" : gameState.username;
+            const userInfo = gameState.currentSystem.users.find(
+                (u) => u.name === user
+            ) || { home: `/home/${user}` };
+            writeToTerminal(userInfo.home, "");
+        }
+
+        // Show current user
+        function whoami() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            const user = gameState.currentSystem.hacked ? "root" : gameState.username;
+            writeToTerminal(user, "");
+        }
+
+        // Show network configuration
+        function showNetworkConfig() {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            writeToTerminal("Network Configuration:", "system-text");
+            writeToTerminal(
+                "eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500",
+                ""
+            );
+            writeToTerminal(
+                `        inet ${gameState.currentSystem.ip}  netmask 255.255.255.0`,
+                ""
+            );
+            writeToTerminal(
+                `        inet6 fe80::215:5dff:fe${gameState.currentSystem.ip.split(".")[2]
+                }:${gameState.currentSystem.ip.split(".")[3]
+                }  prefixlen 64  scopeid 0x20<link>`,
+                ""
+            );
+            writeToTerminal(
+                "        ether 00:15:5d:01:ca:03  txqueuelen 1000  (Ethernet)",
+                ""
+            );
+            writeToTerminal("        RX packets 17861  bytes 1621873 (1.5 MiB)", "");
+            writeToTerminal("        RX errors 0  dropped 0  overruns 0  frame 0", "");
+            writeToTerminal("        TX packets 4533  bytes 1705844 (1.6 MiB)", "");
+            writeToTerminal(
+                "        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0",
+                ""
+            );
+
+            writeToTerminal("", "");
+            writeToTerminal("lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536", "");
+            writeToTerminal("        inet 127.0.0.1  netmask 255.0.0.0", "");
+            writeToTerminal("        inet6 ::1  prefixlen 128  scopeid 0x10<host>", "");
+            writeToTerminal("        loop  txqueuelen 1000  (Local Loopback)", "");
+            writeToTerminal("        RX packets 0  bytes 0 (0.0 B)", "");
+            writeToTerminal("        RX errors 0  dropped 0  overruns 0  frame 0", "");
+            writeToTerminal("        TX packets 0  bytes 0 (0.0 B)", "");
+            writeToTerminal(
+                "        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0",
+                ""
+            );
+        }
+
+        // Search files for a string
+        function grepFile(searchTerm, filePattern) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!searchTerm) {
+                writeToTerminal(
+                    "Please specify a search term. Usage: grep [search-term] [file-pattern]",
+                    "error-text"
+                );
+                return;
+            }
+
+            writeToTerminal(`Searching for '${searchTerm}' in files...`, "system-text");
+
+            let matchFound = false;
+
+            gameState.currentSystem.files.forEach((file) => {
+                if (!filePattern || file.name.includes(filePattern)) {
+                    if (file.content.includes(searchTerm)) {
+                        matchFound = true;
+
+                        // Display matching lines
+                        const lines = file.content.split("\n");
+                        lines.forEach((line, index) => {
+                            if (line.includes(searchTerm)) {
+                                writeToTerminal(`${file.name}:${index + 1}: ${line}`, "");
+                            }
+                        });
+                    }
+                }
+            });
+
+            if (!matchFound) {
+                writeToTerminal(`No matches found for '${searchTerm}'`, "error-text");
+            }
+        }
+
+        // Find files matching a pattern
+        function findFiles(pattern) {
+            if (!gameState.connected) {
+                writeToTerminal(
+                    "Not connected to any system. Use 'connect [ip]' first.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!gameState.currentSystem.hacked) {
+                writeToTerminal(
+                    "Access denied. You need to hack this system first using 'crack'.",
+                    "error-text"
+                );
+                return;
+            }
+
+            if (!pattern) {
+                writeToTerminal(
+                    "Please specify a search pattern. Usage: find [pattern]",
+                    "error-text"
+                );
+                return;
+            }
+
+            writeToTerminal(
+                `Finding files matching pattern '${pattern}'...`,
+                "system-text"
+            );
+
+            let matchFound = false;
+
+            gameState.currentSystem.files.forEach((file) => {
+                if (file.name.includes(pattern)) {
+                    matchFound = true;
+                    writeToTerminal(`./home/user/${file.name}`, "");
+                }
+            });
+
+            if (!matchFound) {
+                writeToTerminal(`No files matching '${pattern}' found.`, "error-text");
+            }
+        }
+
+        // Show manual for a command
+        function showManual(command) {
+            if (!command) {
+                writeToTerminal(
+                    "Please specify a command. Usage: man [command]",
+                    "error-text"
+                );
+                return;
+            }
+
+            // Simple manual database
+            const manuals = {
+                ls: {
+                    name: "ls - list directory contents",
+                    synopsis: "ls [-a]",
+                    description: "List information about files in the current directory.",
+                    options: ["-a, --all    do not ignore entries starting with ."],
+                },
+                cat: {
+                    name: "cat - concatenate files and print on the standard output",
+                    synopsis: "cat [FILE]",
+                    description: "Concatenate FILE to standard output.",
+                    options: [],
+                },
+                nmap: {
+                    name: "nmap - Network exploration tool and security scanner",
+                    synopsis: "nmap [IP]",
+                    description:
+                        "Nmap is a utility for network exploration and security auditing.",
+                    options: [],
+                },
+                exploit: {
+                    name: "exploit - Exploit vulnerabilities in target systems",
+                    synopsis: "exploit [VULNERABILITY]",
+                    description:
+                        "Attempt to exploit a specific vulnerability on the connected system.",
+                    options: [],
+                },
+                skills: {
+                    name: "skills - View and upgrade hacker skills",
+                    synopsis: "skills [SKILL]",
+                    description:
+                        "View your current skills or upgrade a specific skill if you have skill points.",
+                    options: [
+                        "cracking      improve password cracking abilities",
+                        "stealth       reduce detection chances",
+                        "networking    improve network commands",
+                        "cryptography  better handling of encrypted data",
+                    ],
+                },
+            };
+
+            const manual = manuals[command];
+
+            if (!manual) {
+                writeToTerminal(`No manual entry for ${command}`, "error-text");
+                return;
+            }
+
+            writeToTerminal(`NAME`, "system-text");
+            writeToTerminal(`       ${manual.name}`, "");
+            writeToTerminal("", "");
+            writeToTerminal(`SYNOPSIS`, "system-text");
+            writeToTerminal(`       ${manual.synopsis}`, "");
+            writeToTerminal("", "");
+            writeToTerminal(`DESCRIPTION`, "system-text");
+            writeToTerminal(`       ${manual.description}`, "");
+
+            if (manual.options.length > 0) {
+                writeToTerminal("", "");
+                writeToTerminal(`OPTIONS`, "system-text");
+                manual.options.forEach((option) => {
+                    writeToTerminal(`       ${option}`, "");
+                });
+            }
+        }
+
+        // Connect to a system via SSH
+        function sshConnect(target) {
+            // This is an alias for connect
+            connectToSystem(target);
+        }
+
+        // Write to terminal with optional clear of previous line
+        function writeToTerminal(text, className = "", clearPrevious = false) {
+            if (clearPrevious && terminalOutput.lastChild) {
+                terminalOutput.lastChild.remove();
+            }
+
+            const line = document.createElement("div");
+            line.className = className;
+            line.textContent = text;
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        // Update prompt based on current system
+        function updatePrompt() {
+            if (gameState.connected) {
+                const prefix = gameState.currentSystem.hacked
+                    ? "root"
+                    : gameState.username;
+                const systemName = gameState.currentSystem.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "_");
+                prompt.textContent = `${prefix}@${systemName}:~$ `;
+            } else {
+                prompt.textContent = `${gameState.username}@h4ck3r:~$ `;
+            }
+        }
+
+        // Update status display
+        function updateStatus() {
+            if (gameState.connected) {
+                statusDisplay.textContent = `STATUS: CONNECTED${gameState.currentSystem.hacked ? " (ROOT)" : ""
+                    }`;
+                statusDisplay.className = gameState.currentSystem.hacked
+                    ? "success-text"
+                    : "";
+                ipDisplay.textContent = `IP: ${gameState.currentSystem.ip}`;
+            } else {
+                statusDisplay.textContent = "STATUS: DISCONNECTED";
+                statusDisplay.className = "";
+                ipDisplay.textContent = "IP: ----.----.----.----";
+            }
+        }
+
+        // Add visual glitch effect to text
+        function addGlitchEffect() {
+            const glitchElements = ["terminalHeader", "statusDisplayEl"];
+            glitchElements.forEach((id) => {
+                const el = document.getElementById(id);
+                el.classList.add("glitch-text");
+            });
+        }
+
+        // Initialize the game
+        initGame();
+        addGlitchEffect();
+
+        // Handle window events
+        window.addEventListener("beforeunload", cleanupActiveSessions);
+
+        // Focus the terminal input on click anywhere in the container
+        document
+            .getElementById("gameContainer")
+            .addEventListener("click", function (e) {
+                // Only focus if not clicking on an interactive element like a button
+                if (e.target.tagName !== "BUTTON" && e.target.tagName !== "INPUT") {
+                    terminalInput.focus();
+                }
+            });
+    </script>

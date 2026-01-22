@@ -1,0 +1,5271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuralNotes | Anshul Namdev</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="A powerful local note-taking application with graph visualization and markdown support by Anshul Namdev. detailed organization with NeuralNotes.">
+    <meta name="keywords"
+        content="note taking app, neural notes, graph view, markdown notes, anshul namdev, productivity tool">
+    <meta name="author" content="Anshul Namdev">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="NeuralNotes | Anshul Namdev">
+    <meta property="og:description"
+        content="A powerful local note-taking application with graph visualization and markdown support by Anshul Namdev.">
+    <meta property="og:url" content="https://axshul.site/Notes/">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://axshul.site/Notes/">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Add modern UI library for tooltips and modals -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+    <!-- Add highlight.js for code syntax highlighting -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <!-- Add D3.js for graph visualization -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <div id="appContainer">
+        <!-- Sidebar -->
+        <div id="sidebarEl">
+            <div id="sidebarHeader">
+                <h1><i class="fas fa-book"></i> NeuralNotes</h1>
+                <button id="newNoteBtn" class="btn-icon"><i class="fas fa-plus"></i></button>
+            </div>
+            <div id="searchContainer">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInputEl" placeholder="Search notes...">
+                    <button id="clearSearchBtn" class="btn-icon" hidden><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+            <!-- View selector buttons -->
+            <div id="viewSelectorEl">
+                <button id="notesViewBtn" class="view-btn active"><i class="fas fa-file-alt"></i> Notes</button>
+                <button id="foldersViewBtn" class="view-btn"><i class="fas fa-folder"></i> Folders</button>
+                <button id="tagsViewBtn" class="view-btn"><i class="fas fa-tags"></i> Tags</button>
+            </div>
+
+            <!-- Notes list -->
+            <div id="noteListEl">
+                <!-- Notes will be listed here -->
+                <div class="empty-notes-placeholder">
+                    <i class="fas fa-file-alt"></i>
+                    <p>No notes yet. Create your first note!</p>
+                </div>
+            </div>
+
+            <!-- Folders view (hidden by default) -->
+            <div id="foldersListEl" hidden>
+                <div class="section-header">
+                    <h3>Folders</h3>
+                    <button id="newFolderBtn" class="small-btn"><i class="fas fa-plus"></i> New Folder</button>
+                </div>
+                <div id="folderTreeEl">
+                    <!-- Folders will be listed here -->
+                    <div class="folder-item active">
+                        <i class="fas fa-folder-open"></i> All Notes
+                    </div>
+                    <div class="empty-folders-placeholder">
+                        <p>No folders yet. Create your first folder!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tags view (hidden by default) -->
+            <div id="tagsListEl" hidden>
+                <div class="section-header">
+                    <h3>Tags</h3>
+                    <button id="manageTagsBtn" class="small-btn"><i class="fas fa-cog"></i> Manage</button>
+                </div>
+                <div id="tagCloudEl">
+                    <!-- Tags will be listed here -->
+                    <div class="empty-tags-placeholder">
+                        <p>No tags yet. Add tags to your notes with #tag in your content.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sidebarFooter">
+                <div style="font-size: 0.7em; color: var(--text-muted); text-align: center; margin-bottom: 10px;">
+                    Built by Anshul Namdev
+                </div>
+                <button id="themeToggleBtn" title="Toggle Dark Mode" class="btn-icon"><i
+                        class="fas fa-moon"></i></button>
+                <button id="settingsBtn" title="Settings" class="btn-icon"><i class="fas fa-cog"></i></button>
+                <button id="exportNotesBtn" title="Export Notes" class="btn-icon"><i
+                        class="fas fa-file-export"></i></button>
+                <button id="importNotesBtn" title="Import Notes" class="btn-icon"><i
+                        class="fas fa-file-import"></i></button>
+            </div>
+        </div>
+
+        <!-- Mobile sidebar toggle -->
+        <button id="sidebarToggleBtn" class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+
+        <!-- Main content area -->
+        <div id="mainContent">
+            <!-- Editor toolbar -->
+            <div id="editorToolbar">
+                <div class="toolbar-group">
+                    <button id="boldBtn" title="Bold (Ctrl+B)" class="toolbar-btn"><i class="fas fa-bold"></i></button>
+                    <button id="italicBtn" title="Italic (Ctrl+I)" class="toolbar-btn"><i
+                            class="fas fa-italic"></i></button>
+                    <button id="headingBtn" title="Heading (Ctrl+H)" class="toolbar-btn"><i
+                            class="fas fa-heading"></i></button>
+                    <button id="listBtn" title="List (Ctrl+L)" class="toolbar-btn"><i
+                            class="fas fa-list-ul"></i></button>
+                    <button id="numListBtn" title="Numbered List" class="toolbar-btn"><i
+                            class="fas fa-list-ol"></i></button>
+                    <button id="linkBtn" title="Link (Ctrl+K)" class="toolbar-btn"><i class="fas fa-link"></i></button>
+                    <button id="codeBtn" title="Code (Ctrl+`)" class="toolbar-btn"><i class="fas fa-code"></i></button>
+                    <button id="quoteBtn" title="Quote" class="toolbar-btn"><i class="fas fa-quote-right"></i></button>
+                    <button id="imageBtn" title="Image" class="toolbar-btn"><i class="fas fa-image"></i></button>
+                </div>
+                <div class="spacer"></div>
+                <div class="toolbar-group">
+                    <button id="addTagBtn" title="Add Tag" class="toolbar-btn"><i class="fas fa-tag"></i></button>
+                    <button id="moveFolderBtn" title="Move to Folder" class="toolbar-btn"><i
+                            class="fas fa-folder-open"></i></button>
+                    <div id="clockContainer" class="clock-container">
+                        <div id="clockDisplay" class="clock-display">
+                            <span id="clockTime">00:00:00</span>
+                        </div>
+                        <button id="clockSettingsBtn" title="Clock Settings" class="toolbar-btn"><i
+                                class="fas fa-clock"></i></button>
+                    </div>
+                    <button id="saveBtn" title="Save (Ctrl+S)" class="toolbar-btn primary"><i
+                            class="fas fa-save"></i></button>
+                </div>
+            </div>
+
+            <!-- Editor area -->
+            <div id="editorContainer">
+                <textarea id="editorEl" placeholder="Start writing your note here..."></textarea>
+                <div id="previewEl" hidden></div>
+                <div id="graphViewEl" hidden></div>
+            </div>
+
+            <!-- Empty state for no notes -->
+            <div id="emptyStateEl" hidden>
+                <div class="empty-state-content">
+                    <i class="fas fa-file-alt empty-icon"></i>
+                    <h2>No note selected</h2>
+                    <p>Create a new note or select an existing one from the sidebar.</p>
+                    <button id="createFirstNoteBtn" class="primary-btn">Create your first note</button>
+                </div>
+            </div>
+
+            <!-- View toggle -->
+            <div id="viewToggle">
+                <button id="editViewBtn" class="active">Edit</button>
+                <button id="previewViewBtn">Preview</button>
+                <button id="splitViewBtn">Split</button>
+                <button id="graphViewBtn">Graph</button>
+                <div class="word-count">Words: <span id="wordCountEl">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings modal -->
+    <div id="settingsModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="closeSettingsBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h3>Appearance</h3>
+                    <div class="setting-item">
+                        <label for="themeSelect">Theme</label>
+                        <select id="themeSelect">
+                            <option value="auto">Auto (system)</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="fontSizeSelect">Font Size</label>
+                        <select id="fontSizeSelect">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="fontFamilySelect">Font Family</label>
+                        <select id="fontFamilySelect">
+                            <option value="inter">Inter (Default)</option>
+                            <option value="roboto">Roboto</option>
+                            <option value="opensans">Open Sans</option>
+                            <option value="merriweather">Merriweather</option>
+                            <option value="monospace">Monospace</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="lineHeightSelect">Line Height</label>
+                        <select id="lineHeightSelect">
+                            <option value="compact">Compact</option>
+                            <option value="normal">Normal</option>
+                            <option value="relaxed">Relaxed</option>
+                            <option value="spacious">Spacious</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="accentColorSelect">Accent Color</label>
+                        <select id="accentColorSelect">
+                            <option value="blue">Blue (Default)</option>
+                            <option value="purple">Purple</option>
+                            <option value="green">Green</option>
+                            <option value="orange">Orange</option>
+                            <option value="red">Red</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3>Editor</h3>
+                    <div class="setting-item">
+                        <label for="autoSaveToggle">Auto Save</label>
+                        <label class="switch">
+                            <input type="checkbox" id="autoSaveToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label for="spellCheckToggle">Spell Check</label>
+                        <label class="switch">
+                            <input type="checkbox" id="spellCheckToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label for="autoCompleteToggle">Auto Complete</label>
+                        <label class="switch">
+                            <input type="checkbox" id="autoCompleteToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label for="syncScrollToggle">Sync Scrolling in Split View</label>
+                        <label class="switch">
+                            <input type="checkbox" id="syncScrollToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label for="tabSizeSelect">Tab Size</label>
+                        <select id="tabSizeSelect">
+                            <option value="2">2 spaces</option>
+                            <option value="4">4 spaces</option>
+                            <option value="tab">Tab character</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h3>Backup & Sync</h3>
+                    <div class="setting-item">
+                        <label for="autoBackupToggle">Auto Backup</label>
+                        <label class="switch">
+                            <input type="checkbox" id="autoBackupToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label for="backupFrequencySelect">Backup Frequency</label>
+                        <select id="backupFrequencySelect">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+                    <button id="backupNowBtn" class="secondary-btn full-width">Backup Now</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="resetSettingsBtn" class="secondary-btn">Reset to Default</button>
+                <button id="saveSettingsBtn" class="primary-btn">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Note actions modal -->
+    <div id="noteActionsModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Note Options</h2>
+                <button id="closeNoteActionsBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <button id="renameNoteBtn" class="action-btn"><i class="fas fa-edit"></i> Rename</button>
+                <button id="duplicateNoteBtn" class="action-btn"><i class="fas fa-copy"></i> Duplicate</button>
+                <button id="moveToFolderBtn" class="action-btn"><i class="fas fa-folder"></i> Move to Folder</button>
+                <button id="addTagsBtn" class="action-btn"><i class="fas fa-tags"></i> Add Tags</button>
+                <button id="printNoteBtn" class="action-btn"><i class="fas fa-print"></i> Print</button>
+                <button id="deleteNoteBtn" class="action-btn danger"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Folder actions modal -->
+    <div id="folderModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="folderModalTitle">Create New Folder</h2>
+                <button id="closeFolderModalBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="folderNameInput">Folder Name</label>
+                    <input type="text" id="folderNameInput" placeholder="Enter folder name...">
+                </div>
+                <div class="form-group">
+                    <label for="parentFolderSelect">Parent Folder (Optional)</label>
+                    <select id="parentFolderSelect">
+                        <option value="">Root (No parent)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelFolderBtn" class="secondary-btn">Cancel</button>
+                <button id="saveFolderBtn" class="primary-btn">Create Folder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Move to folder modal -->
+    <div id="moveToFolderModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Move Note to Folder</h2>
+                <button id="closeMoveToFolderBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="selectFolderInput">Select Folder</label>
+                    <select id="selectFolderInput">
+                        <option value="">Root (No folder)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelMoveBtn" class="secondary-btn">Cancel</button>
+                <button id="confirmMoveBtn" class="primary-btn">Move Note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tags modal -->
+    <div id="tagsModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Manage Tags</h2>
+                <button id="closeTagsModalBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addTagInput">Add New Tag</label>
+                    <div class="input-with-button">
+                        <input type="text" id="addTagInput" placeholder="Enter tag name...">
+                        <button id="addTagToNoteBtn" class="primary-btn">Add</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Current Tags</label>
+                    <div id="currentTagsList" class="tags-list">
+                        <!-- Tags will be listed here -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Suggested Tags</label>
+                    <div id="suggestedTagsList" class="tags-list">
+                        <!-- Suggested tags will be listed here -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeTagsBtn" class="primary-btn">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clock Settings Modal -->
+    <div id="clockModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Clock & Alarms</h2>
+                <button id="closeClockModalBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="timeFormatSelect">Time Format</label>
+                    <select id="timeFormatSelect">
+                        <option value="12">12-Hour (AM/PM)</option>
+                        <option value="24">24-Hour</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="showSecondsToggle">Show Seconds</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showSecondsToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Set Alarm</label>
+                    <input type="text" id="alarmNameInput" placeholder="Alarm name (optional)">
+                    <div class="input-with-button">
+                        <input type="time" id="alarmTimeInput">
+                        <button id="addAlarmBtn" class="primary-btn">Add</button>
+                    </div>
+                </div>
+                <div class="alarms-section">
+                    <h3>Active Alarms</h3>
+                    <div id="alarmsListEl">
+                        <!-- Alarms will be listed here -->
+                        <div class="empty-alarms-placeholder">
+                            <p>No alarms set. Add an alarm above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeClockSettingsBtn" class="primary-btn">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graph Settings Modal -->
+    <div id="graphSettingsModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Graph View Settings</h2>
+                <button id="closeGraphSettingsBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="showTagsToggle">Show Tags</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showTagsToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="showLinksToggle">Show Note Links</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showLinksToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="showLabelsToggle">Show Node Labels</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showLabelsToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="nodeSizeRange">Node Size</label>
+                    <input type="range" id="nodeSizeRange" min="1" max="20" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="linkStrengthRange">Link Strength</label>
+                    <input type="range" id="linkStrengthRange" min="1" max="100" value="50">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="resetGraphBtn" class="secondary-btn">Reset Layout</button>
+                <button id="saveGraphSettingsBtn" class="primary-btn">Apply Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading screen -->
+    <div id="loadingScreenEl" hidden>
+        <div class="spinner"></div>
+        <p id="loadingMessageEl">Processing...</p>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toastContainer"></div>
+
+    <!-- Alarm popup container -->
+    <div id="alarmPopupContainer"></div>
+
+    <!-- Hidden audio element for alarm sounds -->
+    <audio id="alarmAudioEl" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"
+        preload="auto" loop></audio>
+
+    <!-- Add external link modal -->
+    <div id="externalLinkModalEl" class="modal" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add External Link</h2>
+                <button id="closeExternalLinkBtn" class="btn-icon"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="linkTextInput">Link Text</label>
+                    <input type="text" id="linkTextInput" placeholder="Enter link text...">
+                </div>
+                <div class="form-group">
+                    <label for="linkUrlInput">URL</label>
+                    <input type="url" id="linkUrlInput" placeholder="https://example.com">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelLinkBtn" class="secondary-btn">Cancel</button>
+                <button id="insertLinkBtn" class="primary-btn">Insert Link</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            /* Core colors */
+            --primary-color: #5c6ac4;
+            --primary-dark: #4c599e;
+            --primary-light: #eceefb;
+            --secondary-color: #ff6b6b;
+            --secondary-dark: #e55c5c;
+            --secondary-light: #ffeded;
+
+            /* Text colors */
+            --text-color: #333;
+            --text-light: #666;
+            --text-muted: #888;
+
+            /* Background colors */
+            --bg-color: #f9f9fb;
+            --bg-light: #ffffff;
+            --bg-dark: #f0f0f5;
+
+            /* UI elements */
+            --border-color: #e0e0e0;
+            --border-light: #efefef;
+            --sidebar-width: 300px;
+
+            /* Effects */
+            --transition: all 0.2s ease;
+            --transition-slow: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius-sm: 4px;
+            --radius: 8px;
+            --radius-lg: 12px;
+
+            /* Font sizes */
+            --font-xs: 12px;
+            --font-sm: 14px;
+            --font-md: 16px;
+            --font-lg: 18px;
+            --font-xl: 22px;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+        }
+
+        /* Dark theme colors */
+        .dark-theme {
+            --primary-color: #7a88e3;
+            --primary-dark: #6375d6;
+            --primary-light: #282c45;
+            --secondary-color: #ff7f7f;
+            --secondary-dark: #ff6666;
+            --secondary-light: #3f2e2e;
+
+            --text-color: #e0e0e0;
+            --text-light: #aaaaaa;
+            --text-muted: #777777;
+
+            --bg-color: #1a1a1f;
+            --bg-light: #252530;
+            --bg-dark: #13131a;
+
+            --border-color: #333340;
+            --border-light: #282835;
+
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            text-align: left;
+            overflow: hidden;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            line-height: 1.5;
+        }
+
+        button {
+            cursor: pointer;
+            background: none;
+            border: none;
+            border-radius: var(--radius);
+            padding: 8px 12px;
+            transition: var(--transition);
+            color: var(--text-color);
+            font-size: var(--font-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-theme button:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            padding: 10px 16px;
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .secondary-btn {
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--border-light);
+        }
+
+        .danger {
+            color: var(--secondary-color);
+        }
+
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+            font-size: var(--font-sm);
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        /* App container */
+        #appContainer {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Sidebar toggle button for mobile */
+        .sidebar-toggle {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            font-size: 18px;
+        }
+
+        /* Sidebar styles */
+        #sidebarEl {
+            background-color: var(--bg-light);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--transition-slow);
+            z-index: 10;
+        }
+
+        #sidebarHeader {
+            padding: var(--space-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #sidebarHeader h1 {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        #sidebarHeader button {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-size: var(--font-md);
+            transition: var(--transition);
+        }
+
+        #sidebarHeader button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        #searchContainer {
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        #searchInputEl {
+            width: 100%;
+            padding: 10px 36px 10px 36px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: var(--font-sm);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        #clearSearchBtn {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* View selector buttons */
+        #viewSelectorEl {
+            display: flex;
+            padding: var(--space-sm);
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+        }
+
+        .view-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px;
+            border-radius: var(--radius);
+            font-weight: 500;
+        }
+
+        .view-btn.active {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .view-btn i {
+            font-size: 14px;
+        }
+
+        /* Section headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .dark-theme .section-header h3 {
+            color: var(--text-color);
+        }
+
+        .section-header h3 {
+            font-size: var(--font-md);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .small-btn {
+            font-size: var(--font-xs);
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-dark);
+        }
+
+        .small-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        /* Folder styles */
+        #folderTreeEl {
+            padding: var(--space-md);
+        }
+
+        .folder-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .folder-item:hover {
+            background-color: var(--bg-color);
+        }
+
+        .folder-item.active {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .folder-item i {
+            font-size: 14px;
+            width: 18px;
+        }
+
+        .subfolder {
+            margin-left: 20px;
+        }
+
+        /* Tag styles */
+        #tagCloudEl {
+            padding: var(--space-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag-item {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: var(--font-xs);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .tag-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tag-item .count {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+        }
+
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .tag-pill {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: var(--font-xs);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-pill .remove {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .tag-pill .remove:hover {
+            opacity: 1;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+        }
+
+        .input-with-button {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-with-button input {
+            flex: 1;
+        }
+
+        /* Note list styles */
+        #noteListEl {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-md);
+        }
+
+        .note-item {
+            padding: var(--space-md);
+            margin-bottom: var(--space-sm);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: var(--bg-color);
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .note-item:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .note-item.active {
+            background-color: var(--primary-light);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .note-title {
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            color: var(--text-color);
+            font-size: var(--font-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-xs);
+            color: var(--text-light);
+            margin-bottom: var(--space-xs);
+        }
+
+        .note-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: var(--space-xs);
+        }
+
+        .note-tag {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 12px;
+        }
+
+        .note-excerpt {
+            font-size: var(--font-xs);
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .highlight {
+            background-color: var(--secondary-light);
+            color: var(--secondary-color);
+            padding: 0 2px;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+        }
+
+        .note-item:hover .note-actions {
+            opacity: 1;
+        }
+
+        .note-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0;
+            transition: var(--transition);
+            display: flex;
+            gap: 4px;
+        }
+
+        .note-actions button {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            font-size: 12px;
+            background-color: var(--bg-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .empty-notes-placeholder,
+        .empty-folders-placeholder,
+        .empty-tags-placeholder,
+        .empty-alarms-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-xl);
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .empty-notes-placeholder i {
+            font-size: 40px;
+            margin-bottom: var(--space-md);
+        }
+
+        #sidebarFooter {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-md);
+            border-top: 1px solid var(--border-color);
+        }
+
+        #sidebarFooter button {
+            color: var(--text-light);
+        }
+
+        #sidebarFooter button:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main content area */
+        #mainContent {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: var(--bg-light);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        #editorToolbar {
+            display: flex;
+            padding: var(--space-md);
+            background-color: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scrolling on iOS */
+        }
+
+        /* Hide scrollbar for toolbar but allow scrolling */
+        #editorToolbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        #editorToolbar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: var(--space-xs);
+        }
+
+        .toolbar-btn {
+            font-size: var(--font-md);
+            color: var(--text-light);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            border-radius: var(--radius);
+        }
+
+        .toolbar-btn:hover,
+        .toolbar-btn.active {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .toolbar-btn.primary {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .toolbar-btn.primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .spacer {
+            flex: 1;
+        }
+
+        /* Clock styles */
+        .clock-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-color);
+            border-radius: var(--radius);
+            padding: 4px 8px;
+            margin-right: 8px;
+        }
+
+        .clock-display {
+            font-size: var(--font-sm);
+            font-weight: 500;
+            color: var(--text-color);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .alarm-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-color);
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            margin-bottom: 8px;
+        }
+
+        .alarm-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .alarm-time {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .alarm-name {
+            font-size: var(--font-xs);
+            color: var(--text-light);
+        }
+
+        .alarm-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .alarm-controls button {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        .alarms-section h3 {
+            font-size: var(--font-sm);
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: var(--space-sm);
+            padding-bottom: var(--space-xs);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .dark-theme .modal-header h2,
+        .dark-theme .alarms-section h3,
+        .dark-theme .settings-section h3 {
+            color: var(--text-color);
+        }
+
+        #editorContainer {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            background-color: var(--bg-light);
+            position: relative;
+        }
+
+        #editorEl,
+        #previewEl {
+            flex: 1;
+            padding: var(--space-lg);
+            overflow-y: auto;
+            line-height: 1.6;
+            -webkit-overflow-scrolling: touch;
+            /* Smooth scrolling on iOS */
+        }
+
+        #editorEl {
+            width: 100%;
+            height: 100%;
+            border: none;
+            resize: none;
+            font-size: var(--font-md);
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        #editorEl:focus {
+            outline: none;
+        }
+
+        #previewEl {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+        }
+
+        /* Graph view styles */
+        #graphViewEl {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .graph-node {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .graph-node:hover {
+            stroke: var(--primary-color);
+            stroke-width: 2px;
+        }
+
+        .graph-node.note {
+            fill: var(--primary-light);
+            stroke: var(--primary-color);
+        }
+
+        .graph-node.tag {
+            fill: var(--secondary-light);
+            stroke: var(--secondary-color);
+        }
+
+        .graph-link {
+            stroke: var(--border-color);
+            stroke-opacity: 0.6;
+            stroke-width: 1px;
+        }
+
+        .node-label {
+            font-size: 10px;
+            fill: var(--text-color);
+            text-anchor: middle;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .graph-settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        .graph-settings-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .graph-legend {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--bg-light);
+            padding: 10px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 10;
+            font-size: var(--font-xs);
+        }
+
+        .graph-legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .graph-legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .graph-legend-color.note {
+            background-color: var(--primary-light);
+            border: 1px solid var(--primary-color);
+        }
+
+        .graph-legend-color.tag {
+            background-color: var(--secondary-light);
+            border: 1px solid var(--secondary-color);
+        }
+
+        /* Preview styling */
+        #previewEl h1 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 8px;
+        }
+
+        #previewEl h2 {
+            font-size: 22px;
+            margin-bottom: 14px;
+            margin-top: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        #previewEl h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        #previewEl p {
+            margin-bottom: 16px;
+            color: var(--text-color);
+        }
+
+        #previewEl ul,
+        #previewEl ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+            color: var(--text-color);
+        }
+
+        #previewEl li {
+            margin-bottom: 8px;
+        }
+
+        #previewEl a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--primary-color);
+        }
+
+        #previewEl a:hover {
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        #previewEl blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 16px;
+            margin-left: 0;
+            margin-bottom: 16px;
+            color: var(--text-light);
+        }
+
+        #previewEl code {
+            background-color: var(--bg-dark);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        #previewEl pre {
+            background-color: var(--bg-dark);
+            padding: 16px;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+
+        #previewEl pre code {
+            background-color: transparent;
+            padding: 0;
+            display: block;
+        }
+
+        .wiki-link {
+            color: var(--primary-color);
+            background-color: var(--primary-light);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* External link styles */
+        .external-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--primary-color);
+            padding-right: 16px;
+            position: relative;
+        }
+
+        .external-link:after {
+            content: "\f08e";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 0;
+            font-size: 10px;
+            top: 0;
+        }
+
+        /* Empty state */
+        #emptyStateEl {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-light);
+            z-index: 5;
+        }
+
+        .empty-state-content {
+            text-align: center;
+            max-width: 400px;
+            padding: var(--space-lg);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            color: var(--text-muted);
+            margin-bottom: var(--space-md);
+        }
+
+        .empty-state-content h2 {
+            margin-bottom: var(--space-md);
+            color: var(--text-color);
+        }
+
+        .empty-state-content p {
+            margin-bottom: var(--space-lg);
+            color: var(--text-light);
+        }
+
+        /* View toggle */
+        #viewToggle {
+            display: flex;
+            background-color: var(--bg-light);
+            border-top: 1px solid var(--border-color);
+            padding: var(--space-sm) var(--space-md);
+            align-items: center;
+        }
+
+        #viewToggle button {
+            padding: 8px 16px;
+            background: none;
+            border: 1px solid var(--border-color);
+            margin: 0 4px;
+            border-radius: var(--radius);
+            font-size: var(--font-sm);
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        #viewToggle button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .word-count {
+            margin-left: auto;
+            font-size: var(--font-xs);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal:not([hidden]) {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .modal-body {
+            padding: var(--space-md);
+        }
+
+        .modal-footer {
+            padding: var(--space-md);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-sm);
+        }
+
+        .settings-section {
+            margin-bottom: var(--space-lg);
+        }
+
+        .settings-section h3 {
+            font-size: var(--font-md);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: var(--space-xs);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+
+        .setting-item label {
+            font-size: var(--font-sm);
+            color: var(--text-color);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary-color);
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px var(--primary-color);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(22px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: var(--space-md);
+            margin-bottom: var(--space-sm);
+            text-align: left;
+            border-radius: var(--radius);
+            background-color: var(--bg-color);
+            gap: var(--space-sm);
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .action-btn.danger:hover {
+            background-color: var(--secondary-light);
+            color: var(--secondary-color);
+        }
+
+        /* Loading screen */
+        #loadingScreenEl {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .dark-theme #loadingScreenEl {
+            background-color: rgba(26, 26, 31, 0.8);
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: var(--space-md);
+        }
+
+        .dark-theme .spinner {
+            border-color: rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary-color);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Toast notifications */
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .toast {
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            padding: var(--space-md);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            max-width: 400px;
+            border-left: 4px solid var(--primary-color);
+            animation: slideInRight 0.3s, fadeOut 0.5s 2.5s forwards;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+        }
+
+        .toast.success {
+            border-left-color: #4caf50;
+        }
+
+        .toast.error {
+            border-left-color: #f44336;
+        }
+
+        .toast.warning {
+            border-left-color: #ff9800;
+        }
+
+        .toast .icon {
+            margin-right: var(--space-md);
+            font-size: 20px;
+        }
+
+        .toast .content {
+            flex: 1;
+        }
+
+        .toast .close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 0;
+            margin-left: var(--space-md);
+        }
+
+        /* Alarm popup styles */
+        .alarm-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 1050;
+            transform: translateX(110%);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .alarm-popup.show {
+            transform: translateX(0);
+        }
+
+        .alarm-popup.closing {
+            transform: translateX(110%);
+        }
+
+        .alarm-popup-content {
+            display: flex;
+            padding: var(--space-md);
+            align-items: center;
+        }
+
+        .alarm-popup-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-right: var(--space-md);
+        }
+
+        .alarm-popup-info {
+            flex: 1;
+        }
+
+        .alarm-popup-info h3 {
+            margin: 0 0 5px 0;
+            font-size: var(--font-md);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .alarm-popup-time {
+            font-size: var(--font-lg);
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .alarm-popup-name {
+            font-size: var(--font-sm);
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .alarm-popup-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: var(--space-sm);
+        }
+
+        .alarm-popup-close:hover {
+            background-color: var(--bg-dark);
+        }
+
+        /* Additional styles */
+        .full-width {
+            width: 100%;
+            margin-top: var(--space-xs);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 280px;
+            }
+
+            #appContainer {
+                grid-template-columns: 0fr 1fr;
+            }
+
+            #sidebarEl {
+                position: fixed;
+                left: -100%;
+                width: var(--sidebar-width);
+                box-shadow: var(--shadow-lg);
+                transition: left 0.3s ease;
+                z-index: 1001;
+            }
+
+            #sidebarEl.active {
+                left: 0;
+            }
+
+            .sidebar-toggle {
+                display: flex;
+            }
+
+            #editorToolbar {
+                flex-wrap: wrap;
+                padding: 8px;
+                justify-content: center;
+            }
+
+            .toolbar-group {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 4px;
+            }
+
+            .toolbar-btn {
+                width: 40px;
+                height: 40px;
+                margin: 2px;
+            }
+
+            .clock-container {
+                width: 100%;
+                margin-bottom: 8px;
+                justify-content: center;
+            }
+
+            #viewToggle {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 8px;
+            }
+
+            #viewToggle button {
+                margin-bottom: 8px;
+                flex: 1;
+                min-width: 80px;
+                max-width: 120px;
+                padding: 10px 8px;
+            }
+
+            .word-count {
+                width: 100%;
+                justify-content: center;
+                margin-top: 8px;
+                margin-left: 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 80vh;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-footer button {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+
+            /* Add margin for content when sidebar toggle is visible */
+            #mainContent {
+                padding-left: 10px;
+                padding-top: 10px;
+            }
+
+            /* Hide graph controls in small screens */
+            .graph-settings-btn {
+                top: 10px;
+                right: 10px;
+            }
+
+            .graph-legend {
+                top: 10px;
+                left: 10px;
+                padding: 5px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --font-md: 14px;
+                --space-md: 12px;
+                --space-lg: 16px;
+            }
+
+            #editorEl,
+            #previewEl {
+                padding: var(--space-md);
+            }
+
+            .toolbar-btn {
+                width: 38px;
+                height: 38px;
+            }
+
+            .modal-content {
+                width: 95%;
+                border-radius: 12px;
+            }
+
+            /* Improve touch targets for mobile */
+            .note-item {
+                padding: 14px;
+                margin-bottom: 10px;
+            }
+
+            .action-btn {
+                padding: 14px;
+                margin-bottom: 10px;
+            }
+
+            /* Better toast positioning for mobile */
+            #toastContainer {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+
+            .toast {
+                min-width: unset;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Better mobile inputs */
+            input,
+            select,
+            textarea {
+                font-size: 16px;
+                /* Prevents iOS zoom on focus */
+            }
+
+            /* Simplify graph view for mobile */
+            .graph-legend {
+                display: none;
+            }
+        }
+
+        /* Additional mobile improvements */
+        @media (max-width: 768px) {
+
+            /* Improve split view for mobile */
+            #editorEl,
+            #previewEl {
+                width: 100% !important;
+                /* Override inline styles */
+            }
+
+            #splitViewBtn {
+                display: none;
+                /* Hide split view on mobile, it's not practical */
+            }
+
+            /* Add overlay when sidebar is open */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            /* Improve mobile keyboard experience */
+            #editorEl {
+                padding-bottom: 50px;
+                /* Add padding for virtual keyboard */
+            }
+        }
+    </style>
+
+    <script>
+        // Initialize IndexedDB-backed kv store
+        const kv = {
+            notes: {
+                async get(key) {
+                    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+                },
+                async set(key, value) {
+                    localStorage.setItem(key, JSON.stringify(value));
+                    return true;
+                },
+                async delete(key) {
+                    localStorage.removeItem(key);
+                    return true;
+                }
+            },
+            settings: {
+                async get(key) {
+                    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+                },
+                async set(key, value) {
+                    localStorage.setItem(key, JSON.stringify(value));
+                    return true;
+                }
+            },
+            folders: {
+                async get(key) {
+                    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+                },
+                async set(key, value) {
+                    localStorage.setItem(key, JSON.stringify(value));
+                    return true;
+                }
+            },
+            alarms: {
+                async get(key) {
+                    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
+                },
+                async set(key, value) {
+                    localStorage.setItem(key, JSON.stringify(value));
+                    return true;
+                }
+            }
+        };
+
+        // DOM Elements
+        const appContainerEl = document.getElementById('appContainer');
+        const sidebarEl = document.getElementById('sidebarEl');
+        const noteListEl = document.getElementById('noteListEl');
+        const foldersListEl = document.getElementById('foldersListEl');
+        const tagsListEl = document.getElementById('tagsListEl');
+        const searchInputEl = document.getElementById('searchInputEl');
+        const clearSearchBtnEl = document.getElementById('clearSearchBtn');
+        const editorEl = document.getElementById('editorEl');
+        const previewEl = document.getElementById('previewEl');
+        const graphViewEl = document.getElementById('graphViewEl');
+        const loadingScreenEl = document.getElementById('loadingScreenEl');
+        const loadingMessageEl = document.getElementById('loadingMessageEl');
+        const toastContainerEl = document.getElementById('toastContainer');
+        const emptyStateEl = document.getElementById('emptyStateEl');
+        const wordCountEl = document.getElementById('wordCountEl');
+        const settingsModalEl = document.getElementById('settingsModalEl');
+        const noteActionsModalEl = document.getElementById('noteActionsModalEl');
+        const folderModalEl = document.getElementById('folderModalEl');
+        const moveToFolderModalEl = document.getElementById('moveToFolderModalEl');
+        const tagsModalEl = document.getElementById('tagsModalEl');
+        const clockModalEl = document.getElementById('clockModalEl');
+        const graphSettingsModalEl = document.getElementById('graphSettingsModalEl');
+        const sidebarToggleBtnEl = document.getElementById('sidebarToggleBtn');
+        const folderTreeEl = document.getElementById('folderTreeEl');
+        const tagCloudEl = document.getElementById('tagCloudEl');
+        const alarmPopupContainerEl = document.getElementById('alarmPopupContainer');
+        const alarmAudioEl = document.getElementById('alarmAudioEl');
+        const externalLinkModalEl = document.getElementById('externalLinkModalEl');
+
+        // Clock elements
+        const clockDisplayEl = document.getElementById('clockDisplay');
+        const clockTimeEl = document.getElementById('clockTime');
+        const clockSettingsBtnEl = document.getElementById('clockSettingsBtn');
+        const timeFormatSelectEl = document.getElementById('timeFormatSelect');
+        const showSecondsToggleEl = document.getElementById('showSecondsToggle');
+        const alarmTimeInputEl = document.getElementById('alarmTimeInput');
+        const alarmNameInputEl = document.getElementById('alarmNameInput');
+        const addAlarmBtnEl = document.getElementById('addAlarmBtn');
+        const alarmsListEl = document.getElementById('alarmsListEl');
+        const closeClockModalBtnEl = document.getElementById('closeClockModalBtn');
+        const closeClockSettingsBtnEl = document.getElementById('closeClockSettingsBtn');
+
+        // Graph settings elements
+        const showTagsToggleEl = document.getElementById('showTagsToggle');
+        const showLinksToggleEl = document.getElementById('showLinksToggle');
+        const showLabelsToggleEl = document.getElementById('showLabelsToggle');
+        const nodeSizeRangeEl = document.getElementById('nodeSizeRange');
+        const linkStrengthRangeEl = document.getElementById('linkStrengthRange');
+        const closeGraphSettingsBtnEl = document.getElementById('closeGraphSettingsBtn');
+        const saveGraphSettingsBtnEl = document.getElementById('saveGraphSettingsBtn');
+        const resetGraphBtnEl = document.getElementById('resetGraphBtn');
+
+        // View selector buttons
+        const notesViewBtnEl = document.getElementById('notesViewBtn');
+        const foldersViewBtnEl = document.getElementById('foldersViewBtn');
+        const tagsViewBtnEl = document.getElementById('tagsViewBtn');
+
+        // Buttons
+        const newNoteBtnEl = document.getElementById('newNoteBtn');
+        const saveBtnEl = document.getElementById('saveBtn');
+        const themeToggleBtnEl = document.getElementById('themeToggleBtn');
+        const exportNotesBtnEl = document.getElementById('exportNotesBtn');
+        const importNotesBtnEl = document.getElementById('importNotesBtn');
+        const settingsBtnEl = document.getElementById('settingsBtn');
+        const closeSettingsBtnEl = document.getElementById('closeSettingsBtn');
+        const saveSettingsBtnEl = document.getElementById('saveSettingsBtn');
+        const resetSettingsBtnEl = document.getElementById('resetSettingsBtn');
+        const createFirstNoteBtnEl = document.getElementById('createFirstNoteBtn');
+        const newFolderBtnEl = document.getElementById('newFolderBtn');
+        const manageTagsBtnEl = document.getElementById('manageTagsBtn');
+
+        // Folder modal buttons
+        const folderNameInputEl = document.getElementById('folderNameInput');
+        const parentFolderSelectEl = document.getElementById('parentFolderSelect');
+        const saveFolderBtnEl = document.getElementById('saveFolderBtn');
+        const cancelFolderBtnEl = document.getElementById('cancelFolderBtn');
+        const closeFolderModalBtnEl = document.getElementById('closeFolderModalBtn');
+
+        // Move to folder modal buttons
+        const selectFolderInputEl = document.getElementById('selectFolderInput');
+        const confirmMoveBtnEl = document.getElementById('confirmMoveBtn');
+        const cancelMoveBtnEl = document.getElementById('cancelMoveBtn');
+        const closeMoveToFolderBtnEl = document.getElementById('closeMoveToFolderBtn');
+
+        // Tags modal elements
+        const addTagInputEl = document.getElementById('addTagInput');
+        const addTagToNoteBtnEl = document.getElementById('addTagToNoteBtn');
+        const currentTagsListEl = document.getElementById('currentTagsList');
+        const suggestedTagsListEl = document.getElementById('suggestedTagsList');
+        const closeTagsModalBtnEl = document.getElementById('closeTagsModalBtn');
+        const closeTagsBtnEl = document.getElementById('closeTagsBtn');
+
+        // Toolbar buttons for tag, folder, and clock
+        const addTagBtnEl = document.getElementById('addTagBtn');
+        const moveFolderBtnEl = document.getElementById('moveFolderBtn');
+
+        // View toggle buttons
+        const editViewBtnEl = document.getElementById('editViewBtn');
+        const previewViewBtnEl = document.getElementById('previewViewBtn');
+        const splitViewBtnEl = document.getElementById('splitViewBtn');
+        const graphViewBtnEl = document.getElementById('graphViewBtn');
+
+        // Note actions buttons
+        const closeNoteActionsBtnEl = document.getElementById('closeNoteActionsBtn');
+        const renameNoteBtnEl = document.getElementById('renameNoteBtn');
+        const duplicateNoteBtnEl = document.getElementById('duplicateNoteBtn');
+        const deleteNoteBtnEl = document.getElementById('deleteNoteBtn');
+        const printNoteBtnEl = document.getElementById('printNoteBtn');
+        const moveToFolderBtnEl = document.getElementById('moveToFolderBtn');
+        const addTagsBtnEl = document.getElementById('addTagsBtn');
+
+        // Editor toolbar buttons
+        const boldBtnEl = document.getElementById('boldBtn');
+        const italicBtnEl = document.getElementById('italicBtn');
+        const headingBtnEl = document.getElementById('headingBtn');
+        const listBtnEl = document.getElementById('listBtn');
+        const numListBtnEl = document.getElementById('numListBtn');
+        const linkBtnEl = document.getElementById('linkBtn');
+        const codeBtnEl = document.getElementById('codeBtn');
+        const quoteBtnEl = document.getElementById('quoteBtn');
+        const imageBtnEl = document.getElementById('imageBtn');
+
+        // External link modal elements
+        const linkTextInputEl = document.getElementById('linkTextInput');
+        const linkUrlInputEl = document.getElementById('linkUrlInput');
+        const insertLinkBtnEl = document.getElementById('insertLinkBtn');
+        const cancelLinkBtnEl = document.getElementById('cancelLinkBtn');
+        const closeExternalLinkBtnEl = document.getElementById('closeExternalLinkBtn');
+
+        // Settings elements
+        const themeSelectEl = document.getElementById('themeSelect');
+        const fontSizeSelectEl = document.getElementById('fontSizeSelect');
+        const fontFamilySelectEl = document.getElementById('fontFamilySelect');
+        const lineHeightSelectEl = document.getElementById('lineHeightSelect');
+        const accentColorSelectEl = document.getElementById('accentColorSelect');
+        const autoSaveToggleEl = document.getElementById('autoSaveToggle');
+        const spellCheckToggleEl = document.getElementById('spellCheckToggle');
+        const autoCompleteToggleEl = document.getElementById('autoCompleteToggle');
+        const syncScrollToggleEl = document.getElementById('syncScrollToggle');
+        const tabSizeSelectEl = document.getElementById('tabSizeSelect');
+        const autoBackupToggleEl = document.getElementById('autoBackupToggle');
+        const backupFrequencySelectEl = document.getElementById('backupFrequencySelect');
+        const backupNowBtnEl = document.getElementById('backupNowBtn');
+
+        // State
+        let notes = [];
+        let folders = [];
+        let alarms = [];
+        let currentNoteId = null;
+        let currentView = 'notes'; // 'notes', 'folders', 'tags'
+        let currentFolderId = null;
+        let currentTag = null;
+        let lastSavedContent = '';
+        let darkMode = false;
+        let editorChangeTimer = null;
+        let clockTimer = null;
+        let alarmAudio = null;
+        let settings = {
+            theme: 'auto',
+            fontSize: 'medium',
+            fontFamily: 'inter',
+            lineHeight: 'normal',
+            accentColor: 'blue',
+            autoSave: true,
+            spellCheck: true,
+            autoComplete: false,
+            syncScroll: true,
+            tabSize: 2,
+            autoBackup: false,
+            backupFrequency: 'weekly',
+            clockFormat: '24',
+            showSeconds: true,
+            // Graph settings
+            graphShowTags: true,
+            graphShowLinks: true,
+            graphShowLabels: true,
+            graphNodeSize: 10,
+            graphLinkStrength: 50
+        };
+
+        // Keyboard shortcut combinations
+        const shortcuts = {
+            save: { key: 's', ctrl: true, action: saveCurrentNote },
+            newNote: { key: 'n', ctrl: true, action: createNewNote },
+            bold: { key: 'b', ctrl: true, action: () => insertFormatting('**', '**') },
+            italic: { key: 'i', ctrl: true, action: () => insertFormatting('*', '*') },
+            heading: { key: 'h', ctrl: true, action: () => insertFormatting('# ', '') },
+            link: { key: 'k', ctrl: true, action: () => showExternalLinkModal() },
+            code: { key: '`', ctrl: true, action: () => insertFormatting('`', '`') },
+            list: { key: 'l', ctrl: true, action: () => insertFormatting('- ', '') }
+        };
+
+        // Initialize app
+        async function initApp() {
+            try {
+                loadingScreenEl.hidden = false;
+                loadingMessageEl.textContent = "Loading app settings...";
+
+                // Create sidebar overlay for mobile
+                createSidebarOverlay();
+
+                // Load app settings
+                await loadSettings();
+
+                // Apply theme based on stored preference
+                applyTheme();
+                applyFontSize();
+                applyFontFamily();
+                applyLineHeight();
+                applyAccentColor();
+
+                loadingMessageEl.textContent = "Loading notes and folders...";
+                // Load notes and folders from storage
+                await loadNotes();
+                await loadFolders();
+                await loadAlarms();
+
+                // If there are no notes, show empty state
+                if (notes.length === 0) {
+                    showEmptyState();
+                } else {
+                    updateNotesList();
+                    // Open the first note
+                    openNote(notes[0].id);
+                }
+
+                // Update folder and tag views
+                updateFoldersList();
+                updateTagsList();
+
+                // Setup event listeners
+                setupEventListeners();
+
+                // Setup keyboard shortcuts
+                setupKeyboardShortcuts();
+
+                // Initialize markdown highlight.js
+                initializeHighlightJs();
+
+                // Start the clock
+                startClock();
+
+                // Start alarm checker
+                checkAlarms();
+
+                // Initialize audio for alarms
+                initializeAudio();
+
+                // Hide loading screen
+                loadingScreenEl.hidden = true;
+
+                // Show welcome toast
+                showToast('Welcome to NeuralNotes!', 'success');
+
+            } catch (error) {
+                console.error('Error initializing app:', error);
+                loadingScreenEl.hidden = true;
+                showToast('Error initializing app. Please refresh and try again.', 'error');
+            }
+        }
+
+        // Initialize audio for alarms
+        function initializeAudio() {
+            // Make sure audio is loaded and ready
+            alarmAudioEl.load();
+
+            // Add error handler
+            alarmAudioEl.addEventListener('error', (e) => {
+                console.error('Audio error:', e);
+                showToast('Error loading alarm sound. Please try again.', 'error');
+            });
+
+            // Try to unlock audio on user interaction (needed for mobile browsers)
+            document.addEventListener('click', function unlockAudio() {
+                // Play and immediately pause to unlock audio
+                const playPromise = alarmAudioEl.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        alarmAudioEl.pause();
+                        alarmAudioEl.currentTime = 0;
+                        console.log('Audio unlocked');
+                    }).catch(error => {
+                        console.log('Audio unlock failed, will try again on next user interaction');
+                    });
+                }
+
+                // Only need to do this once
+                document.removeEventListener('click', unlockAudio);
+            });
+        }
+
+        // Create sidebar overlay for mobile
+        function createSidebarOverlay() {
+            const overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            overlay.addEventListener('click', toggleSidebar);
+            document.body.appendChild(overlay);
+        }
+
+        // Load app settings from local storage
+        async function loadSettings() {
+            try {
+                const storedSettings = await kv.settings.get('appSettings');
+                if (storedSettings) {
+                    settings = { ...settings, ...storedSettings };
+
+                    // Update settings UI
+                    themeSelectEl.value = settings.theme;
+                    fontSizeSelectEl.value = settings.fontSize;
+                    fontFamilySelectEl.value = settings.fontFamily || 'inter';
+                    lineHeightSelectEl.value = settings.lineHeight || 'normal';
+                    accentColorSelectEl.value = settings.accentColor || 'blue';
+                    autoSaveToggleEl.checked = settings.autoSave;
+                    spellCheckToggleEl.checked = settings.spellCheck;
+                    autoCompleteToggleEl.checked = settings.autoComplete || false;
+                    syncScrollToggleEl.checked = settings.syncScroll !== false;
+                    tabSizeSelectEl.value = settings.tabSize || '2';
+                    autoBackupToggleEl.checked = settings.autoBackup || false;
+                    backupFrequencySelectEl.value = settings.backupFrequency || 'weekly';
+
+                    // Update clock settings
+                    timeFormatSelectEl.value = settings.clockFormat || '24';
+                    showSecondsToggleEl.checked = settings.showSeconds !== false;
+
+                    // Update graph settings
+                    if (showTagsToggleEl) {
+                        showTagsToggleEl.checked = settings.graphShowTags !== false;
+                        showLinksToggleEl.checked = settings.graphShowLinks !== false;
+                        showLabelsToggleEl.checked = settings.graphShowLabels !== false;
+                        nodeSizeRangeEl.value = settings.graphNodeSize || 10;
+                        linkStrengthRangeEl.value = settings.graphLinkStrength || 50;
+                    }
+
+                    // Apply theme based on setting
+                    if (settings.theme === 'dark' || (settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        darkMode = true;
+                    } else {
+                        darkMode = false;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        // Save app settings
+        async function saveSettings() {
+            try {
+                await kv.settings.set('appSettings', settings);
+                showToast('Settings saved', 'success');
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showToast('Error saving settings', 'error');
+            }
+        }
+
+        // Apply theme based on dark mode setting
+        function applyTheme() {
+            if (darkMode) {
+                document.body.classList.add('dark-theme');
+                themeToggleBtnEl.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggleBtnEl.title = 'Switch to Light Mode';
+            } else {
+                document.body.classList.remove('dark-theme');
+                themeToggleBtnEl.innerHTML = '<i class="fas fa-moon"></i>';
+                themeToggleBtnEl.title = 'Switch to Dark Mode';
+            }
+        }
+
+        // Apply font size setting
+        function applyFontSize() {
+            let size = '16px';
+            if (settings.fontSize === 'small') size = '14px';
+            if (settings.fontSize === 'large') size = '18px';
+
+            editorEl.style.fontSize = size;
+            previewEl.style.fontSize = size;
+        }
+
+        // Apply font family setting
+        function applyFontFamily() {
+            let fontFamily = "'Inter', sans-serif";
+
+            if (settings.fontFamily === 'roboto') {
+                fontFamily = "'Roboto', sans-serif";
+                if (!document.getElementById('roboto-font')) {
+                    const link = document.createElement('link');
+                    link.id = 'roboto-font';
+                    link.rel = 'stylesheet';
+                    link.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap';
+                    document.head.appendChild(link);
+                }
+            } else if (settings.fontFamily === 'opensans') {
+                fontFamily = "'Open Sans', sans-serif";
+                if (!document.getElementById('opensans-font')) {
+                    const link = document.createElement('link');
+                    link.id = 'opensans-font';
+                    link.rel = 'stylesheet';
+                    link.href = 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap';
+                    document.head.appendChild(link);
+                }
+            } else if (settings.fontFamily === 'merriweather') {
+                fontFamily = "'Merriweather', serif";
+                if (!document.getElementById('merriweather-font')) {
+                    const link = document.createElement('link');
+                    link.id = 'merriweather-font';
+                    link.rel = 'stylesheet';
+                    link.href = 'https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap';
+                    document.head.appendChild(link);
+                }
+            } else if (settings.fontFamily === 'monospace') {
+                fontFamily = "monospace";
+            }
+
+            editorEl.style.fontFamily = fontFamily;
+            previewEl.style.fontFamily = fontFamily;
+        }
+
+        // Apply line height setting
+        function applyLineHeight() {
+            let lineHeight = 1.6; // Normal default
+
+            if (settings.lineHeight === 'compact') lineHeight = 1.4;
+            if (settings.lineHeight === 'relaxed') lineHeight = 1.8;
+            if (settings.lineHeight === 'spacious') lineHeight = 2.0;
+
+            editorEl.style.lineHeight = lineHeight;
+            previewEl.style.lineHeight = lineHeight;
+        }
+
+        // Apply accent color setting
+        function applyAccentColor() {
+            let rootStyles = document.documentElement.style;
+
+            // Reset to default blue
+            if (settings.accentColor === 'blue' || !settings.accentColor) {
+                rootStyles.setProperty('--primary-color', '#5c6ac4');
+                rootStyles.setProperty('--primary-dark', '#4c599e');
+                rootStyles.setProperty('--primary-light', '#eceefb');
+                document.body.classList.remove('theme-purple', 'theme-green', 'theme-orange', 'theme-red');
+            }
+            // Purple theme
+            else if (settings.accentColor === 'purple') {
+                rootStyles.setProperty('--primary-color', '#9c5ac4');
+                rootStyles.setProperty('--primary-dark', '#7a4c9e');
+                rootStyles.setProperty('--primary-light', '#f5ecfb');
+                document.body.classList.add('theme-purple');
+                document.body.classList.remove('theme-green', 'theme-orange', 'theme-red');
+            }
+            // Green theme
+            else if (settings.accentColor === 'green') {
+                rootStyles.setProperty('--primary-color', '#4caf50');
+                rootStyles.setProperty('--primary-dark', '#3d8b40');
+                rootStyles.setProperty('--primary-light', '#e8f5e9');
+                document.body.classList.add('theme-green');
+                document.body.classList.remove('theme-purple', 'theme-orange', 'theme-red');
+            }
+            // Orange theme
+            else if (settings.accentColor === 'orange') {
+                rootStyles.setProperty('--primary-color', '#ff9800');
+                rootStyles.setProperty('--primary-dark', '#f57c00');
+                rootStyles.setProperty('--primary-light', '#fff3e0');
+                document.body.classList.add('theme-orange');
+                document.body.classList.remove('theme-purple', 'theme-green', 'theme-red');
+            }
+            // Red theme
+            else if (settings.accentColor === 'red') {
+                rootStyles.setProperty('--primary-color', '#f44336');
+                rootStyles.setProperty('--primary-dark', '#d32f2f');
+                rootStyles.setProperty('--primary-light', '#ffebee');
+                document.body.classList.add('theme-red');
+                document.body.classList.remove('theme-purple', 'theme-green', 'theme-orange');
+            }
+        }
+
+        // Toggle dark/light theme
+        function toggleTheme() {
+            darkMode = !darkMode;
+            settings.theme = darkMode ? 'dark' : 'light';
+            applyTheme();
+            saveSettings();
+            showToast(`${darkMode ? 'Dark' : 'Light'} mode enabled`, 'success');
+        }
+
+        // Show empty state
+        function showEmptyState() {
+            emptyStateEl.hidden = false;
+            noteListEl.querySelector('.empty-notes-placeholder').style.display = 'flex';
+        }
+
+        // Hide empty state
+        function hideEmptyState() {
+            emptyStateEl.hidden = true;
+            noteListEl.querySelector('.empty-notes-placeholder').style.display = 'none';
+        }
+
+        // Create a welcome note
+        function createWelcomeNote() {
+            const welcomeNote = {
+                id: generateId(),
+                title: "Welcome to NeuralNotes",
+                content: `# Welcome to NeuralNotes! 🚀
+
+NeuralNotes is your powerful note-taking app that helps you organize your thoughts, ideas, and knowledge.
+
+## Features
+
+- **Markdown Support**: Write notes using Markdown for rich formatting
+- **Live Preview**: See how your notes look while you write
+- **Tagging**: Organize with #tags for easy filtering
+- **Folders**: Organize your notes in hierarchical folders
+- **Linking**: Connect your notes together with [[links]]
+- **Data Privacy**: Your notes are stored locally in your browser
+- **Dark Mode**: Easy on the eyes, day or night
+- **Responsive Design**: Works on desktop and mobile devices
+- **Graph View**: Visualize connections between your notes
+- **External Links**: Add important links from around the web
+
+## Getting Started
+
+1. Click the + button in the sidebar to create a new note
+2. Use the editor toolbar to format your text
+3. Your notes are automatically saved
+4. Use #tags in your notes to organize them
+5. Create folders to further organize your notes
+6. Create connections using [[wiki links]]
+7. View your knowledge graph in the graph view
+8. Print your notes with the print button
+9. Add external links to useful resources
+
+## External Links Example
+
+Here are some helpful resources:
+
+[Markdown Guide](https://www.markdownguide.org/) - Learn more about Markdown syntax
+[Zettelkasten Method](https://zettelkasten.de/) - A method for knowledge management
+[NeuralNotes GitHub](https://github.com/neuralnotes) - Check for updates and contribute
+
+Enjoy using NeuralNotes!`,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                tags: ["welcome", "tutorial"],
+                folderId: null
+            };
+
+            notes.push(welcomeNote);
+            saveNotes();
+            updateNotesList();
+            openNote(welcomeNote.id);
+            hideEmptyState();
+        }
+
+        // Load notes from storage
+        async function loadNotes() {
+            try {
+                const storedNotes = await kv.notes.get('notesList');
+                if (storedNotes && Array.isArray(storedNotes)) {
+                    notes = storedNotes;
+                    // Add folderId property if not exists
+                    notes.forEach(note => {
+                        if (!note.hasOwnProperty('folderId')) {
+                            note.folderId = null;
+                        }
+                    });
+                } else if (storedNotes === null) {
+                    // Create welcome note for new users
+                    createWelcomeNote();
+                }
+            } catch (error) {
+                console.error('Error loading notes:', error);
+                showToast('Failed to load notes', 'error');
+            }
+        }
+
+        // Load folders from storage
+        async function loadFolders() {
+            try {
+                const storedFolders = await kv.folders.get('foldersList');
+                if (storedFolders && Array.isArray(storedFolders)) {
+                    folders = storedFolders;
+                } else {
+                    folders = [];
+                }
+            } catch (error) {
+                console.error('Error loading folders:', error);
+                showToast('Failed to load folders', 'error');
+            }
+        }
+
+        // Load alarms from storage
+        async function loadAlarms() {
+            try {
+                const storedAlarms = await kv.alarms.get('alarmsList');
+                if (storedAlarms && Array.isArray(storedAlarms)) {
+                    alarms = storedAlarms;
+                } else {
+                    alarms = [];
+                }
+            } catch (error) {
+                console.error('Error loading alarms:', error);
+                showToast('Failed to load alarms', 'error');
+            }
+        }
+
+        // Save notes to storage
+        async function saveNotes() {
+            try {
+                await kv.notes.set('notesList', notes);
+            } catch (error) {
+                console.error('Error saving notes:', error);
+                showToast('Failed to save notes', 'error');
+            }
+        }
+
+        // Save folders to storage
+        async function saveFolders() {
+            try {
+                await kv.folders.set('foldersList', folders);
+            } catch (error) {
+                console.error('Error saving folders:', error);
+                showToast('Failed to save folders', 'error');
+            }
+        }
+
+        // Save alarms to storage
+        async function saveAlarms() {
+            try {
+                await kv.alarms.set('alarmsList', alarms);
+            } catch (error) {
+                console.error('Error saving alarms:', error);
+                showToast('Failed to save alarms', 'error');
+            }
+        }
+
+        // Update notes list in sidebar
+        function updateNotesList(searchTerm = '') {
+            // Clear note list
+            noteListEl.innerHTML = '';
+
+            // Add empty state placeholder
+            const emptyPlaceholder = document.createElement('div');
+            emptyPlaceholder.className = 'empty-notes-placeholder';
+            emptyPlaceholder.innerHTML = `
+      <i class="fas fa-file-alt"></i>
+      <p>No notes yet. Create your first note!</p>
+    `;
+            noteListEl.appendChild(emptyPlaceholder);
+
+            // If there are no notes, show empty placeholder and return
+            if (notes.length === 0) {
+                emptyPlaceholder.style.display = 'flex';
+                return;
+            }
+
+            // Filter notes based on current view
+            let displayedNotes = notes;
+
+            // Filter by folder if folder view is active
+            if (currentView === 'folders' && currentFolderId !== null) {
+                displayedNotes = notes.filter(note => note.folderId === currentFolderId);
+            }
+
+            // Filter by tag if tag view is active
+            if (currentView === 'tags' && currentTag !== null) {
+                displayedNotes = notes.filter(note => note.tags && note.tags.includes(currentTag));
+            }
+
+            // Filter by search term if provided
+            if (searchTerm) {
+                displayedNotes = displayedNotes.filter(note =>
+                    note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    note.content.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+
+                // Show empty search results message if no matches
+                if (displayedNotes.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'empty-notes-placeholder';
+                    noResults.innerHTML = `
+          <i class="fas fa-search"></i>
+          <p>No notes found matching "${searchTerm}"</p>
+        `;
+                    noteListEl.appendChild(noResults);
+                    emptyPlaceholder.style.display = 'none';
+                    return;
+                }
+            }
+
+            // Hide empty placeholder if we have notes to display
+            emptyPlaceholder.style.display = displayedNotes.length > 0 ? 'none' : 'flex';
+
+            // Sort notes by updated date, newest first
+            displayedNotes.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+            // Create note items
+            displayedNotes.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'note-item';
+                if (currentNoteId === note.id) {
+                    noteItem.classList.add('active');
+                }
+
+                // Format date
+                const updatedDate = new Date(note.updatedAt);
+                const formattedDate = formatDate(updatedDate);
+
+                // Prepare tags display if note has tags
+                let tagsHtml = '';
+                if (note.tags && note.tags.length > 0) {
+                    tagsHtml = `
+          <div class="note-tags">
+            ${note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join('')}
+          </div>
+        `;
+                }
+
+                // Folder info
+                let folderName = '';
+                if (note.folderId) {
+                    const folder = folders.find(f => f.id === note.folderId);
+                    if (folder) {
+                        folderName = `<span class="note-folder"><i class="fas fa-folder-open"></i> ${folder.name}</span>`;
+                    }
+                }
+
+                // Extract excerpt
+                let excerptText = note.content.replace(/\s+/g, ' ').substring(0, 60) + '...';
+
+                // If searching, highlight matching term in excerpt
+                if (searchTerm) {
+                    const searchIndex = note.content.toLowerCase().indexOf(searchTerm.toLowerCase());
+                    if (searchIndex !== -1) {
+                        const start = Math.max(0, searchIndex - 20);
+                        const end = Math.min(note.content.length, searchIndex + searchTerm.length + 40);
+                        excerptText = note.content.substring(start, end).replace(/\s+/g, ' ');
+
+                        if (start > 0) excerptText = '...' + excerptText;
+                        if (end < note.content.length) excerptText = excerptText + '...';
+
+                        excerptText = highlightSearchTerm(excerptText, searchTerm);
+                    }
+                }
+
+                // Create HTML for note item
+                noteItem.innerHTML = `
+        <div class="note-title">
+          ${highlightSearchTerm(note.title || 'Untitled', searchTerm)}
+          <div class="note-actions">
+            <button class="note-more-btn" title="More options"><i class="fas fa-ellipsis-v"></i></button>
+          </div>
+        </div>
+        <div class="note-meta">
+          <span>${formattedDate}</span>
+          <span>${countWords(note.content)} words</span>
+        </div>
+        ${folderName ? `<div class="note-folder-info">${folderName}</div>` : ''}
+        ${tagsHtml}
+        <div class="note-excerpt">${excerptText}</div>
+      `;
+
+                // Add event listeners
+                noteItem.addEventListener('click', (e) => {
+                    // Don't open note if clicking on the more button
+                    if (e.target.closest('.note-more-btn')) {
+                        e.stopPropagation();
+                        showNoteActionsModal(note);
+                        return;
+                    }
+                    openNote(note.id);
+
+                    // Close sidebar on mobile after selecting a note
+                    if (window.innerWidth <= 768) {
+                        toggleSidebar();
+                    }
+                });
+
+                // Add to note list
+                noteListEl.appendChild(noteItem);
+            });
+        }
+
+        // Update folders list in sidebar
+        function updateFoldersList() {
+            // Get the folder tree element
+            const folderTreeEl = document.getElementById('folderTreeEl');
+            folderTreeEl.innerHTML = '';
+
+            // Create All Notes option (root)
+            const allNotesItem = document.createElement('div');
+            allNotesItem.className = 'folder-item';
+            if (currentFolderId === null && currentView === 'folders') {
+                allNotesItem.classList.add('active');
+            }
+            allNotesItem.innerHTML = '<i class="fas fa-folder-open"></i> All Notes';
+            allNotesItem.addEventListener('click', () => {
+                currentFolderId = null;
+                setView('folders');
+                updateFoldersList();
+                updateNotesList(searchInputEl.value);
+            });
+            folderTreeEl.appendChild(allNotesItem);
+
+            // Create empty folders placeholder if no folders
+            if (folders.length === 0) {
+                const emptyPlaceholder = document.createElement('div');
+                emptyPlaceholder.className = 'empty-folders-placeholder';
+                emptyPlaceholder.innerHTML = '<p>No folders yet. Create your first folder!</p>';
+                folderTreeEl.appendChild(emptyPlaceholder);
+                return;
+            }
+
+            // Helper function to create folder tree recursively
+            function createFolderTree(parentId = null, level = 0) {
+                const childFolders = folders.filter(folder => folder.parentId === parentId);
+
+                childFolders.forEach(folder => {
+                    const folderItem = document.createElement('div');
+                    folderItem.className = 'folder-item';
+                    if (level > 0) folderItem.classList.add('subfolder');
+                    if (currentFolderId === folder.id) folderItem.classList.add('active');
+
+                    // Count notes in this folder
+                    const noteCount = notes.filter(note => note.folderId === folder.id).length;
+
+                    folderItem.innerHTML = `
+          <i class="fas ${currentFolderId === folder.id ? 'fa-folder-open' : 'fa-folder'}"></i>
+          ${folder.name}
+          <span class="note-count">(${noteCount})</span>
+        `;
+
+                    folderItem.addEventListener('click', () => {
+                        currentFolderId = folder.id;
+                        setView('folders');
+                        updateFoldersList();
+                        updateNotesList(searchInputEl.value);
+                    });
+
+                    // Add margin-left based on nesting level
+                    folderItem.style.marginLeft = `${level * 20}px`;
+
+                    folderTreeEl.appendChild(folderItem);
+
+                    // Recursively create child folders
+                    createFolderTree(folder.id, level + 1);
+                });
+            }
+
+            // Create the folder tree starting from root
+            createFolderTree();
+
+            // Also update the folder options in select elements
+            updateFolderSelects();
+        }
+
+        // Update tag list in sidebar
+        function updateTagsList() {
+            // Get all unique tags from notes
+            const allTags = [];
+            notes.forEach(note => {
+                if (note.tags && Array.isArray(note.tags)) {
+                    note.tags.forEach(tag => {
+                        if (!allTags.includes(tag)) {
+                            allTags.push(tag);
+                        }
+                    });
+                }
+            });
+
+            // Sort tags alphabetically
+            allTags.sort();
+
+            // Get the tag cloud element
+            const tagCloudEl = document.getElementById('tagCloudEl');
+            tagCloudEl.innerHTML = '';
+
+            // Show empty placeholder if no tags
+            if (allTags.length === 0) {
+                const emptyPlaceholder = document.createElement('div');
+                emptyPlaceholder.className = 'empty-tags-placeholder';
+                emptyPlaceholder.innerHTML = '<p>No tags yet. Add tags to your notes with #tag in your content.</p>';
+                tagCloudEl.appendChild(emptyPlaceholder);
+                return;
+            }
+
+            // Create tag items
+            allTags.forEach(tag => {
+                const tagCount = notes.filter(note => note.tags && note.tags.includes(tag)).length;
+
+                const tagItem = document.createElement('div');
+                tagItem.className = 'tag-item';
+                if (currentTag === tag) tagItem.classList.add('active');
+
+                tagItem.innerHTML = `
+        ${tag}
+        <span class="count">${tagCount}</span>
+      `;
+
+                tagItem.addEventListener('click', () => {
+                    if (currentTag === tag) {
+                        // Clicking on already selected tag deselects it
+                        currentTag = null;
+                    } else {
+                        currentTag = tag;
+                    }
+                    setView('tags');
+                    updateTagsList();
+                    updateNotesList(searchInputEl.value);
+                });
+
+                tagCloudEl.appendChild(tagItem);
+            });
+        }
+
+        // Update folder select options in modals
+        function updateFolderSelects() {
+            // Update parent folder select in folder modal
+            parentFolderSelectEl.innerHTML = '<option value="">Root (No parent)</option>';
+
+            // Update select folder input in move to folder modal
+            selectFolderInputEl.innerHTML = '<option value="">Root (No folder)</option>';
+
+            // Helper function to add folder options recursively with proper indentation
+            function addFolderOptions(parentId = null, level = 0, selectElement) {
+                const childFolders = folders.filter(folder => folder.parentId === parentId);
+
+                childFolders.forEach(folder => {
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    option.textContent = '—'.repeat(level) + ' ' + folder.name;
+                    selectElement.appendChild(option);
+
+                    // Recursively add child folders
+                    addFolderOptions(folder.id, level + 1, selectElement);
+                });
+            }
+
+            // Add folder options to both select elements
+            addFolderOptions(null, 0, parentFolderSelectEl);
+            addFolderOptions(null, 0, selectFolderInputEl);
+        }
+
+        // Format date nicely
+        function formatDate(date) {
+            const now = new Date();
+            const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) {
+                return 'Today, ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else if (diffDays === 1) {
+                return 'Yesterday';
+            } else if (diffDays < 7) {
+                return date.toLocaleDateString([], { weekday: 'short' });
+            } else {
+                return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+            }
+        }
+
+        // Count words in text
+        function countWords(text) {
+            return text.split(/\s+/).filter(word => word.length > 0).length;
+        }
+
+        // Update word count
+        function updateWordCount() {
+            const words = countWords(editorEl.value);
+            wordCountEl.textContent = words;
+        }
+
+        // Highlight search term in text
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm) return text;
+
+            const regex = new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\<-<-<|OUTPUT_TEMPLATE_PLACEHOLDER|>->->'), 'gi');
+            return text.replace(regex, match => `<span class="highlight">${match}</span>`);
+        }
+
+        // Set view (notes, folders, tags)
+        function setView(view) {
+            currentView = view;
+
+            // Update button states
+            notesViewBtnEl.classList.remove('active');
+            foldersViewBtnEl.classList.remove('active');
+            tagsViewBtnEl.classList.remove('active');
+
+            // Hide all views
+            noteListEl.hidden = true;
+            foldersListEl.hidden = true;
+            tagsListEl.hidden = true;
+
+            // Show selected view
+            if (view === 'notes') {
+                notesViewBtnEl.classList.add('active');
+                noteListEl.hidden = false;
+                currentFolderId = null;
+                currentTag = null;
+            } else if (view === 'folders') {
+                foldersViewBtnEl.classList.add('active');
+                foldersListEl.hidden = false;
+                noteListEl.hidden = false;
+                currentTag = null;
+            } else if (view === 'tags') {
+                tagsViewBtnEl.classList.add('active');
+                tagsListEl.hidden = false;
+                noteListEl.hidden = false;
+                currentFolderId = null;
+            }
+
+            // Update lists
+            updateNotesList(searchInputEl.value);
+            updateFoldersList();
+            updateTagsList();
+        }
+
+        // Open note
+        function openNote(noteId) {
+            // Save current note if there is one
+            if (currentNoteId) {
+                saveCurrentNote();
+            }
+
+            const note = notes.find(n => n.id === noteId);
+            if (!note) return;
+
+            currentNoteId = noteId;
+            editorEl.value = note.content;
+            lastSavedContent = note.content;
+
+            // Hide empty state
+            emptyStateEl.hidden = true;
+
+            // Update preview
+            updatePreview();
+
+            // Update word count
+            updateWordCount();
+
+            // Update spell check based on settings
+            editorEl.spellcheck = settings.spellCheck;
+
+            // Highlight active note in list
+            updateNotesList(searchInputEl.value);
+        }
+
+        // Create a new note
+        function createNewNote() {
+            const newNote = {
+                id: generateId(),
+                title: 'Untitled',
+                content: '# Untitled',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                tags: [],
+                folderId: currentFolderId // Use current folder if in folder view
+            };
+
+            notes.push(newNote);
+            saveNotes();
+            updateNotesList();
+            openNote(newNote.id);
+            hideEmptyState();
+            editorEl.focus();
+            showToast('New note created', 'success');
+        }
+
+        // Save current note
+        function saveCurrentNote() {
+            if (!currentNoteId) return;
+
+            const content = editorEl.value;
+
+            // Only save if content has changed
+            if (content === lastSavedContent) return;
+
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+            if (noteIndex === -1) return;
+
+            // Extract title from first heading or first line
+            let title = 'Untitled';
+            const headingMatch = content.match(/^# (.+)/m);
+            if (headingMatch) {
+                title = headingMatch[1].trim();
+            } else {
+                const firstLine = content.split('\n')[0];
+                if (firstLine.trim()) {
+                    title = firstLine.trim().substring(0, 50);
+                }
+            }
+
+            // Extract tags from content with #tag format
+            const tagMatches = content.match(/#([a-zA-Z0-9_-]+)/g) || [];
+            const tags = tagMatches.map(tag => tag.substring(1)).filter((tag, index, self) =>
+                self.indexOf(tag) === index && tag.length > 0
+            );
+
+            notes[noteIndex].title = title;
+            notes[noteIndex].content = content;
+            notes[noteIndex].updatedAt = new Date().toISOString();
+            notes[noteIndex].tags = tags;
+
+            lastSavedContent = content;
+
+            saveNotes();
+            updateNotesList(searchInputEl.value);
+            updateTagsList(); // Update tags list in case tags changed
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            showToast('Note saved', 'success', 1000);
+        }
+
+        // Create a new folder
+        function createFolder() {
+            const folderName = folderNameInputEl.value.trim();
+            if (!folderName) {
+                showToast('Please enter a folder name', 'error');
+                return;
+            }
+
+            const parentId = parentFolderSelectEl.value || null;
+
+            const newFolder = {
+                id: generateId(),
+                name: folderName,
+                parentId: parentId,
+                createdAt: new Date().toISOString()
+            };
+
+            folders.push(newFolder);
+            saveFolders();
+            updateFoldersList();
+            folderModalEl.hidden = true;
+            folderNameInputEl.value = '';
+            showToast('Folder created', 'success');
+
+            // Switch to folders view
+            setView('folders');
+        }
+
+        // Show folder modal
+        function showFolderModal(editMode = false, folderId = null) {
+            folderModalEl.hidden = false;
+
+            if (editMode && folderId) {
+                const folder = folders.find(f => f.id === folderId);
+                if (folder) {
+                    folderModalTitle.textContent = 'Edit Folder';
+                    folderNameInputEl.value = folder.name;
+                    parentFolderSelectEl.value = folder.parentId || '';
+                    saveFolderBtnEl.textContent = 'Update Folder';
+                    saveFolderBtnEl.dataset.mode = 'edit';
+                    saveFolderBtnEl.dataset.folderId = folderId;
+                }
+            } else {
+                folderModalTitle.textContent = 'Create New Folder';
+                folderNameInputEl.value = '';
+                parentFolderSelectEl.value = '';
+                saveFolderBtnEl.textContent = 'Create Folder';
+                saveFolderBtnEl.dataset.mode = 'create';
+                delete saveFolderBtnEl.dataset.folderId;
+            }
+        }
+
+        // Move note to folder
+        function moveNoteToFolder() {
+            if (!currentNoteId) return;
+
+            const folderId = selectFolderInputEl.value || null;
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+
+            if (noteIndex === -1) return;
+
+            notes[noteIndex].folderId = folderId;
+            saveNotes();
+            updateNotesList(searchInputEl.value);
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            moveToFolderModalEl.hidden = true;
+            showToast('Note moved to folder', 'success');
+        }
+
+        // Show move to folder modal
+        function showMoveToFolderModal() {
+            moveToFolderModalEl.hidden = false;
+            updateFolderSelects();
+
+            // Set the current folder as selected
+            const note = notes.find(n => n.id === currentNoteId);
+            if (note) {
+                selectFolderInputEl.value = note.folderId || '';
+            }
+        }
+
+        // Show tags modal
+        function showTagsModal() {
+            tagsModalEl.hidden = false;
+
+            // Get the current note
+            const note = notes.find(n => n.id === currentNoteId);
+            if (!note) return;
+
+            // Display current tags
+            updateCurrentTagsList(note.tags);
+
+            // Display suggested tags
+            updateSuggestedTagsList(note.tags);
+        }
+
+        // Show external link modal
+        function showExternalLinkModal() {
+            // Get selected text to pre-fill the link text
+            const start = editorEl.selectionStart;
+            const end = editorEl.selectionEnd;
+            const selectedText = editorEl.value.substring(start, end);
+
+            linkTextInputEl.value = selectedText;
+            linkUrlInputEl.value = 'https://';
+            externalLinkModalEl.hidden = false;
+
+            // Focus on link text if empty, otherwise focus on URL
+            if (!selectedText) {
+                linkTextInputEl.focus();
+            } else {
+                linkUrlInputEl.focus();
+            }
+        }
+
+        // Insert external link
+        function insertExternalLink() {
+            const linkText = linkTextInputEl.value.trim();
+            const linkUrl = linkUrlInputEl.value.trim();
+
+            if (!linkText) {
+                showToast('Please enter link text', 'error');
+                linkTextInputEl.focus();
+                return;
+            }
+
+            if (!linkUrl || linkUrl === 'https://') {
+                showToast('Please enter a valid URL', 'error');
+                linkUrlInputEl.focus();
+                return;
+            }
+
+            // Create markdown link format
+            const linkMd = `[${linkText}](${linkUrl})`;
+
+            // Insert at cursor position
+            const start = editorEl.selectionStart;
+            const end = editorEl.selectionEnd;
+
+            editorEl.value = editorEl.value.substring(0, start) + linkMd + editorEl.value.substring(end);
+
+            // Update preview and set cursor position
+            updatePreview();
+            editorEl.focus();
+            editorEl.selectionStart = start + linkMd.length;
+            editorEl.selectionEnd = start + linkMd.length;
+
+            // Close modal
+            externalLinkModalEl.hidden = true;
+
+            // Auto-save if enabled
+            if (settings.autoSave) {
+                clearTimeout(editorChangeTimer);
+                editorChangeTimer = setTimeout(saveCurrentNote, 2000);
+            }
+        }
+
+        // Update current tags list in tags modal
+        function updateCurrentTagsList(tags) {
+            currentTagsListEl.innerHTML = '';
+
+            if (!tags || tags.length === 0) {
+                currentTagsListEl.innerHTML = '<p class="empty-tag-message">No tags added yet</p>';
+                return;
+            }
+
+            tags.forEach(tag => {
+                const tagPill = document.createElement('div');
+                tagPill.className = 'tag-pill';
+                tagPill.innerHTML = `
+        ${tag}
+        <span class="remove" data-tag="${tag}"><i class="fas fa-times"></i></span>
+      `;
+
+                // Add event listener for remove button
+                tagPill.querySelector('.remove').addEventListener('click', (e) => {
+                    const tagToRemove = e.currentTarget.dataset.tag;
+                    removeTagFromNote(tagToRemove);
+                });
+
+                currentTagsListEl.appendChild(tagPill);
+            });
+        }
+
+        // Update suggested tags list in tags modal
+        function updateSuggestedTagsList(currentTags) {
+            suggestedTagsListEl.innerHTML = '';
+
+            // Get all unique tags from all notes
+            const allTags = [];
+            notes.forEach(note => {
+                if (note.tags && Array.isArray(note.tags)) {
+                    note.tags.forEach(tag => {
+                        if (!allTags.includes(tag)) {
+                            allTags.push(tag);
+                        }
+                    });
+                }
+            });
+
+            // Filter out current tags
+            const suggestedTags = allTags.filter(tag => !currentTags.includes(tag));
+
+            if (suggestedTags.length === 0) {
+                suggestedTagsListEl.innerHTML = '<p class="empty-tag-message">No suggested tags</p>';
+                return;
+            }
+
+            // Sort alphabetically
+            suggestedTags.sort();
+
+            // Create tag pills
+            suggestedTags.forEach(tag => {
+                const tagPill = document.createElement('div');
+                tagPill.className = 'tag-pill';
+                tagPill.innerHTML = tag;
+                tagPill.dataset.tag = tag;
+
+                // Add event listener to add tag
+                tagPill.addEventListener('click', () => {
+                    addTagToNote(tag);
+                });
+
+                suggestedTagsListEl.appendChild(tagPill);
+            });
+        }
+
+        // Add tag to current note
+        function addTagToNote(tag) {
+            if (!currentNoteId) return;
+
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+            if (noteIndex === -1) return;
+
+            // Initialize tags array if it doesn't exist
+            if (!notes[noteIndex].tags) {
+                notes[noteIndex].tags = [];
+            }
+
+            // Don't add if tag already exists
+            if (notes[noteIndex].tags.includes(tag)) {
+                showToast('Tag already exists', 'info');
+                return;
+            }
+
+            notes[noteIndex].tags.push(tag);
+            notes[noteIndex].updatedAt = new Date().toISOString();
+
+            saveNotes();
+            updateNotesList(searchInputEl.value);
+            updateTagsList();
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            // Update tags in modal
+            updateCurrentTagsList(notes[noteIndex].tags);
+            updateSuggestedTagsList(notes[noteIndex].tags);
+
+            showToast('Tag added', 'success');
+        }
+
+        // Remove tag from current note
+        function removeTagFromNote(tag) {
+            if (!currentNoteId) return;
+
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+            if (noteIndex === -1) return;
+
+            if (!notes[noteIndex].tags) return;
+
+            notes[noteIndex].tags = notes[noteIndex].tags.filter(t => t !== tag);
+            notes[noteIndex].updatedAt = new Date().toISOString();
+
+            saveNotes();
+            updateNotesList(searchInputEl.value);
+            updateTagsList();
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            // Update tags in modal
+            updateCurrentTagsList(notes[noteIndex].tags);
+            updateSuggestedTagsList(notes[noteIndex].tags);
+
+            showToast('Tag removed', 'success');
+        }
+
+        // Add tag from input
+        function addTagFromInput() {
+            const tag = addTagInputEl.value.trim();
+
+            if (!tag) {
+                showToast('Please enter a tag', 'error');
+                return;
+            }
+
+            // Clean up tag - remove # if present, replace spaces with underscores
+            let cleanTag = tag.replace(/^#/, '').replace(/\s+/g, '_');
+
+            addTagToNote(cleanTag);
+            addTagInputEl.value = '';
+        }
+
+        // Show note actions modal
+        function showNoteActionsModal(note) {
+            // Set the current note for the actions
+            currentNoteId = note.id;
+
+            // Update modal title to show the note name
+            noteActionsModalEl.querySelector('h2').textContent = `Options for "${note.title}"`;
+
+            // Show modal
+            noteActionsModalEl.hidden = false;
+        }
+
+        // Start the clock
+        function startClock() {
+            // Update immediately
+            updateClock();
+
+            // Update every second
+            clockTimer = setInterval(updateClock, 1000);
+        }
+
+        // Update the clock display
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            let timeStr;
+
+            if (settings.clockFormat === '12') {
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+
+                if (settings.showSeconds) {
+                    timeStr = `${hours}:${minutes}:${seconds} ${ampm}`;
+                } else {
+                    timeStr = `${hours}:${minutes} ${ampm}`;
+                }
+            } else {
+                hours = hours.toString().padStart(2, '0');
+
+                if (settings.showSeconds) {
+                    timeStr = `${hours}:${minutes}:${seconds}`;
+                } else {
+                    timeStr = `${hours}:${minutes}`;
+                }
+            }
+
+            clockTimeEl.textContent = timeStr;
+        }
+
+        // Show clock settings modal
+        function showClockModal() {
+            clockModalEl.hidden = false;
+            updateAlarmsList();
+        }
+
+        // Update alarms list in clock modal
+        function updateAlarmsList() {
+            alarmsListEl.innerHTML = '';
+
+            if (alarms.length === 0) {
+                const emptyPlaceholder = document.createElement('div');
+                emptyPlaceholder.className = 'empty-alarms-placeholder';
+                emptyPlaceholder.innerHTML = '<p>No alarms set. Add an alarm above.</p>';
+                alarmsListEl.appendChild(emptyPlaceholder);
+                return;
+            }
+
+            // Sort alarms by time
+            alarms.sort((a, b) => {
+                const timeA = a.time.split(':');
+                const timeB = b.time.split(':');
+                return timeA[0] * 60 + parseInt(timeA[1]) - (timeB[0] * 60 + parseInt(timeB[1]));
+            });
+
+            // Create alarm items
+            alarms.forEach((alarm, index) => {
+                const alarmItem = document.createElement('div');
+                alarmItem.className = 'alarm-item';
+
+                // Format time in 12-hour format if needed
+                let displayTime = alarm.time;
+                if (settings.clockFormat === '12') {
+                    const [hours, minutes] = alarm.time.split(':');
+                    const h = parseInt(hours);
+                    const ampm = h >= 12 ? 'PM' : 'AM';
+                    const h12 = h % 12 || 12;
+                    displayTime = `${h12}:${minutes} ${ampm}`;
+                }
+
+                alarmItem.innerHTML = `
+        <div class="alarm-info">
+          <div class="alarm-time">${displayTime}</div>
+          ${alarm.name ? `<div class="alarm-name">${alarm.name}</div>` : ''}
+        </div>
+        <div class="alarm-controls">
+          <button class="alarm-toggle-btn" title="${alarm.enabled ? 'Disable' : 'Enable'}" data-index="${index}">
+            <i class="fas ${alarm.enabled ? 'fa-bell' : 'fa-bell-slash'}"></i>
+          </button>
+          <button class="alarm-delete-btn" title="Delete" data-index="${index}">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `;
+
+                // Add event listeners
+                alarmItem.querySelector('.alarm-toggle-btn').addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    toggleAlarm(index);
+                });
+
+                alarmItem.querySelector('.alarm-delete-btn').addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    deleteAlarm(index);
+                });
+
+                alarmsListEl.appendChild(alarmItem);
+            });
+        }
+
+        // Add a new alarm
+        function addAlarm() {
+            const time = alarmTimeInputEl.value;
+            const name = alarmNameInputEl.value.trim();
+
+            if (!time) {
+                showToast('Please select a time', 'error');
+                return;
+            }
+
+            const newAlarm = {
+                id: generateId(),
+                time: time,
+                name: name,
+                enabled: true,
+                createdAt: new Date().toISOString()
+            };
+
+            alarms.push(newAlarm);
+            saveAlarms();
+            updateAlarmsList();
+            alarmTimeInputEl.value = '';
+            alarmNameInputEl.value = '';
+            showToast('Alarm added', 'success');
+
+            // Try to play a short sound to unlock audio (needed for iOS/Safari)
+            try {
+                alarmAudioEl.play().then(() => {
+                    setTimeout(() => {
+                        alarmAudioEl.pause();
+                        alarmAudioEl.currentTime = 0;
+                    }, 300);
+                }).catch(e => {
+                    console.log('Audio context not yet unlocked');
+                });
+            } catch (e) {
+                console.log('Failed to test audio playback');
+            }
+        }
+
+        // Toggle alarm enabled state
+        function toggleAlarm(index) {
+            if (index < 0 || index >= alarms.length) return;
+
+            alarms[index].enabled = !alarms[index].enabled;
+            saveAlarms();
+            updateAlarmsList();
+
+            showToast(`Alarm ${alarms[index].enabled ? 'enabled' : 'disabled'}`, 'success');
+        }
+
+        // Delete an alarm
+        function deleteAlarm(index) {
+            if (index < 0 || index >= alarms.length) return;
+
+            alarms.splice(index, 1);
+            saveAlarms();
+            updateAlarmsList();
+
+            showToast('Alarm deleted', 'success');
+        }
+
+        // Check for active alarms
+        function checkAlarms() {
+            const now = new Date();
+            const currentHour = now.getHours().toString().padStart(2, '0');
+            const currentMinute = now.getMinutes().toString().padStart(2, '0');
+            const currentTime = `${currentHour}:${currentMinute}`;
+
+            alarms.forEach(alarm => {
+                if (alarm.enabled && alarm.time === currentTime && !alarm.lastTriggered) {
+                    triggerAlarm(alarm);
+
+                    // Mark as triggered to prevent multiple triggers in the same minute
+                    alarm.lastTriggered = true;
+
+                    // Schedule reset of lastTriggered flag after 1 minute
+                    setTimeout(() => {
+                        alarm.lastTriggered = false;
+                    }, 61000); // 61 seconds to ensure we're in a new minute
+                }
+            });
+
+            // Check every 15 seconds
+            setTimeout(checkAlarms, 15000);
+        }
+
+        // Function to play alarm sound
+        function playAlarmSound() {
+            try {
+                // Stop any currently playing alarm
+                stopAlarmSound();
+
+                // Reset and play the audio element
+                alarmAudioEl.currentTime = 0;
+
+                // Promise-based play with fallback
+                const playPromise = alarmAudioEl.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Playback started successfully
+                        alarmAudio = alarmAudioEl;
+                    }).catch(error => {
+                        console.error('Error playing alarm sound:', error);
+                        showToast('Could not play alarm sound. Click anywhere to enable sound.', 'warning');
+
+                        // Unlock audio on next user interaction
+                        const unlockAudio = () => {
+                            alarmAudioEl.play().then(() => {
+                                alarmAudio = alarmAudioEl;
+                                document.removeEventListener('click', unlockAudio);
+                            }).catch(e => {
+                                console.error('Still unable to play sound:', e);
+                            });
+                        };
+
+                        document.addEventListener('click', unlockAudio);
+                    });
+                } else {
+                    // Older browsers that don't return a promise
+                    alarmAudio = alarmAudioEl;
+                }
+            } catch (error) {
+                console.error('Error in playAlarmSound:', error);
+            }
+        }
+
+        // Function to stop alarm sound
+        function stopAlarmSound() {
+            try {
+                alarmAudioEl.pause();
+                alarmAudioEl.currentTime = 0;
+                alarmAudio = null;
+            } catch (error) {
+                console.error('Error stopping alarm sound:', error);
+            }
+        }
+
+        // Trigger an alarm
+        function triggerAlarm(alarm) {
+            // Format time for display
+            let displayTime = alarm.time;
+            if (settings.clockFormat === '12') {
+                const [hours, minutes] = alarm.time.split(':');
+                const h = parseInt(hours);
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                const h12 = h % 12 || 12;
+                displayTime = `${h12}:${minutes} ${ampm}`;
+            }
+
+            // Create and show a nice popup
+            const alarmPopup = document.createElement('div');
+            alarmPopup.className = 'alarm-popup';
+            alarmPopup.innerHTML = `
+      <div class="alarm-popup-content">
+        <div class="alarm-popup-icon"><i class="fas fa-bell"></i></div>
+        <div class="alarm-popup-info">
+          <h3>Alarm</h3>
+          <div class="alarm-popup-time">${displayTime}</div>
+          ${alarm.name ? `<div class="alarm-popup-name">${alarm.name}</div>` : ''}
+        </div>
+        <button class="alarm-popup-close"><i class="fas fa-times"></i></button>
+      </div>
+    `;
+
+            document.body.appendChild(alarmPopup);
+
+            // Add event listener to close button
+            alarmPopup.querySelector('.alarm-popup-close').addEventListener('click', () => {
+                stopAlarmSound();
+                alarmPopup.classList.add('closing');
+                setTimeout(() => {
+                    if (alarmPopup.parentNode) {
+                        alarmPopup.parentNode.removeChild(alarmPopup);
+                    }
+                }, 300);
+            });
+
+            // Show popup with animation
+            setTimeout(() => {
+                alarmPopup.classList.add('show');
+            }, 10);
+
+            // Auto close after 1 minute if not manually closed
+            setTimeout(() => {
+                if (alarmPopup.parentNode) {
+                    stopAlarmSound();
+                    alarmPopup.classList.add('closing');
+                    setTimeout(() => {
+                        if (alarmPopup.parentNode) {
+                            alarmPopup.parentNode.removeChild(alarmPopup);
+                        }
+                    }, 300);
+                }
+            }, 60000);
+
+            // Play sound
+            playAlarmSound();
+
+            // Show toast notification
+            showToast(`⏰ Alarm: ${alarm.name ? alarm.name : displayTime}`, 'warning', 10000);
+        }
+
+        // Rename a note
+        function renameNote() {
+            if (!currentNoteId) return;
+
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+            if (noteIndex === -1) return;
+
+            const newTitle = prompt('Enter a new title:', notes[noteIndex].title);
+            if (!newTitle) return;
+
+            notes[noteIndex].title = newTitle;
+
+            // Also update the first heading in the content if it exists
+            const content = notes[noteIndex].content;
+            const headingMatch = content.match(/^# (.+)/m);
+            if (headingMatch) {
+                notes[noteIndex].content = content.replace(/^# .+/m, `# ${newTitle}`);
+                if (currentNoteId === notes[noteIndex].id) {
+                    editorEl.value = notes[noteIndex].content;
+                    lastSavedContent = notes[noteIndex].content;
+                    updatePreview();
+                }
+            }
+
+            notes[noteIndex].updatedAt = new Date().toISOString();
+
+            saveNotes();
+            updateNotesList(searchInputEl.value);
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            showToast('Note renamed', 'success');
+
+            // Close modal
+            noteActionsModalEl.hidden = true;
+        }
+
+        // Duplicate a note
+        function duplicateNote() {
+            if (!currentNoteId) return;
+
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+            if (noteIndex === -1) return;
+
+            const originalNote = notes[noteIndex];
+            const newNote = {
+                id: generateId(),
+                title: `${originalNote.title} (Copy)`,
+                content: originalNote.content.replace(/^# .+/m, `# ${originalNote.title} (Copy)`),
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                tags: [...originalNote.tags],
+                folderId: originalNote.folderId
+            };
+
+            notes.push(newNote);
+            saveNotes();
+            updateNotesList(searchInputEl.value);
+            openNote(newNote.id);
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            showToast('Note duplicated', 'success');
+
+            // Close modal
+            noteActionsModalEl.hidden = true;
+        }
+
+        // Delete a note
+        function deleteNote() {
+            if (!currentNoteId) return;
+
+            if (!confirm('Are you sure you want to delete this note? This action cannot be undone.')) return;
+
+            const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+            if (noteIndex === -1) return;
+
+            // Store the ID before removing from array
+            const deletedNoteId = currentNoteId;
+
+            // Remove from array
+            notes.splice(noteIndex, 1);
+            saveNotes();
+
+            // Update UI
+            if (deletedNoteId === currentNoteId) {
+                currentNoteId = null;
+
+                if (notes.length > 0) {
+                    openNote(notes[0].id);
+                } else {
+                    editorEl.value = '';
+                    updatePreview();
+                    showEmptyState();
+                }
+            }
+
+            updateNotesList(searchInputEl.value);
+            updateTagsList();
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            showToast('Note deleted', 'success');
+
+            // Close modal
+            noteActionsModalEl.hidden = true;
+        }
+
+        // Print current note
+        function printNote() {
+            if (!currentNoteId) return;
+
+            // Create a new window with just the note content for printing
+            const printWindow = window.open('', '_blank');
+            const note = notes.find(n => n.id === currentNoteId);
+
+            if (!note) return;
+
+            // Generate HTML for printing
+            printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>${note.title} - NeuralNotes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+          h1 { font-size: 24px; margin-bottom: 16px; }
+          h2 { font-size: 20px; margin-bottom: 14px; margin-top: 24px; }
+          h3 { font-size: 18px; margin-bottom: 12px; margin-top: 20px; }
+          p { margin-bottom: 16px; }
+          pre { background: #f5f5f5; padding: 12px; border-radius: 4px; overflow-x: auto; }
+          code { background: #f5f5f5; padding: 2px 4px; border-radius: 2px; font-family: monospace; }
+          blockquote { border-left: 3px solid #ddd; padding-left: 16px; margin-left: 0; color: #666; }
+          a { color: #5c6ac4; text-decoration: none; }
+          img { max-width: 100%; }
+          @media print {
+            body { font-size: 12pt; }
+            pre, code { font-size: 10pt; }
+          }
+          @media screen and (max-width: 600px) {
+            body { padding: 15px; }
+          }
+        </style>
+      </head>
+      <body>
+        ${markdownToHtml(note.content)}
+        <div style="margin-top: 40px; color: #999; font-size: 12px; text-align: center;">
+          Printed from NeuralNotes - ${new Date().toLocaleString()}
+        </div>
+      </body>
+      </html>
+    `);
+
+            printWindow.document.close();
+            printWindow.focus();
+
+            // Print after short delay to ensure content is rendered
+            setTimeout(() => {
+                printWindow.print();
+                // Close window after print dialog (some browsers)
+                printWindow.onafterprint = function () {
+                    printWindow.close();
+                };
+            }, 500);
+
+            // Close modal
+            noteActionsModalEl.hidden = true;
+        }
+
+        // Export notes to JSON file
+        function exportNotes() {
+            try {
+                const exportData = {
+                    notes: notes,
+                    folders: folders
+                };
+
+                const notesJson = JSON.stringify(exportData, null, 2);
+                const blob = new Blob([notesJson], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `neuralnotes-export-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+
+                URL.revokeObjectURL(url);
+                showToast('Notes exported successfully', 'success');
+            } catch (error) {
+                console.error('Error exporting notes:', error);
+                showToast('Failed to export notes', 'error');
+            }
+        }
+
+        // Import notes from JSON file
+        function importNotes() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                try {
+                    // Show loading indicator
+                    loadingScreenEl.hidden = false;
+                    loadingMessageEl.textContent = "Importing notes...";
+
+                    const text = await file.text();
+                    const importedData = JSON.parse(text);
+
+                    let importedNotes = [];
+                    let importedFolders = [];
+
+                    // Check if the imported data is an object with notes and folders
+                    if (importedData && typeof importedData === 'object') {
+                        if (Array.isArray(importedData.notes)) {
+                            importedNotes = importedData.notes;
+                        } else if (Array.isArray(importedData)) {
+                            // Legacy format: just an array of notes
+                            importedNotes = importedData;
+                        }
+
+                        if (Array.isArray(importedData.folders)) {
+                            importedFolders = importedData.folders;
+                        }
+                    }
+
+                    if (importedNotes.length === 0) {
+                        throw new Error('No valid notes found in import file');
+                    }
+
+                    if (confirm(`Import ${importedNotes.length} notes and ${importedFolders.length} folders? This will add them to your existing data.`)) {
+                        // Import folders first (create ID mapping for reference)
+                        let folderIdMap = {};
+
+                        if (importedFolders.length > 0) {
+                            importedFolders.forEach(folder => {
+                                const oldId = folder.id;
+                                const newId = generateId();
+                                folderIdMap[oldId] = newId;
+
+                                folder.id = newId;
+
+                                // Update parent IDs if needed
+                                if (folder.parentId && folderIdMap[folder.parentId]) {
+                                    folder.parentId = folderIdMap[folder.parentId];
+                                }
+                            });
+
+                            // Add imported folders to existing folders
+                            folders = [...folders, ...importedFolders];
+                            await saveFolders();
+                        }
+
+                        // Now import notes, updating folder references
+                        importedNotes.forEach(note => {
+                            note.id = generateId();
+
+                            // Add tags array if missing
+                            if (!note.tags) note.tags = [];
+
+                            // Update folder reference if needed
+                            if (note.folderId && folderIdMap[note.folderId]) {
+                                note.folderId = folderIdMap[note.folderId];
+                            }
+                        });
+
+                        // Add to existing notes
+                        notes = [...notes, ...importedNotes];
+
+                        await saveNotes();
+                        updateNotesList();
+                        updateFoldersList();
+                        updateTagsList();
+
+                        // If graph view is active, update it
+                        if (!graphViewEl.hidden) {
+                            renderGraph();
+                        }
+
+                        if (notes.length > 0 && !currentNoteId) {
+                            openNote(importedNotes[0].id);
+                            hideEmptyState();
+                        }
+
+                        showToast(`Imported ${importedNotes.length} notes and ${importedFolders.length} folders successfully`, 'success');
+                    }
+                } catch (error) {
+                    console.error('Error importing notes:', error);
+                    showToast(`Error importing notes: ${error.message}`, 'error');
+                } finally {
+                    loadingScreenEl.hidden = true;
+                }
+            };
+
+            input.click();
+        }
+
+        // Backup data now
+        function backupNow() {
+            exportNotes();
+            showToast('Backup created successfully', 'success');
+        }
+
+        // Initialize highlight.js for code syntax highlighting
+        function initializeHighlightJs() {
+            // Load highlight.js if needed
+            if (typeof hljs === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js';
+                script.onload = () => {
+                    // Initialize after loading
+                    hljs.configure({ languages: ['javascript', 'python', 'html', 'css', 'bash', 'markdown'] });
+                };
+                document.head.appendChild(script);
+            }
+        }
+
+        // Update preview with rendered markdown
+        function updatePreview() {
+            if (!editorEl.value) {
+                previewEl.innerHTML = '<div class="empty-preview">Nothing to preview</div>';
+                return;
+            }
+
+            // Process markdown content
+            let content = editorEl.value;
+
+            // Process wiki links [[link]]
+            content = content.replace(/\[\[(.+?)\]\]/g, (match, link) => {
+                return `<a href="#" class="wiki-link" data-link="${link}">${link}</a>`;
+            });
+
+            // Convert markdown to HTML
+            content = markdownToHtml(content);
+
+            previewEl.innerHTML = content;
+
+            // Highlight code blocks
+            if (typeof hljs !== 'undefined') {
+                previewEl.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightElement(block);
+                });
+            }
+
+            // Add event listeners to wiki links
+            document.querySelectorAll('.wiki-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const linkText = link.getAttribute('data-link');
+
+                    // Check if a note with this title exists
+                    const existingNote = notes.find(n => n.title === linkText);
+                    if (existingNote) {
+                        openNote(existingNote.id);
+                    } else {
+                        // Create a new note with the link text as title
+                        createNoteFromWikiLink(linkText);
+                    }
+                });
+            });
+
+            // Update word count
+            updateWordCount();
+        }
+
+        // Convert markdown to HTML (improved version)
+        function markdownToHtml(markdown) {
+            return markdown
+                // Headers
+                .replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+                .replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+                // Bold
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                // Italic
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                // Strike through
+                .replace(/~~(.*?)~~/g, '<del>$1</del>')
+                // Code blocks with syntax highlighting
+                .replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+                    return `<pre><code class="language-${lang}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+                })
+                // Inline code
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                // Blockquotes
+                .replace(/^> (.*?)$/gm, '<blockquote>$1</blockquote>')
+                // Unordered lists
+                .replace(/^- (.*?)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>\n)+/g, match => `<ul>${match}</ul>`)
+                // Ordered lists
+                .replace(/^\d+\. (.*?)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>\n)+/g, match => `<ol>${match}</ol>`)
+                // Images
+                .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">')
+                // Links - update with external link class
+                .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" class="external-link">$1</a>')
+                // Regular links (internal)
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (match, text, url) {
+                    if (url.startsWith('http://') || url.startsWith('https://')) {
+                        return match; // Skip, already processed by the external link regex
+                    }
+                    return `<a href="${url}" target="_blank">${text}</a>`;
+                })
+                // Horizontal rules
+                .replace(/^---$/gm, '<hr>')
+                // Paragraphs - wrap non-wrapped lines
+                .replace(/^([^<].*?)$/gm, (match, text) => {
+                    if (text.trim() === '') return '';
+                    return `<p>${text}</p>`;
+                })
+                // Line breaks
+                .replace(/\n\n/g, '<br>');
+        }
+
+        // Create a new note from a wiki link
+        function createNoteFromWikiLink(title) {
+            const newNote = {
+                id: generateId(),
+                title: title,
+                content: `# ${title}\n\n`,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                tags: [],
+                folderId: currentFolderId
+            };
+
+            notes.push(newNote);
+            saveNotes();
+            updateNotesList();
+            openNote(newNote.id);
+
+            // If graph view is active, update it
+            if (!graphViewEl.hidden) {
+                renderGraph();
+            }
+
+            showToast(`Created new note: ${title}`, 'success');
+        }
+
+        // Insert formatting around selected text
+        function insertFormatting(prefix, suffix) {
+            const start = editorEl.selectionStart;
+            const end = editorEl.selectionEnd;
+            const selectedText = editorEl.value.substring(start, end);
+
+            const newText = prefix + selectedText + suffix;
+
+            editorEl.value = editorEl.value.substring(0, start) + newText + editorEl.value.substring(end);
+
+            // Update preview
+            updatePreview();
+
+            // Set cursor position
+            if (selectedText.length > 0) {
+                editorEl.selectionStart = start;
+                editorEl.selectionEnd = start + newText.length;
+            } else {
+                editorEl.selectionStart = start + prefix.length;
+                editorEl.selectionEnd = start + prefix.length;
+            }
+
+            editorEl.focus();
+
+            // Auto-save if enabled
+            if (settings.autoSave) {
+                clearTimeout(editorChangeTimer);
+                editorChangeTimer = setTimeout(saveCurrentNote, 2000);
+            }
+        }
+
+        // Set view mode (edit, preview, split, or graph)
+        function setViewMode(mode) {
+            // Reset all buttons
+            editViewBtnEl.classList.remove('active');
+            previewViewBtnEl.classList.remove('active');
+            splitViewBtnEl.classList.remove('active');
+            graphViewBtnEl.classList.remove('active');
+
+            // Hide all by default
+            editorEl.hidden = true;
+            previewEl.hidden = true;
+            graphViewEl.hidden = true;
+
+            // Set the requested mode
+            if (mode === 'edit') {
+                editorEl.hidden = false;
+                editorEl.style.width = '100%';
+                editViewBtnEl.classList.add('active');
+                editorEl.focus();
+            } else if (mode === 'preview') {
+                previewEl.hidden = false;
+                previewEl.style.width = '100%';
+                previewViewBtnEl.classList.add('active');
+                updatePreview(); // Make sure preview is up to date
+            } else if (mode === 'split') {
+                editorEl.hidden = false;
+                previewEl.hidden = false;
+                editorEl.style.width = '50%';
+                previewEl.style.width = '50%';
+                splitViewBtnEl.classList.add('active');
+                updatePreview();
+            } else if (mode === 'graph') {
+                graphViewEl.hidden = false;
+                graphViewBtnEl.classList.add('active');
+                renderGraph(); // Render or update the graph
+            }
+
+            // On mobile, hide split view option
+            if (window.innerWidth <= 768 && mode === 'split') {
+                // Fall back to edit view on mobile
+                setViewMode('edit');
+            }
+        }
+
+        // Extract wiki links from content
+        function extractWikiLinks(content) {
+            const matches = content.match(/\[\[(.+?)\]\]/g) || [];
+            return matches.map(match => match.slice(2, -2));
+        }
+
+        // Create graph data from notes and their connections
+        function createGraphData() {
+            const nodes = [];
+            const links = [];
+            const tagNodes = new Set();
+
+            // Add note nodes
+            notes.forEach(note => {
+                nodes.push({
+                    id: note.id,
+                    name: note.title || 'Untitled',
+                    type: 'note'
+                });
+
+                // Add tags and connections if enabled in settings
+                if (settings.graphShowTags !== false && note.tags && note.tags.length > 0) {
+                    note.tags.forEach(tag => {
+                        // Add tag node if it doesn't exist
+                        if (!tagNodes.has(tag)) {
+                            tagNodes.add(tag);
+                            nodes.push({
+                                id: `tag-${tag}`,
+                                name: tag,
+                                type: 'tag'
+                            });
+                        }
+
+                        // Add link between note and tag
+                        links.push({
+                            source: note.id,
+                            target: `tag-${tag}`,
+                            type: 'tag'
+                        });
+                    });
+                }
+
+                // Extract wiki links from content if enabled in settings
+                if (settings.graphShowLinks !== false) {
+                    const wikiLinks = extractWikiLinks(note.content);
+                    wikiLinks.forEach(link => {
+                        // Find if there's a note with this title
+                        const linkedNote = notes.find(n => n.title === link);
+                        if (linkedNote) {
+                            links.push({
+                                source: note.id,
+                                target: linkedNote.id,
+                                type: 'link'
+                            });
+                        }
+                    });
+                }
+            });
+
+            return { nodes, links };
+        }
+
+        // Render graph view
+        function renderGraph() {
+            // Clear previous graph
+            graphViewEl.innerHTML = '';
+
+            // Add graph legend
+            const legendDiv = document.createElement('div');
+            legendDiv.className = 'graph-legend';
+            legendDiv.innerHTML = `
+      <div class="graph-legend-item">
+        <div class="graph-legend-color note"></div>
+        <span>Notes</span>
+      </div>
+      <div class="graph-legend-item">
+        <div class="graph-legend-color tag"></div>
+        <span>Tags</span>
+      </div>
+    `;
+            graphViewEl.appendChild(legendDiv);
+
+            // Add graph settings button
+            const settingsBtn = document.createElement('button');
+            settingsBtn.className = 'graph-settings-btn';
+            settingsBtn.innerHTML = '<i class="fas fa-cog"></i>';
+            settingsBtn.title = 'Graph Settings';
+            settingsBtn.addEventListener('click', () => {
+                graphSettingsModalEl.hidden = false;
+            });
+            graphViewEl.appendChild(settingsBtn);
+
+            // Create data structure for graph
+            const graphData = createGraphData();
+
+            // If no data, show message
+            if (graphData.nodes.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'empty-state-content';
+                emptyMessage.innerHTML = `
+        <i class="fas fa-project-diagram empty-icon"></i>
+        <h2>No data to visualize</h2>
+        <p>Create notes with tags and links to see them in the graph view.</p>
+      `;
+                graphViewEl.appendChild(emptyMessage);
+                return;
+            }
+
+            // Set dimensions
+            const width = graphViewEl.clientWidth;
+            const height = graphViewEl.clientHeight;
+
+            // Create SVG
+            const svg = d3.select(graphViewEl)
+                .append('svg')
+                .attr('width', '100%')
+                .attr('height', '100%')
+                .attr('viewBox', [0, 0, width, height])
+                .call(d3.zoom()
+                    .extent([[0, 0], [width, height]])
+                    .scaleExtent([0.1, 8])
+                    .on('zoom', (event) => {
+                        g.attr('transform', event.transform);
+                    }));
+
+            // Main group that will be transformed
+            const g = svg.append('g');
+
+            // Create the links
+            const links = g.append('g')
+                .selectAll('line')
+                .data(graphData.links)
+                .enter()
+                .append('line')
+                .attr('class', 'graph-link')
+                .attr('stroke-width', d => d.type === 'tag' ? 1 : 2);
+
+            // Node size based on settings
+            const nodeSize = parseInt(settings.graphNodeSize) || 10;
+
+            // Create a force simulation
+            const simulation = d3.forceSimulation(graphData.nodes)
+                .force('charge', d3.forceManyBody().strength(-150))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('link', d3.forceLink(graphData.links).id(d => d.id).distance(100))
+                .force('x', d3.forceX(width / 2).strength(0.01))
+                .force('y', d3.forceY(height / 2).strength(0.01))
+                .force('collision', d3.forceCollide().radius(nodeSize * 1.5));
+
+            // Create the nodes
+            const nodes = g.append('g')
+                .selectAll('circle')
+                .data(graphData.nodes)
+                .enter()
+                .append('circle')
+                .attr('class', d => `graph-node ${d.type}`)
+                .attr('r', d => d.type === 'note' ? nodeSize : nodeSize * 0.6)
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            // Add node labels if enabled
+            if (settings.graphShowLabels !== false) {
+                const labels = g.append('g')
+                    .selectAll('text')
+                    .data(graphData.nodes)
+                    .enter()
+                    .append('text')
+                    .attr('class', 'node-label')
+                    .attr('dy', nodeSize + 10)
+                    .text(d => d.name);
+            }
+
+            // Add title for tooltip on hover
+            nodes.append('title')
+                .text(d => d.name);
+
+            // Add click event to nodes
+            nodes.on('click', (event, d) => {
+                if (d.type === 'note') {
+                    openNote(d.id);
+                    setViewMode('edit');
+                } else if (d.type === 'tag') {
+                    currentTag = d.name;
+                    setView('tags');
+                    // Close sidebar on mobile
+                    if (window.innerWidth <= 768) {
+                        toggleSidebar();
+                    }
+                }
+            });
+
+            // Update positions on each tick
+            simulation.on('tick', () => {
+                links
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                nodes
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                // Update labels if they exist
+                if (settings.graphShowLabels !== false) {
+                    g.selectAll('.node-label')
+                        .attr('x', d => d.x)
+                        .attr('y', d => d.y);
+                }
+            });
+
+            // Drag functions
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            // Store references for zooming
+            graphViewEl.svg = svg;
+            graphViewEl.g = g;
+            graphViewEl.simulation = simulation;
+        }
+
+        // Zoom graph functions
+        function zoomGraph(delta) {
+            const svg = graphViewEl.svg;
+            if (!svg) return;
+
+            const currentTransform = d3.zoomTransform(svg.node());
+            const newScale = currentTransform.k * (1 + delta);
+
+            svg.transition()
+                .duration(300)
+                .call(svg.zoom().transform, d3.zoomIdentity
+                    .translate(currentTransform.x, currentTransform.y)
+                    .scale(newScale));
+        }
+
+        function resetGraphZoom() {
+            const svg = graphViewEl.svg;
+            if (!svg) return;
+
+            svg.transition()
+                .duration(500)
+                .call(svg.zoom().transform, d3.zoomIdentity);
+        }
+
+        // Show graph settings modal
+        function showGraphSettingsModal() {
+            graphSettingsModalEl.hidden = false;
+
+            // Update settings controls
+            showTagsToggleEl.checked = settings.graphShowTags !== false;
+            showLinksToggleEl.checked = settings.graphShowLinks !== false;
+            showLabelsToggleEl.checked = settings.graphShowLabels !== false;
+            nodeSizeRangeEl.value = settings.graphNodeSize || 10;
+            linkStrengthRangeEl.value = settings.graphLinkStrength || 50;
+        }
+
+        // Save graph settings
+        function saveGraphSettings() {
+            settings.graphShowTags = showTagsToggleEl.checked;
+            settings.graphShowLinks = showLinksToggleEl.checked;
+            settings.graphShowLabels = showLabelsToggleEl.checked;
+            settings.graphNodeSize = parseInt(nodeSizeRangeEl.value);
+            settings.graphLinkStrength = parseInt(linkStrengthRangeEl.value);
+
+            saveSettings();
+            renderGraph();
+            graphSettingsModalEl.hidden = true;
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-exclamation-circle';
+            if (type === 'warning') icon = 'fa-exclamation-triangle';
+
+            toast.innerHTML = `
+      <i class="fas ${icon} icon"></i>
+      <div class="content">${message}</div>
+      <button class="close" onclick="this.parentNode.remove()">
+        <i class="fas fa-times"></i>
+      </button>
+    `;
+
+            toastContainerEl.appendChild(toast);
+
+            // Auto remove after duration
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, duration);
+        }
+
+        // Setup keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Check if it's in an input or textarea (except editor)
+                const activeEl = document.activeElement;
+                const isInInput = (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA') && activeEl !== editorEl;
+
+                // If in an input field (not editor), don't process shortcuts
+                if (isInInput) return;
+
+                // Process keyboard shortcuts
+                for (const [name, shortcut] of Object.entries(shortcuts)) {
+                    if (e.key.toLowerCase() === shortcut.key.toLowerCase() &&
+                        (!shortcut.ctrl || (e.ctrlKey || e.metaKey))) {
+                        e.preventDefault();
+                        shortcut.action();
+                        return;
+                    }
+                }
+            });
+        }
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            sidebarEl.classList.toggle('active');
+            document.querySelector('.sidebar-overlay').classList.toggle('active');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile sidebar toggle
+            sidebarToggleBtnEl.addEventListener('click', toggleSidebar);
+
+            // Editor input events
+            editorEl.addEventListener('input', () => {
+                updatePreview();
+                updateWordCount();
+
+                // Auto-save after typing stops
+                if (settings.autoSave) {
+                    clearTimeout(editorChangeTimer);
+                    editorChangeTimer = setTimeout(saveCurrentNote, 2000);
+                }
+            });
+
+            // Search input events
+            searchInputEl.addEventListener('input', () => {
+                const searchTerm = searchInputEl.value.trim();
+                clearSearchBtnEl.hidden = !searchTerm;
+                updateNotesList(searchTerm);
+            });
+
+            // Clear search button
+            clearSearchBtnEl.addEventListener('click', () => {
+                searchInputEl.value = '';
+                clearSearchBtnEl.hidden = true;
+                updateNotesList();
+                searchInputEl.focus();
+            });
+
+            // View selector buttons
+            notesViewBtnEl.addEventListener('click', () => setView('notes'));
+            foldersViewBtnEl.addEventListener('click', () => setView('folders'));
+            tagsViewBtnEl.addEventListener('click', () => setView('tags'));
+
+            // New folder button
+            newFolderBtnEl.addEventListener('click', () => showFolderModal());
+
+            // Manage tags button
+            manageTagsBtnEl.addEventListener('click', () => showTagsModal());
+
+            // Clock settings button
+            clockSettingsBtnEl.addEventListener('click', showClockModal);
+
+            // Clock modal buttons
+            closeClockModalBtnEl.addEventListener('click', () => clockModalEl.hidden = true);
+            closeClockSettingsBtnEl.addEventListener('click', () => clockModalEl.hidden = true);
+            addAlarmBtnEl.addEventListener('click', addAlarm);
+
+            // Clock settings changes
+            timeFormatSelectEl.addEventListener('change', () => {
+                settings.clockFormat = timeFormatSelectEl.value;
+                saveSettings();
+                updateClock();
+            });
+
+            showSecondsToggleEl.addEventListener('change', () => {
+                settings.showSeconds = showSecondsToggleEl.checked;
+                saveSettings();
+                updateClock();
+            });
+
+            // Graph settings modal buttons
+            if (closeGraphSettingsBtnEl) {
+                closeGraphSettingsBtnEl.addEventListener('click', () => graphSettingsModalEl.hidden = true);
+                saveGraphSettingsBtnEl.addEventListener('click', saveGraphSettings);
+                resetGraphBtnEl.addEventListener('click', () => {
+                    resetGraphZoom();
+                    renderGraph();
+                });
+            }
+
+            // Folder modal buttons
+            saveFolderBtnEl.addEventListener('click', createFolder);
+            cancelFolderBtnEl.addEventListener('click', () => folderModalEl.hidden = true);
+            closeFolderModalBtnEl.addEventListener('click', () => folderModalEl.hidden = true);
+
+            // Move to folder modal buttons
+            confirmMoveBtnEl.addEventListener('click', moveNoteToFolder);
+            cancelMoveBtnEl.addEventListener('click', () => moveToFolderModalEl.hidden = true);
+            closeMoveToFolderBtnEl.addEventListener('click', () => moveToFolderModalEl.hidden = true);
+
+            // Tags modal buttons
+            addTagToNoteBtnEl.addEventListener('click', addTagFromInput);
+            closeTagsModalBtnEl.addEventListener('click', () => tagsModalEl.hidden = true);
+            closeTagsBtnEl.addEventListener('click', () => tagsModalEl.hidden = true);
+
+            // External link modal buttons
+            insertLinkBtnEl.addEventListener('click', insertExternalLink);
+            cancelLinkBtnEl.addEventListener('click', () => externalLinkModalEl.hidden = true);
+            closeExternalLinkBtnEl.addEventListener('click', () => externalLinkModalEl.hidden = true);
+
+            // Add tag input (enter key)
+            addTagInputEl.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    addTagFromInput();
+                }
+            });
+
+            // External link input (enter key)
+            linkUrlInputEl.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    insertExternalLink();
+                }
+            });
+
+            // New note button
+            newNoteBtnEl.addEventListener('click', createNewNote);
+            createFirstNoteBtnEl.addEventListener('click', createNewNote);
+
+            // Save button
+            saveBtnEl.addEventListener('click', () => {
+                saveCurrentNote();
+                showToast('Note saved', 'success');
+            });
+
+            // Theme toggle
+            themeToggleBtnEl.addEventListener('click', toggleTheme);
+
+            // Export/Import buttons
+            exportNotesBtnEl.addEventListener('click', exportNotes);
+            importNotesBtnEl.addEventListener('click', importNotes);
+
+            // Settings modal
+            settingsBtnEl.addEventListener('click', () => settingsModalEl.hidden = false);
+            closeSettingsBtnEl.addEventListener('click', () => settingsModalEl.hidden = true);
+
+            // Toolbar buttons for folders and tags
+            addTagBtnEl.addEventListener('click', showTagsModal);
+            moveFolderBtnEl.addEventListener('click', showMoveToFolderModal);
+
+            // Backup now button
+            backupNowBtnEl.addEventListener('click', backupNow);
+
+            // Save settings
+            saveSettingsBtnEl.addEventListener('click', () => {
+                // Update settings from UI
+                settings.theme = themeSelectEl.value;
+                settings.fontSize = fontSizeSelectEl.value;
+                settings.fontFamily = fontFamilySelectEl.value;
+                settings.lineHeight = lineHeightSelectEl.value;
+                settings.accentColor = accentColorSelectEl.value;
+                settings.autoSave = autoSaveToggleEl.checked;
+                settings.spellCheck = spellCheckToggleEl.checked;
+                settings.autoComplete = autoCompleteToggleEl.checked;
+                settings.syncScroll = syncScrollToggleEl.checked;
+                settings.tabSize = tabSizeSelectEl.value;
+                settings.autoBackup = autoBackupToggleEl.checked;
+                settings.backupFrequency = backupFrequencySelectEl.value;
+
+                // Apply settings
+                if (settings.theme === 'dark') {
+                    darkMode = true;
+                } else if (settings.theme === 'light') {
+                    darkMode = false;
+                } else {
+                    // Auto mode
+                    darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                }
+
+                applyTheme();
+                applyFontSize();
+                applyFontFamily();
+                applyLineHeight();
+                applyAccentColor();
+
+                // Update editor spell check
+                editorEl.spellcheck = settings.spellCheck;
+
+                // Save settings
+                saveSettings();
+
+                // Close modal
+                settingsModalEl.hidden = true;
+            });
+
+            // Reset settings
+            resetSettingsBtnEl.addEventListener('click', () => {
+                // Confirm reset
+                if (confirm('Reset all settings to default?')) {
+                    // Reset to defaults
+                    settings = {
+                        theme: 'auto',
+                        fontSize: 'medium',
+                        fontFamily: 'inter',
+                        lineHeight: 'normal',
+                        accentColor: 'blue',
+                        autoSave: true,
+                        spellCheck: true,
+                        autoComplete: false,
+                        syncScroll: true,
+                        tabSize: 2,
+                        autoBackup: false,
+                        backupFrequency: 'weekly',
+                        clockFormat: '24',
+                        showSeconds: true,
+                        graphShowTags: true,
+                        graphShowLinks: true,
+                        graphShowLabels: true,
+                        graphNodeSize: 10,
+                        graphLinkStrength: 50
+                    };
+
+                    // Update UI
+                    themeSelectEl.value = settings.theme;
+                    fontSizeSelectEl.value = settings.fontSize;
+                    fontFamilySelectEl.value = settings.fontFamily;
+                    lineHeightSelectEl.value = settings.lineHeight;
+                    accentColorSelectEl.value = settings.accentColor;
+                    autoSaveToggleEl.checked = settings.autoSave;
+                    spellCheckToggleEl.checked = settings.spellCheck;
+                    autoCompleteToggleEl.checked = settings.autoComplete;
+                    syncScrollToggleEl.checked = settings.syncScroll;
+                    tabSizeSelectEl.value = settings.tabSize;
+                    autoBackupToggleEl.checked = settings.autoBackup;
+                    backupFrequencySelectEl.value = settings.backupFrequency;
+                    timeFormatSelectEl.value = settings.clockFormat;
+                    showSecondsToggleEl.checked = settings.showSeconds;
+
+                    // Update graph settings if they exist
+                    if (showTagsToggleEl) {
+                        showTagsToggleEl.checked = settings.graphShowTags;
+                        showLinksToggleEl.checked = settings.graphShowLinks;
+                        showLabelsToggleEl.checked = settings.graphShowLabels;
+                        nodeSizeRangeEl.value = settings.graphNodeSize;
+                        linkStrengthRangeEl.value = settings.graphLinkStrength;
+                    }
+
+                    // Apply settings
+                    darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    applyTheme();
+                    applyFontSize();
+                    applyFontFamily();
+                    applyLineHeight();
+                    applyAccentColor();
+                    editorEl.spellcheck = settings.spellCheck;
+
+                    // Save settings
+                    saveSettings();
+                }
+            });
+
+            // View toggle buttons
+            editViewBtnEl.addEventListener('click', () => setViewMode('edit'));
+            previewViewBtnEl.addEventListener('click', () => setViewMode('preview'));
+            splitViewBtnEl.addEventListener('click', () => setViewMode('split'));
+            graphViewBtnEl.addEventListener('click', () => setViewMode('graph'));
+
+            // Note actions
+            closeNoteActionsBtnEl.addEventListener('click', () => noteActionsModalEl.hidden = true);
+            renameNoteBtnEl.addEventListener('click', renameNote);
+            moveToFolderBtnEl.addEventListener('click', () => {
+                noteActionsModalEl.hidden = true;
+                showMoveToFolderModal();
+            });
+            addTagsBtnEl.addEventListener('click', () => {
+                noteActionsModalEl.hidden = true;
+                showTagsModal();
+            });
+
+            if (duplicateNoteBtnEl) duplicateNoteBtnEl.addEventListener('click', duplicateNote);
+            if (deleteNoteBtnEl) deleteNoteBtnEl.addEventListener('click', deleteNote);
+            if (printNoteBtnEl) printNoteBtnEl.addEventListener('click', printNote);
+
+            // Editor toolbar buttons
+            boldBtnEl.addEventListener('click', () => insertFormatting('**', '**'));
+            italicBtnEl.addEventListener('click', () => insertFormatting('*', '*'));
+            headingBtnEl.addEventListener('click', () => insertFormatting('# ', ''));
+            listBtnEl.addEventListener('click', () => insertFormatting('- ', ''));
+            numListBtnEl.addEventListener('click', () => insertFormatting('1. ', ''));
+            linkBtnEl.addEventListener('click', () => showExternalLinkModal());
+            codeBtnEl.addEventListener('click', () => insertFormatting('`', '`'));
+            quoteBtnEl.addEventListener('click', () => insertFormatting('> ', ''));
+            imageBtnEl.addEventListener('click', () => insertFormatting('![Alt text](', ')'));
+
+            // Modal click outside to close
+            settingsModalEl.addEventListener('click', (e) => {
+                if (e.target === settingsModalEl) {
+                    settingsModalEl.hidden = true;
+                }
+            });
+
+            noteActionsModalEl.addEventListener('click', (e) => {
+                if (e.target === noteActionsModalEl) {
+                    noteActionsModalEl.hidden = true;
+                }
+            });
+
+            folderModalEl.addEventListener('click', (e) => {
+                if (e.target === folderModalEl) {
+                    folderModalEl.hidden = true;
+                }
+            });
+
+            moveToFolderModalEl.addEventListener('click', (e) => {
+                if (e.target === moveToFolderModalEl) {
+                    moveToFolderModalEl.hidden = true;
+                }
+            });
+
+            tagsModalEl.addEventListener('click', (e) => {
+                if (e.target === tagsModalEl) {
+                    tagsModalEl.hidden = true;
+                }
+            });
+
+            clockModalEl.addEventListener('click', (e) => {
+                if (e.target === clockModalEl) {
+                    clockModalEl.hidden = true;
+                }
+            });
+
+            externalLinkModalEl.addEventListener('click', (e) => {
+                if (e.target === externalLinkModalEl) {
+                    externalLinkModalEl.hidden = true;
+                }
+            });
+
+            if (graphSettingsModalEl) {
+                graphSettingsModalEl.addEventListener('click', (e) => {
+                    if (e.target === graphSettingsModalEl) {
+                        graphSettingsModalEl.hidden = true;
+                    }
+                });
+            }
+
+            // Initialize with Edit view
+            setViewMode('edit');
+
+            // Listen for dark mode changes on system
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (settings.theme === 'auto') {
+                    darkMode = e.matches;
+                    applyTheme();
+                }
+            });
+
+            // Handle window resize to toggle sidebar class on larger screens
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    sidebarEl.classList.remove('active');
+                    document.querySelector('.sidebar-overlay').classList.remove('active');
+
+                    // Check if split view is active and screen is too small
+                    if (splitViewBtnEl.classList.contains('active')) {
+                        setViewMode('edit');
+                    }
+                }
+
+                // If graph view is active, re-render it on resize for better fit
+                if (!graphViewEl.hidden) {
+                    renderGraph();
+                }
+            });
+
+            // Handle touch gestures for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            function handleSwipe() {
+                const swipeThreshold = 100;
+
+                // Right swipe (open sidebar)
+                if (touchEndX - touchStartX > swipeThreshold && !sidebarEl.classList.contains('active')) {
+                    if (window.innerWidth <= 768) {
+                        toggleSidebar();
+                    }
+                }
+
+                // Left swipe (close sidebar)
+                if (touchStartX - touchEndX > swipeThreshold && sidebarEl.classList.contains('active')) {
+                    if (window.innerWidth <= 768) {
+                        toggleSidebar();
+                    }
+                }
+            }
+
+            // Fix iOS focus issues
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                editorEl.style.cursor = 'pointer'; // Makes it more tappable
+
+                // Help ensure editor stays visible when keyboard appears
+                editorEl.addEventListener('focus', () => {
+                    setTimeout(() => {
+                        editorEl.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                });
+            }
+        }
+
+        // Generate a unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substring(2);
+        }
+
+        // Initialize the app when the page loads
+        window.addEventListener('load', initApp);
+    </script>
+
+    <!-- Initialize Highlight.js for code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+</body>
+
+</html>
