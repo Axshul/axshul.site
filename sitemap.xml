@@ -16,4 +16,8 @@
       <loc>https://axshul.site/contact.html</loc>
       <priority>0.8</priority>
    </url>
+   <url>
+      <loc>https://axshul.site/Notes/</loc>
+      <priority>0.8</priority>
+   </url>
 </urlset>
