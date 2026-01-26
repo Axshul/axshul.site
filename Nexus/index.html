@@ -74,8 +74,6 @@
     <!-- Fabric.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://unpkg.com/fabric-eraser-brush@1.1.0/dist/index.js"></script>
-    <!-- LZ-String for compression -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- n8n Workflow Preview CDN -->
@@ -575,6 +573,16 @@
         <button class="tool-btn" data-tool="circle" title="Circle">
             <i data-lucide="circle"></i><kbd>O</kbd>
         </button>
+        <button class="tool-btn" data-tool="triangle" title="Triangle">
+            <i data-lucide="triangle"></i>
+        </button>
+        <button class="tool-btn" data-tool="diamond" title="Diamond">
+            <i data-lucide="diamond"></i>
+        </button>
+        <button class="tool-btn" data-tool="hexagon" title="Hexagon">
+            <i data-lucide="hexagon"></i>
+        </button>
+        <div class="divider"></div>
         <button class="tool-btn" data-tool="arrow" title="Arrow">
             <i data-lucide="move-up-right"></i><kbd>A</kbd>
         </button>
@@ -654,11 +662,18 @@
                 <input type="range" id="opacity" min="0" max="100" value="100">
             </div>
             <div class="property-row">
-                <span class="property-label">Style</span>
+                <span class="property-label">Line Style</span>
                 <select id="stroke-dash">
                     <option value="solid">Solid</option>
                     <option value="dashed">Dashed</option>
                     <option value="dotted">Dotted</option>
+                </select>
+            </div>
+            <div class="property-row" id="arrow-style-row" style="display:none">
+                <span class="property-label">Arrow Mode</span>
+                <select id="arrow-type">
+                    <option value="straight">Straight</option>
+                    <option value="curved">Curved</option>
                 </select>
             </div>
             <div class="property-row">
@@ -696,6 +711,11 @@
                 <button class="tool-btn" id="ungroup-btn" title="Ungroup" style="flex:1"><i
                         data-lucide="split"></i></button>
             </div>
+            <div class="property-row">
+                <button class="tool-btn" id="sidebar-import-json" style="flex:1; background: rgba(0, 204, 136, 0.1); border: 1px solid rgba(0, 204, 136, 0.2); color: var(--accent-green);">
+                    <i data-lucide="folder-up" style="width:14px; margin-right:6px"></i> Import Project
+                </button>
+            </div>
         </div>
     </div>
 
@@ -713,10 +733,9 @@
             <button class="tool-btn" id="export-png" title="Export PNG"><i data-lucide="download"></i></button>
             <button class="tool-btn" id="export-svg" title="Export SVG"><i data-lucide="file-code"></i></button>
             <button class="tool-btn" id="export-json" title="Export JSON Project"><i data-lucide="file-json"></i></button>
-            <button class="tool-btn" id="import-json" title="Import JSON Project"><i data-lucide="upload"></i></button>
-            <button class="tool-btn" id="copy-link" title="Copy Share Link"><i data-lucide="link"></i></button>
+            <button class="tool-btn" id="import-json" title="Import JSON Project"><i data-lucide="folder-up"></i></button>
             <div class="status-indicator">
-                <span id="save-status">Synced</span>
+                <span id="save-status">Local Only</span>
                 <div class="status-dot" id="status-dot"></div>
             </div>
         </div>
@@ -746,8 +765,9 @@
             <p>Draw, type, and create on an infinite dark canvas.</p>
             <p style="font-size: 12px; color: var(--text-dim); margin: 10px 0;">Created by <strong>Axshul</strong></p>
             <div style="text-align: left; margin: 20px 0; font-size: 14px; color: var(--text-dim)">
-                <p>• <b>Auto-save:</b> Every 10 seconds, the URL updates with your changes.</p>
-                <p>• <b>Sharing:</b> Simply copy the URL and share it. It's your save file.</p>
+                <p>• <b>JSON Workflow:</b> Import and export your projects via JSON files.</p>
+                <p>• <b>Snap-to-Grid:</b> Professional alignment with 30px grid snapping.</p>
+                <p>• <b>Quick Text:</b> Double-click anywhere to quickly add text.</p>
                 <p>• <b>Global Color:</b> Use the color picker in the toolbar to set colors for all new objects.</p>
                 <p>• <b>Shortcuts:</b> V (Select), T (Text), R (Rect), P (Pencil), Del (Delete).</p>
             </div>
@@ -758,7 +778,7 @@
 
     <!-- Empty State Info -->
     <div id="empty-state">
-        <p>Start creating. Everything is auto-saved to this URL.</p>
+        <p>Start creating. Professional workflow design tool.</p>
     </div>
 
     <script>
@@ -786,7 +806,8 @@
             historyIndex: -1,
             isLocked: false,
             lastSave: 0,
-            isPresenting: false
+            isPresenting: false,
+            grid: 30
         };
 
         // UI References
@@ -929,7 +950,7 @@
             document.getElementById('export-svg').onclick = exportSVG;
             document.getElementById('export-json').onclick = exportJSON;
             document.getElementById('import-json').onclick = importJSON;
-            document.getElementById('copy-link').onclick = copyShareLink;
+            document.getElementById('sidebar-import-json').onclick = importJSON;
             document.getElementById('present-btn').onclick = togglePresentation;
 
             // Help overlay
@@ -986,7 +1007,8 @@
                 return toObject.call(this, [
                     'x1', 'y1', 'x2', 'y2',
                     'startObjId', 'endObjId',
-                    'startPort', 'endPort'
+                    'startPort', 'endPort',
+                    'arrowType'
                 ].concat(propertiesToInclude));
             };
         })(fabric.Polyline.prototype.toObject);
@@ -1045,6 +1067,7 @@
         }
 
         function createArrow(x1, y1, x2, y2) {
+            const arrowType = document.getElementById('arrow-type').value || 'straight';
             const arrow = new fabric.Polyline([{x:0, y:0}], {
                 stroke: state.currentColor,
                 strokeWidth: parseInt(strokeWidthInput.value) || 2,
@@ -1056,12 +1079,13 @@
                 objectCaching: false,
                 selectable: true,
                 evented: true,
-                padding: 20, // Increased hit area
+                padding: 20,
                 x1: x1,
                 y1: y1,
                 x2: x2 || x1,
                 y2: y2 || y1,
-                perPixelTargeting: false // Better selection for thin lines
+                arrowType: arrowType,
+                perPixelTargeting: false
             });
             updateArrow(arrow);
             return arrow;
@@ -1086,13 +1110,30 @@
             const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
             const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
 
-            const points = [
-                { x: 0, y: 0 },
-                { x: dist, y: 0 },
-                { x: dist - headLength, y: -headWidth },
-                { x: dist, y: 0 },
-                { x: dist - headLength, y: headWidth }
-            ];
+            let points = [];
+            if (arrow.arrowType === 'curved' && dist > 10) {
+                // Approximate a curve using polyline points
+                points.push({ x: 0, y: 0 });
+                const curveHeight = Math.min(dist / 4, 50);
+                for (let i = 1; i <= 20; i++) {
+                    const t = i / 20;
+                    const x = t * dist;
+                    const y = Math.sin(t * Math.PI) * curveHeight;
+                    points.push({ x, y });
+                }
+                const last = points[points.length - 1];
+                points.push({ x: last.x - headLength, y: last.y - headWidth });
+                points.push({ x: last.x, y: last.y });
+                points.push({ x: last.x - headLength, y: last.y + headWidth });
+            } else {
+                points = [
+                    { x: 0, y: 0 },
+                    { x: dist, y: 0 },
+                    { x: dist - headLength, y: -headWidth },
+                    { x: dist, y: 0 },
+                    { x: dist - headLength, y: headWidth }
+                ];
+            }
 
             arrow.set({
                 x1: p1.x,
@@ -1208,6 +1249,8 @@
             toolBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.tool === tool));
             if (tool !== 'arrow') clearPorts();
 
+            document.getElementById('arrow-style-row').style.display = (tool === 'arrow') ? 'flex' : 'none';
+
             canvas.isDrawingMode = (tool === 'pencil' || tool === 'eraser');
             canvas.selection = (tool === 'select');
             canvas.skipTargetFind = (tool === 'hand');
@@ -1228,17 +1271,15 @@
         }
 
         function applyColorToObject(obj, color) {
-            if (!obj || !color) return;
+            if (!obj || !color || obj.type === 'activeSelection') return;
             
             if (obj.type === 'i-text' || obj.type === 'text') {
                 obj.set({ fill: color, stroke: 'transparent', strokeWidth: 0 });
             } else if (obj.type === 'group') {
-                // If it's one of our node groups, update the main rectangle
                 obj.getObjects().forEach(child => {
-                    if (child.type === 'rect' || child.type === 'circle' || child.type === 'path' || child.type === 'polygon') {
+                    if (['rect', 'circle', 'path', 'polygon', 'polyline'].includes(child.type)) {
                         child.set('stroke', color);
-                        // If it has a semi-transparent fill, update it
-                        if (child.fill && child.fill !== 'transparent' && child.fill !== '#ffffff' && child.fill !== '#FFFFFF' && child.fill !== 'white') {
+                        if (child.fill && child.fill !== 'transparent' && !['#ffffff', 'white'].includes(child.fill.toLowerCase())) {
                              try {
                                 child.set('fill', new fabric.Color(color).setAlpha(0.2).toRgba());
                              } catch(e) {}
@@ -1532,7 +1573,25 @@
         });
 
         canvas.on('mouse:dblclick', (opt) => {
-            if (!opt.target) return;
+            if (!opt.target) {
+                if (state.currentTool === 'select') {
+                    const pointer = canvas.getPointer(opt.e);
+                    const text = new fabric.IText('Text', {
+                        left: pointer.x,
+                        top: pointer.y,
+                        fontFamily: 'Inter',
+                        fontSize: 24,
+                        fill: state.currentColor,
+                        originX: 'center',
+                        originY: 'center'
+                    });
+                    canvas.add(text);
+                    canvas.setActiveObject(text);
+                    text.enterEditing();
+                    saveState();
+                }
+                return;
+            }
 
             if (opt.target.type === 'workflow-node' || opt.target.type === 'markdown-block') {
                 sidebar.classList.remove('hidden');
@@ -1570,12 +1629,11 @@
             if (state.isHistoryAction) return;
 
             prepareForSave();
-            // Optimization: Only serialize if there's an actual change
             const json = JSON.stringify(canvas.toDatalessJSON([
                 'id', 'x1', 'y1', 'x2', 'y2',
                 'startObjId', 'endObjId',
                 'startPort', 'endPort',
-                'workflowData', 'fontSize',
+                'arrowType', 'workflowData', 'fontSize',
                 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable'
             ]));
 
@@ -1584,13 +1642,11 @@
                 state.history.push(json);
                 state.historyIndex++;
 
-                // Limit history size
                 if (state.history.length > 50) {
                     state.history.shift();
                     state.historyIndex--;
                 }
 
-                debounceSaveToURL();
                 updateUndoRedoButtons();
             }
         }
@@ -1612,31 +1668,24 @@
         }
 
         function loadStateFromJSON(json) {
-            // Store current IDs to cleanup orphaned DOM elements
             const currentOverlayIds = canvas.getObjects('workflow-node').map(n => 'node-overlay-' + n.id);
 
             canvas.loadFromJSON(json, () => {
                 const newOverlayIds = canvas.getObjects('workflow-node').map(n => 'node-overlay-' + n.id);
 
-                // Cleanup DOM elements that are no longer in the canvas
                 document.querySelectorAll('.workflow-overlay').forEach(el => {
                     if (!newOverlayIds.includes(el.id)) el.remove();
                 });
 
-                // Ensure all arrows are connected to their objects and updated
                 canvas.getObjects('polyline').forEach(arrow => updateArrow(arrow));
 
-                // Ensure all workflow nodes have their DOM elements synced
                 canvas.getObjects('workflow-node').forEach(node => {
                     node.createDOMElement();
-
-                    // Only update the 'workflow' attribute if it's actually different to avoid flashing
                     const currentWorkflowAttr = node.domElement.getAttribute('workflow');
                     const newWorkflowAttr = JSON.stringify(node.workflowData);
                     if (currentWorkflowAttr !== newWorkflowAttr) {
                         node.domElement.setAttribute('workflow', newWorkflowAttr);
                     }
-
                     node.syncDOM();
                 });
 
@@ -1646,72 +1695,13 @@
             });
         }
 
-        // --- Persistence (The Magic) ---
-
-        let saveTimeout;
-        function debounceSaveToURL() {
-            clearTimeout(saveTimeout);
-            saveTimeout = setTimeout(saveToURL, 2000);
-        }
+        // --- Persistence ---
 
         function prepareForSave() {
             canvas.getObjects('polyline').forEach(arrow => {
                 if (arrow.startObj) arrow.startObjId = arrow.startObj.id;
                 if (arrow.endObj) arrow.endObjId = arrow.endObj.id;
             });
-        }
-
-        function saveToURL() {
-            if (!canvas || canvas.getObjects().length === 0) {
-                 // Don't clutter the URL if canvas is empty
-                 if (window.location.hash) {
-                    window.history.replaceState(null, null, ' ');
-                 }
-                 return;
-            }
-            try {
-                prepareForSave();
-                const json = JSON.stringify(canvas.toDatalessJSON([
-                    'id', 'x1', 'y1', 'x2', 'y2',
-                    'startObjId', 'endObjId',
-                    'startPort', 'endPort',
-                    'workflowData', 'fontSize',
-                    'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable'
-                ]));
-                const compressed = LZString.compressToEncodedURIComponent(json);
-                window.history.replaceState(null, null, '#' + compressed);
-
-                statusDot.classList.add('active');
-                saveStatusText.textContent = 'Synced';
-                setTimeout(() => statusDot.classList.remove('active'), 1000);
-            } catch (err) {
-                console.error('Save failed', err);
-                saveStatusText.textContent = 'Limit reached';
-            }
-        }
-
-        function loadFromURL() {
-            const hash = window.location.hash.substring(1);
-            if (!hash) return;
-            
-            try {
-                document.body.classList.add('loading');
-                const decompressed = LZString.decompressFromEncodedURIComponent(hash);
-                if (decompressed) {
-                    canvas.loadFromJSON(decompressed, () => {
-                        canvas.renderAll();
-                        if (canvas.getObjects().length) emptyState.style.display = 'none';
-                        saveState(); // Initialize history
-                        document.body.classList.remove('loading');
-                    });
-                } else {
-                    document.body.classList.remove('loading');
-                }
-            } catch (err) {
-                console.error('Load failed', err);
-                saveStatusText.textContent = 'Load failed';
-                document.body.classList.remove('loading');
-            }
         }
 
         async function exportPNG() {
@@ -1769,7 +1759,13 @@
 
         function exportJSON() {
             prepareForSave();
-            const json = JSON.stringify(canvas.toDatalessJSON(), null, 2);
+            const json = JSON.stringify(canvas.toDatalessJSON([
+                'id', 'x1', 'y1', 'x2', 'y2',
+                'startObjId', 'endObjId',
+                'startPort', 'endPort',
+                'arrowType', 'workflowData', 'fontSize',
+                'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable'
+            ]), null, 2);
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -1795,15 +1791,6 @@
             input.click();
         }
 
-        function copyShareLink() {
-            navigator.clipboard.writeText(window.location.href);
-            saveStatusText.textContent = 'Link Copied!';
-            statusDot.classList.add('active');
-            setTimeout(() => {
-                saveStatusText.textContent = 'Synced';
-                statusDot.classList.remove('active');
-            }, 2000);
-        }
 
         function handleImageBtn() {
             // Toggle sidebar to Assets section
@@ -1936,7 +1923,7 @@
 
         canvas.on('mouse:down', (opt) => {
             if (state.currentTool === 'select' || state.currentTool === 'pencil' || state.currentTool === 'hand' || state.currentTool === 'eraser') return;
-            if (opt.button === 3) return; // Right click
+            if (opt.button === 3) return;
 
             const pointer = canvas.getPointer(opt.e);
             let obj;
@@ -1946,7 +1933,7 @@
                 top: pointer.y,
                 stroke: state.currentColor,
                 strokeWidth: strokeWidth,
-                fill: 'transparent',
+                fill: state.currentColor === 'transparent' ? 'transparent' : state.currentColor + '33',
                 originX: 'center',
                 originY: 'center',
                 selectable: true,
@@ -1954,22 +1941,20 @@
             };
 
             if (state.currentTool === 'rect') {
-                const fillColor = state.currentColor === 'transparent' ? 'transparent' : state.currentColor + '33';
-                obj = new fabric.Rect({ 
-                    ...common, 
-                    width: 100, 
-                    height: 100, 
-                    fill: fillColor,
-                    rx: 5,
-                    ry: 5
-                });
+                obj = new fabric.Rect({ ...common, width: 100, height: 100, rx: 5, ry: 5 });
             } else if (state.currentTool === 'circle') {
-                const fillColor = state.currentColor === 'transparent' ? 'transparent' : state.currentColor + '33';
-                obj = new fabric.Circle({ 
-                    ...common, 
-                    radius: 50, 
-                    fill: fillColor 
-                });
+                obj = new fabric.Circle({ ...common, radius: 50 });
+            } else if (state.currentTool === 'triangle') {
+                obj = new fabric.Triangle({ ...common, width: 100, height: 100 });
+            } else if (state.currentTool === 'diamond') {
+                obj = new fabric.Rect({ ...common, width: 80, height: 80, angle: 45 });
+            } else if (state.currentTool === 'hexagon') {
+                const points = [];
+                for(let i=0; i<6; i++) {
+                    const angle = i * Math.PI / 3;
+                    points.push({ x: 50 * Math.cos(angle), y: 50 * Math.sin(angle) });
+                }
+                obj = new fabric.Polygon(points, { ...common });
             } else if (state.currentTool === 'text') {
                 obj = new fabric.IText('Type something...', { 
                     ...common, 
@@ -2047,17 +2032,13 @@
         initUI();
         setTool('select');
 
-        // Font loading fix
         if (document.fonts) {
             document.fonts.ready.then(() => {
                 canvas.renderAll();
             });
         }
         
-        // Load from URL when ready
         window.addEventListener('load', () => {
-            loadFromURL();
-            // Initialize first state for undo/redo
             setTimeout(() => {
                 if (state.history.length === 0) {
                     saveState();
@@ -2065,14 +2046,6 @@
             }, 100);
         });
 
-        // Auto-save fallback with better timing
-        setInterval(() => {
-            if (canvas && canvas.getObjects().length > 0) {
-                saveToURL();
-            }
-        }, 10000);
-
-        // Canvas modification hooks with debouncing
         let modificationTimeout;
         const debouncedSaveState = () => {
             clearTimeout(modificationTimeout);
@@ -2080,10 +2053,28 @@
         };
 
         canvas.on('object:moving', (e) => {
+            if (state.grid) {
+                e.target.set({
+                    left: Math.round(e.target.left / state.grid) * state.grid,
+                    top: Math.round(e.target.top / state.grid) * state.grid
+                });
+            }
             updateConnectedArrows(e.target);
             if (e.target.type === 'workflow-node') e.target.syncDOM();
         });
+
         canvas.on('object:scaling', (e) => {
+            if (state.grid) {
+                const target = e.target;
+                const width = target.width * target.scaleX;
+                const height = target.height * target.scaleY;
+                const snapWidth = Math.round(width / state.grid) * state.grid;
+                const snapHeight = Math.round(height / state.grid) * state.grid;
+                target.set({
+                    scaleX: snapWidth / target.width,
+                    scaleY: snapHeight / target.height
+                });
+            }
             updateConnectedArrows(e.target);
             if (e.target.type === 'workflow-node') e.target.syncDOM();
         });
