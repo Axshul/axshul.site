@@ -5,37 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS for AI Engineers - Infinite Canvas Workflow Tool</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="NEXUS is a specialized infinite canvas tool for AI and N8N engineers to design, document, and present automation workflows. Created by Axshul.">
-    <meta name="keywords" content="drawing app, infinite canvas, diagram tool, sketch app, visual collaboration, online whiteboard, drawing software, design tool, Axshul">
+    <meta name="description"
+        content="NEXUS is a specialized infinite canvas tool for AI and N8N engineers to design, document, and present automation workflows. Created by Axshul.">
+    <meta name="keywords"
+        content="drawing app, infinite canvas, diagram tool, sketch app, visual collaboration, online whiteboard, drawing software, design tool, Axshul">
     <meta name="author" content="Axshul">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yoursite.com/Nexus/">
     <meta property="og:title" content="NEXUS for AI Engineers">
-    <meta property="og:description" content="Infinite canvas tool for AI and N8N engineers to design and present workflows. Built by Axshul.">
+    <meta property="og:description"
+        content="Infinite canvas tool for AI and N8N engineers to design and present workflows. Built by Axshul.">
     <meta property="og:image" content="https://yoursite.com/assets/img/nexus-preview.png">
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yoursite.com/Nexus/">
     <meta property="twitter:title" content="NEXUS for AI Engineers">
-    <meta property="twitter:description" content="Infinite canvas tool for AI and N8N engineers to design and present workflows. Built by Axshul.">
+    <meta property="twitter:description"
+        content="Infinite canvas tool for AI and N8N engineers to design and present workflows. Built by Axshul.">
     <meta property="twitter:image" content="https://yoursite.com/assets/img/nexus-preview.png">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://yoursite.com/Nexus/">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/favicon_io/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
-    
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -82,15 +86,16 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
     <style>
         :root {
-            --bg-color: #000000;
-            --panel-bg: rgba(18, 18, 18, 0.9);
-            --panel-border: #2A2A2A;
-            --accent-color: #0077FF;
-            --accent-green: #00CC88;
-            --text-main: #ECECEC;
-            --text-dim: #999999;
-            --transition-speed: 0.15s;
-            --sidebar-width: 260px;
+            --bg-color: #0d0d0d;
+            --panel-bg: rgba(23, 23, 23, 0.8);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --accent-color: #3b82f6;
+            --accent-green: #10b981;
+            --text-main: #f3f4f6;
+            --text-dim: #9ca3af;
+            --transition-speed: 0.2s;
+            --sidebar-width: 280px;
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
         }
 
         body,
@@ -111,34 +116,34 @@
             height: 100vh;
             background-color: var(--bg-color);
             background-image:
-                radial-gradient(circle, #333333 1px, transparent 1px);
+                radial-gradient(circle, #2a2a2a 1px, transparent 1px);
             background-size: 30px 30px;
         }
 
         /* Top Toolbar */
         .toolbar {
             position: absolute;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--panel-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--panel-border);
-            border-radius: 10px;
-            padding: 6px;
+            border-radius: 12px;
+            padding: 8px;
             display: flex;
-            gap: 2px;
+            gap: 4px;
             z-index: 100;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            box-shadow: var(--shadow-lg);
         }
 
         .tool-btn {
             background: transparent;
             border: none;
             color: var(--text-dim);
-            padding: 8px 12px;
+            padding: 10px 14px;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -148,12 +153,13 @@
 
         .tool-btn:hover {
             color: var(--text-main);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .tool-btn.active {
-            color: var(--accent-color);
-            background: rgba(0, 119, 255, 0.08);
+            color: #fff;
+            background: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
 
         .tool-btn kbd {
@@ -176,22 +182,22 @@
         /* Sidebar Property Panel */
         .sidebar {
             position: absolute;
-            top: 80px;
-            left: 15px;
+            top: 90px;
+            left: 20px;
             width: var(--sidebar-width);
             background: var(--panel-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--panel-border);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 20px;
             z-index: 200;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            box-shadow: var(--shadow-lg);
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            max-height: calc(100vh - 160px);
+            gap: 24px;
+            max-height: calc(100vh - 140px);
             overflow-y: auto;
-            transition: opacity 0.2s, transform 0.2s;
+            transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
         }
 
         .sidebar.hidden {
@@ -278,9 +284,9 @@
         /* Bottom Status Bar */
         .bottom-bar {
             position: absolute;
-            bottom: 15px;
-            left: 15px;
-            right: 15px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -296,15 +302,16 @@
 
         .status-indicator {
             background: var(--panel-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--panel-border);
-            border-radius: 8px;
-            padding: 6px 12px;
+            border-radius: 10px;
+            padding: 8px 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 11px;
+            gap: 10px;
+            font-size: 12px;
             color: var(--text-dim);
+            box-shadow: var(--shadow-lg);
         }
 
         .status-dot {
@@ -396,7 +403,7 @@
             height: 14px;
             border-radius: 50%;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.1s;
         }
 
@@ -407,19 +414,22 @@
         /* Creator Attribution */
         .creator-badge {
             position: absolute;
-            bottom: 15px;
-            right: 15px;
+            bottom: 20px;
+            right: 20px;
             background: var(--panel-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--panel-border);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 11px;
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 12px;
             color: var(--text-dim);
             z-index: 100;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            box-shadow: var(--shadow-lg);
+            text-decoration: none;
+            transition: all 0.2s;
         }
 
         .creator-badge:hover {
@@ -446,7 +456,7 @@
             max-height: 350px;
             overflow-y: auto;
             padding: 10px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
         }
 
@@ -479,7 +489,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .node-lib-box img {
@@ -505,13 +515,13 @@
                 flex-wrap: wrap;
                 max-width: 90vw;
             }
-            
+
             .sidebar {
                 width: calc(100vw - 30px);
                 left: 15px;
                 right: 15px;
             }
-            
+
             .creator-badge {
                 display: none;
             }
@@ -547,10 +557,11 @@
             <i data-lucide="hand"></i><kbd>H</kbd>
         </button>
         <div class="divider"></div>
-        
+
         <!-- Global Color Selector -->
         <div class="global-color-selector">
-            <input type="color" id="global-color-picker" class="global-color-input" value="#0077FF" title="Custom Color">
+            <input type="color" id="global-color-picker" class="global-color-input" value="#0077FF"
+                title="Custom Color">
             <div class="quick-colors">
                 <div class="color-dot" style="background: #0077FF" data-color="#0077FF"></div>
                 <div class="color-dot" style="background: #00CC88" data-color="#00CC88"></div>
@@ -559,7 +570,7 @@
             </div>
         </div>
         <div class="divider"></div>
-        
+
         <button class="tool-btn" data-tool="text" title="Text">
             <i data-lucide="type"></i><kbd>T</kbd>
         </button>
@@ -582,12 +593,18 @@
         <button class="tool-btn" data-tool="hexagon" title="Hexagon">
             <i data-lucide="hexagon"></i>
         </button>
+        <button class="tool-btn" data-tool="frame" title="Add Slide Frame">
+            <i data-lucide="monitor-play"></i>
+        </button>
         <div class="divider"></div>
         <button class="tool-btn" data-tool="arrow" title="Arrow">
             <i data-lucide="move-up-right"></i><kbd>A</kbd>
         </button>
         <button class="tool-btn" data-tool="pencil" title="Pencil">
             <i data-lucide="pencil"></i><kbd>P</kbd>
+        </button>
+        <button class="tool-btn" data-tool="highlighter" title="Highlighter">
+            <i data-lucide="highlighter"></i>
         </button>
         <button class="tool-btn" data-tool="eraser" title="Eraser">
             <i data-lucide="eraser"></i><kbd>E</kbd>
@@ -609,20 +626,27 @@
     <!-- Sidebar Property Panel -->
     <div class="sidebar hidden" id="sidebar">
         <!-- Content Editor (Contextual) -->
-        <div class="sidebar-section" id="edit-section" style="display:none; background: rgba(0, 119, 255, 0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 119, 255, 0.2);">
+        <div class="sidebar-section" id="edit-section"
+            style="display:none; background: rgba(0, 119, 255, 0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 119, 255, 0.2);">
             <div class="sidebar-title" id="edit-title">Node Editor</div>
-            <p style="font-size: 10px; color: var(--text-dim); margin: 0 0 8px 0;">Paste N8N Node JSON below to render it.</p>
-            <textarea id="edit-textarea" placeholder='{"nodes": [...]}' style="width: 100%; height: 150px; background: #1A1A1A; border: 1px solid var(--panel-border); color: var(--text-main); padding: 8px; border-radius: 4px; font-family: 'Roboto Mono', monospace; font-size: 12px; resize: vertical; margin-bottom: 10px;"></textarea>
-            <button class="tool-btn" id="save-content-btn" style="width: 100%; background: var(--accent-color); color: white; justify-content: center;">Apply Changes</button>
+            <p style="font-size: 10px; color: var(--text-dim); margin: 0 0 8px 0;">Paste N8N Node JSON below to render
+                it.</p>
+            <textarea id="edit-textarea" placeholder='{"nodes": [...]}'
+                style="width: 100%; height: 150px; background: #1A1A1A; border: 1px solid var(--panel-border); color: var(--text-main); padding: 8px; border-radius: 4px; font-family: 'Roboto Mono', monospace; font-size: 12px; resize: vertical; margin-bottom: 10px;"></textarea>
+            <button class="tool-btn" id="save-content-btn"
+                style="width: 100%; background: var(--accent-color); color: white; justify-content: center;">Apply
+                Changes</button>
         </div>
 
         <div class="sidebar-section" id="image-section">
             <div class="sidebar-title">Assets</div>
             <div class="property-row">
-                <button class="tool-btn" id="sidebar-upload-btn" style="flex:1; background: rgba(255,255,255,0.05); border: 1px dashed var(--panel-border); font-size: 11px;">
+                <button class="tool-btn" id="sidebar-upload-btn"
+                    style="flex:1; background: rgba(255,255,255,0.05); border: 1px dashed var(--panel-border); font-size: 11px;">
                     <i data-lucide="upload-cloud" style="width:14px; margin-right:6px"></i> Upload Image
                 </button>
-                <button class="tool-btn" id="sidebar-url-btn" style="flex:1; background: rgba(255,255,255,0.05); border: 1px dashed var(--panel-border); font-size: 11px;">
+                <button class="tool-btn" id="sidebar-url-btn"
+                    style="flex:1; background: rgba(255,255,255,0.05); border: 1px dashed var(--panel-border); font-size: 11px;">
                     <i data-lucide="link" style="width:14px; margin-right:6px"></i> From URL
                 </button>
             </div>
@@ -712,7 +736,8 @@
                         data-lucide="split"></i></button>
             </div>
             <div class="property-row">
-                <button class="tool-btn" id="sidebar-import-json" style="flex:1; background: rgba(0, 204, 136, 0.1); border: 1px solid rgba(0, 204, 136, 0.2); color: var(--accent-green);">
+                <button class="tool-btn" id="sidebar-import-json"
+                    style="flex:1; background: rgba(0, 204, 136, 0.1); border: 1px solid rgba(0, 204, 136, 0.2); color: var(--accent-green);">
                     <i data-lucide="folder-up" style="width:14px; margin-right:6px"></i> Import Project
                 </button>
             </div>
@@ -732,8 +757,10 @@
         <div class="bottom-group">
             <button class="tool-btn" id="export-png" title="Export PNG"><i data-lucide="download"></i></button>
             <button class="tool-btn" id="export-svg" title="Export SVG"><i data-lucide="file-code"></i></button>
-            <button class="tool-btn" id="export-json" title="Export JSON Project"><i data-lucide="file-json"></i></button>
-            <button class="tool-btn" id="import-json" title="Import JSON Project"><i data-lucide="folder-up"></i></button>
+            <button class="tool-btn" id="export-json" title="Export JSON Project"><i
+                    data-lucide="file-json"></i></button>
+            <button class="tool-btn" id="import-json" title="Import JSON Project"><i
+                    data-lucide="folder-up"></i></button>
             <div class="status-indicator">
                 <span id="save-status">Local Only</span>
                 <div class="status-dot" id="status-dot"></div>
@@ -748,15 +775,29 @@
     </a>
 
     <!-- Permanent Branding -->
-    <div style="position: absolute; top: 100px; right: 80px; font-family: 'Inter', sans-serif; text-align: right; pointer-events: none; user-select: none; z-index: 1;">
-        <div style="font-weight: 800; font-size: 42px; letter-spacing: 0.4em; color: rgba(255,255,255,0.12);">NEXUS</div>
-        <div style="font-weight: 400; font-size: 12px; letter-spacing: 0.2em; color: rgba(255,255,255,0.2); margin-top: -4px;">FOR AI ENGINEERS</div>
+    <div
+        style="position: absolute; top: 100px; right: 80px; font-family: 'Inter', sans-serif; text-align: right; pointer-events: none; user-select: none; z-index: 1;">
+        <div style="font-weight: 800; font-size: 42px; letter-spacing: 0.4em; color: rgba(255,255,255,0.12);">NEXUS
+        </div>
+        <div
+            style="font-weight: 400; font-size: 12px; letter-spacing: 0.2em; color: rgba(255,255,255,0.2); margin-top: -4px;">
+            FOR AI ENGINEERS</div>
     </div>
 
     <!-- Help Button -->
     <button class="tool-btn help-btn" id="help-toggle">
         <i data-lucide="help-circle"></i>
     </button>
+
+    <!-- Slide Navigation (Presentation Mode Only) -->
+    <div id="slide-nav"
+        style="display: none; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--panel-bg); backdrop-filter: blur(16px); border: 1px solid var(--panel-border); border-radius: 12px; padding: 10px 20px; z-index: 2000; gap: 20px; align-items: center; box-shadow: var(--shadow-lg);">
+        <button class="tool-btn" id="prev-slide" title="Previous Slide"><i data-lucide="chevron-left"></i></button>
+        <div id="slide-indicator"
+            style="font-size: 14px; font-weight: 600; color: var(--text-main); min-width: 80px; text-align: center;">
+            Slide 1 / 1</div>
+        <button class="tool-btn" id="next-slide" title="Next Slide"><i data-lucide="chevron-right"></i></button>
+    </div>
 
     <!-- Help Overlay -->
     <div class="overlay" id="help-overlay">
@@ -799,7 +840,7 @@
         // --- State Management ---
         const state = {
             currentTool: 'select',
-            currentColor: '#0077FF',
+            currentColor: '#3b82f6',
             isPanning: false,
             zoom: 1,
             history: [],
@@ -807,7 +848,8 @@
             isLocked: false,
             lastSave: 0,
             isPresenting: false,
-            grid: 30
+            grid: 30,
+            currentSlide: 0
         };
 
         // UI References
@@ -895,7 +937,7 @@
             });
 
             customColorPicker.oninput = (e) => setColor(e.target.value);
-            
+
             globalColorPicker.oninput = (e) => setColor(e.target.value);
             document.querySelectorAll('.color-dot').forEach(dot => {
                 dot.onclick = () => setColor(dot.dataset.color);
@@ -952,6 +994,9 @@
             document.getElementById('import-json').onclick = importJSON;
             document.getElementById('sidebar-import-json').onclick = importJSON;
             document.getElementById('present-btn').onclick = togglePresentation;
+
+            document.getElementById('prev-slide').onclick = () => navigateSlide(-1);
+            document.getElementById('next-slide').onclick = () => navigateSlide(1);
 
             // Help overlay
             document.getElementById('help-toggle').onclick = () => document.getElementById('help-overlay').classList.add('visible');
@@ -1051,7 +1096,7 @@
                 { id: 'left', ...getPortCoords(obj, 'left') },
                 { id: 'right', ...getPortCoords(obj, 'right') }
             ];
-            
+
             let nearest = coords[0];
             let minDist = Math.hypot(pointer.x - coords[0].x, pointer.y - coords[0].y);
 
@@ -1068,7 +1113,7 @@
 
         function createArrow(x1, y1, x2, y2) {
             const arrowType = document.getElementById('arrow-type').value || 'straight';
-            const arrow = new fabric.Polyline([{x:0, y:0}], {
+            const arrow = new fabric.Polyline([{ x: 0, y: 0 }], {
                 stroke: state.currentColor,
                 strokeWidth: parseInt(strokeWidthInput.value) || 2,
                 fill: 'transparent',
@@ -1160,7 +1205,7 @@
         // --- n8n Workflow Node Class ---
         fabric.WorkflowNode = fabric.util.createClass(fabric.Rect, {
             type: 'workflow-node',
-            initialize: function(workflowData, options) {
+            initialize: function (workflowData, options) {
                 options = options || {};
                 options.width = options.width || 120; // Default smaller size for single node
                 options.height = options.height || 120;
@@ -1178,7 +1223,7 @@
                 this.on('added', () => this.createDOMElement());
                 this.on('removed', () => this.removeDOMElement());
             },
-            createDOMElement: function() {
+            createDOMElement: function () {
                 if (this.domElement) return;
 
                 // Check if an element with this ID already exists (e.g. from a previous partial load)
@@ -1202,13 +1247,13 @@
                 document.body.appendChild(this.domElement);
                 this.syncDOM();
             },
-            removeDOMElement: function() {
+            removeDOMElement: function () {
                 if (this.domElement) {
                     this.domElement.remove();
                     this.domElement = null;
                 }
             },
-            syncDOM: function() {
+            syncDOM: function () {
                 if (!this.domElement) return;
                 const vpt = canvas.viewportTransform;
                 const zoom = canvas.getZoom();
@@ -1221,23 +1266,23 @@
 
                 this.domElement.style.width = `${width}px`;
                 this.domElement.style.height = `${height}px`;
-                this.domElement.style.left = `${screenPoint.x - width/2}px`;
-                this.domElement.style.top = `${screenPoint.y - height/2}px`;
+                this.domElement.style.left = `${screenPoint.x - width / 2}px`;
+                this.domElement.style.top = `${screenPoint.y - height / 2}px`;
                 this.domElement.style.transform = `rotate(${this.angle}deg)`;
 
                 // Toggle visibility if off-screen
-                const isOffScreen = screenPoint.x + width/2 < 0 || screenPoint.y + height/2 < 0 ||
-                                   screenPoint.x - width/2 > window.innerWidth || screenPoint.y - height/2 > window.innerHeight;
+                const isOffScreen = screenPoint.x + width / 2 < 0 || screenPoint.y + height / 2 < 0 ||
+                    screenPoint.x - width / 2 > window.innerWidth || screenPoint.y - height / 2 > window.innerHeight;
                 this.domElement.style.display = isOffScreen ? 'none' : 'block';
             },
-            toObject: function() {
+            toObject: function () {
                 return fabric.util.object.extend(this.callSuper('toObject'), {
                     workflowData: this.workflowData
                 });
             }
         });
 
-        fabric.WorkflowNode.fromObject = function(object, callback) {
+        fabric.WorkflowNode.fromObject = function (object, callback) {
             const node = new fabric.WorkflowNode(object.workflowData, object);
             node.set(object);
             callback(node);
@@ -1251,17 +1296,26 @@
 
             document.getElementById('arrow-style-row').style.display = (tool === 'arrow') ? 'flex' : 'none';
 
-            canvas.isDrawingMode = (tool === 'pencil' || tool === 'eraser');
+            canvas.isDrawingMode = (tool === 'pencil' || tool === 'eraser' || tool === 'highlighter');
             canvas.selection = (tool === 'select');
             canvas.skipTargetFind = (tool === 'hand');
             canvas.defaultCursor = (tool === 'hand') ? 'grab' : (tool === 'select' ? 'default' : 'crosshair');
 
             if (canvas.isDrawingMode) {
-                canvas.freeDrawingBrush = (tool === 'eraser')
-                    ? new fabric.EraserBrush(canvas)
-                    : new fabric.PencilBrush(canvas);
-                canvas.freeDrawingBrush.width = parseInt(strokeWidthInput.value);
-                if (tool === 'pencil') canvas.freeDrawingBrush.color = state.currentColor;
+                if (tool === 'eraser') {
+                    canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
+                    canvas.freeDrawingBrush.width = parseInt(strokeWidthInput.value) * 2;
+                } else if (tool === 'highlighter') {
+                    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+                    canvas.freeDrawingBrush.width = 30;
+                    canvas.freeDrawingBrush.color = new fabric.Color(state.currentColor).setAlpha(0.3).toRgba();
+                } else {
+                    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+                    canvas.freeDrawingBrush.width = parseInt(strokeWidthInput.value);
+                    canvas.freeDrawingBrush.color = state.currentColor;
+                    // Smoothing
+                    canvas.freeDrawingBrush.decimate = 1.5;
+                }
             }
 
             if (tool !== 'select') {
@@ -1272,7 +1326,7 @@
 
         function applyColorToObject(obj, color) {
             if (!obj || !color || obj.type === 'activeSelection') return;
-            
+
             if (obj.type === 'i-text' || obj.type === 'text') {
                 obj.set({ fill: color, stroke: 'transparent', strokeWidth: 0 });
             } else if (obj.type === 'group') {
@@ -1280,9 +1334,9 @@
                     if (['rect', 'circle', 'path', 'polygon', 'polyline'].includes(child.type)) {
                         child.set('stroke', color);
                         if (child.fill && child.fill !== 'transparent' && !['#ffffff', 'white'].includes(child.fill.toLowerCase())) {
-                             try {
+                            try {
                                 child.set('fill', new fabric.Color(color).setAlpha(0.2).toRgba());
-                             } catch(e) {}
+                            } catch (e) { }
                         }
                     }
                 });
@@ -1293,7 +1347,7 @@
                 if (obj.fill && obj.fill !== 'transparent') {
                     try {
                         obj.set('fill', new fabric.Color(color).setAlpha(0.2).toRgba());
-                    } catch(e) {
+                    } catch (e) {
                         obj.set('fill', color);
                     }
                 }
@@ -1313,7 +1367,7 @@
                     hexColor = new fabric.Color(color).toHex();
                     if (!hexColor.startsWith('#')) hexColor = '#' + hexColor;
                 }
-            } catch(e) {}
+            } catch (e) { }
 
             customColorPicker.value = hexColor;
             globalColorPicker.value = hexColor;
@@ -1345,8 +1399,8 @@
                 activeObjects.forEach(obj => {
                     if (obj.type === 'activeSelection') {
                         obj.getObjects().forEach(child => {
-                             if (prop === 'stroke' || prop === 'fill') applyColorToObject(child, value);
-                             else child.set(prop, value);
+                            if (prop === 'stroke' || prop === 'fill') applyColorToObject(child, value);
+                            else child.set(prop, value);
                         });
                     } else {
                         if (prop === 'stroke' || prop === 'fill') applyColorToObject(obj, value);
@@ -1386,20 +1440,18 @@
         function togglePresentation() {
             state.isPresenting = !state.isPresenting;
             const btn = document.getElementById('present-btn');
+            const slideNav = document.getElementById('slide-nav');
             btn.classList.toggle('active', state.isPresenting);
 
-            // Toggle Icon between Play and Square (Stop)
             btn.innerHTML = state.isPresenting ? '<i data-lucide="square"></i>' : '<i data-lucide="play"></i>';
             lucide.createIcons();
 
             if (state.isPresenting) {
-                // Save state before presentation to discard changes later
                 state.prePresentJson = JSON.stringify(canvas.toDatalessJSON([
-                    'id', 'x1', 'y1', 'x2', 'y2', 'startObjId', 'endObjId', 'startPort', 'endPort',
+                    'id', 'x1', 'y1', 'x2', 'y2', 'startObjId', 'endObjId', 'startPort', 'endPort', 'arrowType',
                     'workflowData', 'fontSize', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable'
                 ]));
 
-                // Lock all current objects
                 canvas.getObjects().forEach(obj => {
                     obj._originalLockState = {
                         lX: obj.lockMovementX, lY: obj.lockMovementY, lR: obj.lockRotation,
@@ -1411,13 +1463,11 @@
                     });
                 });
 
-                // Enter presentation mode
                 document.querySelector('.sidebar').classList.add('hidden');
                 document.querySelector('.toolbar').style.opacity = '0.3';
                 document.querySelector('.bottom-bar').style.opacity = '0.3';
 
-                // Allow only specific tools (Pencil, Rect, Circle, Text for explaining)
-                const forbiddenTools = ['workflow', 'arrow', 'image', 'trash-2'];
+                const forbiddenTools = ['workflow', 'arrow', 'image', 'trash-2', 'frame'];
                 document.querySelectorAll('.tool-btn[data-tool], .tool-btn#img-upload-btn, .tool-btn#clear-btn').forEach(b => {
                     const tool = b.dataset.tool || b.id;
                     if (forbiddenTools.some(t => tool.includes(t))) {
@@ -1425,46 +1475,65 @@
                     }
                 });
 
+                // Find slides
+                state.slides = canvas.getObjects().filter(o => o.type === 'slide-frame').sort((a, b) => a.top - b.top || a.left - b.left);
+                if (state.slides.length > 0) {
+                    state.currentSlide = 0;
+                    slideNav.style.display = 'flex';
+                    updateSlideUI();
+                    navigateSlide(0);
+                }
+
                 setTool('pencil');
                 if (!document.fullscreenElement) {
                     document.documentElement.requestFullscreen().catch(e => console.log(e));
                 }
             } else {
-                // Exit presentation mode
                 document.querySelector('.toolbar').style.opacity = '1';
                 document.querySelector('.bottom-bar').style.opacity = '1';
                 document.querySelectorAll('.tool-btn').forEach(b => b.style.display = 'flex');
+                slideNav.style.display = 'none';
 
                 if (document.fullscreenElement) {
                     document.exitFullscreen();
                 }
 
-                // Discard presentation markings by reloading pre-presentation state
                 if (state.prePresentJson) {
                     loadStateFromJSON(state.prePresentJson);
                     state.prePresentJson = null;
-                } else {
-                    // Fallback cleanup if pre-present state missing
-                    canvas.getObjects().forEach(obj => {
-                        if (obj._originalLockState) {
-                            obj.set({
-                                lockMovementX: obj._originalLockState.lX,
-                                lockMovementY: obj._originalLockState.lY,
-                                lockRotation: obj._originalLockState.lR,
-                                lockScalingX: obj._originalLockState.sX,
-                                lockScalingY: obj._originalLockState.sY,
-                                hasControls: obj._originalLockState.hC,
-                                editable: obj._originalLockState.ed
-                            });
-                            delete obj._originalLockState;
-                        }
-                    });
                 }
 
                 setTool('select');
             }
 
             sidebar.classList.remove('library-open');
+        }
+
+        function navigateSlide(dir) {
+            if (!state.slides || state.slides.length === 0) return;
+
+            state.currentSlide = Math.max(0, Math.min(state.slides.length - 1, state.currentSlide + dir));
+            const frame = state.slides[state.currentSlide];
+
+            const zoom = Math.min(
+                (canvas.width * 0.9) / (frame.width * frame.scaleX),
+                (canvas.height * 0.9) / (frame.height * frame.scaleY)
+            );
+
+            canvas.setZoom(zoom);
+            const vpt = canvas.viewportTransform;
+            vpt[4] = canvas.width / 2 - (frame.left * zoom);
+            vpt[5] = canvas.height / 2 - (frame.top * zoom);
+
+            canvas.requestRenderAll();
+            canvas.getObjects('workflow-node').forEach(node => node.syncDOM());
+            updateSlideUI();
+        }
+
+        function updateSlideUI() {
+            document.getElementById('slide-indicator').textContent = `Slide ${state.currentSlide + 1} / ${state.slides.length}`;
+            document.getElementById('prev-slide').style.opacity = state.currentSlide === 0 ? '0.3' : '1';
+            document.getElementById('next-slide').style.opacity = state.currentSlide === state.slides.length - 1 ? '0.3' : '1';
         }
 
         function toggleLock() {
@@ -1634,7 +1703,8 @@
                 'startObjId', 'endObjId',
                 'startPort', 'endPort',
                 'arrowType', 'workflowData', 'fontSize',
-                'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable'
+                'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable',
+                'type'
             ]));
 
             if (state.historyIndex === -1 || state.history[state.historyIndex] !== json) {
@@ -1764,7 +1834,8 @@
                 'startObjId', 'endObjId',
                 'startPort', 'endPort',
                 'arrowType', 'workflowData', 'fontSize',
-                'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable'
+                'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'hasControls', 'editable',
+                'type'
             ]), null, 2);
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -1821,12 +1892,12 @@
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
-            
+
             if (!file.type.startsWith('image/')) {
                 alert('Please select a valid image file.');
                 return;
             }
-            
+
             const reader = new FileReader();
             reader.onload = f => {
                 fabric.Image.fromURL(f.target.result, img => {
@@ -1942,6 +2013,34 @@
 
             if (state.currentTool === 'rect') {
                 obj = new fabric.Rect({ ...common, width: 100, height: 100, rx: 5, ry: 5 });
+            } else if (state.currentTool === 'frame') {
+                const rect = new fabric.Rect({
+                    width: 400,
+                    height: 250,
+                    fill: 'rgba(59, 130, 246, 0.05)',
+                    stroke: '#3b82f6',
+                    strokeWidth: 2,
+                    strokeDashArray: [10, 5],
+                    rx: 10,
+                    ry: 10,
+                    originX: 'center',
+                    originY: 'center'
+                });
+                const label = new fabric.Text("SLIDE", {
+                    fontSize: 10,
+                    fontFamily: 'Inter',
+                    fontWeight: 800,
+                    fill: '#3b82f6',
+                    top: -115,
+                    left: -175,
+                    originX: 'center',
+                    originY: 'center'
+                });
+                obj = new fabric.Group([rect, label], {
+                    ...common,
+                    type: 'slide-frame',
+                    subTargetCheck: false
+                });
             } else if (state.currentTool === 'circle') {
                 obj = new fabric.Circle({ ...common, radius: 50 });
             } else if (state.currentTool === 'triangle') {
@@ -1950,16 +2049,16 @@
                 obj = new fabric.Rect({ ...common, width: 80, height: 80, angle: 45 });
             } else if (state.currentTool === 'hexagon') {
                 const points = [];
-                for(let i=0; i<6; i++) {
+                for (let i = 0; i < 6; i++) {
                     const angle = i * Math.PI / 3;
                     points.push({ x: 50 * Math.cos(angle), y: 50 * Math.sin(angle) });
                 }
                 obj = new fabric.Polygon(points, { ...common });
             } else if (state.currentTool === 'text') {
-                obj = new fabric.IText('Type something...', { 
-                    ...common, 
-                    fill: state.currentColor, 
-                    fontSize: 24, 
+                obj = new fabric.IText('Type something...', {
+                    ...common,
+                    fill: state.currentColor,
+                    fontSize: 24,
                     fontFamily: fontFamilyInput.value || 'Inter',
                     stroke: 'transparent',
                     strokeWidth: 0,
@@ -2037,7 +2136,7 @@
                 canvas.renderAll();
             });
         }
-        
+
         window.addEventListener('load', () => {
             setTimeout(() => {
                 if (state.history.length === 0) {
@@ -2053,19 +2152,29 @@
         };
 
         canvas.on('object:moving', (e) => {
+            const target = e.target;
             if (state.grid) {
-                e.target.set({
-                    left: Math.round(e.target.left / state.grid) * state.grid,
-                    top: Math.round(e.target.top / state.grid) * state.grid
+                target.set({
+                    left: Math.round(target.left / state.grid) * state.grid,
+                    top: Math.round(target.top / state.grid) * state.grid
                 });
             }
-            updateConnectedArrows(e.target);
-            if (e.target.type === 'workflow-node') e.target.syncDOM();
+            // Update arrows and DOM in a single pass
+            updateConnectedArrows(target);
+            if (target.type === 'workflow-node') target.syncDOM();
+
+            // If dragging a selection, sync all children
+            if (target.type === 'activeSelection') {
+                target.getObjects().forEach(obj => {
+                    updateConnectedArrows(obj);
+                    if (obj.type === 'workflow-node') obj.syncDOM();
+                });
+            }
         });
 
         canvas.on('object:scaling', (e) => {
+            const target = e.target;
             if (state.grid) {
-                const target = e.target;
                 const width = target.width * target.scaleX;
                 const height = target.height * target.scaleY;
                 const snapWidth = Math.round(width / state.grid) * state.grid;
@@ -2075,8 +2184,15 @@
                     scaleY: snapHeight / target.height
                 });
             }
-            updateConnectedArrows(e.target);
-            if (e.target.type === 'workflow-node') e.target.syncDOM();
+            updateConnectedArrows(target);
+            if (target.type === 'workflow-node') target.syncDOM();
+
+            if (target.type === 'activeSelection') {
+                target.getObjects().forEach(obj => {
+                    updateConnectedArrows(obj);
+                    if (obj.type === 'workflow-node') obj.syncDOM();
+                });
+            }
         });
         canvas.on('object:rotating', (e) => {
             updateConnectedArrows(e.target);
@@ -2106,7 +2222,7 @@
                 debouncedSaveState();
             }
         });
-        
+
         // Handle text editing mode
         canvas.on('text:editing:entered', (e) => {
             const textObj = e.target;
@@ -2116,7 +2232,7 @@
                 textObj.set('strokeWidth', 0);
             }
         });
-        
+
         canvas.on('text:editing:exited', (e) => {
             const textObj = e.target;
             // Ensure text properties are correct after editing
@@ -2125,7 +2241,7 @@
             canvas.renderAll();
             saveState();
         });
-        
+
         // Helper to draw visual ports
         function drawPorts(obj) {
             if (!obj || obj.type === 'polyline' || obj.name === 'port-helper') return;

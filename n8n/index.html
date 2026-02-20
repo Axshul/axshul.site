@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automations — Anshul Namdev</title>
+    <meta name="description"
+        content="Personal automation tools hub by Anshul Namdev. Verify workflow certifications, explore automation resources and my own n8n-powered projects.">
+
+    <!-- Fonts: match main site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
+    <link rel="canonical" href="https://axshul.site/n8n/">
+</head>
+
+<body>
+
+    <!-- ── NAV ── -->
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="/" class="nav-logo">AN. <span
+                    style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/
+                    Automations</span></a>
+
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+            </button>
+
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="#verify" class="active">Verify</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#creations">My Work</a></li>
+                <li><a href="https://n8n.io" target="_blank">n8n.io ↗</a></li>
+                <li><a href="/">← Portfolio</a></li>
+            </ul>
+
+            <a href="https://n8n.io" target="_blank" class="nav-cta">
+                <span class="cta-text">Open n8n</span>
+                <span class="cta-icon">↗</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ── WRAP ── -->
+    <div class="auto-wrap">
+
+        <!-- ── HERO ── -->
+        <section class="auto-hero">
+            <div>
+                <div class="eyebrow">Automation tools by Anshul Namdev</div>
+
+                <h1 class="hero-h1">
+                    Automate.<br>
+                    Verify.<br>
+                    <i>Build.</i>
+                </h1>
+
+                <p class="hero-sub">
+                    A personal hub for workflow automation tools, certificate verification and resources I use daily as
+                    an AI engineer.
+                </p>
+
+                <div class="hero-btns">
+                    <a href="#verify" class="ib-btn">
+                        <span class="bt">Verify a Certificate</span>
+                        <span class="bi">✓</span>
+                    </a>
+                    <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank" class="ib-btn outline">
+                        <span class="bt">My Community Profile</span>
+                        <span class="bi">↗</span>
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div>
+                        <div class="stat-num">2<sup>+</sup></div>
+                        <div class="stat-lbl">Certifications</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">400<sup>+</sup></div>
+                        <div class="stat-lbl">Integrations</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">∞</div>
+                        <div class="stat-lbl">Workflows</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow canvas preview (desktop) -->
+            <div class="hero-right">
+                <div class="wf-canvas">
+                    <div class="wf-nodes">
+                        <div class="wf-node">
+                            <div class="wf-box active">📩</div>
+                            <div class="wf-node-lbl">Trigger</div>
+                        </div>
+                        <div class="wf-conn"></div>
+                        <div class="wf-node">
+                            <div class="wf-box">⚙️</div>
+                            <div class="wf-node-lbl">Process</div>
+                        </div>
+                        <div class="wf-conn"></div>
+                        <div class="wf-node">
+                            <div class="wf-box">🔍</div>
+                            <div class="wf-node-lbl">Verify</div>
+                        </div>
+                        <div class="wf-conn"></div>
+                        <div class="wf-node">
+                            <div class="wf-box">✅</div>
+                            <div class="wf-node-lbl">Done</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+       ROW 1 — Verifier (7) + Courses (5)
+  ══════════════════════════════════════ -->
+        <div class="grid fade-in" id="verify">
+
+            <!-- VERIFIER ─ col 7 -->
+            <div class="card col-7" data-accent="blue">
+                <div class="card-head">
+                    <div class="card-title">Certificate Verifier</div>
+                    <span class="chip chip-blue"><span class="dot"></span> Live</span>
+                </div>
+
+                <div class="sec-label">Verification tool</div>
+
+                <div class="vf-form">
+                    <div class="vf-row">
+                        <div class="vf-field">
+                            <label for="uniqueId">Unique ID</label>
+                            <input type="text" id="uniqueId" placeholder="4d29b9c490705c9381…" autocomplete="off"
+                                spellcheck="false">
+                        </div>
+                        <div class="vf-field">
+                            <label for="courseLevel">Course Level</label>
+                            <select id="courseLevel">
+                                <option value="level1">Level 1 — Fundamentals</option>
+                                <option value="level2">Level 2 — Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="verifyBtn" class="verify-btn">
+                        <span class="vb-text">Verify Certificate</span>
+                        <span class="vb-icon">✓</span>
+                    </button>
+                </div>
+
+                <!-- Terminal output -->
+                <div class="vf-output">
+                    <div class="vf-out-bar">
+                        <div class="out-dots"><i></i><i></i><i></i></div>
+                        <div class="out-meta">
+                            <span class="out-status" id="outLabel">output</span>
+                            <span class="out-endpoint" id="outEndpoint">—</span>
+                        </div>
+                    </div>
+                    <div class="vf-out-body">
+                        <div class="out-placeholder" id="outPlaceholder">
+                            ▸ Awaiting verification request…
+                        </div>
+                        <div class="out-loader" id="outLoader">
+                            <div class="spinner"></div>
+                            Sending to webhook…
+                        </div>
+                        <div id="resultContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COURSES + DOCS ─ col 5 -->
+            <div class="card col-5" data-accent="black">
+                <div class="card-head">
+                    <div class="card-title">Automation Courses</div>
+                    <span class="chip chip-grey">Free</span>
+                </div>
+
+                <div class="sec-label">Text-based courses — docs.n8n.io</div>
+
+                <div class="link-list" style="margin-bottom: 1.75rem;">
+                    <a href="https://docs.n8n.io/courses/level-one/" target="_blank" class="link-row">
+                        <span class="link-icon">⚡</span>
+                        <span class="link-label">Level 1 — Fundamentals</span>
+                        <span class="link-meta">Beginner</span>
+                        <span class="link-arrow">→</span>
+                    </a>
+                    <a href="https://docs.n8n.io/courses/level-two/" target="_blank" class="link-row">
+                        <span class="link-icon">🚀</span>
+                        <span class="link-label">Level 2 — Advanced</span>
+                        <span class="link-meta">Intermediate</span>
+                        <span class="link-arrow">→</span>
+                    </a>
+                </div>
+
+                <div class="sec-label">Resources</div>
+
+                <div class="link-list">
+                    <a href="https://docs.n8n.io" target="_blank" class="link-row">
+                        <span class="link-icon">📖</span>
+                        <span class="link-label">Documentation</span>
+                        <span class="link-meta">docs.n8n.io</span>
+                        <span class="link-arrow">→</span>
+                    </a>
+                    <a href="https://community.n8n.io" target="_blank" class="link-row">
+                        <span class="link-icon">💬</span>
+                        <span class="link-label">Community Forum</span>
+                        <span class="link-meta">community.n8n.io</span>
+                        <span class="link-arrow">→</span>
+                    </a>
+                    <a href="https://learn.app.n8n.cloud" target="_blank" class="link-row">
+                        <span class="link-icon">🎓</span>
+                        <span class="link-label">n8n Learn</span>
+                        <span class="link-meta">learn.app.n8n.cloud</span>
+                        <span class="link-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+        </div><!-- /grid row 1 -->
+
+        <!-- ══════════════════════════════════════
+       ROW 2 — Community (7) + Nexus (5)
+  ══════════════════════════════════════ -->
+        <div class="grid fade-in" id="community">
+
+            <!-- COMMUNITY ─ col 7 -->
+            <div class="card col-7">
+                <div class="card-head">
+                    <div class="card-title">Community Presence</div>
+                    <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank" class="chip chip-blue"
+                        style="text-decoration:none;">View Profile →</a>
+                </div>
+
+                <!-- Screenshot -->
+                <div class="community-img-wrap">
+                    <img src="../assets/img/n8n-community.png" alt="Anshul Namdev on the n8n Community Forum"
+                        loading="lazy">
+                </div>
+
+                <!-- Profile row -->
+                <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank" class="profile-row">
+                    <div class="profile-av">AN</div>
+                    <div class="profile-info">
+                        <div class="profile-name">Anshul Namdev</div>
+                        <div class="profile-url">community.n8n.io/u/Anshul_Namdev</div>
+                    </div>
+                    <div class="profile-arrow">→</div>
+                </a>
+            </div>
+
+            <!-- NEXUS ─ col 5 -->
+            <div class="card col-5 nexus-card">
+                <div class="nexus-wm">NEXUS</div>
+                <div class="nexus-tagline">For AI Engineers</div>
+
+                <p class="nexus-desc">
+                    An infinite canvas tool I built for AI and workflow engineers — design, document and present
+                    automation flows visually.
+                </p>
+
+                <div class="nexus-tags">
+                    <span class="nexus-tag">Infinite Canvas</span>
+                    <span class="nexus-tag">n8n Nodes</span>
+                    <span class="nexus-tag">Auto-save</span>
+                    <span class="nexus-tag">PNG / SVG Export</span>
+                    <span class="nexus-tag">Presentation Mode</span>
+                </div>
+
+                <div class="nexus-btns">
+                    <a href="/Nexus/" class="nb-btn solid">
+                        <span class="nt">Open Nexus</span>
+                        <span class="ni">↗</span>
+                    </a>
+                    <a href="/" class="nb-btn ghost-w">
+                        <span class="nt">← Back to Portfolio</span>
+                        <span class="ni">→</span>
+                    </a>
+                </div>
+            </div>
+
+        </div><!-- /grid row 2 -->
+
+        <!-- ══════════════════════════════════════
+       ROW 3 — My Creations (full width)
+  ══════════════════════════════════════ -->
+        <section id="creations" class="fade-in">
+            <div class="page-sec-hdr">
+                <div class="page-sec-title">My <i>Creations</i></div>
+                <span class="chip chip-grey">Coming Soon</span>
+            </div>
+
+            <!-- Empty state -->
+            <div class="creations-empty" style="margin-bottom: 1.5rem;">
+                <div class="ce-icon">⚡</div>
+                <div class="ce-title">No workflows published yet</div>
+                <div class="ce-sub">
+                    I'm building automation workflows and will be sharing them here soon. Check my community profile in
+                    the meantime.
+                </div>
+                <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank" class="ib-btn"
+                    style="margin-top:.75rem;min-width:240px;max-width:300px;">
+                    <span class="bt">Community Profile</span>
+                    <span class="bi">↗</span>
+                </a>
+            </div>
+
+            <!-- Skeleton placeholder cards -->
+            <div class="grid" style="margin-bottom:0;">
+                <div class="ph-card col-4">
+                    <div class="ph-icon">📧</div>
+                    <div class="ph-lines">
+                        <div class="ph-line ph-long"></div>
+                        <div class="ph-line ph-short"></div>
+                    </div>
+                </div>
+                <div class="ph-card col-4">
+                    <div class="ph-icon">🤖</div>
+                    <div class="ph-lines">
+                        <div class="ph-line ph-long"></div>
+                        <div class="ph-line ph-short"></div>
+                    </div>
+                </div>
+                <div class="ph-card col-4">
+                    <div class="ph-icon">📊</div>
+                    <div class="ph-lines">
+                        <div class="ph-line ph-long"></div>
+                        <div class="ph-line ph-short"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── FOOTER ── -->
+        <footer class="auto-footer">
+            <div class="footer-copy">
+                © 2026 <a href="/">Anshul Namdev</a> · All automation tools built and maintained personally
+            </div>
+            <div class="footer-links">
+                <a href="/">Portfolio</a>
+                <a href="https://n8n.io" target="_blank">n8n.io</a>
+                <a href="https://docs.n8n.io" target="_blank">Docs</a>
+                <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank">Community</a>
+            </div>
+        </footer>
+
+    </div><!-- /auto-wrap -->
+
+    <script src="../assets/js/n8n.js"></script>
+</body>
+
+</html>
