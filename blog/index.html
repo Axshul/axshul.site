@@ -1,575 +1,271 @@
 <!DOCTYPE html>
-<html lang="en" data-graphic-shape="diamond">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Anshul Namdev - Code & Thoughts</title>
-
-    <!-- Canonical Link -->
-    <link rel="canonical" href="https://axshul.site/blog">
-
-    <!-- Meta Tags -->
+    <title>Blog — Anshul Namdev / Code &amp; Thoughts</title>
     <meta name="description"
-        content="Technical writings, tutorials, and insights from Anshul Namdev. Explore programming concepts, problem-solving techniques, and developer experiences from the CodeProb community.">
-    <meta property="og:title" content="Blog | Anshul Namdev - Code & Thoughts">
-    <meta property="og:description"
-        content="Technical writings and insights on programming, AI, and software development.">
+        content="Technical writings, dev logs, tutorials and live Hacker News — Anshul Namdev's reading hub.">
+    <meta property="og:title" content="Blog — Anshul Namdev">
+    <meta property="og:description" content="Code & Thoughts: writings on AI, automation, systems, and web.">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="https://axshul.site/assets/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://axshul.site/assets/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://axshul.site/assets/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="https://axshul.site/assets/favicon_io/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png">
+    <link rel="canonical" href="https://axshul.site/blog/">
 
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&display=swap"
         rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://axshul.site/assets/css/style.css">
-    <style>
-        /* Blog-specific styles */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .blog-card {
-            background: white;
-            border: 1px solid var(--border-light);
-            padding: 2.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .blog-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-blue), #667eea);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .blog-card::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(0, 68, 255, 0.05) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .blog-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .blog-card:hover::after {
-            width: 500px;
-            height: 500px;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-            border-color: rgba(0, 68, 255, 0.2);
-        }
-
-        .blog-card-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: var(--accent-blue);
-            color: white;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .blog-card-badge.type-article {
-            background: #FF6B6B;
-        }
-
-        .blog-card-badge.type-problem {
-            background: #4ECDC4;
-        }
-
-        .blog-card-badge.type-concept {
-            background: #FFE66D;
-            color: var(--text-primary);
-        }
-
-        .blog-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-            font-family: var(--font-serif);
-        }
-
-        .blog-card h3 a {
-            color: var(--text-primary);
-            transition: color 0.3s;
-        }
-
-        .blog-card h3 a:hover {
-            color: var(--accent-blue);
-        }
-
-        .blog-card-meta {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .blog-card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .blog-card-tags span {
-            padding: 0.4rem 0.8rem;
-            background: #f5f5f5;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-
-        .blog-card-tags span:hover {
-            background: var(--accent-blue);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .filter-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-top: 3rem;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 0;
-            flex-wrap: wrap;
-        }
-
-        .filter-tab {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-            color: var(--text-secondary);
-            cursor: pointer;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .filter-tab::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-blue);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .filter-tab.active {
-            color: var(--accent-blue);
-        }
-
-        .filter-tab.active::after {
-            transform: scaleX(1);
-        }
-
-        .filter-tab:hover {
-            color: var(--accent-blue);
-        }
-
-        .blog-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(0, 68, 255, 0.03) 0%, rgba(0, 0, 0, 0.02) 100%);
-            border: 1px solid var(--border-light);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 4rem;
-            font-family: var(--font-serif);
-            font-weight: 600;
-            color: var(--accent-blue);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .loading-skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 4px;
-        }
-
-        @keyframes loading {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        .skeleton-card {
-            height: 300px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 6rem 2rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .error-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: #fff5f5;
-            border: 1px solid #ffcccc;
-            margin-top: 3rem;
-        }
-
-        .error-state h3 {
-            color: #d32f2f;
-            margin-bottom: 1rem;
-        }
-
-        .codeprob-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.2rem 2.5rem;
-            background: var(--text-primary);
-            color: white;
-            font-family: var(--font-sans);
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-            margin-top: 2rem;
-        }
-
-        .codeprob-cta:hover {
-            background: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 68, 255, 0.3);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .blog-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-
-            .hero-title {
-                font-size: 4.5rem !important;
-            }
-
-            .section-title {
-                font-size: 3rem !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding-top: 8rem !important;
-                min-height: 80vh;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr !important;
-                gap: 3rem;
-            }
-
-            .hero-title {
-                font-size: 3.5rem !important;
-                margin-top: 0 !important;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem !important;
-                margin-top: 1.5rem !important;
-            }
-
-            .hero-visual {
-                order: -1;
-                height: 300px;
-            }
-
-            .section {
-                padding-top: 4rem !important;
-                padding-bottom: 4rem !important;
-            }
-
-            .section-header {
-                grid-template-columns: 1fr !important;
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 2.5rem !important;
-            }
-
-            .blog-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                margin-top: 2rem;
-            }
-
-            .blog-card {
-                padding: 1.8rem;
-            }
-
-            .blog-card h3 {
-                font-size: 1.5rem;
-            }
-
-            .blog-card-meta {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .filter-tabs {
-                gap: 0.5rem;
-                margin-top: 2rem;
-            }
-
-            .filter-tab {
-                padding: 0.8rem 1.2rem;
-                font-size: 0.7rem;
-            }
-
-            .container {
-                padding: 0 2rem;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr !important;
-                gap: 2rem !important;
-            }
-
-            .footer-social-section {
-                text-align: left !important;
-            }
-
-            .footer-socials {
-                justify-content: flex-start !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.5rem !important;
-            }
-
-            .hero-subtitle {
-                font-size: 0.95rem !important;
-            }
-
-            .section-title {
-                font-size: 2rem !important;
-            }
-
-            .blog-card {
-                padding: 1.5rem;
-            }
-
-            .blog-card h3 {
-                font-size: 1.3rem;
-            }
-
-            .filter-tab {
-                padding: 0.7rem 1rem;
-                font-size: 0.65rem;
-            }
-
-            .container {
-                padding: 0 1.5rem;
-            }
-
-            .navbar {
-                padding: 1.5rem 0 !important;
-            }
-        }
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/blog.css">
 </head>
 
-<body class="loading" data-graphic-shape="diamond">
+<body class="loading blog-page" data-graphic-shape="diamond">
 
-    <!-- Loading Overlay -->
+    <!-- ── LOADER ── -->
     <div class="loader">
         <div class="loader-line"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- ── NAV ── -->
     <nav class="navbar scrolled">
         <div class="container nav-container">
-            <a href="https://axshul.site/" class="logo">AN.</a>
-
+            <a href="/" class="logo">AN.</a>
             <button class="mobile-toggle" aria-label="Toggle Menu">
-                <span></span>
-                <span></span>
+                <span></span><span></span>
             </button>
-
             <ul class="nav-links">
-                <li><a href="https://axshul.site/about.html">About</a></li>
-                <li><a href="https://axshul.site/work.html">Work</a></li>
-                <li><a href="https://axshul.site/experience/index.html">Experience</a></li>
-                <li><a href="https://axshul.site/contact.html">Contact</a></li>
-                <li class="cta-item"><a href="https://axshul.site/RESUME.pdf" class="btn-nav" target="_blank">Resume</a>
-                </li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/work.html">Work</a></li>
+                <li><a href="/experience/">Experience</a></li>
+                <li><a href="/blog/" class="active">Blog</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li class="cta-item"><a href="/RESUME.pdf" class="btn-nav" target="_blank">Resume</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Blog Hero -->
-    <section class="hero" id="blog-hero" style="padding-top: 12rem;">
-        <div class="container hero-grid">
-            <div class="hero-content" data-scroll>
-                <h1 class="hero-title" style="font-size: 6rem; margin-top: 2rem;">
-                    Code &<br><i>Thoughts</i>.
-                </h1>
-                <p class="hero-subtitle"
-                    style="max-width: 650px; margin-top: 2rem; font-size: 1.1rem; line-height: 1.7;">
-                    A collection of technical writings, problem-solving insights, and programming concepts from my
-                    journey on CodeProb. Exploring the intersection of code, creativity, and continuous learning.
-                </p>
-            </div>
-
-            <div class="hero-visual" data-scroll data-speed="2">
-                <div class="image-wrapper">
-                    <div class="tech-graphic"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Content -->
-    <section class="section" style="padding-top: 8rem; padding-bottom: 8rem;">
+    <!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+    <section class="blog-hero">
+        <div class="blog-hero-bg"></div>
         <div class="container">
-            <div class="section-header" data-scroll style="border-top: none;">
-                <span class="section-label">Latest Content</span>
-                <h2 class="section-title" style="font-size: 4rem;">Writings</h2>
-            </div>
+            <div class="blog-hero-inner">
 
-            <!-- Filter Tabs -->
-            <div class="filter-tabs">
-                <button class="filter-tab active" data-filter="all">All</button>
-                <button class="filter-tab" data-filter="blogs">Blogs</button>
-                <button class="filter-tab" data-filter="articles">Articles</button>
-                <button class="filter-tab" data-filter="problems">Problems</button>
-                <button class="filter-tab" data-filter="concepts">Concepts</button>
-            </div>
+                <!-- Left: headline -->
+                <div class="blog-hero-left b-fade">
+                    <div class="blog-hero-eyebrow">Anshul Namdev · axshul.site/blog</div>
 
-            <!-- Blog Grid -->
-            <div class="blog-grid" id="blog-grid">
-                <!-- Loading skeletons -->
-                <div class="blog-card loading-skeleton skeleton-card"></div>
-                <div class="blog-card loading-skeleton skeleton-card"></div>
-                <div class="blog-card loading-skeleton skeleton-card"></div>
-            </div>
-        </div>
-    </section>
+                    <h1 class="blog-hero-title">
+                        Code &amp;<br>
+                        <i>Thoughts</i>.
+                    </h1>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid"
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem;">
-                <div>
-                    <h3 style="margin-bottom: 1.5rem;">Quick Links</h3>
-                    <ul class="footer-links" style="display: flex; gap: 2rem;">
-                        <li><a href="https://axshul.site/work.html"
-                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Projects</a>
-                        </li>
-                        <li><a href="https://axshul.site/about.html"
-                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">About</a></li>
-                        <li><a href="https://axshul.site/blog/"
-                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Blog</a></li>
-                        <li><a href="https://axshul.site/contact.html"
-                                style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-social-section" style="text-align: right;">
-                    <h3 style="margin-bottom: 1.5rem;">Social</h3>
-                    <div class="footer-socials" style="display: flex; gap: 1.5rem; justify-content: flex-end;">
-                        <a href="https://github.com/axshul" target="_blank">GitHub</a>
-                        <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
-                        <a href="https://twitter.com/Axshul" target="_blank">Twitter</a>
+                    <p class="blog-hero-sub">
+                        Writings on AI automation, systems programming, and the craft of building software — plus a live
+                        window into what the world's sharpest engineers are talking about right now.
+                    </p>
+
+                    <div class="blog-hero-meta">
+                        <div class="bhm-stat">
+                            <span class="bhm-num" id="postCount">6</span>
+                            <span class="bhm-lbl">Posts</span>
+                        </div>
+                        <div class="bhm-stat">
+                            <span class="bhm-num">3</span>
+                            <span class="bhm-lbl">Categories</span>
+                        </div>
+                        <div class="bhm-stat" id="hn-live-meta" style="display:none;">
+                            <span class="bhm-num" id="hn-live-count">—</span>
+                            <span class="bhm-lbl">HN Stories</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="footer-content" style="border-top: 1px solid var(--border-light); padding-top: 2rem;">
-                <span class="copyright">&copy; 2026 Anshul Namdev. All Rights Reserved.</span>
-                <a href="#" class="back-to-top">Back to Top &uarr;</a>
+
+                <!-- Right: live pulse badge -->
+                <!-- Right: Visual (Dynamic 3D Shape) -->
+                <div class="hero-visual b-fade" style="transition-delay:.15s">
+                    <div class="tech-graphic" style="display:none;"></div>
+                </div>
+
             </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- ════════════════════════════════════════
+     MY WRITINGS
+════════════════════════════════════════ -->
+    <section class="blog-section container" id="writings">
+
+        <div class="bs-head b-fade">
+            <div>
+                <div class="bs-label">My Writings</div>
+                <h2 class="bs-title">Latest <i>Posts</i></h2>
+            </div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="blog-filter-tabs b-fade" style="transition-delay:.1s" id="filterTabs">
+            <button class="bft-tab active" data-filter="all">All</button>
+            <button class="bft-tab" data-filter="writing">Writing</button>
+            <button class="bft-tab" data-filter="tutorial">Tutorial</button>
+            <button class="bft-tab" data-filter="dev-log">Dev Log</button>
+        </div>
+
+        <!-- Cards -->
+        <div class="writings-grid" id="writingsGrid">
+            <!-- injected by blog.js -->
+        </div>
+
+    </section>
+
+    <!-- ════════════════════════════════════════
+     LIVE DIVIDER
+════════════════════════════════════════ -->
+    <div class="container">
+        <div class="live-divider b-fade">
+            <div class="ld-badge">
+                <div class="ld-dot"></div>
+                Live
+            </div>
+            <button id="hnRefreshBtn" class="hn-refresh-btn" title="Refresh Live Feed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
+                </svg>
+                <span>Refresher</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+     HN · BEST STORIES
+════════════════════════════════════════ -->
+    <section class="hn-section" id="hn-best">
+        <div class="container">
+            <div class="bs-head b-fade">
+                <div>
+                    <div class="bs-label">
+                        <span class="hn-badge">HN</span>
+                        Best Stories
+                    </div>
+                    <h2 class="bs-title">What's <i>Trending</i></h2>
+                </div>
+                <a href="https://news.ycombinator.com/best" target="_blank" class="bs-link">
+                    Open on HN →
+                </a>
+            </div>
+
+            <div class="hn-scroll-container" id="hn-best-scroll">
+                <div class="hn-grid" id="hn-best-grid">
+                    <!-- skeleton -->
+                    <div class="hn-skel-card">
+                        <div class="hn-skel-line w-3 hn-skeleton"></div>
+                        <div class="hn-skel-line w-10 hn-skeleton"></div>
+                        <div class="hn-skel-line w-8 hn-skeleton"></div>
+                        <div class="hn-skel-line w-7 hn-skeleton" style="margin-top:auto;"></div>
+                    </div>
+                </div>
+                <div class="hn-sentinel" data-category="best"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+     HN · ASK HN + SHOW HN
+════════════════════════════════════════ -->
+    <section class="hn-section" id="hn-ask">
+        <div class="container">
+            <div class="bs-head b-fade">
+                <div>
+                    <div class="bs-label">
+                        <span class="hn-badge">HN</span>
+                        Discussions
+                    </div>
+                    <h2 class="bs-title">Ask &amp; <i>Show</i></h2>
+                </div>
+                <a href="https://news.ycombinator.com/ask" target="_blank" class="bs-link">
+                    Ask HN →
+                </a>
+            </div>
+
+            <div class="hn-scroll-container" id="hn-ask-scroll">
+                <div class="hn-ask-grid" id="hn-ask-grid">
+                    <div class="hn-skel-card">
+                        <div class="hn-skel-line w-3 hn-skeleton"></div>
+                        <div class="hn-skel-line w-10 hn-skeleton"></div>
+                        <div class="hn-skel-line w-8 hn-skeleton"></div>
+                    </div>
+                </div>
+                <div class="hn-sentinel" data-category="ask"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+     HN · JOBS
+════════════════════════════════════════ -->
+    <section class="hn-section" id="hn-jobs">
+        <div class="container">
+            <div class="bs-head b-fade">
+                <div>
+                    <div class="bs-label">
+                        <span class="hn-badge">HN</span>
+                        Who's Hiring
+                    </div>
+                    <h2 class="bs-title">Jobs <i>Board</i></h2>
+                </div>
+                <a href="https://news.ycombinator.com/jobs" target="_blank" class="bs-link">
+                    All Jobs →
+                </a>
+            </div>
+
+            <div class="hn-scroll-container" id="hn-jobs-scroll">
+                <div class="hn-jobs-list" id="hn-jobs-list">
+                    <div class="hn-skel-card"
+                        style="height:70px;border:none;border-bottom:1px solid #e0e0e0;border-radius:0;flex-direction:row;gap:1rem;align-items:center;">
+                        <div style="flex:1;display:flex;flex-direction:column;gap:.5rem;">
+                            <div class="hn-skel-line w-7 hn-skeleton"></div>
+                            <div class="hn-skel-line w-3 hn-skeleton"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hn-sentinel" data-category="jobs"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+    <div class="container">
+        <footer class="blog-footer b-fade">
+            <div class="bf-copy">
+                © 2026 <a href="/">Anshul Namdev</a> · Built with curiosity, caffeine &amp; n8n
+            </div>
+            <div class="bf-links">
+                <a href="../index.html">Portfolio</a>
+                <a href="../n8n/index.html">Automations</a>
+                <a href="https://news.ycombinator.com" target="_blank">Hacker News</a>
+                <a href="../contact.html">Contact</a>
+            </div>
+        </footer>
+    </div>
 
     <!-- Scripts -->
-    <script src="https://axshul.site/assets/js/script.js"></script>
-    <script src="https://axshul.site/assets/js/scroll-3d.js"></script>
-    <script src="https://axshul.site/assets/js/blog-fetcher.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/scroll-3d.js"></script>
+    <script src="../assets/js/blog-data.js"></script>
+    <script src="../assets/js/blog.js"></script>
 </body>
 
 </html>
