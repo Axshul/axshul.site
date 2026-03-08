@@ -18,6 +18,11 @@
     <link rel="stylesheet" href="../assets/css/n8n.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png">
     <link rel="canonical" href="https://axshul.site/n8n/">
+
+    <!-- n8n Workflow Preview CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.0/webcomponents-loader.js"></script>
+    <script src="https://www.unpkg.com/lit@2.0.0-rc.2/polyfill-support.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
 </head>
 
 <body>
@@ -230,6 +235,7 @@
                         <span class="link-arrow">→</span>
                     </a>
                 </div>
+
             </div>
 
         </div><!-- /grid row 1 -->
@@ -248,9 +254,17 @@
                 </div>
 
                 <!-- Screenshot -->
-                <div class="community-img-wrap">
+                <div class="community-img-wrap" style="margin-bottom: 2rem;">
                     <img src="../assets/img/n8n-community.png" alt="Anshul Namdev on the n8n Community Forum"
                         loading="lazy">
+                </div>
+
+                <!-- LinkedIn Post -->
+                <div class="linkedin-post-wrap" style="margin-bottom: 2rem; display: flex; justify-content: center;">
+                    <iframe
+                        src="https://www.linkedin.com/embed/feed/update/urn:li:share:7435630847849844736?collapsed=1"
+                        height="668" width="504" frameborder="0" allowfullscreen="" title="Embedded post"
+                        style="max-width: 100%; border-radius: 8px;"></iframe>
                 </div>
 
                 <!-- Profile row -->
@@ -300,48 +314,44 @@
        ROW 3 — My Creations (full width)
   ══════════════════════════════════════ -->
         <section id="creations" class="fade-in">
-            <div class="page-sec-hdr">
-                <div class="page-sec-title">My <i>Creations</i></div>
-                <span class="chip chip-grey">Coming Soon</span>
-            </div>
-
-            <!-- Empty state -->
-            <div class="creations-empty" style="margin-bottom: 1.5rem;">
-                <div class="ce-icon">⚡</div>
-                <div class="ce-title">No workflows published yet</div>
-                <div class="ce-sub">
-                    I'm building automation workflows and will be sharing them here soon. Check my community profile in
-                    the meantime.
-                </div>
-                <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank" class="ib-btn"
-                    style="margin-top:.75rem;min-width:240px;max-width:300px;">
-                    <span class="bt">Community Profile</span>
-                    <span class="bi">↗</span>
-                </a>
-            </div>
-
-            <!-- Skeleton placeholder cards -->
+            <!-- Workflow Showcase Cards -->
             <div class="grid" style="margin-bottom:0;">
-                <div class="ph-card col-4">
-                    <div class="ph-icon">📧</div>
-                    <div class="ph-lines">
-                        <div class="ph-line ph-long"></div>
-                        <div class="ph-line ph-short"></div>
+                <div class="card col-6 wf-showcase">
+                    <div class="wf-card-header">
+                        <div class="wf-info">
+                            <span class="chip chip-blue">Email Automation</span>
+                            <h3 class="wf-title">AI Email Responder</h3>
+                        </div>
+                        <div class="wf-tags">
+                            <span class="tag">OpenAI</span>
+                            <span class="tag">Gmail</span>
+                        </div>
                     </div>
+                    <div class="wf-preview-container">
+                        <n8n-demo
+                            workflow='{"nodes":[{"parameters":{},"id":"1","name":"Gmail","type":"n8n-nodes-base.gmail","typeVersion":2,"position":[450,300]},{"parameters":{"model":"gpt-4"},"id":"2","name":"OpenAI","type":"n8n-nodes-base.openAi","typeVersion":1,"position":[650,300]}],"connections":{"Gmail":{"main":[[{"node":"OpenAI","type":"main","index":0}]]}}}'></n8n-demo>
+                    </div>
+                    <p class="wf-desc">Automatically categorizes and drafts responses for incoming business emails using
+                        GPT-4.</p>
                 </div>
-                <div class="ph-card col-4">
-                    <div class="ph-icon">🤖</div>
-                    <div class="ph-lines">
-                        <div class="ph-line ph-long"></div>
-                        <div class="ph-line ph-short"></div>
+
+                <div class="card col-6 wf-showcase">
+                    <div class="wf-card-header">
+                        <div class="wf-info">
+                            <span class="chip chip-green">Data Sync</span>
+                            <h3 class="wf-title">CRM to Slack Sync</h3>
+                        </div>
+                        <div class="wf-tags">
+                            <span class="tag">HubSpot</span>
+                            <span class="tag">Slack</span>
+                        </div>
                     </div>
-                </div>
-                <div class="ph-card col-4">
-                    <div class="ph-icon">📊</div>
-                    <div class="ph-lines">
-                        <div class="ph-line ph-long"></div>
-                        <div class="ph-line ph-short"></div>
+                    <div class="wf-preview-container">
+                        <n8n-demo
+                            workflow='{"nodes":[{"parameters":{},"id":"3","name":"HubSpot","type":"n8n-nodes-base.hubspot","typeVersion":1,"position":[450,300]},{"parameters":{},"id":"4","name":"Slack","type":"n8n-nodes-base.slack","typeVersion":2,"position":[650,300]}],"connections":{"HubSpot":{"main":[[{"node":"Slack","type":"main","index":0}]]}}}'></n8n-demo>
                     </div>
+                    <p class="wf-desc">Real-time alerts in Slack whenever a high-value deal reaches a specific stage in
+                        HubSpot.</p>
                 </div>
             </div>
         </section>

@@ -1559,3 +1559,99 @@ ul {
         word-break: break-all;
     }
 }
+/* -- Workflow Showcase -- */
+.wf-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wf-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.wf-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+    font-weight: 700;
+}
+
+.wf-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.wf-tags .tag {
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+}
+
+.wf-preview-container {
+    background: var(--bg-off);
+    border: 1px solid var(--border);
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.wf-preview-container n8n-demo {
+    height: 100%;
+    width: 100%;
+}
+
+.wf-desc {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+}
+
+/* -- Updates Feed -- */
+.updates-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.update-item {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.update-item:last-child {
+    border-bottom: none;
+}
+
+.update-title {
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.update-title a:hover {
+    color: var(--blue);
+}
+
+.update-date {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.update-placeholder {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: italic;
+}
