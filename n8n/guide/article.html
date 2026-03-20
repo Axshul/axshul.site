@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article — n8n Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon_io/favicon-32x32.png">
+</head>
+<body>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="index.html">← Back to Archive</a></li>
+                <li><a href="../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        
+        <div class="reader-layout">
+            <main class="reader-main fade-in" id="reader-content">
+                <div style="text-align:center; padding: 5rem 0;">
+                    <div class="spinner" style="margin: 0 auto 1.5rem; width:40px; height:40px;"></div>
+                    <p style="color:var(--text-mid);">Loading article data...</p>
+                </div>
+            </main>
+            
+            <aside class="reader-sidebar fade-in">
+                <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                <div class="reader-author">
+                    <div class="ra-av">AN</div>
+                    <div>
+                        <div class="ra-name">Anshul Namdev</div>
+                        <div class="ra-role">AI / Automation Eng.</div>
+                    </div>
+                </div>
+                <hr style="border:0; border-top:1px solid var(--border); margin: 2rem 0;">
+                <a href="index.html" class="ib-btn outline" style="justify-content:center;">
+                    <span class="bt" style="padding:0">← Back to Archive</span>
+                </a>
+            </aside>
+        </div>
+
+        <footer class="auto-footer" style="margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .spinner { border: 4px solid var(--border); border-top: 4px solid var(--blue); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+
+    <script src="articlesData.js"></script>
+    <script src="../../assets/js/n8n-article.js"></script>
+</body>
+</html>

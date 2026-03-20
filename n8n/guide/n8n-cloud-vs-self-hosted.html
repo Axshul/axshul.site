@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Cloud vs Self-Hosted - n8n Guide</title>
+    <meta name="description" content="A technical breakdown of the differences between n8n Cloud and n8n Self-Hosted, and how to choose the right deployment for your specific use cases.">
+    <meta property="og:title" content="n8n Cloud vs Self-Hosted - n8n Guide">
+    <meta property="og:description" content="A technical breakdown of the differences between n8n Cloud and n8n Self-Hosted, and how to choose the right deployment for your specific use cases.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon_io/favicon-32x32.png">
+</head>
+<body>
+    <!-- Global 3D Roaming Geometry -->
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="index.html">← Back to Archive</a></li>
+                <li><a href="../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        
+        <div class="reader-layout">
+            <main class="reader-main">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Architecture</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Cloud</span>
+                    </div>
+                    <h1 class="reader-title">n8n Cloud vs. Self-Hosted: Which Should You Choose?</h1>
+                    <div class="reader-meta">Published on Mar 20, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+                    <h2>The Ultimate Deployment Decision</h2>
+                    <p>When starting with <a href="https://n8n.io" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n.io</a>, the leading source-available workflow automation framework, the very first architectural decision you make is the most critical: <strong>Where will your automations live?</strong></p>
+                    <p>Unlike Zapier or Make, n8n offers you complete data sovereignty by allowing you to choose between their managed <strong>n8n Cloud</strong> offering and a completely <strong>Self-Hosted</strong> environment. Let's break down the technical realities of both.</p>
+
+                    <h2>1. n8n Cloud (Managed Service)</h2>
+                    <p>n8n Cloud is the official managed hosting solution provided directly by the n8n infrastructure team. It functions similarly to traditional SaaS tools.</p>
+                    <h3>The Advantages</h3>
+                    <ul>
+                        <li><strong>Zero Maintenance:</strong> Server provisioning, database scaling, SSL certificates, and version updates are handled entirely for you.</li>
+                        <li><strong>Instant Setup:</strong> You can start building workflows within 60 seconds of signing up.</li>
+                        <li><strong>Managed Reliability:</strong> High availability and failover are managed by the n8n team directly.</li>
+                    </ul>
+                    <h3>The Trade-offs</h3>
+                    <ul>
+                        <li><strong>Strict Volume Limits:</strong> You are billed based on the number of workflow executions (e.g., 5,000 executions/month on the starter tier).</li>
+                        <li><strong>Network Constraints:</strong> If you need to automate APIs living inside a strictly private corporate VPN, the Cloud version cannot easily reach them without exposing your internal network via webhooks.</li>
+                    </ul>
+
+                    <h2>2. n8n Self-Hosted</h2>
+                    <p>Because n8n uses a fair-code model, you have full access to its source code via Docker, npm, or cloud templates (like DigitalOcean, AWS, or Azure). You essentially boot up your own server and run the engine yourself.</p>
+                    <h3>The Advantages</h3>
+                    <ul>
+                        <li><strong>Unlimited Executions:</strong> There are arbitrarily <em>zero</em> execution limits. Whether you trigger 1,000 or 1,000,000 operations, your only cost is the $5-$20/month fee for your own VPS server (e.g., AWS EC2, DigitalOcean Droplet).</li>
+                        <li><strong>Ultimate Privacy & Compliance:</strong> Your data never leaves your environment. This is perfect for GDPR/HIPAA compliance or handling highly sensitive internal databases.</li>
+                        <li><strong>Custom Capabilities:</strong> You can install community nodes, custom npm packages, or write powerful bash scripts directly onto the host machine that n8n can interact with.</li>
+                    </ul>
+                    <h3>The Trade-offs</h3>
+                    <ul>
+                        <li><strong>Technical Overhead:</strong> You must know how to deploy Docker containers, configure Nginx reverse proxies, issue SSL certs, and maintain a PostgreSQL database.</li>
+                        <li><strong>DevOps Responsibility:</strong> When the server runs out of memory or needs a security patch, you are the dev-ops engineer responsible for fixing it.</li>
+                    </ul>
+
+                    <h2>The Final Verdict</h2>
+                    <p>The choice ultimately comes down to your team's technical bandwidth and your data privacy requirements:</p>
+                    <ol>
+                        <li><strong>Choose n8n Cloud if:</strong> You are a founder, an agency prioritizing speed-to-market over hosting costs, or you simply want to build workflows without worrying about server maintenance and uptime guarantees.</li>
+                        <li><strong>Choose n8n Self-Hosted if:</strong> You are a developer, technical architect, or scaling enterprise that requires strict data privacy, handles massive execution volumes (100k+ executions/month), and is highly comfortable navigating Docker and Linux console environments.</li>
+                    </ol>
+                    <p>With either choice, the workflow canvas remains identical. You can even export workflows from Cloud and drop them into Self-Hosted later if you outgrow the managed tier!</p>
+                </div>
+            </main>
+            
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <!-- Reading Progress -->
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>4 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+                    
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <!-- Written By Section (Moved UP) -->
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse">AN</div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <!-- Quick Links Section (Moved DOWN) -->
+                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://docs.n8n.io/hosting/" target="_blank" class="sb-link">n8n Hosting Documentation ↗</a></li>
+                        <li><a href="https://docs.n8n.io/choose-n8n/" target="_blank" class="sb-link">Choose n8n Deployment ↗</a></li>
+                        <li><a href="https://n8n.io" target="_blank" class="sb-link">Official n8n Website ↗</a></li>
+                        <li><a href="https://community.n8n.io/" target="_blank" class="sb-link">n8n Community Forum ↗</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+                    
+                    <a href="index.html" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">← Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <!-- 3D Geometry Animation for Sidebar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../assets/js/3d-anim.js"></script>
+    
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if(contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+    </script>
+</body>
+</html>

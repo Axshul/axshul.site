@@ -112,18 +112,24 @@
             </div>
         </div>
 
-        <!-- Filter tabs -->
-        <div class="blog-filter-tabs b-fade" style="transition-delay:.1s" id="filterTabs">
-            <button class="bft-tab active" data-filter="all">All</button>
-            <button class="bft-tab" data-filter="writing">Writing</button>
-            <button class="bft-tab" data-filter="tutorial">Tutorial</button>
-            <button class="bft-tab" data-filter="dev-log">Dev Log</button>
+        <!-- n8n Archive Banner -->
+        <div class="writings-grid b-fade" style="display:block; transition-delay:.15s">
+            <div class="card" data-accent="blue" style="display:flex; flex-direction:column; align-items:flex-start; gap:1.5rem; justify-content:center; padding: 4rem 3rem;">
+                <div>
+                    <div class="chip chip-blue" style="margin-bottom:1rem;"><i class="dot"></i> Archive Moved</div>
+                    <h3 class="card-title" style="font-size:2.5rem; margin-bottom: 0.5rem;">The n8n Masterclass <i>Archive</i></h3>
+                    <p style="color:var(--text-mid); max-width:600px; line-height:1.6; font-size: 1.1rem;">I have overhauled my technical writings. All my advanced n8n automation blueprints, workflow tutorials, and case studies have been migrated into a dedicated, high-performance digital archive.</p>
+                </div>
+                <a href="../n8n/guide/" class="nav-cta" style="margin-top:1rem; height:4rem;">
+                    <span class="cta-text" style="font-size:0.85rem; padding: 0 2.5rem;">Enter The Archive</span>
+                    <span class="cta-icon" style="width:4rem; height:4rem; font-size:1.4rem;">→</span>
+                </a>
+            </div>
         </div>
-
-        <!-- Cards -->
-        <div class="writings-grid" id="writingsGrid">
-            <!-- injected by blog.js -->
-        </div>
+        
+        <!-- Keep the empty grid hidden so blog.js doesn't throw a null error when it tries to inject cards -->
+        <div id="writingsGrid" style="display: none;"></div>
+        <div id="filterTabs" style="display: none;"></div>
 
     </section>
 

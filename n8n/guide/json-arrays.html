@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Split and Process Nested JSON - n8n Guide</title>
+    <meta name="description" content="Learn how to split and process nested JSON arrays cleanly in n8n using the Item Lists node. A masterclass in data transformation.">
+    <meta property="og:title" content="How to Split and Process Nested JSON - n8n Guide">
+    <meta property="og:description" content="Learn how to split and process nested JSON arrays cleanly in n8n using the Item Lists node. A masterclass in data transformation.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon_io/favicon-32x32.png">
+</head>
+<body>
+    <!-- Global 3D Roaming Geometry -->
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="index.html">← Back to Archive</a></li>
+                <li><a href="../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        
+        <div class="reader-layout">
+            <main class="reader-main">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Data Parsing</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">JSON</span>
+                    </div>
+                    <h1 class="reader-title">How to Split and Process Nested JSON Arrays in n8n</h1>
+                    <div class="reader-meta">Published on Mar 20, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+                    <h2>Understanding the Problem</h2>
+                    <p>When you receive nested data from an API (like an e-commerce order containing an array of items), standard n8n nodes will process the entire array as a single item. If you want to perform an action (like sending an email or updating a database) for <em>each</em> individual item inside that array, you need to split it.</p>
+                    
+                    <h2>The Solution: Item Lists Node</h2>
+                    <p>The <strong>Item Lists</strong> node is designed precisely for this scenario.</p>
+                    
+                    <h3>Step-by-Step Configuration:</h3>
+                    <ol>
+                        <li>Add an <strong>Item Lists</strong> node to your canvas.</li>
+                        <li>Set the Operation to <strong>Split Out Items</strong>.</li>
+                        <li>In the <strong>Field To Split</strong> parameter, enter the dot-notation path to your array. For example, if your JSON has <code>data.orders.items</code>, type exactly that.</li>
+                        <li>Ensure <strong>Include Other Fields</strong> is toggled On. This is crucial if you need parent properties (like the parent <code>order_id</code>) preserved alongside each split item.</li>
+                    </ol>
+                    
+                    <h3>Expected Execution Flow</h3>
+                    <pre><code>[
+  {
+    "order_id": "901A",
+    "item_name": "Laptop"
+  },
+  {
+    "order_id": "901A",
+    "item_name": "Mouse"
+  }
+]</code></pre>
+                    <p>Your workflow will now inherently loop for each dictionary in the array. Every node placed after the Item Lists node will execute twice in this example—once for the Laptop and once for the Mouse.</p>
+                </div>
+            </main>
+            
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <!-- Reading Progress -->
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>3 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+                    
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <!-- Written By Section (Moved UP) -->
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse">AN</div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <!-- Quick Links Section (Moved DOWN) -->
+                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://n8n.io" target="_blank" class="sb-link">Official n8n Website ↗</a></li>
+                        <li><a href="https://docs.n8n.io/" target="_blank" class="sb-link">n8n Documentation ↗</a></li>
+                        <li><a href="https://community.n8n.io/" target="_blank" class="sb-link">n8n Community Forum ↗</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+                    
+                    <a href="index.html" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">← Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <!-- 3D Geometry Animation for Sidebar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../assets/js/3d-anim.js"></script>
+
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if(contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+    </script>
+</body>
+</html>
