@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choosing the Right AI Model for n8n - n8n Guide</title>
+    <meta name="description" content="A masterclass on selecting the perfect LLM for your n8n automation. Understand tool-calling benchmarks, context windows, and when to use GPT, Claude, DeepSeek, or Mistral.">
+    <meta property="og:title" content="Choosing the Right AI Model for n8n - n8n Guide">
+    <meta property="og:description" content="A masterclass on selecting the perfect LLM for your n8n automation. Understand tool-calling benchmarks, context windows, and when to use GPT, Claude, DeepSeek, or Mistral.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon_io/favicon-32x32.png">
+</head>
+<body>
+    <!-- Global 3D Roaming Geometry -->
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../">← Back to Archive</a></li>
+                <li><a href="../../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        
+        <div class="reader-layout">
+            <main class="reader-main">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">AI Models</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Architecture</span>
+                    </div>
+                    <h1 class="reader-title">Choosing the Right AI Model for n8n</h1>
+                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+                    <h2>The Intelligence Engine of Your Workflows</h2>
+                    <p>When constructing AI Agents inside n8n via the Advanced AI nodes, the underlying large language model (LLM) you select will dictate the success or catastrophic failure of your automation. A model that excels at writing creative copy may outright fail when tasked with extracting structured JSON from a messy email. Here is the definitive guide on matching the exact model class to your specific n8n use-case.</p>
+
+                    <div class="model-chart-wrap" style="margin: 3rem 0; padding: 2.5rem; background: var(--bg-off); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto;">
+                        <h3 style="margin-top:0; margin-bottom:1.5rem; font-family:var(--font-sans); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-mid);">Advanced Capability Matrix</h3>
+                        
+                        <table style="width: 100%; min-width: 600px; border-collapse: collapse; text-align: left; font-family: var(--font-sans);">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em;">
+                                    <th style="padding: 1rem 1rem 1rem 0;">Model</th>
+                                    <th style="padding: 1rem;">Context Window</th>
+                                    <th style="padding: 1rem; width: 20%;">Tool Calling</th>
+                                    <th style="padding: 1rem; width: 20%;">Reasoning</th>
+                                    <th style="padding: 1rem; width: 20%;">Speed / Latency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">GPT-4o</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">128K</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:98%; height:100%; background:var(--blue); border-radius:3px; box-shadow: 0 0 8px rgba(0, 122, 255, 0.4);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:88%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:90%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Claude 3.5 Sonnet</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">200K</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:90%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:96%; height:100%; background:#1a8a4a; border-radius:3px; box-shadow: 0 0 8px rgba(26, 138, 74, 0.4);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:82%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">DeepSeek R1</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">128K</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:75%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:99%; height:100%; background:#1a8a4a; border-radius:3px; box-shadow: 0 0 8px rgba(26, 138, 74, 0.5);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:55%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Mistral 8x7B</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">32K</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:60%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:65%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:100%; height:100%; background:var(--text); border-radius:3px; box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);"></div></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div style="display:flex; gap:1.5rem; justify-content:flex-end; margin-top:2rem; font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">
+                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:var(--blue); border-radius:2px;"></div>Tool Calling</span>
+                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:#1a8a4a; border-radius:2px;"></div>Reasoning</span>
+                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:var(--text); border-radius:2px;"></div>Speed</span>
+                        </div>
+                    </div>
+
+                    <h2>1. Tool Calling - The GPT Dominion</h2>
+                    <p>Tool Calling (or Function Calling) is the absolute backbone of n8n AI Agents. This is the process where the LLM realizes it doesn't know an answer, so it cleanly formats a JSON request to trigger another n8n node (like "GetRowFromPostgres" or "SearchGoogle").</p>
+                    <ul>
+                        <li><strong>The Recommendation:</strong> Use the <strong>OpenAI GPT-4o</strong> or <strong>GPT-4o-mini</strong>.</li>
+                        <li><strong>The Reason:</strong> OpenAI fundamentally pioneered function calling at the API level. Their models are rigorously fine-tuned to return 100% syntactically valid JSON arguments to trigger tools. If your n8n agent relies on executing 5 different tools in a specific sequence, deviating from OpenAI drastically increases your chance of schema hallucination.</li>
+                    </ul>
+
+                    <h2>2. Complex Reasoning & Research - Claude & DeepSeek</h2>
+                    <p>If your workflow does not require executing tools, but instead requires reading a massive 50-page PDF, finding logical inconsistencies, and summarizing deep technical insights, the landscape shifts.</p>
+                    <ul>
+                        <li><strong>Anthropic Claude 3.5 Sonnet:</strong> Widely regarded as the industry standard for extreme coding tasks and nuanced technical research without losing logic over long contexts.</li>
+                        <li><strong>DeepSeek R1:</strong> DeepSeek has forcefully disrupted the high-reasoning ecosystem by implementing internal "Chain of Thought" processing before outputting an answer. Unbeatable for complex mathematical reasoning or structural data analysis at a fraction of Western API costs.</li>
+                    </ul>
+
+                    <h2>3. High Volume Data Pipelines - Qwen & Mistral</h2>
+                    <p>When you use the "Item Lists" node to split an array of 5,000 product reviews and run them through an LLM to extract sentiment analysis, you absolutely cannot use GPT-4o. The API costs will bankrupt the workflow.</p>
+                    <ul>
+                        <li><strong>The Recommendation:</strong> Utilize open-weights models served via Groq, Together AI, or local Ollama instances - specifically <strong>Mistral 8x7B</strong> or Alibaba's <strong>Qwen</strong>.</li>
+                        <li><strong>The Reason:</strong> These models are lightning fast and cost mere cents per million tokens. They are mathematically "smart enough" to do binary classifications (Postive/Negative) or basic keyword extraction at scale.</li>
+                    </ul>
+
+                    <h2>The Context Window Trap</h2>
+                    <p>It is incredibly tempting to use n8n to scrape 20 Wikipedia articles, compile them into a massive chunk of text, and throw it into a model with a 128K context window just because "it fits." This is a severe architectural mistake.</p>
+                    <p>As you approach the maximum limit of an LLM's context window:</p>
+                    <ol>
+                        <li><strong>Attention Dilution:</strong> The model begins to suffer from "Lost in the Middle" syndrome, where it completely forgets or hallucinates instructions buried in the center of the prompt.</li>
+                        <li><strong>High Latency:</strong> A 100K token prompt takes significantly longer for the API infrastructure to ingest (Time-To-First-Token), directly slowing down your n8n workflow execution time.</li>
+                        <li><strong>Cost:</strong> You pay for input tokens. Feeding massive unnecessary context is financially inefficient.</li>
+                    </ol>
+                    <p><strong>The n8n Solution:</strong> Instead of dumping raw data, use n8n's Vector Store integration. Chunk your documents, embed them into Qdrant or Pinecone, and use the <strong>Vector Store Tool</strong> so the LLM agent only retrieves the top 3 most relevant paragraphs before answering.</p>
+                </div>
+            </main>
+            
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <!-- Reading Progress -->
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>4 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+                    
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <!-- Written By Section -->
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse">AN</div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <!-- Quick Links Section -->
+                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" class="sb-link">AI Model Leaderboards ↗</a></li>
+                        <li><a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" class="sb-link">OpenAI Tool Calling Docs ↗</a></li>
+                        <li><a href="https://docs.n8n.io/advanced-ai/" target="_blank" class="sb-link">n8n Advanced AI Nodes ↗</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+                    
+                    <button onclick="navigator.clipboard.writeText(window.location.href); const t = this.querySelector('.bt'); t.innerText='Copied!'; setTimeout(()=>t.innerText='Share Article', 2000)" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                        <span class="bt">Share Article</span>
+                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
+                    </button>
+                    
+                    <a href="../" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">← Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <!-- 3D Geometry Animation for Sidebar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../../assets/js/3d-anim.js"></script>
+    
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if(contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+    </script>
+</body>
+</html>
