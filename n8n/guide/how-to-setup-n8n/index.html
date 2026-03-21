@@ -113,7 +113,12 @@
 
                     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
                     
-                    <a href="../../" class="ib-btn outline" style="justify-content:center;">
+                    <button onclick="navigator.clipboard.writeText(window.location.href); const t = this.querySelector('.bt'); t.innerText='Copied!'; setTimeout(()=>t.innerText='Share Article', 2000)" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                        <span class="bt">Share Article</span>
+                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
+                    </button>
+                    
+                    <a href="../" class="ib-btn outline" style="justify-content:center;">
                         <span class="bt" style="padding:0">← Back to Archive</span>
                     </a>
                 </div>
