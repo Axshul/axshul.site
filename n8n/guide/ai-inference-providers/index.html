@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Inference Providers for n8n: The Complete Comparison - n8n Guide</title>
+    <meta name="description" content="A comprehensive guide to every major AI inference provider for n8n. Compare OpenRouter, Groq, Together AI, Fireworks, Mistral, and more to find the right infrastructure for your automation stack.">
+    <meta property="og:title" content="AI Inference Providers for n8n: The Complete Comparison - n8n Guide">
+    <meta property="og:description" content="A comprehensive guide to every major AI inference provider for n8n. Compare OpenRouter, Groq, Together AI, Fireworks, Mistral, and more to find the right infrastructure for your automation stack.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon_io/favicon-32x32.png">
+</head>
+<body>
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../">← Back to Archive</a></li>
+                <li><a href="../../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        
+        <div class="reader-layout">
+            <main class="reader-main" style="min-width: 0; overflow: hidden;">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">AI Infrastructure</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Architecture</span>
+                    </div>
+                    <h1 class="reader-title">AI Inference Providers for n8n: The Complete Comparison</h1>
+                    <div class="reader-meta">Published on Mar 24, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+                    <h2>The Infrastructure Layer You Cannot Ignore</h2>
+                    <p>When building AI agents and pipelines inside n8n, most people obsess over <em>which model</em> to use. But the question that determines your actual production costs, latency, and reliability is fundamentally different: <strong>who is serving that model?</strong></p>
+                    <p>An AI inference provider is the cloud infrastructure that sits between your n8n workflow and the model weights. They handle GPU allocation, request queuing, batching, and API rate limits. Choosing the wrong provider can triple your costs, introduce unpredictable latency, or lock you into a single proprietary model family. This article breaks down every major provider available as an option within n8n's AI Agent nodes: their free tiers, integration quality, pricing models, and what they are genuinely best for.</p>
+
+                    <!-- Provider Comparison Matrix -->
+                    <div class="model-chart-wrap" style="margin: 3rem 0; padding: 2.5rem; background: var(--bg-off); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto;">
+                        <h3 style="margin-top:0; margin-bottom:1.5rem; font-family:var(--font-sans); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-mid);">Inference Provider Comparison Matrix</h3>
+                        <table style="width: 100%; min-width: 700px; border-collapse: collapse; text-align: left; font-family: var(--font-sans);">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em;">
+                                    <th style="padding: 1rem 1rem 1rem 0;">Provider</th>
+                                    <th style="padding: 1rem;">Free Tier</th>
+                                    <th style="padding: 1rem;">Speed</th>
+                                    <th style="padding: 1rem;">Model Range</th>
+                                    <th style="padding: 1rem;">n8n Integration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">OpenRouter</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #1a8a4a;">$5 Credit</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:88%; height:100%; background:var(--blue); border-radius:3px; box-shadow: 0 0 8px rgba(0, 122, 255, 0.4);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:100%; height:100%; background:#1a8a4a; border-radius:3px; box-shadow: 0 0 8px rgba(26, 138, 74, 0.5);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:96%; height:100%; background:var(--text); border-radius:3px; box-shadow: 0 0 4px rgba(255,255,255,0.3);"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Groq</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #1a8a4a;">Generous RPM</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:100%; height:100%; background:var(--blue); border-radius:3px; box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:45%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:92%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Together AI</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #1a8a4a;">$25 Credit</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:82%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:88%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:85%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Fireworks AI</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #facc15;">Limited</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:90%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:70%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:78%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Mistral AI</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #1a8a4a;">Free Tier</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:80%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:55%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:88%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Hugging Face</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #1a8a4a;">Free Endpoints</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:50%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:100%; height:100%; background:#1a8a4a; border-radius:3px; box-shadow: 0 0 8px rgba(26, 138, 74, 0.4);"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:65%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Ollama (Local)</td>
+                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.8rem; color: #1a8a4a;">Free Forever</td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:60%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:82%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
+                                    </td>
+                                    <td style="padding: 1.25rem 1rem;">
+                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:80%; height:100%; background:var(--text); border-radius:3px;"></div></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="display:flex; gap:1.5rem; justify-content:flex-end; margin-top:2rem; font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">
+                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:var(--blue); border-radius:2px;"></div>Speed</span>
+                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:#1a8a4a; border-radius:2px;"></div>Model Range</span>
+                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:var(--text); border-radius:2px;"></div>n8n Integration</span>
+                        </div>
+                    </div>
+
+                    <h2>1. OpenRouter: The Best Overall Choice</h2>
+                    <p>If you are only going to use one inference provider inside n8n, it should be <strong>OpenRouter</strong>. OpenRouter is not a model lab. It is a unified routing layer that sits on top of virtually every major AI provider in the world. A single API key gives you access to OpenAI, Anthropic, Google Gemini, Mistral, DeepSeek, Qwen, Meta Llama, Cohere, and hundreds more.</p>
+                    <ul>
+                        <li><strong>n8n Integration:</strong> OpenRouter exposes a fully OpenAI-compatible API endpoint. Inside n8n's AI Agent node, you select "OpenAI" as the credential type, then point the base URL to <code>https://openrouter.ai/api/v1</code>. No custom HTTP Request nodes required. It works natively.</li>
+                        <li><strong>Free Credit:</strong> New accounts receive $5 in credits automatically, which is more than enough to run hundreds of test automations across multiple model providers simultaneously.</li>
+                        <li><strong>Price Arbitrage:</strong> OpenRouter lets you route to the cheapest available provider for any given model at real-time market prices. You can run DeepSeek R1 at a fraction of the direct API cost, or switch between providers automatically if one goes down.</li>
+                        <li><strong>The Fallback Strategy:</strong> OpenRouter supports automatic fallback routing. If your primary model API goes down mid-workflow, OpenRouter can transparently retry on a backup provider, a resilience feature you would otherwise have to hard-code yourself in n8n.</li>
+                    </ul>
+
+                    <h2>2. Groq: When Speed Is the Priority</h2>
+                    <p>Groq operates custom-built LPU (Language Processing Unit) hardware specifically designed for inference. The result is genuinely fast token generation speeds, commonly reaching 500-800 tokens per second for models like Llama 3 and Mixtral. For context, standard GPU inference from OpenAI generates roughly 60-80 tokens per second.</p>
+                    <ul>
+                        <li><strong>Best Use in n8n:</strong> High-volume pipeline steps where you need fast, cheap classification, extraction, or text transformation. Running 1,000 records through a sentiment analysis step? Groq processes the batch in a fraction of the time.</li>
+                        <li><strong>Free Tier:</strong> Groq provides a genuinely generous free tier measured in Requests Per Minute (RPM) and daily token limits, not a credit system that expires. For non-commercial workflows or early-stage testing, you can run an entire n8n AI pipeline on Groq at zero cost.</li>
+                        <li><strong>Limitation:</strong> Groq's model catalogue is intentionally narrow, primarily open-weight models like Llama 3, Mixtral, and Gemma. You will not find Claude or GPT-4o here. If your workflow requires proprietary models, Groq is not your answer.</li>
+                    </ul>
+
+                    <h2>3. Together AI: The Open-Source Powerhouse</h2>
+                    <p>Together AI has built one of the broadest open-weight model serving platforms available. If you need access to fine-tuned, specialized, or obscure open-source models not available elsewhere, Together AI is the definitive answer.</p>
+                    <ul>
+                        <li><strong>Free Credit:</strong> New accounts receive a $25 credit, the largest of any provider on this list, and enough to genuinely stress-test your production workflows.</li>
+                        <li><strong>Model Depth:</strong> Together serves over 100 models including leading open-weight options like Llama 3.1 405B, Qwen 2.5, Mistral variants, and deep research models like Solar. For anyone building RAG pipelines or specialized extraction agents, this breadth matters.</li>
+                        <li><strong>Pricing:</strong> Together AI aggressively undercuts proprietary API costs. Running Llama 3.1 70B via Together is typically 5-10x cheaper per token compared to an equivalent proprietary model from OpenAI or Anthropic.</li>
+                    </ul>
+
+                    <h2>4. Fireworks AI: Ultra-Low Latency for Production</h2>
+                    <p>Fireworks AI focuses on production-grade inference with extremely competitive latency and throughput benchmarks. Their infrastructure is built with Streaming and function-calling performance as first-class priorities.</p>
+                    <ul>
+                        <li><strong>Tool Calling Reliability:</strong> Fireworks has invested heavily in optimizing JSON mode and structured output for open-weight models. For n8n AI Agents that rely on tool calling from non-OpenAI models (e.g., Llama or Mistral), Fireworks reduces schema hallucination errors more consistently than most alternatives.</li>
+                        <li><strong>Compound AI:</strong> Their "Compound AI Systems" offering lets you chain specialized models (one for retrieval, one for reasoning, one for generation) at the infrastructure level, before the request even hits your n8n node. This is cutting-edge architecture for production AI pipelines.</li>
+                    </ul>
+
+                    <h2>5. Mistral AI (Direct): The European Alternative</h2>
+                    <p>Mistral AI is a French AI lab that has released a family of outstanding open and proprietary models. Accessing their models directly through <code>api.mistral.ai</code>, rather than through a reseller like OpenRouter, gives you access to their premium proprietary models, notably <strong>Mistral Large 2</strong> and the ultra-fast <strong>Mistral Nemo</strong>.</p>
+                    <ul>
+                        <li><strong>Data Residency:</strong> For European businesses with GDPR and data residency requirements, using Mistral API directly processes data within EU infrastructure. This is a compliance consideration many n8n users overlook when connecting AI nodes to sensitive business data.</li>
+                        <li><strong>Free Tier:</strong> The Mistral API offers a free tier with rate-limited access to their smaller models, more than adequate for building and testing n8n workflows before committing to paid usage.</li>
+                        <li><strong>n8n Native Node:</strong> n8n has a dedicated Mistral AI credential type, meaning setup is a single API key with no workarounds required.</li>
+                    </ul>
+
+                    <h2>6. Hugging Face Inference API: The Researcher's Gateway</h2>
+                    <p>Hugging Face hosts the world's largest repository of open-source AI models, over 900,000 model checkpoints. Their Inference API allows you to call many of these models directly via HTTP, without managing your own infrastructure.</p>
+                    <ul>
+                        <li><strong>Use Case:</strong> Highly specialized or domain-specific models. If you need a model fine-tuned specifically on medical literature, legal documents, or a specific language, Hugging Face is the only place to find it. No other provider comes close to this depth of model variety.</li>
+                        <li><strong>n8n Integration:</strong> Using n8n's HTTP Request node or the OpenAI-compatible chat endpoint, you can connect to Hugging Face Inference Endpoints directly. The setup is slightly more manual than native integrations but is well-documented.</li>
+                        <li><strong>Limitation:</strong> The free serverless inference tier throttles heavily during peak demand. For production-grade reliability, you need Dedicated Inference Endpoints, which are priced per hour and can get expensive quickly.</li>
+                    </ul>
+
+                    <h2>7. Ollama: Free, Private, Local Inference</h2>
+                    <p>Ollama is not a cloud provider. It is a local runtime that allows you to download and run open-weight models directly on your own machine or server. For self-hosted n8n deployments, the Ollama combination is the ultimate zero-cost AI stack.</p>
+                    <ul>
+                        <li><strong>Privacy:</strong> Zero data leaves your infrastructure. Every token is generated on your hardware. For workflows that process sensitive internal data such as financial records, PII, or proprietary IP, Ollama is the only architecturally sound option.</li>
+                        <li><strong>n8n Integration:</strong> n8n has a dedicated Ollama node in the AI section. Setup is as simple as pointing the credential to your local Ollama server address (default: <code>http://localhost:11434</code>). The integration is first-class and works natively with the AI Agent orchestration system.</li>
+                        <li><strong>Limitation:</strong> Performance is entirely bound by your local hardware. Without a dedicated GPU (minimum RTX 3060 12GB for 7B parameter models), inference will be significantly slower than any cloud provider.</li>
+                    </ul>
+
+                    <!-- Video Generation Section -->
+                    <h2>8. Video Generation Inference: kie.ai and the Visual AI Layer</h2>
+                    <p>Text-based LLM inference is only one dimension of AI automation. As n8n workflows expand into content creation, marketing, and multimedia pipelines, video generation APIs become a critical component of the stack.</p>
+                    <p><strong>kie.ai</strong> has emerged as one of the most capable and accessible video generation inference APIs available today. It serves as a unified gateway to leading video generation models including Runway, Kling AI, Sora, and more, all behind a single API interface, structurally similar to what OpenRouter does for text models.</p>
+                    <ul>
+                        <li><strong>n8n Integration:</strong> Video generation APIs are accessed via n8n's HTTP Request node. You send a prompt (and optionally a source image) to the kie.ai endpoint, poll for completion status, and retrieve the generated video URL. This pattern fits cleanly inside a standard n8n workflow with a "Wait" node handling the asynchronous generation step.</li>
+                        <li><strong>Pricing Model:</strong> kie.ai operates on a credit-based system. You purchase generation credits that work across multiple underlying video models, preventing vendor lock-in.</li>
+                        <li><strong>Use Case in n8n:</strong> Automated content pipelines. For example, a workflow that monitors a blog RSS feed, extracts the key points, generates a short video summary via kie.ai, and posts it to social media automatically.</li>
+                    </ul>
+
+                    <h2>The Vendor Lock-In Problem</h2>
+                    <p>The most dangerous mistake in AI infrastructure architecture is committing exclusively to a single inference provider before you understand your workload. Here is why this is structurally risky:</p>
+                    <ol>
+                        <li><strong>Pricing Volatility:</strong> AI inference pricing changes aggressively. A model that costs $5 per million tokens today may cost $1 in three months as competition increases and hardware efficiency improves. Locking into an annual plan or a single provider prevents you from capturing these savings.</li>
+                        <li><strong>Model Deprecation:</strong> Providers retire model versions on unpredictable schedules. OpenAI deprecated GPT-4 standard without much warning. If your n8n agent was hard-coded to a specific model version, it breaks on deprecation.</li>
+                        <li><strong>Outages:</strong> Even the largest providers experience outages. In a production n8n environment, a single provider outage can halt your automation pipeline entirely. Using OpenRouter's routing layer or building manual fallback branches in n8n using an "If" node mitigates this risk.</li>
+                    </ol>
+                    <p><strong>The recommended architecture:</strong> Use <strong>OpenRouter as your primary API key</strong> in n8n's AI credentials. This gives you instant access to all providers through a single integration point. Then use provider-specific credentials (Groq, Mistral) only where you need guaranteed access to features not routed via OpenRouter.</p>
+
+                    <h2>Choosing Your Stack: A Decision Framework</h2>
+                    <p>Rather than picking one provider and hoping for the best, apply this tiered framework to your n8n AI stack:</p>
+                    <ul>
+                        <li><strong>Primary API (Default):</strong> OpenRouter. One key, all models, price routing, automatic fallback. Setup once, switch models in seconds.</li>
+                        <li><strong>High-Volume Batch Steps:</strong> Groq. Route your high-frequency, latency-sensitive nodes (sentiment analysis, entity extraction, classification) to Groq for speed and cost advantages.</li>
+                        <li><strong>Privacy-Sensitive Workflows:</strong> Ollama + Self-hosted n8n. For any workflow touching personal user data, financial records, or proprietary business data, keep everything local.</li>
+                        <li><strong>Specialized Open Models:</strong> Together AI or Hugging Face. When you need a domain-specific fine-tuned model not available commercially, these are your only options.</li>
+                        <li><strong>Video and Multimedia Generation:</strong> kie.ai. For any content automation pipeline that requires AI video generation at scale.</li>
+                    </ul>
+
+                </div>
+            </main>
+
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <!-- Reading Progress -->
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>8 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <!-- Written By Section -->
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse">AN</div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <!-- Resources Section -->
+                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://openrouter.ai/models" target="_blank" class="sb-link">OpenRouter Model Catalogue ↗</a></li>
+                        <li><a href="https://console.groq.com/docs/openai" target="_blank" class="sb-link">Groq OpenAI Compatibility ↗</a></li>
+                        <li><a href="https://api.together.ai/models" target="_blank" class="sb-link">Together AI Model List ↗</a></li>
+                        <li><a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" class="sb-link">AI Leaderboards ↗</a></li>
+                        <li><a href="https://docs.n8n.io/advanced-ai/" target="_blank" class="sb-link">n8n Advanced AI Docs ↗</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <button onclick="navigator.clipboard.writeText(window.location.href); const t = this.querySelector('.bt'); t.innerText='Copied!'; setTimeout(()=>t.innerText='Share Article', 2000)" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                        <span class="bt">Share Article</span>
+                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
+                    </button>
+
+                    <a href="../" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">← Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../../assets/js/3d-anim.js"></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if(contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+    </script>
+</body>
+</html>
