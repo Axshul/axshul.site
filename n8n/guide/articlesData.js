@@ -1,14 +1,5 @@
 window.n8nArticles = [
   {
-    "id": "json-arrays",
-    "title": "How to Split and Process Nested JSON Arrays in n8n",
-    "tags": ["Data Parsing", "JSON", "Core Nodes"],
-    "description": "Master the Item Lists node. Convert singular incoming items containing complex arrays into multiple discrete output items for precise, per-item execution loops.",
-    "date": "2026-03-20",
-    "author": "Anshul Namdev",
-    "content": "<h2>Understanding the Problem</h2><p>When you receive nested data from an API (like an e-commerce order containing an array of items), standard n8n nodes will process the entire array as a single item. If you want to perform an action (like sending an email or updating a database) for <em>each</em> individual item inside that array, you need to split it.</p><h2>The Solution: Item Lists Node</h2><p>The <strong>Item Lists</strong> node is designed precisely for this scenario.</p><h3>Step-by-Step Configuration:</h3><ol><li>Add an <strong>Item Lists</strong> node to your canvas.</li><li>Set the Operation to <strong>Split Out Items</strong>.</li><li>In the <strong>Field To Split</strong> parameter, enter the dot-notation path to your array. For example, if your JSON has <code>data.orders.items</code>, type exactly that.</li><li>Ensure <strong>Include Other Fields</strong> is toggled On. This is crucial if you need parent properties (like the parent <code>order_id</code>) preserved alongside each split item.</li></ol><h3>Expected Execution Flow</h3><pre><code>[\n  {\n    \"order_id\": \"901A\",\n    \"item_name\": \"Laptop\"\n  },\n  {\n    \"order_id\": \"901A\",\n    \"item_name\": \"Mouse\"\n  }\n]</code></pre><p>Your workflow will now inherently loop for each dictionary in the array. Every node placed after the Item Lists node will execute twice in this example—once for the Laptop and once for the Mouse.</p>"
-  },
-  {
     "id": "webhooks-auth",
     "title": "Handling Custom Headers & Webhook Auth",
     "tags": ["Webhooks", "APIs", "Security"],

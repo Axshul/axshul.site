@@ -234,7 +234,7 @@
 
                     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
 
-                    <button onclick="navigator.clipboard.writeText(window.location.href); const t = this.querySelector('.bt'); t.innerText='Copied!'; setTimeout(()=>t.innerText='Share Article', 2000)" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
                         <span class="bt">Share Article</span>
                         <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
                     </button>
@@ -259,6 +259,7 @@
     <!-- 3D Geometry Animation for Sidebar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../../../assets/js/3d-anim.js"></script>
+    <script src="../../../assets/js/text-highlight-share.js" defer></script>
 
     <script>
         document.addEventListener("scroll", () => {

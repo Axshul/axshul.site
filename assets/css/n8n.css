@@ -3719,3 +3719,46 @@ ul {
 .plain-card:hover .pc-action i {
     transform: translateX(4px);
 }
+
+/* ── Text Highlight Share ── */
+mark.ths-mark {
+  background: #ffe066;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 2px;
+  animation: ths-pulse 1.4s ease-out forwards;
+}
+@keyframes ths-pulse {
+  0%   { background: #ffb300; box-shadow: 0 0 0 4px rgba(255,179,0,0.3); }
+  60%  { box-shadow: 0 0 0 0px rgba(255,179,0,0); }
+  100% { background: #ffe066; }
+}
+
+#ths-tooltip {
+  position: fixed;
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  background: #111;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+  cursor: pointer;
+  z-index: 9999;
+  user-select: none;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+  transform: translateY(0);
+}
+#ths-tooltip.ths-visible {
+  display: flex;
+}
+#ths-tooltip:hover {
+  background: var(--blue, #0044ff);
+}
