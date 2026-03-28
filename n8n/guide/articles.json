@@ -1,5 +1,23 @@
 [
   {
+    "id": "what-is-n8n",
+    "title": "What is n8n?",
+    "tags": ["Overview", "Automation", "Open Source"],
+    "description": "A complete introduction to n8n — the open-source workflow automation platform. Learn what it is, what it can do, who it's for, and how to get started.",
+    "date": "2026-03-29",
+    "author": "Anshul Namdev",
+    "url": "/n8n/guide/what-is-n8n/"
+  },
+  {
+    "id": "build-your-first-workflow",
+    "title": "How to Build Your First n8n Workflow",
+    "tags": ["Beginner", "Workflows", "Getting Started"],
+    "description": "A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.",
+    "date": "2026-03-29",
+    "author": "Anshul Namdev",
+    "url": "/n8n/guide/build-your-first-workflow/"
+  },
+  {
     "id": "json-arrays",
     "title": "How to Split and Process Nested JSON Arrays in n8n",
     "tags": ["Data Parsing", "JSON", "Core Nodes"],
