@@ -509,15 +509,17 @@
 
 <script>
 const ARTICLES = [
+    { slug: 'what-is-n8n',               title: 'What is n8n?',                 category: 'Overview',     description: 'A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it is for, and how to get started.', date: '2026-03-29' },
+    { slug: 'build-your-first-workflow',  title: 'How to Build Your First n8n Workflow', category: 'Getting Started', description: 'A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.', date: '2026-03-29' },
     { slug: 'n8n-cloud-vs-self-hosted',  title: 'n8n Cloud vs. Self-Hosted',    category: 'Architecture', description: 'Compare n8n Cloud with self-hosted options. Covers data residency, scalability, maintenance, and when to choose each approach.', date: '2026-03-20' },
     { slug: 'how-to-setup-n8n',          title: 'How To Setup n8n',             category: 'Setup',        description: 'Step-by-step setup for n8n via cloud signup, NPM install, or Docker. Includes environment variables and initial configuration.', date: '2026-03-21' },
     { slug: 'vps-self-hosting-n8n',      title: 'VPS Self-Hosting for n8n',     category: 'Hosting',      description: 'Deploy n8n on DigitalOcean, Linode, or Hetzner. SSL, backups, and resource sizing for production workflows.', date: '2026-03-21' },
     { slug: 'license-and-regulations',   title: 'License and Regulations',      category: 'Strategy',     description: "Understand n8n's Sustainable Use License, Fair Use policy, and compliance for commercial and internal use.", date: '2026-03-21' },
     { slug: 'choose-right-ai-model',     title: 'Choosing the Right AI Model',  category: 'AI Models',    description: 'Compare GPT-4, Claude, DeepSeek, and open models in n8n. Cost, latency, and quality trade-offs for automation.', date: '2026-03-21' },
     { slug: 'where-to-get-n8n-help',     title: 'Where to Get Help',            category: 'Community',    description: 'n8n community forum, Discord, GitHub issues, and documentation. When to ask where, and how to get fast answers.', date: '2026-03-21' },
-    { slug: 'ai-inference-providers',     title: 'AI Inference Providers for n8n', category: 'AI Infrastructure', description: 'Compare every major AI inference provider — OpenRouter, Groq, Together AI, Fireworks, Mistral, and more. Free tiers, speed, and how to avoid vendor lock-in.', date: '2026-03-24' },
-    { slug: 'n8n-community-edition',      title: 'n8n Community Edition: Features, Limits, and Free Unlocks', category: 'Setup', description: 'What the free self-hosted Community Edition includes, what it excludes, and how to unlock three extra features at no cost by registering your instance.', date: '2026-03-25' },
-    { slug: 'vector-stores-and-rag',      title: 'Vector Stores and RAG in n8n', category: 'AI Infrastructure', description: 'Set up Pinecone or Qdrant with n8n, inject documents, and build AI agents that answer questions from your own data. Includes real workflow diagrams.', date: '2026-03-26' },
+    { slug: 'ai-inference-providers',    title: 'AI Inference Providers for n8n', category: 'AI Infrastructure', description: 'Compare every major AI inference provider: OpenRouter, Groq, Together AI, Fireworks, Mistral, and more. Free tiers, speed, and how to avoid vendor lock-in.', date: '2026-03-24' },
+    { slug: 'n8n-community-edition',     title: 'n8n Community Edition: Features, Limits, and Free Unlocks', category: 'Setup', description: 'What the free self-hosted Community Edition includes, what it excludes, and how to unlock three extra features at no cost by registering your instance.', date: '2026-03-25' },
+    { slug: 'vector-stores-and-rag',     title: 'Vector Stores and RAG in n8n', category: 'AI Infrastructure', description: 'Set up Pinecone or Qdrant with n8n, inject documents, and build AI agents that answer questions from your own data. Includes real workflow diagrams.', date: '2026-03-26' },
 ];
 
 let query = '';
