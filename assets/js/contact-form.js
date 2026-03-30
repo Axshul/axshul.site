@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const message = this.querySelector('[name="Message"]').value;
 
             // Construct URL
-            const baseUrl = 'https://71245c5b4176.ngrok-free.app/webhook/Portfolio-Agent';
+            const baseUrl = 'https://n8n.srv1419396.hstgr.cloud/webhook/website-form-sendAmessage';
             const params = new URLSearchParams({
                 Name: name,
                 Email: email,
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .finally(() => {
                     // Change button state
                     btn.classList.add('sent');
-                    btnText.innerText = 'SENT!';
+                    btnText.innerText = 'SENT | Please Check Your Inbox & Spam Folder!';
                     btn.style.background = '#00cc66'; // Green
                     btnIcon.innerText = '✓';
 
