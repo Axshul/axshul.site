@@ -27,6 +27,15 @@ window.n8nArticles = [
     "content": "<h2>Why Verify Webhooks?</h2><p>When exposing an n8n webhook URL to the public web, anyone with the URL can trigger your workflow. To ensure data integrity—especially for sensitive platforms like Stripe, GitHub, or Shopify—you must verify the cryptographic signature sent in the request headers.</p><h2>The Solution</h2><p>Stop trusting raw payloads. Validate signatures using n8n's Crypto node.</p><h3>Implementation Guide</h3><ol><li><strong>Enable Headers:</strong> Inside your Webhook node, map to the Options block and enable <strong>Include Headers</strong>. This allows n8n to output the header alongside the body.</li><li><strong>Calculate the Hash:</strong> Use a <strong>Crypto</strong> node. Set the Action to <em>Hash</em>, select the appropriate algorithm (e.g., HMAC SHA256), input your webhook secret, and use the raw webhook body as the value.</li><li><strong>Compare Hashes:</strong> Use an <strong>If</strong> node to compare the output of your Crypto node's hash with the signature provided in the headers (e.g., <code>headers['stripe-signature']</code>).</li></ol><p>If the expressions match, process the workflow as normal. If they fail, route to an HTTP response node emitting a 401 Unauthorized.</p>"
   },
   {
+    "id": "automate-n8n-with-claude",
+    "title": "Automate n8n with Claude: Build Workflows Using AI",
+    "tags": ["AI Automation", "Claude", "MCP", "Advanced"],
+    "description": "Connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI — no manual node-by-node construction required.",
+    "date": "2026-03-31",
+    "author": "Anshul Namdev",
+    "url": "/n8n/guide/automate-n8n-with-claude/"
+  },
+  {
     "id": "error-trigger",
     "title": "Building Resilient Workflows: The Error Trigger",
     "tags": ["Architecture", "Error Handling", "Advanced"],

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automate n8n with Claude: Build Workflows Using AI — n8n Guide</title>
+    <meta name="description" content="Learn how to connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI — no manual node-by-node construction required.">
+    <meta property="og:title" content="Automate n8n with Claude: Build Workflows Using AI">
+    <meta property="og:description" content="Learn how to connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI — no manual node-by-node construction required.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon_io/favicon-32x32.png">
+    <style>
+        .step-block {
+            display: flex;
+            gap: 1.25rem;
+            margin: 2rem 0;
+            align-items: flex-start;
+        }
+        .step-num {
+            flex-shrink: 0;
+            width: 2.4rem;
+            height: 2.4rem;
+            background: var(--blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-top: 0.1rem;
+        }
+        .step-content { flex: 1; }
+        .step-content h3 { margin: 0 0 0.5rem 0; font-size: 1.05rem; color: var(--text); }
+        .step-content p  { margin: 0 0 0.75rem 0; font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; }
+        .step-content p:last-child { margin-bottom: 0; }
+        .callout {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--blue);
+            border-radius: 8px;
+            padding: 1.1rem 1.4rem;
+            margin: 1.5rem 0;
+            font-size: 0.88rem;
+            color: var(--text-mid);
+            line-height: 1.75;
+        }
+        .callout strong { color: var(--text); }
+        .callout.warn { border-left-color: #f59e0b; }
+        .callout.tip  { border-left-color: #10b981; }
+        .code-block {
+            background: #0d0d0d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 1.1rem 1.4rem;
+            margin: 1rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            line-height: 1.8;
+        }
+        .code-block .comment { color: #6b7280; }
+        .code-block .key     { color: #93c5fd; }
+        .code-block .val     { color: #34d399; }
+        .code-block .cmd     { color: #f9a8d4; }
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .arch-card {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .arch-card-label {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+        .arch-card h4 { margin: 0 0 0.4rem 0; font-size: 0.95rem; color: var(--text); }
+        .arch-card p  { margin: 0; font-size: 0.82rem; color: var(--text-dim); line-height: 1.65; }
+        .flow-diagram {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            row-gap: 0.75rem;
+        }
+        .flow-node {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.45rem 0.85rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
+        }
+        .flow-node.blue { background: var(--blue); color: #fff; border-color: var(--blue); }
+        .flow-node.green { background: #10b981; color: #fff; border-color: #10b981; }
+        .flow-arrow {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            padding: 0 0.5rem;
+        }
+        .prompt-example {
+            background: #0d0d0d;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 1.1rem 1.4rem;
+            margin: 1rem 0;
+            font-size: 0.88rem;
+            color: #e2e8f0;
+            line-height: 1.75;
+            font-style: italic;
+        }
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+        .use-case-card {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+        .use-case-card .uc-label {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--blue);
+            margin-bottom: 0.35rem;
+        }
+        .use-case-card p { margin: 0; font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; }
+        @media (max-width: 640px) {
+            .arch-grid, .use-case-grid { grid-template-columns: 1fr; }
+            .flow-diagram { flex-direction: column; align-items: flex-start; }
+            .flow-arrow { transform: rotate(90deg); align-self: center; }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../">← Back to Archive</a></li>
+                <li><a href="../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        <div class="reader-layout">
+            <main class="reader-main">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">AI Automation</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Claude</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">MCP</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Advanced</span>
+                    </div>
+                    <h1 class="reader-title">Automate n8n with Claude: Build Workflows Using AI</h1>
+                    <div class="reader-meta">Published on Mar 31, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+                    <h2 id="problem">The Problem with Building n8n Workflows Manually</h2>
+                    <p>n8n is one of the most powerful automation platforms available. But anyone who has spent serious time in it knows the friction: you're dragging nodes, hunting for the right property, debugging expression syntax, and wiring together logic that should take minutes but somehow takes hours. The canvas is visual, but complex workflows are anything but simple to build.</p>
+                    <p>That changes completely when you connect Claude to your n8n instance. Instead of building node by node, you describe what you want in plain English and Claude architects the entire workflow, configures the nodes, handles the logic, and deploys it directly to your instance via the n8n API. No JSON exports. No copy-pasting. No manual wiring.</p>
+                    <p>This guide covers two distinct approaches: Claude Desktop with MCP for most users, and Claude Code on a VPS for power users who want full programmatic control. Both are production-ready. Pick the one that fits your setup.</p>
+
+                    <div class="callout">
+                        <strong>What you need before starting:</strong> A running n8n instance (Cloud or self-hosted), a Claude Pro subscription, and Node.js installed on your machine. If you're still deciding how to run n8n, see <a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" style="color:var(--blue);text-decoration:underline;">n8n Cloud vs. Self-Hosted</a>, as it matters for which approach below fits you best.
+                    </div>
+
+                    <h2 id="architecture">Understanding the Architecture: How Claude Talks to n8n</h2>
+                    <p>The bridge between Claude and n8n is the <strong>Model Context Protocol (MCP)</strong>, an open standard that lets AI assistants interact with external tools and services through a structured interface. When you configure n8n-MCP, Claude gains the ability to search your existing workflows, read node configurations, create new workflows, update existing ones, and trigger executions, all through natural conversation.</p>
+                    <p>The key package that makes this work is <a href="https://www.n8n-mcp.com" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n-mcp</a>, an open-source MCP server purpose-built for n8n. It exposes your n8n instance as a set of tools that Claude can call, and it ships with deep knowledge of n8n's node library, validation logic, and workflow structure. It is not just a thin API wrapper; it understands n8n.</p>
+
+                    <div class="flow-diagram">
+                        <div class="flow-node blue">You (Natural Language)</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">Claude Desktop / Claude Code</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">n8n-MCP Server</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">n8n API</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node green">Workflow Deployed</div>
+                    </div>
+
+                    <div class="arch-grid">
+                        <div class="arch-card">
+                            <div class="arch-card-label">Approach 1</div>
+                            <h4>Claude Desktop + MCP</h4>
+                            <p>Best for most users. Install the n8n-mcp package, configure Claude Desktop with your API key, and start building workflows from the chat interface. Setup takes under 10 minutes.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Approach 2</div>
+                            <h4>Claude Code on VPS</h4>
+                            <p>Best for power users and teams. Claude Code runs directly on your server alongside n8n, giving you terminal-level control, SSH access, and the ability to trigger Claude from inside n8n workflows.</p>
+                        </div>
+                    </div>
+
+                    <h2 id="requirements">What You Need</h2>
+                    <ul>
+                        <li><strong>Claude Pro</strong>: MCP tools require a Claude Pro plan. The free tier does not support MCP connections.</li>
+                        <li><strong>Claude Desktop</strong>: The desktop app (macOS or Windows) is required for MCP configuration. Download from <a href="https://claude.ai/download" target="_blank" style="color:var(--blue);text-decoration:underline;">claude.ai/download</a>.</li>
+                        <li><strong>Node.js</strong>: Required to run the n8n-mcp package. Version 18 or higher recommended.</li>
+                        <li><strong>A running n8n instance</strong>: Cloud or self-hosted. If you haven't set one up yet, <a href="https://axshul.site/n8n/guide/how-to-setup-n8n/" style="color:var(--blue);text-decoration:underline;">this setup guide</a> covers Cloud, NPM, and Docker in one place.</li>
+                        <li><strong>n8n API key</strong>: Generated from your n8n instance settings. We'll cover this in Step 1 below.</li>
+                    </ul>
+
+                    <div class="callout tip">
+                        <strong>On Claude Pro:</strong> The $20/month Claude Pro plan is what unlocks MCP. It's the same plan that gives you access to Claude's Projects feature, which is where you'll store your n8n workflow-building instructions. If you're serious about automation, this is one of the highest-ROI subscriptions you can have.
+                    </div>
+
+                    <h2 id="desktop-setup">Approach 1: Claude Desktop + n8n-MCP (Recommended)</h2>
+                    <p>This is the fastest path to having Claude build n8n workflows for you. The entire setup is a config file edit and a restart.</p>
+
+                    <div class="step-block">
+                        <div class="step-num">01</div>
+                        <div class="step-content">
+                            <h3>Generate Your n8n API Key</h3>
+                            <p>In your n8n instance, click your user icon in the bottom-left corner. Go to <strong>Settings → API</strong>. Click <strong>Create API Key</strong>, give it a name (e.g., "Claude MCP"), and copy the key immediately. You will not be able to see it again after closing the dialog.</p>
+                            <p>If you don't see an API section in your settings, your instance may need the API feature enabled. For self-hosted instances, add <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">N8N_PUBLIC_API_DISABLED=false</code> to your environment variables and restart.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">02</div>
+                        <div class="step-content">
+                            <h3>Locate Your Claude Desktop Config File</h3>
+                            <p>Claude Desktop reads MCP server configurations from a JSON file on your machine. Find it at:</p>
+                            <div class="code-block">
+<span class="comment"># macOS</span>
+~/Library/Application Support/Claude/claude_desktop_config.json
+
+<span class="comment"># Windows</span>
+%APPDATA%\Claude\claude_desktop_config.json
+
+<span class="comment"># Linux</span>
+~/.config/Claude/claude_desktop_config.json
+                            </div>
+                            <p>If the file doesn't exist yet, create it. You can also access it from inside Claude Desktop via <strong>Settings → Developer → Edit Config</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">03</div>
+                        <div class="step-content">
+                            <h3>Add the n8n-MCP Configuration</h3>
+                            <p>Open the config file and add the following. Replace the placeholder values with your actual n8n instance URL and API key:</p>
+                            <div class="code-block">{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"n8n-mcp"</span>: {
+      <span class="key">"command"</span>: <span class="val">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="val">"n8n-mcp"</span>],
+      <span class="key">"env"</span>: {
+        <span class="key">"N8N_API_URL"</span>: <span class="val">"https://your-n8n-instance.com"</span>,
+        <span class="key">"N8N_API_KEY"</span>: <span class="val">"your_api_key_here"</span>,
+        <span class="key">"MCP_MODE"</span>: <span class="val">"stdio"</span>,
+        <span class="key">"LOG_LEVEL"</span>: <span class="val">"error"</span>,
+        <span class="key">"DISABLE_CONSOLE_OUTPUT"</span>: <span class="val">"true"</span>
+      }
+    }
+  }
+}</div>
+                            <p>The <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">npx n8n-mcp</code> command will automatically download and run the latest version of the package. No separate install step is needed.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">04</div>
+                        <div class="step-content">
+                            <h3>Restart Claude Desktop and Enable Tools</h3>
+                            <p>Completely quit Claude Desktop (do not just close the window; quit from the menu bar or system tray) and reopen it. Once loaded, you should see an n8n MCP icon in the bottom-right corner of the chat input area.</p>
+                            <p>Click it and select <strong>Enable all tools</strong>. This grants Claude access to your n8n instance without asking for permission on every single action. You can always revoke this later from the same menu.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">05</div>
+                        <div class="step-content">
+                            <h3>Verify the Connection</h3>
+                            <p>In a new Claude chat, type: <em>"What n8n-mcp tools are available?"</em> Claude should respond with a list of tools like <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">n8n_create_workflow</code>, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">n8n_list_workflows</code>, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">search_nodes</code>, and more. If you see that list, you're connected.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout warn">
+                        <strong>Troubleshooting:</strong> If Claude doesn't see the tools, the most common causes are: (1) Claude Desktop wasn't fully quit and restarted, (2) the JSON config has a syntax error, validate it at <a href="https://jsonlint.com" target="_blank" style="color:var(--blue);text-decoration:underline;">jsonlint.com</a>, or (3) Node.js isn't installed. Run <code style="font-family:var(--font-mono);font-size:0.82em;">node --version</code> in your terminal to check.
+                    </div>
+
+                    <h2 id="cloud">Using Claude with n8n Cloud</h2>
+                    <p>If you're on <strong>n8n Cloud</strong> rather than self-hosting, the setup is simpler. Your instance is already publicly accessible, so there is no server config to worry about. The MCP connection works identically; you just use your cloud instance URL instead of a localhost or VPS address.</p>
+                    <p>To get your API key on n8n Cloud: log into your instance, click your user icon bottom-left, go to <strong>Settings → API</strong>, and create a key. Your instance URL is the one you use to access n8n in the browser, something like <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">https://yourname.app.n8n.cloud</code>.</p>
+                    <p>Paste both into the Claude Desktop config exactly as shown in the steps above. n8n Cloud users skip all the server setup and go straight to building.</p>
+                    <div class="callout tip">
+                        <strong>n8n Cloud vs. self-hosted:</strong> Cloud is the right call if you want zero ops overhead. Self-hosting gives you more control and lower cost at scale. If you're still deciding, the full comparison is here: <a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" style="color:var(--blue);text-decoration:underline;">n8n Cloud vs. Self-Hosted →</a>
+                    </div>
+
+                    <h2 id="project">Setting Up a Claude Project for n8n (The Game-Changer)</h2>
+                    <p>The real power unlock is creating a dedicated <strong>Claude Project</strong> with custom instructions that turn Claude into a specialized n8n workflow engineer. Projects persist context across conversations, so Claude always knows your stack, your credentials, and your preferences.</p>
+                    <p>In Claude, create a new Project and add the following to the Project Instructions. This is the system prompt that shapes how Claude approaches every workflow request:</p>
+
+                    <div class="code-block"><span class="comment">--- Paste this into your Claude Project Instructions ---</span>
+
+You are an expert n8n automation engineer with deep knowledge of n8n-MCP tools.
+Your role is to design, build, validate, and deploy n8n workflows with maximum
+accuracy and efficiency.
+
+<span class="comment">## Core Process (always follow this order)</span>
+
+1. DISCOVERY: Use search_nodes() and list_nodes() to find the right nodes.
+   Think through the full logic before touching any tools.
+   Ask clarifying questions if the request is ambiguous.
+
+2. CONFIGURATION: Use get_node_essentials() for each node.
+   Use validate_node_minimal() before building anything.
+
+3. BUILD: Construct the workflow JSON with validated node configs.
+   Prefer standard nodes over Code nodes. Only use Code when truly necessary.
+   Always add error handling.
+
+4. VALIDATE: Run validate_workflow() and validate_workflow_connections()
+   before any deployment. Fix all errors first.
+
+5. DEPLOY: Use n8n_create_workflow() to push to the instance.
+   Run n8n_validate_workflow() post-deployment to confirm.
+
+<span class="comment">## Rules</span>
+- Never deploy an unvalidated workflow.
+- Use diff updates (n8n_update_partial_workflow) for edits. Saves 80-90% tokens.
+- Always show a visual architecture summary before building complex workflows.
+- Use expressions like $json, $node["NodeName"].json correctly.
+- Prefer webhook triggers for real-time, schedule triggers for batch.</div>
+
+                    <p>With this in place, every conversation in the Project starts with Claude already knowing how to behave. You don't need to re-explain the rules each time.</p>
+
+                    <h2 id="first-workflow">Building Your First Workflow with Claude</h2>
+                    <p>Once connected, the workflow is simple: describe what you want, and Claude builds it. The quality of the output scales directly with the specificity of your prompt.</p>
+
+                    <div class="callout">
+                        <strong>The golden rule of prompting for workflows:</strong> Specify the trigger, the data source, the transformation, and the destination. The more concrete you are, the less back-and-forth you need.
+                    </div>
+
+                    <p>Here's the difference between a weak and a strong prompt:</p>
+
+                    <div class="prompt-example" style="border-color: rgba(239,68,68,0.3);">
+                        <span style="font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#ef4444;display:block;margin-bottom:0.5rem;">Weak Prompt</span>
+                        "Build me a workflow for emails."
+                    </div>
+                    <div class="prompt-example" style="border-color: rgba(16,185,129,0.3);">
+                        <span style="font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#10b981;display:block;margin-bottom:0.5rem;">Strong Prompt</span>
+                        "Build an n8n workflow that triggers when a new email arrives in Gmail with 'invoice' in the subject. Extract the sender name, email address, and any dollar amounts from the body using an AI node. Then add a row to a Google Sheet named 'Invoice Log' with columns: Date, Sender, Email, Amount. Finally, send a Slack message to #finance with a summary."
+                    </div>
+
+                    <p>Claude will then: scan your n8n instance for existing credentials, find the right nodes (Gmail Trigger, AI Text Classifier, Google Sheets, Slack), validate each configuration, build the complete workflow JSON, and deploy it directly to your instance. You get a link to open it immediately. If you've never built a workflow before and want to understand the fundamentals first, <a href="https://axshul.site/n8n/guide/build-your-first-workflow/" style="color:var(--blue);text-decoration:underline;">this guide walks through the basics</a>.</p>
+
+                    <h2 id="examples">Real-World Workflow Examples</h2>
+                    <p>Here are prompts you can use directly. Each one produces a complete, deployable workflow:</p>
+
+                    <div class="use-case-grid">
+                        <div class="use-case-card">
+                            <div class="uc-label">Lead Pipeline</div>
+                            <p>"When a Typeform submission comes in, enrich the lead with Clearbit, add to HubSpot CRM, and send a Slack notification to #sales with the lead score."</p>
+                        </div>
+                        <div class="use-case-card">
+                            <div class="uc-label">Content Distribution</div>
+                            <p>"Every time I publish a new blog post via RSS, generate a Twitter thread and a LinkedIn post using Claude, then schedule both for posting."</p>
+                        </div>
+                        <div class="use-case-card">
+                            <div class="uc-label">Support Triage</div>
+                            <p>"Check my support inbox every 30 minutes. Classify each email as urgent/normal/spam using AI. Route urgent ones to Zendesk with high priority, auto-reply to spam."</p>
+                        </div>
+                        <div class="use-case-card">
+                            <div class="uc-label">Data Sync</div>
+                            <p>"Every night at midnight, pull all new orders from Shopify, update inventory in Airtable, and send a daily summary report to my email."</p>
+                        </div>
+                    </div>
+
+                    <h2 id="vps">Approach 2: Claude Code on a VPS (Power Users)</h2>
+                    <p>If you're self-hosting n8n on a VPS, there's a more powerful setup: install Claude Code directly on the same server. This eliminates network latency, gives Claude direct filesystem access, and enables a two-way relationship where n8n can also trigger Claude Code tasks via SSH. If you haven't set up a VPS yet, <a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" style="color:var(--blue);text-decoration:underline;">our VPS self-hosting guide</a> covers the full deployment from scratch.</p>
+
+                    <p>Once Claude Code is installed on your server, add the n8n-mcp server with a single command:</p>
+
+                    <div class="code-block"><span class="comment"># Install Claude Code on your VPS (requires Node.js 18+)</span>
+<span class="cmd">npm install -g @anthropic-ai/claude-code</span>
+
+<span class="comment"># Add the n8n-mcp server to Claude Code</span>
+<span class="cmd">claude mcp add n8n-mcp</span>
+
+<span class="comment"># Start Claude Code in your project directory</span>
+<span class="cmd">claude</span></div>
+
+                    <p>Claude Code will prompt you for your n8n instance URL and API key during the <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">mcp add</code> step. Once configured, it scans your existing n8n instance to understand your environment, credentials, and workflow patterns before building anything new.</p>
+
+                    <h3>Using the n8n API Directly (No JSON Files)</h3>
+                    <p>When working with Claude Code, always instruct it to use the n8n API rather than outputting JSON files. This is the key distinction that makes the workflow appear directly in your n8n canvas:</p>
+
+                    <div class="prompt-example">
+                        "Create the n8n workflow via the n8n API. Do not output a JSON file. Build a voice scheduling system that accepts a webhook with a caller's name and requested time, checks Google Calendar for conflicts, and sends a confirmation SMS via Twilio."
+                    </div>
+
+                    <p>Claude Code will scan your instance, understand your existing credentials, build the workflow logic, and publish it automatically. Complex multi-step automations that would take hours to wire manually get built in minutes.</p>
+
+                    <h3>Using JSON Reference Files as Blueprints</h3>
+                    <p>For complex workflows, you can provide an existing n8n JSON export as a reference. Claude Code uses it as a structural blueprint to build new or modified versions, which is particularly useful for intricate AI pipelines where the node structure is non-trivial:</p>
+
+                    <div class="prompt-example">
+                        "Here is my existing AI video generation workflow [paste JSON]. Use this as a reference architecture to build a similar pipeline for AI podcast production. Replace the video generation nodes with audio synthesis nodes using ElevenLabs, keep the same scheduling and distribution logic."
+                    </div>
+
+                    <h3>Running Claude Code from Inside n8n (Advanced)</h3>
+                    <p>The most powerful setup reverses the relationship entirely: n8n becomes the orchestrator that triggers Claude Code tasks. This is done via n8n's SSH node.</p>
+
+                    <div class="flow-diagram">
+                        <div class="flow-node">Telegram / Webhook Trigger</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node blue">n8n SSH Node</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node">Claude Code CLI (VPS)</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node green">Result → Telegram / Slack</div>
+                    </div>
+
+                    <p>In your n8n workflow, add an SSH node configured with your VPS IP, root credentials, and port 22. The command field takes your prompt as input and passes it to the Claude Code CLI. The output is piped back into n8n and routed to whatever channel you want: Telegram, Slack, email, or a database.</p>
+                    <p>The practical result: you send a Telegram message describing an automation you want built, and Claude Code builds and deploys it to your n8n instance automatically. No terminal access required.</p>
+
+                    <h2 id="skills">The n8n-MCP Skills System</h2>
+                    <p>One of the most underrated features of the n8n-mcp package is its <strong>skills system</strong>, a set of specialized instruction sets that guide Claude on how to build production-ready workflows rather than generic snippets. Skills are installed via the <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">/plugin</code> command inside Claude Code.</p>
+                    <p>Skills teach Claude things like how to correctly configure the Perplexity node for research tasks, how to structure Telegram bot workflows, how to handle pagination in HTTP Request nodes, and how to build resilient error-handling patterns. Without skills, Claude builds functional workflows. With skills, it builds workflows that are ready for production.</p>
+                    <p>The <a href="https://www.n8n-mcp.com" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n-mcp.com</a> platform also offers a Chat Agent interface that has learned from over 100,000 workflow patterns. If you want to build workflows without any local setup at all, it is worth exploring. Describe your automation and it deploys directly to your connected n8n instance.</p>
+
+                    <h2 id="prompting">Prompting Best Practices</h2>
+                    <p>The quality of what Claude builds is directly proportional to how well you describe what you want. A few principles that consistently produce better results:</p>
+
+                    <ul>
+                        <li><strong>Name your trigger explicitly.</strong> "When a webhook fires" is vague. "When a POST request hits /new-lead with fields name, email, and company" is precise.</li>
+                        <li><strong>Specify your credentials.</strong> If you have multiple Google accounts connected to n8n, tell Claude which one to use. It can see your credential names.</li>
+                        <li><strong>Describe the data shape.</strong> Tell Claude what the input data looks like and what the output should look like. This prevents mismatched field mappings.</li>
+                        <li><strong>Ask for error handling.</strong> Add "include error handling that sends a Slack alert if any node fails" to any complex workflow request.</li>
+                        <li><strong>Break complex workflows into phases.</strong> Build the trigger and first transformation first, verify it works, then ask Claude to extend it.</li>
+                    </ul>
+
+                    <h2 id="limits">What Claude Can and Can't Do</h2>
+                    <p>Being clear about the boundaries saves frustration. Claude with n8n-mcp can:</p>
+                    <ul>
+                        <li>Create, update, activate, and delete workflows via the API</li>
+                        <li>Search and configure any of n8n's 400+ native nodes</li>
+                        <li>Validate workflow structure and expression syntax before deployment</li>
+                        <li>List and reference your existing credentials (it sees the names, not the secrets)</li>
+                        <li>Trigger webhook-based workflows for testing</li>
+                        <li>Monitor execution history and debug failures</li>
+                    </ul>
+                    <p>What it can't do: it can't create new credentials for you (you still need to authenticate services manually in n8n), it can't access data inside your workflows at runtime, and it can't guarantee a workflow will work perfectly on the first try for highly complex integrations. Always test before going live.</p>
+
+                    <div class="callout tip">
+                        <strong>On AI model choice inside n8n:</strong> Once you're building AI-powered workflows, you'll need to decide which model to use for the AI nodes inside those workflows. That is a separate decision from which model builds the workflows. Claude, GPT-4o, DeepSeek, local Ollama models all have different cost and quality trade-offs. Our breakdown covers exactly this: <a href="https://axshul.site/n8n/guide/choose-right-ai-model/" style="color:var(--blue);text-decoration:underline;">Choosing the Right AI Model for n8n →</a>
+                    </div>
+
+                    <h2 id="next">Where to Go From Here</h2>
+                    <p>The combination of Claude and n8n is genuinely one of the most productive setups available right now for anyone building automations. The learning curve for n8n drops dramatically when you can describe what you want and have it built for you. And as you build more workflows, Claude gets better at understanding your specific stack and patterns.</p>
+                    <p>Start with one workflow. Something you do manually every week. Describe it to Claude, let it build, test it, and watch it run. That first working automation is usually enough to change how you think about what's possible.</p>
+
+                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Continue Reading</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+                            <li><a href="https://axshul.site/n8n/guide/build-your-first-workflow/" style="color:var(--blue);text-decoration:underline;">How to Build Your First n8n Workflow →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" style="color:var(--blue);text-decoration:underline;">Self-Hosting n8n on a VPS →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/choose-right-ai-model/" style="color:var(--blue);text-decoration:underline;">Choosing the Right AI Model for n8n →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/vector-stores-and-rag/" style="color:var(--blue);text-decoration:underline;">Vector Stores and RAG in n8n →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/ai-inference-providers/" style="color:var(--blue);text-decoration:underline;">AI Inference Providers for n8n →</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </main>
+
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>12 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse">AN</div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://www.n8n-mcp.com" target="_blank" class="sb-link">n8n-mcp.com ↗</a></li>
+                        <li><a href="https://github.com/czlonkowski/n8n-mcp" target="_blank" class="sb-link">n8n-mcp GitHub ↗</a></li>
+                        <li><a href="https://claude.ai/download" target="_blank" class="sb-link">Download Claude Desktop ↗</a></li>
+                        <li><a href="https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server/" target="_blank" class="sb-link">n8n MCP Docs ↗</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" class="sb-link">VPS Self-Hosting →</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/choose-right-ai-model/" class="sb-link">Choosing AI Models →</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/build-your-first-workflow/" class="sb-link">First Workflow Guide →</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                        <span class="bt">Share Article</span>
+                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
+                    </button>
+
+                    <a href="../" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">← Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../../assets/js/3d-anim.js"></script>
+    <script src="../../../assets/js/text-highlight-share.js" defer></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+    </script>
+</body>
+</html>
