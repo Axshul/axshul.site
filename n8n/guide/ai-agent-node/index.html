@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The n8n AI Agent Node: Complete Guide | n8n Guide</title>
+    <meta name="description" content="A deep-dive into the n8n AI Agent node. Learn every option, setting, tool, memory type, output parser, and model. Plus when to use an agent vs. a simple LLM call.">
+    <meta property="og:title" content="The n8n AI Agent Node: Complete Guide">
+    <meta property="og:description" content="A deep-dive into the n8n AI Agent node. Learn every option, setting, tool, memory type, output parser, and model. Plus when to use an agent vs. a simple LLM call.">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon_io/favicon-32x32.png">
+    <style>
+        .step-block { display: flex; gap: 1.25rem; margin: 2rem 0; align-items: flex-start; }
+        .step-num { flex-shrink: 0; width: 2.4rem; height: 2.4rem; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; margin-top: 0.1rem; }
+        .step-content { flex: 1; }
+        .step-content h3 { margin: 0 0 0.5rem 0; font-size: 1.05rem; color: var(--text); }
+        .step-content p  { margin: 0 0 0.75rem 0; font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; }
+        .step-content p:last-child { margin-bottom: 0; }
+        .callout { background: var(--bg-off); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; font-size: 0.88rem; color: var(--text-mid); line-height: 1.75; }
+        .callout strong { color: var(--text); }
+        .callout.warn { border-left-color: #f59e0b; }
+        .callout.tip  { border-left-color: #10b981; }
+        .code-block { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1.1rem 1.4rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.8rem; color: #e2e8f0; overflow-x: auto; line-height: 1.8; }
+        .code-block .comment { color: #6b7280; }
+        .code-block .key     { color: #93c5fd; }
+        .code-block .val     { color: #34d399; }
+        .code-block .cmd     { color: #f9a8d4; }
+        .flow-diagram { background: var(--bg-off); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1rem; margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; row-gap: 0.75rem; }
+        .flow-node { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+        .flow-node.blue  { background: var(--blue); color: #fff; border-color: var(--blue); }
+        .flow-node.green { background: #10b981; color: #fff; border-color: #10b981; }
+        .flow-node.orange{ background: #f59e0b; color: #fff; border-color: #f59e0b; }
+        .flow-arrow { font-size: 0.85rem; color: var(--text-dim); padding: 0 0.5rem; }
+        .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .arch-card { background: var(--bg-off); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+        .arch-card-label { font-family: var(--font-mono); font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 0.5rem; }
+        .arch-card h4 { margin: 0 0 0.4rem 0; font-size: 0.95rem; color: var(--text); }
+        .arch-card p  { margin: 0; font-size: 0.82rem; color: var(--text-dim); line-height: 1.65; }
+        .compare-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.82rem; }
+        .compare-table th { background: var(--bg-off); border: 1px solid var(--border); padding: 0.65rem 0.9rem; text-align: left; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-mid); }
+        .compare-table td { border: 1px solid var(--border); padding: 0.6rem 0.9rem; color: var(--text-mid); line-height: 1.5; vertical-align: top; }
+        .compare-table tr:hover td { background: rgba(0,68,255,0.02); }
+        .tag-pill { display: inline-block; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2em 0.55em; border-radius: 5px; }
+        .tag-pill.yes  { background: rgba(16,185,129,0.12); color: #10b981; }
+        .tag-pill.no   { background: rgba(239,68,68,0.1);  color: #ef4444; }
+        .tag-pill.opt  { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .option-block { background: var(--bg-off); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.4rem; margin: 1rem 0; }
+        .option-block .opt-name { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--blue); margin-bottom: 0.35rem; }
+        .option-block .opt-default { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+        .option-block p { margin: 0; font-size: 0.85rem; color: var(--text-mid); line-height: 1.7; }
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0; }
+        .mini-card { background: var(--bg-off); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+        .mini-card .mc-label { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 0.35rem; }
+        .mini-card h5 { margin: 0 0 0.3rem 0; font-size: 0.88rem; color: var(--text); }
+        .mini-card p  { margin: 0; font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
+        @media (max-width: 640px) {
+            .arch-grid, .three-col { grid-template-columns: 1fr; }
+            .flow-diagram { flex-direction: column; align-items: flex-start; }
+            .flow-arrow { transform: rotate(90deg); align-self: center; }
+            .compare-table { font-size: 0.75rem; }
+        }
+
+        /* ── Workflow Visual ── */
+        .workflow-visual { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .wv-label { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #6b7280; margin-bottom: 1.25rem; }
+        .wv-canvas { display: flex; align-items: center; gap: 0; flex-wrap: wrap; row-gap: 1rem; margin-bottom: 1.25rem; }
+        .wv-node { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.9rem 1.1rem; min-width: 140px; position: relative; }
+        .wv-node-icon { font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .wv-node-name { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.15rem; }
+        .wv-node-type { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; }
+        .wv-trigger { border-color: rgba(99,102,241,0.4); box-shadow: 0 0 12px rgba(99,102,241,0.1); }
+        .wv-agent   { border-color: rgba(0,68,255,0.4); box-shadow: 0 0 12px rgba(0,68,255,0.12); }
+        .wv-connector { display: flex; align-items: center; padding: 0 0.5rem; }
+        .wv-line { width: 28px; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.35)); }
+        .wv-arrow { color: rgba(255,255,255,0.5); font-size: 1.1rem; margin-left: -4px; }
+        .wv-sub-nodes { margin-top: 0.65rem; padding-top: 0.65rem; border-top: 1px solid rgba(255,255,255,0.07); display: flex; flex-direction: column; gap: 0.35rem; }
+        .wv-sub { display: flex; align-items: center; gap: 0.45rem; font-size: 0.68rem; color: #9ca3af; font-family: var(--font-mono); }
+        .wv-sub-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+        .wv-dot-model { background: #34d399; }
+        .wv-dot-mem   { background: #f59e0b; }
+        .wv-dot-tool  { background: #60a5fa; }
+        .wv-footer { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .wv-badge { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 0.2em 0.6em; border-radius: 5px; }
+        .wv-badge-trigger { background: rgba(99,102,241,0.15); color: #818cf8; }
+        .wv-badge-agent   { background: rgba(0,68,255,0.15); color: #93c5fd; }
+        .wv-badge-model   { background: rgba(52,211,153,0.12); color: #34d399; }
+        .wv-badge-mem     { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .wv-badge-tool    { background: rgba(96,165,250,0.12); color: #60a5fa; }
+
+        /* ── n8n-demo embed ── */
+        .n8n-embed-wrap { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.5rem 0; }
+        .n8n-embed-header { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 1rem; background: var(--bg-off); border-bottom: 1px solid var(--border); }
+        .n8n-embed-label { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem; }
+        .n8n-embed-label::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block; }
+        .json-copy-btn { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); background: var(--bg-off); border: 1px solid var(--border); border-radius: 5px; padding: 0.25em 0.7em; cursor: pointer; transition: all 0.2s; }
+        .json-copy-btn:hover { color: var(--text); border-color: var(--blue); }
+        n8n-demo { display: block; height: 340px; }
+
+        /* ── Improved flow diagram ── */
+        .flow-diagram { background: #f8f9ff; border: 1px solid rgba(0,68,255,0.1); border-radius: 12px; padding: 1.5rem 1.25rem; margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; row-gap: 0.75rem; }
+        .flow-node { background: #fff; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; color: #1a1a2e; white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .flow-node.blue  { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 2px 8px rgba(0,68,255,0.25); }
+        .flow-node.green { background: #10b981; color: #fff; border-color: #10b981; box-shadow: 0 2px 8px rgba(16,185,129,0.25); }
+        .flow-node.orange{ background: #f59e0b; color: #fff; border-color: #f59e0b; box-shadow: 0 2px 8px rgba(245,158,11,0.25); }
+        .flow-arrow { font-size: 1rem; color: rgba(0,68,255,0.4); padding: 0 0.6rem; font-weight: 700; }
+
+        @media (max-width: 640px) {
+            .wv-canvas { flex-direction: column; align-items: flex-start; }
+            .wv-connector { transform: rotate(90deg); padding: 0.25rem 0; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.0/webcomponents-loader.js"></script>
+    <script src="https://www.unpkg.com/lit@2.0.0-rc.2/polyfill-support.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
+</head>
+<body>
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../">← Back to Archive</a></li>
+                <li><a href="../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        <div class="reader-layout">
+            <main class="reader-main">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">AI Agents</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Deep Dive</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Advanced</span>
+                    </div>
+                    <h1 class="reader-title">The n8n AI Agent Node: Complete Guide</h1>
+                    <div class="reader-meta">Published on Apr 4, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+                    <h2 id="what-is-it">What the AI Agent Node Actually Is</h2>
+                    <p>Most n8n nodes do one thing: take input, transform it, pass it on. The AI Agent node is different. It doesn't follow a fixed path. It <em>reasons</em>. You give it a goal, a set of tools, and a model, and it figures out the steps on its own. It can call tools, observe results, decide what to do next, and loop until the job is done or it hits a limit.</p>
+                    <p>Under the hood, the AI Agent node is built on LangChain and implements what's called a ReAct loop: Reason, Act, Observe, Repeat. The LLM acts as the brain. It reads the incoming message, looks at the tools available, decides which one to call (if any), gets the result back, and decides whether the task is complete or whether it needs to do more. This loop can run multiple times per single user message.</p>
+                    <p>That's the core distinction from a basic LLM node. A basic LLM node is a one-shot call: prompt in, text out. The AI Agent node is a loop: it can take 10 actions before it gives you a final answer.</p>
+
+                    <div class="callout">
+                        <strong>Since n8n v1.82.0</strong>, there is only one agent type: the <strong>Tools Agent</strong>. Earlier versions had multiple agent types (Conversational Agent, ReAct Agent, OpenAI Functions Agent, Plan and Execute Agent). All of those have been consolidated into the single Tools Agent, which uses the LLM's native function/tool-calling interface. If you're on an older version, you may still see those options, but for any new workflow, the Tools Agent is what you want.
+                    </div>
+
+                    <h2 id="when-to-use">When to Use an Agent vs. a Simple LLM Call</h2>
+                    <p>This is the most important question to answer before you start building. Agents are powerful, but they're also slower, more expensive, and harder to debug than a direct LLM call. Don't reach for the AI Agent node by default.</p>
+
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Use Agent?</th>
+                                <th>Why</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Summarize a document</td><td><span class="tag-pill no">No</span></td><td>Single LLM call is faster and cheaper</td></tr>
+                            <tr><td>Classify an email into categories</td><td><span class="tag-pill no">No</span></td><td>Fixed output, no tool use needed</td></tr>
+                            <tr><td>Extract structured fields from text</td><td><span class="tag-pill no">No</span></td><td>LLM Chain + Structured Output Parser handles this</td></tr>
+                            <tr><td>Answer a question that needs a live web search</td><td><span class="tag-pill yes">Yes</span></td><td>Agent decides when and how to call the search tool</td></tr>
+                            <tr><td>Multi-turn chat that remembers context</td><td><span class="tag-pill yes">Yes</span></td><td>Agent + Memory maintains conversation state</td></tr>
+                            <tr><td>Task requiring multiple API calls in unknown order</td><td><span class="tag-pill yes">Yes</span></td><td>Agent reasons about which tool to call next</td></tr>
+                            <tr><td>Fixed sequential pipeline (always same steps)</td><td><span class="tag-pill no">No</span></td><td>Standard workflow nodes are more predictable</td></tr>
+                            <tr><td>Research task pulling from multiple sources</td><td><span class="tag-pill yes">Yes</span></td><td>Agent can query, synthesize, and verify iteratively</td></tr>
+                            <tr><td>Customer support bot with CRM lookups</td><td><span class="tag-pill yes">Yes</span></td><td>Agent decides when to look up data vs. answer directly</td></tr>
+                            <tr><td>Translate text to another language</td><td><span class="tag-pill no">No</span></td><td>One-shot LLM call, no reasoning loop needed</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>The rule of thumb: if the AI needs to <em>decide what to do next</em> based on intermediate results, use an agent. If the steps are predictable and fixed, use a standard workflow with LLM nodes where needed. If you're still getting familiar with how n8n workflows are structured, the <a href="https://axshul.site/n8n/guide/build-your-first-workflow/" style="color:var(--blue);text-decoration:underline;">first workflow guide</a> is a good starting point before diving into agents.</p>
+
+                    <h2 id="first-agent">Your First Agent: Chat Trigger + AI Agent + Model</h2>
+                    <p>Before going deep on every option, let's build the simplest possible agent so you have a working mental model. Three nodes. Five minutes.</p>
+
+                    <div class="workflow-visual">
+                        <div class="wv-label">Minimal Agent Workflow</div>
+                        <div class="wv-canvas">
+                            <div class="wv-node wv-trigger">
+                                <div class="wv-node-icon">CT</div>
+                                <div class="wv-node-name">Chat Trigger</div>
+                                <div class="wv-node-type">Trigger</div>
+                            </div>
+                            <div class="wv-connector">
+                                <div class="wv-line"></div>
+                                <div class="wv-arrow">›</div>
+                            </div>
+                            <div class="wv-node wv-agent">
+                                <div class="wv-node-icon">AI</div>
+                                <div class="wv-node-name">AI Agent</div>
+                                <div class="wv-node-type">Agent</div>
+                                <div class="wv-sub-nodes">
+                                    <div class="wv-sub">
+                                        <span class="wv-sub-dot wv-dot-model"></span>
+                                        <span>OpenAI Chat Model</span>
+                                    </div>
+                                    <div class="wv-sub">
+                                        <span class="wv-sub-dot wv-dot-mem"></span>
+                                        <span>Simple Memory</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wv-footer">
+                            <span class="wv-badge wv-badge-trigger">Chat Trigger</span>
+                            <span class="wv-badge wv-badge-agent">AI Agent</span>
+                            <span class="wv-badge wv-badge-model">OpenAI Model</span>
+                            <span class="wv-badge wv-badge-mem">Simple Memory</span>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">01</div>
+                        <div class="step-content">
+                            <h3>Add a Chat Trigger node</h3>
+                            <p>This is your entry point. The Chat Trigger creates a built-in chat interface you can use directly in n8n for testing. In production, it can be embedded in a website or connected to a messaging platform. No configuration needed to get started, just add it to the canvas.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">02</div>
+                        <div class="step-content">
+                            <h3>Add the AI Agent node</h3>
+                            <p>Click the <strong>+</strong> connector on the Chat Trigger and search for "AI Agent". Add it. You'll see the node has connection points along the bottom for sub-nodes: Chat Model, Memory, Tool, and Output Parser. These are not regular node connections, they're sub-node slots that extend the agent's capabilities.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">03</div>
+                        <div class="step-content">
+                            <h3>Connect a Chat Model</h3>
+                            <p>Click the <strong>+</strong> under "Chat Model" on the AI Agent node. Search for your provider, OpenAI, Anthropic, Google Gemini, Groq, Mistral, or others. Select it, add your API credentials, and choose a model. For OpenAI, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">gpt-4o-mini</code> is a solid starting point. For Anthropic, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">claude-3-5-haiku</code> is fast and affordable.</p>
+                            <p>The Chat Model is the only required sub-node. Everything else, memory, tools, output parsers, is optional.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-block">
+                        <div class="step-num">04</div>
+                        <div class="step-content">
+                            <h3>Test it</h3>
+                            <p>Click the <strong>Chat</strong> button at the bottom of the canvas. A chat window opens. Type anything. The agent will respond using the connected model. You now have a working AI agent, no tools yet, just a direct LLM conversation. From here, every section below adds capability.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <strong>No tools = expensive chatbot.</strong> An agent without tools is just a chatbot with extra overhead. The real value of the AI Agent node comes from connecting tools that let it interact with the real world. We'll cover all of them below.
+                    </div>
+
+                    <h3 id="starter-json">Import This Workflow</h3>
+                    <p>Here's the exact workflow for the minimal agent above rendered live. Click any node to inspect it, or use the copy button to grab the JSON and import it directly into n8n via <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">Ctrl+Shift+V</code>. Just swap in your OpenAI credentials and you're running.</p>
+
+                    <div class="n8n-embed-wrap">
+                        <div class="n8n-embed-header">
+                            <span class="n8n-embed-label">Live Workflow Preview</span>
+                            <button class="json-copy-btn" id="wfCopyBtn" onclick="copyWorkflow()">Copy JSON</button>
+                        </div>
+                        <n8n-demo tidyup="true" frame="true" workflow='{"nodes":[{"parameters":{"options":{}},"type":"@n8n/n8n-nodes-langchain.chatTrigger","typeVersion":1.4,"position":[0,0],"id":"209e608a-a72b-4605-b97f-c413474c677c","name":"When chat message received","webhookId":"a65db521-e22b-4911-ba0c-671a6a454fa8"},{"parameters":{"options":{}},"type":"@n8n/n8n-nodes-langchain.agent","typeVersion":3.1,"position":[208,0],"id":"dd9725c3-be79-46cb-b18d-b20450e62682","name":"AI Agent"},{"parameters":{"model":{"__rl":true,"mode":"list","value":"gpt-4o-mini"},"builtInTools":{},"options":{}},"type":"@n8n/n8n-nodes-langchain.lmChatOpenAi","typeVersion":1.3,"position":[128,240],"id":"7d1b788f-0024-4bc1-9635-1218fbabffc0","name":"OpenAI Chat Model"},{"parameters":{},"type":"@n8n/n8n-nodes-langchain.memoryBufferWindow","typeVersion":1.3,"position":[304,240],"id":"6637e90d-5a36-4292-8493-53dca74a45b3","name":"Simple Memory"}],"connections":{"When chat message received":{"main":[[{"node":"AI Agent","type":"main","index":0}]]},"OpenAI Chat Model":{"ai_languageModel":[[{"node":"AI Agent","type":"ai_languageModel","index":0}]]},"Simple Memory":{"ai_memory":[[{"node":"AI Agent","type":"ai_memory","index":0}]]}}}'>
+                        </n8n-demo>
+                    </div>
+
+                    <h2 id="node-params">Node Parameters: The Prompt Section</h2>
+                    <p>Open the AI Agent node and you'll see two main parameters before you get to the Options section.</p>
+
+                    <div class="option-block">
+                        <div class="opt-name">Prompt (Source)</div>
+                        <div class="opt-default">Default: Take from previous node automatically</div>
+                        <p>This controls where the agent gets its user message from. Two choices:</p>
+                        <ul style="margin: 0.75rem 0 0 1.25rem; font-size: 0.85rem; color: var(--text-mid); line-height: 1.8;">
+                            <li><strong>Take from previous node automatically</strong>: The agent looks for a field called <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">chatInput</code> in the incoming data. The Chat Trigger node outputs exactly this field, so if you're using Chat Trigger, leave this on the default and it just works.</li>
+                            <li><strong>Define below</strong>: You manually write the prompt, either as static text or as an n8n expression. Use this when the agent is triggered by something other than a chat (a webhook, a schedule, a form submission) and you want to construct the prompt dynamically from the incoming data.</li>
+                        </ul>
+                    </div>
+
+                    <div class="option-block">
+                        <div class="opt-name">Require Specific Output Format</div>
+                        <div class="opt-default">Default: Off</div>
+                        <p>When you turn this on, a new sub-node slot appears on the agent: Output Parser. This tells the agent it must return its response in a specific structured format rather than free-form text. When enabled, you connect one of three output parsers (covered in detail in the Output Parsers section below). Leave this off unless you specifically need structured JSON output from the agent.</p>
+                    </div>
+
+                    <h2 id="options">Node Options: Every Setting Explained</h2>
+                    <p>Click <strong>Add Option</strong> at the bottom of the AI Agent node to reveal these settings. None are required, they're all refinements.</p>
+
+                    <div class="option-block">
+                        <div class="opt-name">System Message</div>
+                        <div class="opt-default">Default: "You are a helpful assistant"</div>
+                        <p>This is the most important option in the entire node. The system message is a set of instructions sent to the LLM before any user message. It defines the agent's role, personality, constraints, what tools to use and when, and how to format responses. Think of it as the agent's job description and rulebook combined.</p>
+                        <p>You can use n8n expressions here to make it dynamic. For example, inject the current user's name or account type from the incoming data to personalize the agent's behavior per request.</p>
+                    </div>
+
+                    <div class="option-block">
+                        <div class="opt-name">Max Iterations</div>
+                        <div class="opt-default">Default: 10</div>
+                        <p>The maximum number of times the agent's reasoning loop can run before it's forced to stop and return whatever it has. Each iteration may involve one LLM call plus one tool call. If your agent is doing complex multi-step research, you might need to raise this. If you're worried about runaway costs, lower it. For simple agents with one or two tools, 5 is usually plenty.</p>
+                    </div>
+
+                    <div class="option-block">
+                        <div class="opt-name">Return Intermediate Steps</div>
+                        <div class="opt-default">Default: Off</div>
+                        <p>When turned on, the agent's output includes every step it took, every tool call, every observation, every reasoning step, not just the final answer. This is extremely useful for debugging. In production, you'd typically leave this off and only enable it when something isn't working as expected. The intermediate steps appear in the node's output data and in the execution logs.</p>
+                    </div>
+
+                    <div class="option-block">
+                        <div class="opt-name">Automatically Passthrough Binary Images</div>
+                        <div class="opt-default">Default: Off</div>
+                        <p>When enabled, any binary image data in the incoming workflow data is automatically forwarded to the agent as image-type messages. This is what enables multimodal workflows. For example, a user uploads an image via a form, and the agent can see and analyze it. Requires a model that supports vision (GPT-4o, Claude 3, Gemini 1.5, etc.).</p>
+                    </div>
+
+                    <div class="option-block">
+                        <div class="opt-name">Enable Streaming</div>
+                        <div class="opt-default">Default: On</div>
+                        <p>When enabled, the agent sends its response back token by token as it generates it, rather than waiting until the full response is ready. This makes the chat feel much more responsive for long answers. For streaming to work, your trigger must support it. The Chat Trigger and Webhook node (with Response Mode set to Streaming) both do. If you're using a different trigger, disable this.</p>
+                    </div>
+
+                    <div class="option-block">
+                        <div class="opt-name">Tracing Metadata</div>
+                        <div class="opt-default">Default: Empty</div>
+                        <p>Add custom key-value pairs that get attached to tracing events for this agent. This is specifically for use with LangSmith or similar LLM observability tools. If you're not using a tracing platform, ignore this option entirely.</p>
+                    </div>
+
+                    <h2 id="system-prompt">Writing a Good System Prompt</h2>
+                    <p>The system message is where most of the agent's behavior is defined. A vague system prompt produces unpredictable results. A well-structured one makes the agent consistent and reliable. Here's a template that works well:</p>
+
+                    <div class="code-block"><span class="comment">## Role</span>
+You are [describe the role and purpose clearly].
+
+<span class="comment">## Tools Available</span>
+- [tool_name]: Use this when [specific situation]. Input: [what to pass]. Output: [what it returns].
+- [tool_name]: Use this when [specific situation].
+
+<span class="comment">## Behavior Rules</span>
+- [Specific instruction, be concrete, not vague]
+- [Constraint or boundary]
+- [When to escalate or say you don't know]
+
+<span class="comment">## Response Format</span>
+[How to structure the final answer, length, tone, format]
+
+<span class="comment">## Error Handling</span>
+If a tool fails or returns no results, [what to do instead].</div>
+
+                    <p>A few things that consistently improve agent behavior:</p>
+                    <ul>
+                        <li>Tell the agent <em>when</em> to use each tool, not just that the tools exist. "Use the calendar tool when the user asks about scheduling or availability" is better than just listing the tool.</li>
+                        <li>Set explicit constraints. "Never share order details without first verifying the customer's email" prevents the agent from doing things you don't want.</li>
+                        <li>Define what "done" looks like. Without this, agents sometimes keep calling tools unnecessarily.</li>
+                        <li>Use n8n expressions to inject dynamic context: <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">Today's date is {{ $now.toFormat('yyyy-MM-dd') }}.</code> This is especially useful for date-aware agents.</li>
+                    </ul>
+
+                    <div class="callout warn">
+                        <strong>Common mistake:</strong> Writing a system prompt that's too long and contradictory. If you tell the agent to "be concise" and also "provide detailed explanations", it will be inconsistent. Keep instructions clear and non-conflicting. If the prompt is getting very long, that's usually a sign the agent is trying to do too many things and should be split into specialized sub-agents.
+                    </div>
+
+                    <h2 id="models">Supported Chat Models</h2>
+                    <p>The AI Agent node requires a Chat Model sub-node. The model must support function/tool calling, not all models do. Here are the officially supported providers and what to know about each. For a deeper comparison of cost, speed, and quality across these providers, see the <a href="https://axshul.site/n8n/guide/choose-right-ai-model/" style="color:var(--blue);text-decoration:underline;">Choosing the Right AI Model</a> guide.</p>
+
+                    <table class="compare-table">
+                        <thead>
+                            <tr><th>Provider</th><th>Node Name</th><th>Best For</th><th>Notes</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>OpenAI</td><td>OpenAI Chat Model</td><td>General purpose, most reliable tool calling</td><td>GPT-4o for quality, GPT-4o-mini for cost. Most widely tested with n8n.</td></tr>
+                            <tr><td>Anthropic</td><td>Anthropic Chat Model</td><td>Long context, nuanced reasoning, safety</td><td>Claude 3.5 Sonnet/Haiku. Excellent for complex instructions and large documents.</td></tr>
+                            <tr><td>Google Gemini</td><td>Google Gemini Chat Model</td><td>Multimodal, Google ecosystem</td><td>Gemini 1.5 Pro/Flash. Strong vision capabilities. Free tier available.</td></tr>
+                            <tr><td>Google Vertex AI</td><td>Google Vertex Chat Model</td><td>Enterprise Google Cloud deployments</td><td>Same models as Gemini but via Vertex AI API with enterprise billing.</td></tr>
+                            <tr><td>Azure OpenAI</td><td>Azure OpenAI Chat Model</td><td>Enterprise compliance, data residency</td><td>OpenAI models hosted on Azure. Required for some regulated industries.</td></tr>
+                            <tr><td>Groq</td><td>Groq Chat Model</td><td>Speed, extremely fast inference</td><td>Llama, Mixtral, Gemma models. Best for latency-sensitive workflows.</td></tr>
+                            <tr><td>Mistral</td><td>Mistral Cloud Chat Model</td><td>European hosting, open-weight models</td><td>Mistral Large/Small. Good alternative to OpenAI with EU data residency.</td></tr>
+                            <tr><td>Ollama</td><td>Ollama Chat Model</td><td>Local/self-hosted, privacy, no API costs</td><td>Runs models on your own hardware. Requires Ollama server. Tool calling support varies by model.</td></tr>
+                            <tr><td>AWS Bedrock</td><td>AWS Bedrock Chat Model</td><td>AWS ecosystem, enterprise</td><td>Access to Claude, Llama, Titan, and others via AWS.</td></tr>
+                            <tr><td>DeepSeek</td><td>DeepSeek Chat Model</td><td>Cost-effective, strong reasoning</td><td>Very competitive pricing. DeepSeek-R1 has strong reasoning capabilities.</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>Each Chat Model sub-node has its own settings. The most important ones are:</p>
+                    <ul>
+                        <li><strong>Model</strong>: Which specific model to use (e.g., <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">gpt-4o</code>, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">claude-3-5-sonnet-20241022</code>)</li>
+                        <li><strong>Temperature</strong>: Controls randomness. 0 = deterministic, 1 = creative. For agents doing factual tasks or tool use, keep this at 0 or 0.1. For creative tasks, 0.7 to 1.0.</li>
+                        <li><strong>Max Tokens</strong>: Maximum length of the model's response. Set this to avoid unexpectedly long (and expensive) outputs.</li>
+                        <li><strong>Timeout</strong>: How long to wait for a response before failing. Important for production workflows.</li>
+                    </ul>
+
+                    <div class="callout">
+                        <strong>Fallback Model:</strong> Some Chat Model sub-nodes have an "Enable Fallback Model" option. When enabled, you connect a second backup model that the agent switches to if the primary model fails or is unavailable. Useful for production reliability.
+                    </div>
+
+                    <h2 id="tools">Tools: What the Agent Can Do</h2>
+                    <p>Tools are what separate an AI Agent from a chatbot. Each tool is a capability the agent can invoke during its reasoning loop. The agent reads the tool's name and description, decides whether it needs it, calls it with the right parameters, and uses the result to continue reasoning.</p>
+                    <p>You connect tools by clicking the <strong>+</strong> under "Tool" on the AI Agent node. You can connect as many tools as you want, but more tools means more decisions for the agent, which can lead to confusion and higher costs. Start with the minimum set needed.</p>
+
+                    <h3>Built-in Tool Nodes</h3>
+                    <p>n8n ships with several ready-to-use tool nodes that require no custom configuration:</p>
+
+                    <div class="three-col">
+                        <div class="mini-card">
+                            <div class="mc-label">Calculator</div>
+                            <h5>Math Operations</h5>
+                            <p>Performs arithmetic. Use when the agent needs to compute exact numbers rather than estimate. No configuration needed.</p>
+                        </div>
+                        <div class="mini-card">
+                            <div class="mc-label">Wikipedia</div>
+                            <h5>General Knowledge</h5>
+                            <p>Searches Wikipedia for factual information. Good for general knowledge lookups without needing a paid search API.</p>
+                        </div>
+                        <div class="mini-card">
+                            <div class="mc-label">Wolfram Alpha</div>
+                            <h5>Computational Knowledge</h5>
+                            <p>Scientific queries, unit conversions, data analysis. Requires a Wolfram Alpha API key.</p>
+                        </div>
+                        <div class="mini-card">
+                            <div class="mc-label">SerpAPI</div>
+                            <h5>Google Search</h5>
+                            <p>Real-time web search via Google. Use when the agent needs current information. Requires a SerpAPI key.</p>
+                        </div>
+                        <div class="mini-card">
+                            <div class="mc-label">Code</div>
+                            <h5>Execute JavaScript</h5>
+                            <p>Runs custom JavaScript or Python. Use for data transformations or logic that no other tool handles.</p>
+                        </div>
+                        <div class="mini-card">
+                            <div class="mc-label">HTTP Request</div>
+                            <h5>Call Any API</h5>
+                            <p>The most flexible tool. Configure it to call any REST API. Define the description carefully so the agent knows when to use it.</p>
+                        </div>
+                    </div>
+
+                    <h3>App Integration Tools</h3>
+                    <p>The Tools Agent supports over 100 native app integrations as tools. These include Gmail, Google Sheets, Google Calendar, Slack, Notion, Airtable, HubSpot, Jira, GitHub, Postgres, MySQL, MongoDB, Stripe, Shopify, Telegram, Discord, and many more. Each one exposes specific operations (read, write, search, create) that the agent can call.</p>
+                    <p>To add one, click <strong>+</strong> under Tool, search for the app name, and configure it with your credentials and the specific operation you want to expose. The agent will use the tool's name and description to decide when to call it.</p>
+
+                    <h3>The Workflow Tool: Your Most Powerful Option</h3>
+                    <p>The <strong>Call n8n Workflow</strong> tool lets your agent call another n8n workflow as a tool. This is the foundation of multi-agent architectures. You create specialized sub-workflows, one for CRM lookups, one for sending emails, one for database queries, and your main agent calls them as needed. Each sub-workflow can have its own credentials, error handling, and logic, completely isolated from the main agent.</p>
+
+                    <div class="flow-diagram">
+                        <div class="flow-node blue">Main Agent</div>
+                        <div class="flow-arrow">→ tool call</div>
+                        <div class="flow-node">lookup-customer workflow</div>
+                        <div class="flow-arrow">→ tool call</div>
+                        <div class="flow-node">send-email workflow</div>
+                        <div class="flow-arrow">→ tool call</div>
+                        <div class="flow-node">check-inventory workflow</div>
+                    </div>
+
+                    <h3>The $fromAI() Function: Dynamic Tool Parameters</h3>
+                    <p>When configuring a tool node (like Google Sheets or Gmail), you normally hardcode the parameters. But with <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">$fromAI()</code>, you let the agent fill in the parameters dynamically based on context.</p>
+
+                    <div class="code-block"><span class="comment">// In a Google Sheets tool node, instead of hardcoding the row data:</span>
+<span class="comment">// Name field:</span>
+{{ $fromAI("customerName", "The customer's full name from the conversation") }}
+
+<span class="comment">// Email field:</span>
+{{ $fromAI("email", "The customer's email address") }}
+
+<span class="comment">// Amount field:</span>
+{{ $fromAI("orderAmount", "The total order amount in USD", "number") }}</div>
+
+                    <p>The <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">$fromAI(key, description, type)</code> function takes three arguments: a key name (what the AI uses to identify the value), an optional description (gives the AI context about what to look for), and an optional type hint (<code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">string</code>, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">number</code>, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">boolean</code>, <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">json</code>). The AI model fills in the value from its context, from the conversation, from previous tool results, or by asking the user if it can't find it.</p>
+
+                    <div class="callout">
+                        <strong>$fromAI() only works in tool nodes connected to an AI Agent.</strong> It doesn't work in regular workflow nodes or in the Code tool. Think of it as a way to make your tool nodes "AI-aware", the agent populates the fields rather than you hardcoding them.
+                    </div>
+
+                    <h3>Human-in-the-Loop for Tools</h3>
+                    <p>For sensitive tool calls, sending emails, deleting records, making payments, you can require human approval before the agent executes the tool. In the Tools Panel, there's a "Human review" section where you configure an approval channel (Chat, Slack, Telegram, email). When the agent wants to use a gated tool, the workflow pauses and sends an approval request. The reviewer approves or denies, and the workflow continues accordingly.</p>
+
+                    <h2 id="memory">Memory: Giving the Agent Context</h2>
+                    <p>Without memory, every message to the agent starts a completely blank conversation. The agent has no idea what was said before. Memory fixes this by storing conversation history and making it available on each turn.</p>
+                    <p>You connect a memory node by clicking the <strong>+</strong> under "Memory" on the AI Agent node. Here are all the memory types available:</p>
+
+                    <table class="compare-table">
+                        <thead>
+                            <tr><th>Memory Type</th><th>Persistence</th><th>Best For</th><th>Requires</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Simple Memory</td><td>Session only (lost on restart)</td><td>Testing, demos, single-session interactions</td><td>Nothing, built into n8n</td></tr>
+                            <tr><td>Window Buffer Memory</td><td>Session only</td><td>Conversations where you want a fixed context window</td><td>Nothing, built into n8n</td></tr>
+                            <tr><td>Postgres Chat Memory</td><td>Persistent</td><td>Production chatbots, multi-session conversations</td><td>Postgres database</td></tr>
+                            <tr><td>Redis Chat Memory</td><td>Persistent</td><td>High-performance production, fast reads</td><td>Redis server</td></tr>
+                            <tr><td>Motorhead Memory</td><td>Persistent</td><td>Managed memory service with summarization</td><td>Motorhead server</td></tr>
+                            <tr><td>Xata Memory</td><td>Persistent</td><td>Serverless Postgres-compatible storage</td><td>Xata account</td></tr>
+                            <tr><td>Zep Memory</td><td>Persistent</td><td>Semantic memory with knowledge graph</td><td>Zep server</td></tr>
+                            <tr><td>Vector Store Memory</td><td>Persistent</td><td>Semantic recall over long histories, RAG-style memory</td><td>Embeddings node + Vector Store node</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="arch-grid">
+                        <div class="arch-card">
+                            <div class="arch-card-label">Simple Memory</div>
+                            <h4>Start Here</h4>
+                            <p>Stores the full conversation history in n8n's in-memory store. Zero setup. Perfect for testing. Lost when the workflow restarts or n8n restarts. Configurable: set how many previous messages to keep (default is the last 5 interactions).</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Window Buffer Memory</div>
+                            <h4>Cost Control</h4>
+                            <p>Like Simple Memory but with a hard cap on how many messages are kept. When the window fills, the oldest messages are dropped. Use this to prevent context from growing indefinitely and driving up token costs.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Postgres / Redis</div>
+                            <h4>Production Choice</h4>
+                            <p>Stores conversation history in an external database. Survives restarts. Supports multiple concurrent users via Session ID. Use Postgres if you already have it. Use Redis if you need sub-millisecond read speeds.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Vector Store Memory</div>
+                            <h4>Semantic Recall</h4>
+                            <p>On each turn, retrieves the most semantically relevant past messages, not just the most recent ones. Requires an Embeddings sub-node and a Vector Store sub-node. See the <a href="https://axshul.site/n8n/guide/vector-stores-and-rag/" style="color:var(--blue);text-decoration:underline;">Vector Stores and RAG guide</a> for setup.</p>
+                        </div>
+                    </div>
+
+                    <p>All persistent memory types use a <strong>Session ID</strong> to separate conversations. This is critical. If you don't set a unique Session ID per user or conversation, all users will share the same memory. A common pattern:</p>
+
+                    <div class="code-block"><span class="comment">// Session ID in Postgres/Redis Chat Memory node:</span>
+{{ $json.userId }}_{{ $json.conversationId }}
+
+<span class="comment">// Or for a simple single-user setup:</span>
+{{ $('Chat Trigger').item.json.sessionId }}</div>
+
+                    <div class="callout warn">
+                        <strong>Memory and token costs:</strong> Every message stored in memory gets sent to the LLM on every turn. A conversation with 50 messages means 50 messages of context on message 51. This adds up fast. Use Window Buffer Memory to cap the context size, or use Vector Store Memory which only retrieves the most relevant messages rather than all of them.
+                    </div>
+
+                    <h3>Chat Memory Manager</h3>
+                    <p>For advanced memory management beyond what the standard memory nodes offer, n8n provides the <strong>Chat Memory Manager</strong> node. Use it when you need to: inject custom messages into the agent's memory (to give it context it didn't learn from the conversation), check and reduce memory size programmatically, or manage memory in workflows where you can't attach a memory sub-node directly to the agent.</p>
+
+                    <h2 id="output-parsers">Output Parsers: Getting Structured Data</h2>
+                    <p>By default, the AI Agent returns free-form text. That's fine for chat. But if the agent's output needs to feed into downstream nodes, a database insert, an API call, a conditional branch, you need structured data. Output parsers enforce a specific format on the agent's response.</p>
+                    <p>To use an output parser, first enable <strong>Require Specific Output Format</strong> in the node parameters. This reveals the Output Parser sub-node slot. Then connect one of the three available parsers.</p>
+
+                    <div class="callout warn">
+                        <strong>Important caveat:</strong> Output parsers work more reliably with the <strong>Basic LLM Chain</strong> node than with the AI Agent node. The agent's multi-step reasoning loop can interfere with structured output generation. If you need guaranteed structured output, the recommended pattern is: let the agent do its reasoning, then pass its raw text response through a separate LLM Chain node with an output parser for the final formatting step.
+                    </div>
+
+                    <h3>Structured Output Parser</h3>
+                    <p>The most common parser. Forces the LLM to return a JSON object matching a schema you define. Two ways to configure it:</p>
+
+                    <div class="code-block"><span class="comment">// Method 1: Provide a JSON example, the parser infers the schema</span>
+{
+  <span class="key">"customerName"</span>: <span class="val">"Jane Smith"</span>,
+  <span class="key">"orderTotal"</span>: <span class="val">149.99</span>,
+  <span class="key">"items"</span>: [<span class="val">"Widget A"</span>, <span class="val">"Widget B"</span>],
+  <span class="key">"priority"</span>: <span class="val">"high"</span>
+}
+
+<span class="comment">// Method 2: Define an explicit JSON Schema for precise control</span>
+{
+  <span class="key">"type"</span>: <span class="val">"object"</span>,
+  <span class="key">"properties"</span>: {
+    <span class="key">"customerName"</span>: { <span class="key">"type"</span>: <span class="val">"string"</span> },
+    <span class="key">"orderTotal"</span>:   { <span class="key">"type"</span>: <span class="val">"number"</span> },
+    <span class="key">"priority"</span>: {
+      <span class="key">"type"</span>: <span class="val">"string"</span>,
+      <span class="key">"enum"</span>: [<span class="val">"low"</span>, <span class="val">"medium"</span>, <span class="val">"high"</span>]
+    }
+  },
+  <span class="key">"required"</span>: [<span class="val">"customerName"</span>, <span class="val">"orderTotal"</span>]
+}</div>
+
+                    <p>Note: n8n's JSON Schema implementation doesn't support <code style="font-family:var(--font-mono);font-size:0.82em;background:var(--bg-off);padding:0.1em 0.4em;border-radius:4px;">$ref</code> for referencing other schemas. Keep schemas self-contained.</p>
+
+                    <h3>Auto-fixing Output Parser</h3>
+                    <p>A wrapper around the Structured Output Parser that adds resilience. When the LLM's output doesn't match the schema, instead of failing, this parser sends the malformed output back to the LLM with instructions to fix it. It requires a second Chat Model connection (the "fixing" model) and a Structured Output Parser connection (the schema to fix toward).</p>
+                    <p>Use this in production systems where occasional parsing failures are unacceptable. Avoid it in cost-sensitive or time-critical workflows, each fix attempt adds an extra LLM call.</p>
+
+                    <h3>Item List Output Parser</h3>
+                    <p>The simplest parser. Forces the LLM to return a plain list of items, strings, keywords, tags, categories. Use this when you need an array of simple values rather than a complex object. No schema definition needed; just connect it and the agent will return a JSON array.</p>
+
+                    <table class="compare-table">
+                        <thead>
+                            <tr><th>Parser</th><th>Output Format</th><th>Best For</th><th>Reliability</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Structured Output Parser</td><td>JSON object matching your schema</td><td>Structured data for downstream nodes</td><td>Good with capable models</td></tr>
+                            <tr><td>Auto-fixing Output Parser</td><td>JSON object (with retry on failure)</td><td>Production systems needing reliability</td><td>Best, retries on failure</td></tr>
+                            <tr><td>Item List Output Parser</td><td>JSON array of strings</td><td>Tags, keywords, simple lists</td><td>Very good, simple format</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h2 id="agent-loop">How the Agent Loop Works</h2>
+                    <p>Understanding the loop helps you debug unexpected behavior and write better system prompts. Here's exactly what happens when a message hits the AI Agent node:</p>
+
+                    <div class="flow-diagram" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <div class="flow-node blue">1. RECEIVE</div>
+                            <span style="font-size:0.8rem; color:var(--text-dim);">User message + memory history + system prompt assembled into context</span>
+                        </div>
+                        <div style="padding-left:1rem; color:var(--text-dim); font-size:0.8rem;">↓</div>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <div class="flow-node blue">2. THINK</div>
+                            <span style="font-size:0.8rem; color:var(--text-dim);">LLM evaluates: should I call a tool, or respond directly?</span>
+                        </div>
+                        <div style="padding-left:1rem; color:var(--text-dim); font-size:0.8rem;">↓</div>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <div class="flow-node orange">3. ACT</div>
+                            <span style="font-size:0.8rem; color:var(--text-dim);">If tool selected: n8n executes the tool and captures the result</span>
+                        </div>
+                        <div style="padding-left:1rem; color:var(--text-dim); font-size:0.8rem;">↓</div>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <div class="flow-node orange">4. OBSERVE</div>
+                            <span style="font-size:0.8rem; color:var(--text-dim);">Tool result added to context. LLM evaluates: is the goal achieved?</span>
+                        </div>
+                        <div style="padding-left:1rem; color:var(--text-dim); font-size:0.8rem;">↓ (if not done, loop back to THINK)</div>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <div class="flow-node green">5. RESPOND</div>
+                            <span style="font-size:0.8rem; color:var(--text-dim);">Final answer generated and returned. Memory updated.</span>
+                        </div>
+                    </div>
+
+                    <p>Each pass through steps 2–4 counts as one iteration toward the Max Iterations limit. A simple question with no tool use takes one iteration. A research task that searches the web three times and synthesizes results takes four or more iterations.</p>
+
+                    <h2 id="architectures">Agent Architecture Patterns</h2>
+                    <p>As your use cases grow, the architecture you choose matters. Here are the four patterns that cover most real-world scenarios. If you want to go further and have Claude build these architectures for you automatically, check out the <a href="https://axshul.site/n8n/guide/automate-n8n-with-claude/" style="color:var(--blue);text-decoration:underline;">Automate n8n with Claude</a> guide.</p>
+
+                    <div class="arch-grid">
+                        <div class="arch-card">
+                            <div class="arch-card-label">Single Agent</div>
+                            <h4>One agent, multiple tools</h4>
+                            <p>The simplest setup. One AI Agent node with all tools connected. Good for prototypes and straightforward tasks with fewer than 5–6 tools. Gets unwieldy fast as complexity grows.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Routing Pattern</div>
+                            <h4>Classify → Route → Specialist</h4>
+                            <p>A classifier (simple LLM call or Switch node) categorizes the incoming request and routes it to a specialized agent. Each specialist has focused tools and a tight system prompt. Best when you have clear, distinct request categories.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Orchestrator Pattern</div>
+                            <h4>Master agent → Sub-agents</h4>
+                            <p>A master agent has Workflow tools that call specialized sub-workflows, each containing their own AI Agent. The master decides which specialist to invoke. Scales well for enterprise use cases with many domains.</p>
+                        </div>
+                        <div class="arch-card">
+                            <div class="arch-card-label">Sequential Chain</div>
+                            <h4>Agent A → Agent B → Agent C</h4>
+                            <p>Agents process in stages, each handling one phase of a pipeline. Research → Analysis → Report is a classic example. Each agent receives the previous agent's output as its input.</p>
+                        </div>
+                    </div>
+
+                    <div class="callout tip">
+                        <strong>Start with a single agent.</strong> Add architectural complexity only when you've validated that the simpler approach doesn't meet your requirements. Most workflows that "need" a multi-agent architecture actually just need a better system prompt and cleaner tool descriptions.
+                    </div>
+
+                    <h2 id="real-example">A Real Example: Support Agent with CRM Lookup</h2>
+                    <p>Here's a complete, production-ready agent setup you can replicate. A customer support agent that can look up orders, check product availability, and escalate tickets.</p>
+
+                    <div class="flow-diagram">
+                        <div class="flow-node blue">Chat Trigger</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-node blue">AI Agent</div>
+                        <div class="flow-arrow">↓ tools</div>
+                        <div class="flow-node">HTTP Request (Orders API)</div>
+                        <div class="flow-arrow">+</div>
+                        <div class="flow-node">Google Sheets (Products)</div>
+                        <div class="flow-arrow">+</div>
+                        <div class="flow-node">Gmail (Escalation)</div>
+                        <div class="flow-arrow">↓ memory</div>
+                        <div class="flow-node">Postgres Chat Memory</div>
+                    </div>
+
+                    <p>System Message for this agent:</p>
+
+                    <div class="code-block">You are a customer support agent for TechStore.
+
+<span class="comment">## Tools</span>
+- order_lookup: Search orders by order ID or customer email. Use when a customer asks about their order status, shipping, or delivery.
+- product_search: Search the product catalog. Use when a customer asks about availability, specs, or pricing.
+- escalate_ticket: Send an escalation email to the support team. Use for refund requests over $200, damaged items, or any issue you cannot resolve directly.
+
+<span class="comment">## Rules</span>
+- Always greet the customer by name if you know it from the conversation.
+- Verify the customer's email before sharing any order details.
+- Never process refunds directly, always use escalate_ticket for refund requests.
+- If a product is out of stock, suggest the closest available alternative.
+- Keep responses under 150 words unless the customer asks for detail.
+
+<span class="comment">## When You Don't Know</span>
+If you cannot find an order or answer a question, say so honestly and use escalate_ticket to loop in a human agent.</div>
+
+                    <p>The HTTP Request tool for order lookup:</p>
+
+                    <div class="code-block"><span class="comment">// Tool description (what the agent reads to decide when to use it):</span>
+Look up a customer order by order ID or email address.
+Input: order ID (format: ORD-XXXXX) or customer email.
+Output: Order status, items, shipping info, and estimated delivery.
+
+<span class="comment">// Node configuration:</span>
+Method: GET
+URL: https://api.yourstore.com/orders/search
+Query Params:
+  q: {{ $fromAI("searchQuery", "The order ID or customer email to search for") }}
+Headers:
+  Authorization: Bearer {{ $credentials.apiKey }}</div>
+
+                    <h2 id="debugging">Debugging Agent Workflows</h2>
+                    <p>When an agent behaves unexpectedly, the execution logs are your best friend. Go to <strong>Executions</strong>, click the relevant execution, click the AI Agent node, and expand the output. You'll see every step the agent took: what it received, what it decided, which tools it called, what they returned, and what it concluded.</p>
+
+                    <p>Common failure patterns and fixes:</p>
+
+                    <table class="compare-table">
+                        <thead>
+                            <tr><th>Symptom</th><th>Likely Cause</th><th>Fix</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Agent ignores tools entirely</td><td>Tool descriptions are vague or the system prompt doesn't mention when to use them</td><td>Rewrite tool descriptions to be specific about when and how to use each tool</td></tr>
+                            <tr><td>Agent calls the wrong tool</td><td>Tool descriptions overlap or are ambiguous</td><td>Add clearer differentiation; reduce the number of tools</td></tr>
+                            <tr><td>Agent loops without stopping</td><td>Tool returns unclear results; no completion criteria in prompt</td><td>Add explicit "you're done when..." instructions to the system prompt; lower Max Iterations</td></tr>
+                            <tr><td>Agent makes up tool results</td><td>Tool is returning errors or empty responses that the agent doesn't recognize</td><td>Add error handling to tool nodes; add instructions for handling empty results in the system prompt</td></tr>
+                            <tr><td>Agent forgets previous messages</td><td>No memory node connected, or Session ID is wrong</td><td>Add a memory node; verify Session ID is consistent per user</td></tr>
+                            <tr><td>Structured output fails</td><td>Model doesn't reliably follow the schema</td><td>Use Auto-fixing Output Parser; simplify the schema; use a more capable model</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h2 id="cost-tips">Keeping Costs Under Control</h2>
+                    <p>Agents can get expensive fast if you're not careful. Each iteration involves at least one LLM call, and each LLM call sends the full context (system prompt + memory + conversation history + tool results) to the model. Here's how to keep costs reasonable. For a full breakdown of which providers offer the best cost-to-quality ratio, see the <a href="https://axshul.site/n8n/guide/ai-inference-providers/" style="color:var(--blue);text-decoration:underline;">AI Inference Providers</a> guide.</p>
+                    <ul>
+                        <li><strong>Right-size your model.</strong> Use the smallest model that handles your use case. GPT-4o-mini or Claude Haiku for most tasks. Reserve GPT-4o or Claude Sonnet for tasks that genuinely need the extra capability.</li>
+                        <li><strong>Cap memory.</strong> Use Window Buffer Memory with a small window (5 to 10 messages) instead of unlimited Simple Memory. Every message in memory costs tokens on every turn.</li>
+                        <li><strong>Lower Max Iterations.</strong> If your agent rarely needs more than 3 tool calls, set Max Iterations to 5. This prevents runaway loops from burning tokens.</li>
+                        <li><strong>Keep system prompts tight.</strong> Every token in the system prompt is sent on every turn. A 2,000-token system prompt on a 100-message conversation is 200,000 tokens just for the prompt.</li>
+                        <li><strong>Cache frequent queries.</strong> If the same questions come up repeatedly, consider caching responses in a database and checking the cache before hitting the agent.</li>
+                    </ul>
+
+                    <h2 id="summary">The Full Picture</h2>
+                    <p>The AI Agent node is n8n's most capable and most complex node. Here's a quick reference of everything it connects to:</p>
+
+                    <table class="compare-table">
+                        <thead>
+                            <tr><th>Sub-node Type</th><th>Required?</th><th>Options</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Chat Model</td><td><span class="tag-pill yes">Required</span></td><td>OpenAI, Anthropic, Gemini, Groq, Mistral, Azure OpenAI, Ollama, AWS Bedrock, DeepSeek, Google Vertex AI</td></tr>
+                            <tr><td>Memory</td><td><span class="tag-pill opt">Optional</span></td><td>Simple Memory, Window Buffer, Postgres, Redis, Motorhead, Xata, Zep, Vector Store Memory</td></tr>
+                            <tr><td>Tool</td><td><span class="tag-pill opt">Optional*</span></td><td>Calculator, Wikipedia, Wolfram Alpha, SerpAPI, Code, HTTP Request, Call n8n Workflow, 100+ app integrations</td></tr>
+                            <tr><td>Output Parser</td><td><span class="tag-pill opt">Optional</span></td><td>Structured Output Parser, Auto-fixing Output Parser, Item List Output Parser</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size:0.78rem; color:var(--text-dim); margin-top:-0.5rem;">* Technically optional, but an agent without tools is just an expensive chatbot.</p>
+
+                    <p>The key settings to know:</p>
+                    <ul>
+                        <li><strong>System Message</strong>: Defines the agent's behavior. The most impactful thing you can configure.</li>
+                        <li><strong>Max Iterations</strong>: Controls how many reasoning loops the agent can run. Default 10.</li>
+                        <li><strong>Return Intermediate Steps</strong>: Shows every tool call and reasoning step in the output. Use for debugging.</li>
+                        <li><strong>Enable Streaming</strong>: Sends responses token by token for a more responsive chat experience.</li>
+                        <li><strong>Require Specific Output Format</strong>: Enables the Output Parser sub-node slot for structured JSON output.</li>
+                        <li><strong>Automatically Passthrough Binary Images</strong>: Enables multimodal input (images) for vision-capable models.</li>
+                    </ul>
+
+                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Continue Reading</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+                            <li><a href="https://axshul.site/n8n/guide/choose-right-ai-model/" style="color:var(--blue);text-decoration:underline;">Choosing the Right AI Model for n8n →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/vector-stores-and-rag/" style="color:var(--blue);text-decoration:underline;">Vector Stores and RAG in n8n →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/automate-n8n-with-claude/" style="color:var(--blue);text-decoration:underline;">Automate n8n with Claude →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/ai-inference-providers/" style="color:var(--blue);text-decoration:underline;">AI Inference Providers for n8n →</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/build-your-first-workflow/" style="color:var(--blue);text-decoration:underline;">How to Build Your First n8n Workflow →</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </main>
+
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>18 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse">AN</div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://docs.n8n.io/advanced-ai/intro-tutorial/" target="_blank" class="sb-link">n8n AI Tutorial ↗</a></li>
+                        <li><a href="https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent/tools-agent/" target="_blank" class="sb-link">Tools Agent Docs ↗</a></li>
+                        <li><a href="https://docs.n8n.io/advanced-ai/examples/using-the-fromai-function/" target="_blank" class="sb-link">$fromAI() Docs ↗</a></li>
+                        <li><a href="https://docs.n8n.io/advanced-ai/human-in-the-loop-tools/" target="_blank" class="sb-link">Human-in-the-Loop ↗</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/choose-right-ai-model/" class="sb-link">Choosing AI Models →</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/vector-stores-and-rag/" class="sb-link">Vector Stores & RAG →</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                        <span class="bt">Share Article</span>
+                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
+                    </button>
+
+                    <a href="../" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">← Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                © 2026 <a href="../../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../../assets/js/3d-anim.js"></script>
+    <script src="../../../assets/js/text-highlight-share.js" defer></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
+                        setTimeout(() => shareBtn.querySelector('.bt').textContent = 'Share Article', 2000);
+                    });
+                }
+            });
+        }
+
+        // Mobile nav toggle
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        function copyWorkflow() {
+            const json = `{"nodes":[{"parameters":{"options":{}},"type":"@n8n/n8n-nodes-langchain.chatTrigger","typeVersion":1.4,"position":[0,0],"id":"209e608a-a72b-4605-b97f-c413474c677c","name":"When chat message received","webhookId":"a65db521-e22b-4911-ba0c-671a6a454fa8"},{"parameters":{"options":{}},"type":"@n8n/n8n-nodes-langchain.agent","typeVersion":3.1,"position":[208,0],"id":"dd9725c3-be79-46cb-b18d-b20450e62682","name":"AI Agent"},{"parameters":{"model":{"__rl":true,"mode":"list","value":"gpt-4o-mini"},"builtInTools":{},"options":{}},"type":"@n8n/n8n-nodes-langchain.lmChatOpenAi","typeVersion":1.3,"position":[128,240],"id":"7d1b788f-0024-4bc1-9635-1218fbabffc0","name":"OpenAI Chat Model"},{"parameters":{},"type":"@n8n/n8n-nodes-langchain.memoryBufferWindow","typeVersion":1.3,"position":[304,240],"id":"6637e90d-5a36-4292-8493-53dca74a45b3","name":"Simple Memory"}],"connections":{"When chat message received":{"main":[[{"node":"AI Agent","type":"main","index":0}]]},"OpenAI Chat Model":{"ai_languageModel":[[{"node":"AI Agent","type":"ai_languageModel","index":0}]]},"Simple Memory":{"ai_memory":[[{"node":"AI Agent","type":"ai_memory","index":0}]]}},"pinData":{},"meta":{"templateCredsSetupCompleted":true}}`;
+            navigator.clipboard.writeText(json).then(() => {
+                const btn = document.getElementById('wfCopyBtn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy JSON', 2000);
+            });
+        }
+    </script>
+</body>
+</html>
