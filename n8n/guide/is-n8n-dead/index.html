@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is n8n Dead? Claude Can Generate Workflows, But That Changes Nothing - n8n Guide</title>
+    <meta name="description" content="Every few months someone declares n8n dead. Claude can generate workflow JSON, AI agents are rising, and yet n8n just hit a $2.5B valuation. Here is the honest breakdown of why n8n is not going anywhere.">
+    <meta property="og:title" content="Is n8n Dead? Claude Can Generate Workflows, But That Changes Nothing">
+    <meta property="og:description" content="Every few months someone declares n8n dead. Claude can generate workflow JSON, AI agents are rising, and yet n8n just hit a $2.5B valuation. Here is the honest breakdown.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/is-n8n-dead/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon_io/favicon-32x32.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Is n8n Dead? Claude Can Generate Workflows, But That Changes Nothing",
+      "description": "Every few months someone declares n8n dead. Claude can generate workflow JSON, AI agents are rising, and yet n8n just hit a $2.5B valuation.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-04-05",
+      "url": "https://axshul.site/n8n/guide/is-n8n-dead/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
+    }
+    </script>
+</head>
+<body>
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../../">Back to Archive</a></li>
+                <li><a href="../../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top: 5rem;">
+        <div class="reader-layout">
+            <main class="reader-main">
+                <header class="reader-header stagger-in">
+                    <div class="reader-tags">
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Opinion</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Automation</span>
+                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">AI Agents</span>
+                    </div>
+                    <h1 class="reader-title">Is n8n Dead? Claude Can Generate Workflows, But That Changes Nothing</h1>
+                    <div class="reader-meta">Published on Apr 5, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+                    <h2>The Question That Keeps Coming Back</h2>
+                    <p>Every few months, a new wave of content appears asking whether n8n is dead. The trigger changes. First it was Zapier's dominance. Then Make.com's visual canvas. Now it is Claude, AI agents, and the idea that a language model can just generate a workflow JSON and make the whole platform irrelevant. The question is always the same. The answer has always been the same too.</p>
+                    <p>n8n is not dead. It has never been closer to being the backbone of how serious automation gets built. And the people asking whether it is dead are, almost without exception, confusing a demo with a production system.</p>
+
+                    <h2>What Claude Actually Does With n8n</h2>
+                    <p>Yes, Claude can generate n8n workflow JSON. You can describe what you want in plain English, paste the output into n8n, and watch a basic workflow appear. That is genuinely useful. It lowers the barrier to entry. It speeds up prototyping. It is a real capability that has made n8n more accessible to more people.</p>
+                    <p>But here is what that demo does not show you. The workflow Claude generates is a starting point, not a finished system. It will not know your specific API authentication setup. It will not handle your edge cases. It will not know that your CRM returns a different field name on weekends because of a legacy data migration from 2021. It will not configure your retry logic, your dead letter queues, your error notification routing, or your rate limit handling for the third-party service that throttles after 100 requests per minute.</p>
+
+                    <div style="background:var(--bg-off); border:1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <p style="margin:0; font-size: 1rem; color: var(--text-mid);">The n8n community itself has documented this extensively. Threads on hallucinated node configurations, incorrect credential mappings, and broken variable references are common. Getting Claude to generate a workflow that actually runs in production without modification is a different problem entirely from getting it to generate something that looks right.</p>
+                    </div>
+
+                    <p>The gap between a workflow that imports and a workflow that runs reliably at scale, handles failures gracefully, and integrates cleanly into a real business system is enormous. That gap is where n8n expertise lives. And that gap is not getting smaller because Claude exists.</p>
+
+                    <h2>The Architecture Claude Cannot See</h2>
+                    <p>When you build a real automation system for a business, you are not building one workflow. You are building a system of workflows. You have parent workflows that orchestrate child workflows. You have shared credential stores. You have environment-specific configurations for staging and production. You have webhook endpoints that need to be stable and versioned. You have data transformation logic that has been refined over months of real-world edge cases. You have monitoring, alerting, and audit trails.</p>
+                    <p>None of that exists in a JSON file. All of it requires architectural decisions that a language model generating a single workflow cannot make for you. The decisions about how to structure sub-workflows, how to handle partial failures in a multi-step pipeline, how to design for idempotency when a webhook fires twice, how to manage state across long-running processes, these are engineering decisions. They require understanding the business, the data, the failure modes, and the constraints of every connected system.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0;">
+                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
+                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">What Claude Can Do</p>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">Generate a workflow scaffold. Suggest node types. Prototype a happy-path flow from a description.</p>
+                        </div>
+                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
+                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">What Claude Cannot Do</p>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">Architect a multi-workflow system. Handle your specific data contracts. Build for failure, scale, and observability.</p>
+                        </div>
+                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
+                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">What n8n Provides</p>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">The runtime, the connectors, the execution engine, the credential management, the scheduling, the error handling infrastructure.</p>
+                        </div>
+                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
+                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">What Expertise Provides</p>
+                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">The system design, the edge case handling, the integration knowledge, the business logic that makes it sellable.</p>
+                        </div>
+                    </div>
+
+                    <h2>The Numbers Tell a Different Story</h2>
+                    <p>While the "is n8n dead" content was being written, n8n raised a Series C at a $2.5 billion valuation. Revenue grew 10x year over year. The user base grew 6x. Enterprise clients include Vodafone and Delivery Hero. The platform now serves over 230,000 active users across more than 3,000 enterprise accounts.</p>
+                    <p>The global workflow automation market hit 22 billion dollars in 2026 and is projected to reach 65 billion by 2031. n8n is not a tool that is being replaced. It is a platform that is being embedded deeper into the infrastructure of companies that cannot afford for their automation layer to fail.</p>
+                    <p>That is the thing about infrastructure. Once it is in, it does not come out easily. n8n workflows are running inside companies right now handling lead routing, invoice processing, customer onboarding, data synchronization, compliance reporting, and AI agent orchestration. Those systems are not getting ripped out because Claude can generate a JSON file.</p>
+
+                    <h2>n8n Was Already Winning When Zapier and Make Were Dominant</h2>
+                    <p>It is worth remembering the context. When n8n launched in 2019, Zapier was the established player with a massive head start, a huge app library, and strong brand recognition. Make.com (then Integromat) had a more powerful visual canvas and a loyal following. The conventional wisdom was that the market was already decided.</p>
+                    <p>n8n grew anyway. It grew because it offered something the others did not: real code execution, self-hosting, no per-task pricing that punishes scale, and a level of flexibility that let developers build things that were simply not possible on the other platforms. The community grew 300% in active users from 2022 to 2023 alone.</p>
+                    <p>The same dynamic is playing out now. AI tools are generating interest and hype. Some of that hype is legitimate. But the teams that need to build reliable, scalable, maintainable automation systems are still choosing n8n. Not despite the AI wave, but because of it. n8n is where you run your AI agents. It is the orchestration layer that connects your LLM calls to your actual business systems.</p>
+
+                    <h2>Why n8n Beats Zapier and Make at the Level That Matters</h2>
+                    <p>When Zapier was at its peak, the criticism of n8n was that it was too technical, too hard to set up, and too niche. That criticism was partially fair for a certain type of user. But for the type of user building systems that businesses actually depend on, n8n was always the right answer.</p>
+                    <p>Consider the cost reality. A workflow processing 1,000 tasks per day costs roughly 600 dollars per month on Zapier. The same workflow on n8n costs under 50 dollars per month. At scale, that difference is not a preference. It is a business decision. Companies that automate seriously cannot afford Zapier's per-task pricing model once their workflows grow.</p>
+                    <p>Make.com offered more power than Zapier at a lower price, and it built a strong following. But it still operates on a cloud-only model with its own pricing constraints. n8n's self-hosting option means that for companies with data sovereignty requirements, compliance obligations, or simply a preference for owning their infrastructure, n8n is the only serious option in the visual workflow space.</p>
+                    <p>That is why n8n is embedded in companies that cannot easily switch. The switching cost is not just technical. It is organizational. Workflows that have been running for two years, that have been refined through hundreds of edge cases, that are integrated with internal systems and custom credentials, do not get replaced because a new tool looks interesting.</p>
+
+                    <h2>n8n Is the Runtime for AI Agents, Not the Competition</h2>
+                    <p>Here is the framing that most of the "is n8n dead" content gets completely wrong. Claude and other AI tools are not competing with n8n. They are running on top of n8n. The AI agent node in n8n lets you wire a language model into a workflow that connects to real systems. The model reasons. n8n acts. That is the architecture that makes AI automation actually useful in a business context.</p>
+                    <p>When Claude generates a workflow JSON, where does that workflow run? In n8n. When an AI agent needs to query a database, send a Slack message, update a CRM record, or trigger a downstream process, what is the orchestration layer? n8n. The tools that people are using to argue that n8n is dead are, in many cases, tools that are being used inside n8n.</p>
+                    <p>n8n has leaned into this hard. The platform now has native AI agent nodes, memory management for multi-turn agent conversations, sub-workflow support for complex agent architectures, and tight integrations with every major LLM provider. It is not a legacy tool being disrupted by AI. It is the platform that is absorbing AI capabilities and becoming more powerful because of them.</p>
+
+                    <h2>What "Industry Grade" Actually Means</h2>
+                    <p>There is a version of automation that looks impressive in a demo and falls apart in production. And there is a version that runs quietly, reliably, and invisibly inside a company for years. The difference between them is not which tool you used. It is whether the person who built it understood what production actually requires.</p>
+                    <p>Industry grade automation means your workflow handles the case where the upstream API returns a 429 and you need to back off and retry. It means your data transformation does not silently drop records when a field is null. It means your error notifications go to the right person with enough context to debug the problem. It means your workflow is idempotent so that running it twice does not create duplicate records. It means you have a way to replay failed executions without manual intervention.</p>
+                    <p>None of that is in the JSON that Claude generates. All of it is in the knowledge of the person building the system. And all of it runs inside n8n.</p>
+
+                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Related reading</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+                            <li><a href="https://axshul.site/n8n/guide/automate-n8n-with-claude/" style="color:var(--blue);text-decoration:underline;">Automate n8n With Claude: Build Workflows Using AI</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/ai-agent-node/" style="color:var(--blue);text-decoration:underline;">The n8n AI Agent Node: Complete Guide</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/what-is-n8n/" style="color:var(--blue);text-decoration:underline;">What is n8n?</a></li>
+                        </ul>
+                    </div>
+
+                    <h2>The Verdict</h2>
+                    <p>n8n is not dead. It is not dying. It is not being replaced by Claude, by AI agents, or by any other tool currently generating hype. It is a platform that has survived and grown through every wave of competition since 2019, and it is now more deeply embedded in enterprise infrastructure than it has ever been.</p>
+                    <p>The people who are asking whether n8n is dead are, in most cases, people who have not yet built something serious with it. The people who have built serious systems with it are not asking that question. They are too busy maintaining the workflows that are running their businesses.</p>
+                    <p>Use Claude to generate your starting point. Use n8n to build the system that actually works.
+                    <div style="margin: 3rem 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+                        <div style="background: var(--bg-off); padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Visual Reference</div>
+                        <iframe frameborder="0" style="width:100%;height:1105px;" src="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&dark=auto#R%3Cmxfile%3E%3Cdiagram%20name%3D%22Page-1%22%20id%3D%22Y1R7u5XpaZQSn7qdZvS7%22%3E3VrbUuNIEv0aHmdDVxoehWWMGEpGWMLYLxtGdsuSbIv1BVn6%2BjmnVL4B09M708QSS0cHrlJVVmaekxeVOTNb821nOXqZimI8mZ0Z2nh7ZrpnBn6sc%2FziTNXM6Oe63swky3Ss5g4TvbSeqElNzW7S8WR1snBdFLN1%2BnI6GReLxSRen8yNlsuiPF32vZidnvoySibvJnrxaPZ%2Btp%2BO19Nm9sL4dpi%2FmaTJdHeyfn7ZPJmPdouVJavpaFyUR1Nm%2B8xsLYti3Xyab1uTGb2380uz7%2FpPnu4VW04W65%2FZEFUbw49e11e91tO%2F%2FxNOH7%2F1L377QIqaWq2rnQ%2Bg%2BQs%2FpnPprKvR6qVx9fd0O4H0K%2FXAHY%2FWozPTaYbG9eo1OTOutnNo0bq%2F8Y1hdWWO%2Bg%2FayNVSP4wNL70qhv3ZYnQTXHpZ2xAtLxnPZ7Oxdvs6wRrRckrPjUw%2FdbZ%2B5qReZ%2Fjy3Ckvvbn9%2BjyPUu9mun7u2PV977YY3zyU3fTidWyOzbtFXN%2FNL6thdVEJ1ynvTJ7tQZdWtl14HX81enLWcedaajJ%2Bul393vKz586sFNcXmp%2BJ8qkOqt97akc5eHoo1NnrePG4GoZaOnwazp7nl%2FkQOg%2BM7Uvc0qtxfzuDLrPx%2FHHzbDzksC%2FH2BdZXHnuQAtqT%2Fcrq%2By6eeJnQSKyQLvLIkP0HF1UliXctuW5niZ6VincJPHdK09kDtaIWkRi2w0HGz9sY95JRJjYd1lS%2Bz1H83uW4YeB4WF%2Ft2XpPuWHYiPqge3n5bbrxhuRCQ06bO8yzxDu1MV%2B%2FS7LLew3sMfE%2Bi33i9TCOVHi1xH2xHW3Bd%2FXg03XFbrnJmVQH9Z03WDj15AHfLputOlCpufmPANezKmjic%2B133JsniHqvAqPdBShY9xlg5oyuz3YX0eYa9Ne2OTs7RWhBx54pd%2ByalE34x7GXekn2JK1K%2BXHrXAHGxHm9GMFv0hfQw59DRm5oTAw%2FFqoeWLT3grKzuLduOq2RQXbcFYAPw1MUTkVOLvx4RM8B1cxljgM4JPDWRzj7C18pEveujl851TeXt8Ea4TR29tzTSwsnGHR18AMz2OdmMtxBh9nObExIdP0Mz53bIljVAKb9sZ3Iz4vwZva1wTmHPhgQCxqyIWvuWeAz4ENDOGbti45A4y67tSDjfBfbotc4Pwc8gKeARyTktiKDPiH7a30E8ch%2FdKugjoHvo7VDYUcQ3bDZzc63m8pPm95ds8dNGeFM9cPeZawfYlbW%2FkpACdyjGMlUzT4QDfpr2xgKz2IpymxISdaOKctMEf5wE7yL0AMeEYXMQJf1tijAVfNTy2c75g4C76I4MuglpwPE8kdrAOnLRs246y46kF32Al8r13JeWAMnXXwGBxNqkaPxg%2B%2BxJd6BxZ4XTVntdW84FmIwwh4t%2B2uK%2FnV%2BCN1TJEnWz%2BMgPfAxl4DOUGD7iZ9fsB0YMj4CIlRDL0CXTS6GKJ2tPCIJ37oID6FxFXGcy1gryC3yq7EcM%2B7CjGKXEl%2FMQ94kHPIQyJ7cHe5ijzb655Fjd09YuFRT8YCY1nGl6DPJZf2ODTj%2BtalrvCRvccvS2wVZwZ1Yez52cMoDKVc4laBH8xDCjePemuIW%2BSNgaHGNWzFOuos6C%2FmnqN9bUPpufVzcqRZo%2BYZrxV8jlrDXCnHUh7wZs6lDINrDvukHo1%2B1y8%2BbEROGbpHa20%2FldxjzlN6cg%2FzKH8TP%2BBcB8fyaT%2B5aviw%2BaDPQGv0POyBDojfK7f5nez1O%2BzJjSZ%2BcqOfa4jjRK33qIMl64fMJ14pP1dSXxnftAMxUsuzmnn%2BP7KDsmlH%2Fkan%2FR7aIWX55M%2FhjGYeujB3KYx2uhFvmTdFxrwu%2BVYjhnAmc3NgKRlbmaNkTm9r0k9KlhyTy6yvyLNqvRp7lszVUq9crfdq8Jz%2BUnEL3svnt%2B7xeTLnNfpsu7v1zbjqXheH3iT1r4PwoQXb0rva%2Bv3%2B5mo67iTJcD5bPX%2FcI8jO4%2B7pVn%2FuROhtHo1h334ddgLIRF%2BUaxr5K6AnOIAYQf2tH%2Fp%2BliB3elvyiLmcOdfPmDs8XfIxpD%2BY6wfwe2xjHhxjbWb9Rb%2FRs8DjiPtt2i9jpkZ9C4NS9hQ16xax9Vhr0Jswtw2QAzz7MOfjH30kShlnkAldGRcSsy7rQI2cijUyVmUfwR4hgh4Rcif3S4xkH4JYNppaF2jIYRXyxolNyKGbxs7G9sds7w%2FqQZmmzJc9C%2Fo7NvVgXwXdzK6stYyF%2FRzzlIl16Mv2c6g7gudxHfsqxD7rSLumvaxNqEE7rsg5%2Bh97S%2Bh0vM7mOiHrLuNhUDWYIA%2Bi50HcQO%2FYFC71zuHTdgnOH%2BtowX9cL2PEl%2F0MzmkhH%2BNs%2BIjY1j5yToOJjDfmQhvrTehk4rPOGirzCuoEOKw1PZ2ssagBTs0c7rvsNTzWaXLCRr%2Bscz9tF3yOmoj%2Br%2BpKToCHNeI284CjBxsxlwUqjlh3k6ob0ibWhVzzmzpqCXzmmbIuIW5PZIYePsuaCPxy1JtH7oesWJPyW7J%2BkhOyb2tq7JFN%2B%2FMD8Dw3RThGDjnGiX0IeoOINZP8Y92RvRLqOetyxLyEWsf8hv6pTgypK%2FKcj%2BfMq4iLCvVCYz1F%2FWcfwzhS%2BoOfdcI%2BgX2i4ZOfEhOnJqZNnxVIn7JvlrWkljVea%2BIsJid0T%2FUYyEvExJSc6Ml8a6DnkZjC%2Fi35z74YOlmsLTKH1rl%2BatOeE7KvYu%2FVT70mB%2BGNxwPnIQec817vk%2BJCvgm1mncVX3J4YDU9Fuv%2FzANG4GtePWbUKwJvx%2B5urulH%2BE7BfoOxDF4zltGLIu4Z68RQlz1QRl2hcyR04o6cWjfvJMgf9FvIvsixZI0AFnhvQc2O2NvALnBZ5g9gqQ%2BYj2GXY%2Ff4fij7wnEfPQdiBbblkF%2FLnoP7mV909O2QT78MLMmrSvZuBvVDHtC71J%2FvSYg1n%2Ftlzo0Pc4yPmu87xJ9chW%2F53laTi3w3ivg%2Bhb7neu%2BvEDzmuw5rD3MXcLH9dgJfMMdM%2B6w3sq98PK4f9AXkuoPT%2BgHcQvi3yxhtarSyX%2FDd0eheD9BnWHzv0jBnNOc%2BCL4DNjgd9AN3GCs1cKj99zbV3fe2Yw69uvRXYDb9n%2BxzPvBnoPp06W%2FgFRmMU9UDAg%2B8m2fgnnt7sD9K0H8ztycmOEa8gDcqQ51%2FwAf0s4ijJg8qPkmd2ZczT%2Bz49Ij98Qd83PuQMlEDmY%2F3c4wxcMeBHnv%2Bj1Cj56P%2BdnXf8zLIKH3m8PRC3g6Ur0Oi1HmYDReiuS%2BQ9TxqYuqFuMn7AffqO%2FCvecMgUnWzUA37vubdjF%2BGNw8FpOPkAZgwnY3642LMGxC%2BTe5PvzVHnZk27DVRe2fwHuMq4O1EMz7oUL7G5nCBWV7gmFfNjc7raLZRNzpqYrJcT7ZHtz7q4qgzKeaT9bLCkunR3ZahqZus8nAR9m13u6XE2FYzVNd91oWtruLUNVyyF324qcIHdVn1X1xcGT9zcQU56cuKV1blNF1Pei%2BjmE%2FK5egFc9P1HEe6Oj6u1ssi31%2FwwRFX39PZrL8znhPTUTzdLCcdbnUv1IpWMSuW8izz8lLDj5rvKR3GxXpF8flkHU%2FVWQW0SNd0kKX9Mmy%2BfYSNeX6Cze4uVmFjmNonYWP9DDbLYrMY8%2FZQOuWf4WN9hI%2BacBaJPNKy32OmP4%2F0ifEWoM%2BLFsB0gsgueBQinwaI%2FVOATIv582b1j8H4Tf%2BzaNlFRbwsVqvfpiPp8reYaNr5uYyjz8DEfo%2BJ%2BTaDaaegXFx8Firqi4LJ%2BN03ED%2FMaYuxw%2B81MFoUi8kpNIegogexVH2h8u0dbBKTWVE6i3Q%2BWqfF4keO%2FrFXd05dTmaQ9HpqzJGn7R84Up1wX6Sw%2FM8y1vkbAatis4wnas%2FxNx9vxPyVnPVomUzW7%2BRIUPc2%2F32cd19lfS2gx6PVdJ9%2BObgfrdeT5UJuMTTkcE2Xv782J%2FTLX0SKd4I%2BmxX6l2fFl8bd%2BlW4vxX02bgbXx7399ng4quzQftVbHgr6LPZYH1FNnwpqO3z04bs8m1D9rNYf%2FsrQZ%2BNtf2%2FxNr%2BP%2BsD3tICkWv9y7j8NdT4UNhn0%2BP8K6aCr9sQvCfA2%2Ffnv4%2F%2BW0l%2FG3oMD3%2Fh1Sw%2F%2FKGc2f4D%3C%2Fdiagram%3E%3C%2Fmxfile%3E"></iframe>
+                    </div></p>
+
+                </div>
+            </main>
+
+            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
+                <div style="position: relative; z-index: 1;">
+                    <div class="read-progress-container" style="margin-bottom: 2rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                            <span>READING PROGRESS</span>
+                            <span>9 MIN</span>
+                        </div>
+                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
+                        </div>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
+                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
+                        <div class="reader-author">
+                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
+                            <div>
+                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
+                                <div class="ra-role">AI / Automation Eng.</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+
+                    <div class="sec-label" style="margin-bottom: 1rem;">Related</div>
+                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><a href="https://axshul.site/n8n/guide/automate-n8n-with-claude/" class="sb-link">Automate n8n With Claude</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/ai-agent-node/" class="sb-link">AI Agent Node Guide</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/what-is-n8n/" class="sb-link">What is n8n?</a></li>
+                        <li><a href="https://axshul.site/n8n/guide/build-your-first-workflow/" class="sb-link">Build Your First Workflow</a></li>
+                    </ul>
+
+                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+
+                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
+                        <span class="bt">Share Article</span>
+                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
+                    </button>
+
+                    <a href="../" class="ib-btn outline" style="justify-content:center;">
+                        <span class="bt" style="padding:0">Back to Archive</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">
+                2026 <a href="../../../">Anshul Namdev</a>
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="../../../assets/js/3d-anim.js"></script>
+    <script src="../../../assets/js/text-highlight-share.js" defer></script>
+    <script>
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+    </script>
+</body>
+</html>
