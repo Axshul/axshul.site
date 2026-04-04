@@ -1,4 +1,4 @@
-﻿ <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,9 +12,31 @@
     <!-- Meta Tags -->
     <meta name="description"
         content="Personal portfolio of Anshul Namdev, a Technical Architect, developer and AI engineer based in Bhopal, India. Showcasing modern web, backend and AI automation work.">
+    <meta name="keywords" content="Anshul Namdev, Technical Architect, AI Engineer, n8n automation, Java developer, Spring Boot, Bhopal, axshul">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://axshul.site/">
+    <meta property="og:site_name" content="Anshul Namdev">
     <meta property="og:title" content="Anshul Namdev | Technical Architect, Developer & AI Engineer">
     <meta property="og:description"
         content="Developer and AI engineer building modern products, automation and developer tools.">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Anshul Namdev - Technical Architect & AI Engineer">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Axshul">
+    <meta name="twitter:creator" content="@Axshul">
+    <meta name="twitter:title" content="Anshul Namdev | Technical Architect, Developer & AI Engineer">
+    <meta name="twitter:description" content="Developer and AI engineer building modern products, automation and developer tools.">
+    <meta name="twitter:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:image:alt" content="Anshul Namdev - Technical Architect & AI Engineer">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
@@ -32,22 +54,62 @@
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- JSON-LD SEO Schema -->
+    <!-- JSON-LD: Person -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Anshul Namdev",
       "url": "https://axshul.site",
-      "image": "https://axshul.site/assets/img/Photo.jpg",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://axshul.site/assets/img/anshul-namdev.jpg",
+        "width": 800,
+        "height": 800
+      },
       "jobTitle": "Technical Architect",
-      "alumniOf": "B.Tech CSE",
+      "description": "Technical Architect and AI Automation Expert specializing in modern web development, Java Spring Boot, and n8n workflow automation. Based in Bhopal, India.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bhopal",
+        "addressRegion": "Madhya Pradesh",
+        "addressCountry": "IN"
+      },
+      "email": "sales@axshul.site",
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "B.Tech CSE"
+      },
+      "knowsAbout": ["Java", "Spring Boot", "n8n", "AI Automation", "Rust", "JavaScript", "Web Development", "Workflow Automation", "Technical Architecture"],
       "sameAs": [
         "https://www.linkedin.com/in/anshul-namdev-b149b5329/",
         "https://github.com/axshul",
-        "https://twitter.com/Axshul"
-      ],
-      "description": "Technical Architect and AI Automation Expert specializing in modern web development and workflow automation."
+        "https://twitter.com/Axshul",
+        "https://community.n8n.io/u/Anshul_Namdev"
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Anshul Namdev",
+      "url": "https://axshul.site",
+      "description": "Portfolio of Anshul Namdev � Technical Architect, Developer & AI Engineer",
+      "author": {
+        "@type": "Person",
+        "name": "Anshul Namdev"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://axshul.site/n8n/guide/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
 </head>
@@ -108,7 +170,7 @@
 
             <div class="hero-visual" data-scroll data-speed="2">
                 <div class="image-wrapper">
-                    <img src="assets/img/Photo.jpg" alt="Anshul Namdev" class="hero-img">
+                    <img src="assets/img/anshul-namdev.jpg" alt="Anshul Namdev" class="hero-img">
                 </div>
                 <!-- Abstract Tech Graphics (Rotating Circle) -->
                 <svg class="tech-graphic" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -311,7 +373,7 @@
 
                     <button type="submit" class="btn-submit">
                         <span class="btn-text">Send Message</span>
-                        <span class="btn-icon">→</span>
+                        <span class="btn-icon">?</span>
                     </button>
                 </form>
             </div>

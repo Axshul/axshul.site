@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <!-- Core pages -->
   <url>
     <loc>https://axshul.site/</loc>
-    <lastmod>2026-03-31</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/anshul-namdev.jpg</image:loc>
+      <image:title>Anshul Namdev - Technical Architect &amp; AI Engineer</image:title>
+      <image:caption>Anshul Namdev, Technical Architect and AI Automation Expert based in Bhopal, India</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://axshul.site/about/</loc>
-    <lastmod>2026-03-29</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/anshul-namdev.jpg</image:loc>
+      <image:title>About Anshul Namdev</image:title>
+      <image:caption>Anshul Namdev - Technical Architect, AI Engineer, n8n Expert from Bhopal, India</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://axshul.site/work/</loc>
-    <lastmod>2026-03-29</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://axshul.site/experience/</loc>
-    <lastmod>2026-03-29</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://axshul.site/contact/</loc>
-    <lastmod>2026-03-29</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://axshul.site/blog/</loc>
-    <lastmod>2026-03-29</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -42,13 +53,13 @@
   <!-- n8n Hub -->
   <url>
     <loc>https://axshul.site/n8n/</loc>
-    <lastmod>2026-03-31</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://axshul.site/n8n/guide/</loc>
-    <lastmod>2026-03-31</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -128,7 +139,7 @@
   </url>
   <url>
     <loc>https://axshul.site/n8n/guide/ai-agent-node/</loc>
-    <lastmod>2026-04-04</lastmod>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
