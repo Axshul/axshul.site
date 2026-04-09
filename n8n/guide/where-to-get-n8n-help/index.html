@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where to Get Help in n8n - n8n Guide</title>
-    <meta name="description" content="A comprehensive guide on where to seek help for n8n, distinguishing between the Community forum for workflow logic and direct email lines for Cloud support.">
-    <meta property="og:title" content="Where to Get Help in n8n - n8n Guide">
-    <meta property="og:description" content="A comprehensive guide on where to seek help for n8n, distinguishing between the Community forum for workflow logic and direct email lines for Cloud support.">
+    <title>Where to Get n8n Help: Forum, Discord, GitHub & Support Channels - n8n Guide</title>
+    <meta name="description" content="Every place to get n8n help in 2026: the community forum, Discord server, GitHub issues, official docs, and email support. When to use each one and how to write a request that actually gets answered.">
+    <meta property="og:title" content="Where to Get n8n Help: Forum, Discord, GitHub & Support Channels">
+    <meta property="og:description" content="Every place to get n8n help in 2026: the community forum, Discord server, GitHub issues, official docs, and email support. When to use each one and how to write a request that actually gets answered.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/where-to-get-n8n-help/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Where to Get n8n Help: Forum, Discord, GitHub & Support Channels",
+      "description": "Every place to get n8n help in 2026: the community forum, Discord server, GitHub issues, official docs, and email support.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-03-21",
+      "url": "https://axshul.site/n8n/guide/where-to-get-n8n-help/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
+    }
+    </script>
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,40 +62,154 @@
                         <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Support</span>
                         <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Community</span>
                     </div>
-                    <h1 class="reader-title">Where to Get Help in n8n</h1>
+                    <h1 class="reader-title">Where to Get n8n Help: Forum, Discord, GitHub and Support Channels</h1>
                     <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
                 </header>
 
                 <div class="reader-body">
-                    <h2>The Golden Rule of n8n Support</h2>
-                    <p>As you build increasingly complex workflows, you will inevitably hit a wall - an API endpoint throwing a 400 error, a node behaving unexpectedly, or a complex JSON mapping issue. When this happens, knowing exactly <strong>where</strong> to ask for help is the key to solving your issue rapidly. The right channel guarantees a fast resolution.</p>
+                    <h2>The Rule Before You Ask Anything</h2>
+                    <p>n8n has a genuinely active support ecosystem. The community forum has thousands of solved threads, the Discord moves fast, and the docs cover most standard use cases. Before posting anywhere, run a quick search. The odds that someone has hit your exact issue before are high, and a solved thread gets you an answer in seconds rather than waiting for a reply.</p>
+                    <p>When you do need to ask, the channel you pick matters. Posting a billing question on the community forum will get you a slower, less useful response than emailing support directly. Posting a workflow logic question to support email will get you redirected to the forum. Knowing which channel handles what saves everyone time.</p>
+
+                    <div style="background: rgba(0,68,255,0.04); border: 1px solid rgba(0,68,255,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">💡</span>
+                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);">Quick tip: when posting a workflow question anywhere, always include your workflow JSON. Select your nodes on the canvas, hit <code>Cmd/Ctrl + C</code>, and paste the raw JSON into your post inside a code block. Without it, helpers are guessing.</p>
+                    </div>
 
                     <h2>1. The Community Forum</h2>
-                    <p>The <a href="https://community.n8n.io/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">official n8n Community</a> is extremely active and moderated heavily by official n8n staff and developers.</p>
-                    <ul>
-                        <li><strong>When to use it:</strong> Workflow design questions, custom JavaScript/Code node logic, debugging API errors, and asking if a specific third-party integration is possible.</li>
-                        <li><strong>When NOT to use it:</strong> Issues relating to n8n Cloud billing, workspace provisioning errors, or highly sensitive internal data leaks.</li>
-                    </ul>
-                    <p>When posting in the community, <strong>always</strong> attach a copy of your workflow. You can easily do this by selecting your nodes on the canvas, hitting <code>Cmd/Ctrl + C</code>, and pasting the raw JSON directly into your forum post within code blocks!</p>
+                    <p>The <a href="https://community.n8n.io/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">official n8n Community Forum</a> is the primary support channel for workflow questions. It is heavily moderated by n8n staff and developers, and the search index is deep. Most common problems have already been solved here.</p>
 
-                    <h2>2. Official Email Channels</h2>
-                    <p>For administrative or deeply technical edge-cases relating to the n8n managed services, bypassing the forum is critical.</p>
-                    <ul>
-                        <li><a href="mailto:support@n8n.io" style="color:var(--blue);text-decoration:none;"><strong>support@n8n.io</strong></a> or <a href="mailto:help@n8n.io" style="color:var(--blue);text-decoration:none;"><strong>help@n8n.io</strong></a>: Use these exclusively for <strong>n8n Cloud</strong> account issues, billing discrepancies, enterprise licensing inquiries, or catastrophic managed-infrastructure failures.</li>
-                        <li><a href="mailto:nodes@n8n.io" style="color:var(--blue);text-decoration:none;"><strong>nodes@n8n.io</strong></a>: A highly specialized channel for when you are developing custom community nodes from scratch and need technical architectural assistance from the core integration engineers.</li>
-                    </ul>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0;">
+                        <div style="border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; overflow: hidden;">
+                            <div style="background: rgba(34,197,94,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(34,197,94,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 0.8rem;">✅</span>
+                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #22c55e;">Post here for</span>
+                            </div>
+                            <div style="padding: 0.9rem 1.1rem;">
+                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
+                                    <li>Workflow design and logic questions</li>
+                                    <li>Code node JavaScript help</li>
+                                    <li>Debugging API errors and node behaviour</li>
+                                    <li>Third-party integration questions</li>
+                                    <li>Self-hosting setup and configuration</li>
+                                    <li>Feature requests and general discussion</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; overflow: hidden;">
+                            <div style="background: rgba(239,68,68,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(239,68,68,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 0.8rem;">🚫</span>
+                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #ef4444;">Do not post here for</span>
+                            </div>
+                            <div style="padding: 0.9rem 1.1rem;">
+                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
+                                    <li>n8n Cloud billing issues</li>
+                                    <li>Workspace provisioning errors</li>
+                                    <li>Sensitive internal data or credentials</li>
+                                    <li>Enterprise licensing questions</li>
+                                    <li>Managed infrastructure failures</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-                    <h2>3. How to Write a Flawless Support Request</h2>
-                    <p>Whether you are posting on the forum or emailing support, the quality of their response directly mirrors the quality of your prompt. You must always include:</p>
-                    <ol>
-                        <li><strong>Your Execution Environment:</strong> Are you on n8n Cloud, Docker Self-Hosted, or NPM local? Let them know.</li>
-                        <li><strong>Exact Version Number:</strong> Bugs are often patched daily. Stating you are precisely on `v1.33.0` helps engineers isolate regressions.</li>
-                        <li><strong>Instance Hash (Cloud only):</strong> If emailing Cloud Support, give them your workspace URL or internal workspace ID so they can check the internal logs immediately.</li>
-                        <li><strong>Clear Error Logs:</strong> Do not just say "It failed." Paste the exact JSON output error trace of the failed execution node.</li>
-                    </ol>
+                    <h2>2. The n8n Discord Server</h2>
+                    <p>The <a href="https://discord.com/invite/n8n" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n Discord</a> is where the community moves in real time. It is faster and more conversational than the forum, which makes it good for quick questions, sharing workflows, and getting a second opinion on something you are building. The forum is better for complex, searchable problems that benefit from a structured thread. Discord is better for "does anyone know if X is possible" or "quick sanity check on this approach."</p>
+
+                    <div style="border: 1px solid rgba(88,101,242,0.25); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
+                        <div style="background: rgba(88,101,242,0.07); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(88,101,242,0.2); display: flex; align-items: center; gap: 0.6rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.033.055a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" fill="#5865F2"/></svg>
+                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #5865f2;">n8n Discord Server</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                            <div>
+                                <p style="margin: 0 0 0.3rem 0; font-size: 0.9rem; color: var(--text);">Real-time community chat, workflow sharing, and quick questions.</p>
+                                <p style="margin: 0; font-size: 0.8rem; color: var(--text-dim);">Active channels for general help, showcase, and AI automation.</p>
+                            </div>
+                            <a href="https://discord.com/invite/n8n" target="_blank" style="flex-shrink: 0; background: #5865f2; color: #fff; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; padding: 0.55rem 1.1rem; border-radius: 8px; text-decoration: none; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Join Discord ↗</a>
+                        </div>
+                    </div>
+
+                    <p>A few things to keep in mind on Discord: responses are not guaranteed and threads do not persist as well as forum posts. If your question is complex or you want it to be searchable for others later, post it on the forum instead. Discord is a complement to the forum, not a replacement.</p>
+
+                    <h2>3. Official Email Support</h2>
+                    <p>For account-level issues and anything involving n8n's managed infrastructure, email is the right channel. The community cannot help with these, and posting them publicly is a bad idea anyway.</p>
+
+                    <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
+                        <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.75rem;">✦</span>
+                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">Email Channels</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.85rem;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <code style="font-size: 0.8rem; background: rgba(0,68,255,0.08); color: var(--blue); padding: 0.2em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.1rem;">support@n8n.io</code>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-mid);">n8n Cloud account issues, billing discrepancies, workspace provisioning failures, and managed infrastructure problems.</p>
+                            </div>
+                            <div style="border-top: 1px solid var(--border); padding-top: 0.85rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <code style="font-size: 0.8rem; background: rgba(0,68,255,0.08); color: var(--blue); padding: 0.2em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.1rem;">help@n8n.io</code>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-mid);">Enterprise licensing inquiries, annual subscription execution top-ups, and general account management.</p>
+                            </div>
+                            <div style="border-top: 1px solid var(--border); padding-top: 0.85rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <code style="font-size: 0.8rem; background: rgba(0,68,255,0.08); color: var(--blue); padding: 0.2em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.1rem;">nodes@n8n.io</code>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--text-mid);">Building custom community nodes from scratch and need architectural guidance from the core integration engineers.</p>
+                            </div>
+                        </div>
+                    </div>
 
                     <h2>4. GitHub for Core Engine Bugs</h2>
-                    <p>If you have definitively proven that a core node is fundamentally broken or throwing unhandled exceptions across all setups, you should open a bug report directly on the <a href="https://github.com/n8n-io/n8n/issues" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n GitHub Repository</a>. The repository is heavily monitored by the internal product triaging team and updates happen frequently.</p>
+                    <p>If you have confirmed that a core node or the n8n engine itself is broken across all setups (not just your configuration), open a bug report on the <a href="https://github.com/n8n-io/n8n/issues" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n GitHub repository</a>. The repo is actively triaged by the internal product team and releases happen frequently.</p>
+                    <p>Before opening an issue, search existing ones first. Duplicate reports slow down triage. If your issue already exists, add a comment with your environment details rather than opening a new ticket.</p>
+
+                    <div style="background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">⚠️</span>
+                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);">GitHub issues are for confirmed bugs in the core engine, not for workflow help or configuration questions. Posting a "how do I do X" question as a GitHub issue will get it closed and redirected to the forum.</p>
+                    </div>
+
+                    <h2>5. How to Write a Request That Gets Answered</h2>
+                    <p>The quality of the response you get directly mirrors the quality of the information you provide. Whether you are posting on the forum, Discord, or emailing support, include these every time:</p>
+
+                    <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
+                        <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.75rem;">✦</span>
+                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">Always Include</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--blue); background: rgba(0,68,255,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">01</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--text);">Execution environment</p><p style="margin: 0; font-size: 0.82rem; color: var(--text-mid);">n8n Cloud, Docker self-hosted, NPM local, or Railway. Each has different constraints and the answer often depends on this.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--blue); background: rgba(0,68,255,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">02</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--text);">Exact version number</p><p style="margin: 0; font-size: 0.82rem; color: var(--text-mid);">Bugs get patched frequently. Stating you are on v1.115.3 helps engineers isolate whether it is a known regression or something new.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--blue); background: rgba(0,68,255,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">03</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--text);">Exact error output</p><p style="margin: 0; font-size: 0.82rem; color: var(--text-mid);">Do not say "it failed." Paste the full JSON error trace from the failed execution node. Screenshots of error messages are also useful.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--blue); background: rgba(0,68,255,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">04</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--text);">Workflow JSON (for workflow questions)</p><p style="margin: 0; font-size: 0.82rem; color: var(--text-mid);">Select your nodes, hit Cmd/Ctrl + C, and paste the JSON in a code block. Without this, helpers are guessing at your node configuration.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--blue); background: rgba(0,68,255,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">05</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--text);">Workspace URL (Cloud support only)</p><p style="margin: 0; font-size: 0.82rem; color: var(--text-mid);">When emailing Cloud support, include your workspace URL or internal workspace ID so they can pull logs immediately without back-and-forth.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>6. Official Documentation</h2>
+                    <p>The <a href="https://docs.n8n.io/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n documentation</a> covers every node, credential type, and core concept. It is the first place to check before posting anywhere. The docs are actively maintained and most standard use cases are covered in detail, including the AI agent node, sub-workflows, error handling, and self-hosting configuration.</p>
+                    <p>The docs also include a built-in search that is reasonably good. If you are looking for how a specific node works or what a particular setting does, start there.</p>
+
+                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Related reading</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+                            <li><a href="https://axshul.site/n8n/guide/what-is-n8n/" style="color:var(--blue);text-decoration:underline;">What is n8n?</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/n8n-community-edition/" style="color:var(--blue);text-decoration:underline;">n8n Community Edition: Features, Limits, and Free Unlocks</a></li>
+                            <li><a href="https://axshul.site/n8n/guide/n8n-cloud-plans/" style="color:var(--blue);text-decoration:underline;">n8n Cloud Plans Breakdown</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </main>
             
@@ -87,7 +219,7 @@
                     <div class="read-progress-container" style="margin-bottom: 2rem;">
                         <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
                             <span>READING PROGRESS</span>
-                            <span>3 MIN</span>
+                            <span>6 MIN</span>
                         </div>
                         <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
                             <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
@@ -113,9 +245,10 @@
                     <!-- Quick Links Section -->
                     <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
                     <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://community.n8n.io/" target="_blank" class="sb-link">Official Community Forum ↗</a></li>
-                        <li><a href="https://docs.n8n.io/" target="_blank" class="sb-link">Core Documentation ↗</a></li>
-                        <li><a href="https://github.com/n8n-io/n8n" target="_blank" class="sb-link">n8n GitHub Repository ↗</a></li>
+                        <li><a href="https://community.n8n.io/" target="_blank" class="sb-link">Community Forum ↗</a></li>
+                        <li><a href="https://discord.com/invite/n8nAlao" target="_blank" class="sb-link">Discord Server ↗</a></li>
+                        <li><a href="https://docs.n8n.io/" target="_blank" class="sb-link">Documentation ↗</a></li>
+                        <li><a href="https://github.com/n8n-io/n8n/issues" target="_blank" class="sb-link">GitHub Issues ↗</a></li>
                     </ul>
 
                     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
@@ -148,6 +281,10 @@
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
     
     <script>
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
         document.addEventListener("scroll", () => {
             const contentBlock = document.querySelector('.reader-main');
             let progress = 0;
@@ -159,6 +296,20 @@
             const bar = document.getElementById('read-progress-bar');
             if (bar) bar.style.width = Math.max(progress, 0) + '%';
         });
+
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
