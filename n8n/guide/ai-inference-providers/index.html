@@ -8,6 +8,10 @@
     <meta property="og:title" content="AI Inference Providers for n8n: The Complete Comparison - n8n Guide">
     <meta property="og:description" content="A comprehensive guide to every major AI inference provider for n8n. Compare OpenRouter, Groq, Together AI, Fireworks, Mistral, and more to find the right infrastructure for your automation stack.">
     <meta property="og:type" content="article">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/ai-inference-providers/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -321,17 +325,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../../../assets/js/3d-anim.js"></script><script src="../../../assets/js/text-highlight-share.js" defer></script>
     <script>
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
         document.addEventListener("scroll", () => {
             const contentBlock = document.querySelector('.reader-main');
             let progress = 0;
-            if(contentBlock) {
+            if (contentBlock) {
                 const scrollPos = window.scrollY;
                 const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
                 progress = Math.min((scrollPos / totalScroll) * 100, 100);
             }
             const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+            if (bar) bar.style.width = progress + '%';
         });
+
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>

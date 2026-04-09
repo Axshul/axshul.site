@@ -8,6 +8,23 @@
     <meta name="description"
         content="Personal automation tools hub by Anshul Namdev. Verify workflow certifications, explore automation resources and my own n8n-powered projects.">
 
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://axshul.site/n8n/">
+    <meta property="og:site_name" content="Anshul Namdev">
+    <meta property="og:title" content="Automations — Anshul Namdev">
+    <meta property="og:description" content="Personal automation tools hub by Anshul Namdev. Verify workflow certifications, explore automation resources and my own n8n-powered projects.">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Anshul_Namdev0">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <meta name="twitter:title" content="Automations — Anshul Namdev">
+    <meta name="twitter:description" content="Personal automation tools hub by Anshul Namdev. Verify workflow certifications, explore automation resources and my own n8n-powered projects.">
+    <meta name="twitter:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+
     <!-- Fonts: match main site -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -364,6 +381,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../assets/js/3d-anim.js"></script>
     <script src="../assets/js/n8n.js"></script>
+    <script>
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+    </script>
 </body>
 
 </html>

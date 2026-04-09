@@ -159,6 +159,9 @@
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
     
     <script>
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
         document.addEventListener("scroll", () => {
             const contentBlock = document.querySelector('.reader-main');
             let progress = 0;
@@ -170,6 +173,20 @@
             const bar = document.getElementById('read-progress-bar');
             if (bar) bar.style.width = Math.max(progress, 0) + '%';
         });
+
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
