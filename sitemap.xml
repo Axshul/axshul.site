@@ -2,10 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-  <!-- Core pages -->
+  <!-- ═══════════════════════════════════════
+       Core Pages
+  ═══════════════════════════════════════ -->
   <url>
     <loc>https://axshul.site/</loc>
-    <lastmod>2026-04-05</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -14,9 +16,10 @@
       <image:caption>Anshul Namdev, Technical Architect and AI Automation Expert based in Bhopal, India</image:caption>
     </image:image>
   </url>
+
   <url>
     <loc>https://axshul.site/about/</loc>
-    <lastmod>2026-04-05</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -25,24 +28,33 @@
       <image:caption>Anshul Namdev - Technical Architect, AI Engineer, n8n Expert from Bhopal, India</image:caption>
     </image:image>
   </url>
+
   <url>
     <loc>https://axshul.site/work/</loc>
-    <lastmod>2026-04-05</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/project-ai.png</image:loc>
+      <image:title>Projects by Anshul Namdev</image:title>
+      <image:caption>AI automation, developer tools and web projects by Anshul Namdev</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://axshul.site/experience/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/contact/</loc>
-    <lastmod>2026-04-05</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/blog/</loc>
     <lastmod>2026-04-05</lastmod>
@@ -50,105 +62,77 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- n8n Hub -->
+  <!-- ═══════════════════════════════════════
+       n8n Hub
+  ═══════════════════════════════════════ -->
   <url>
     <loc>https://axshul.site/n8n/</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/n8n-community.png</image:loc>
+      <image:title>n8n Automation Hub by Anshul Namdev</image:title>
+      <image:caption>n8n workflows, guides and automation resources</image:caption>
+    </image:image>
   </url>
+
   <url>
     <loc>https://axshul.site/n8n/guide/</loc>
-    <lastmod>2026-04-05</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- n8n Guide Articles -->
+  <!-- Article reader template -->
+  <url>
+    <loc>https://axshul.site/n8n/guide/article.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       n8n Guide Articles
+  ═══════════════════════════════════════ -->
+
+  <!-- Getting Started -->
   <url>
     <loc>https://axshul.site/n8n/guide/what-is-n8n/</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/n8n/guide/build-your-first-workflow/</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/n8n/guide/how-to-setup-n8n/</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Hosting and Plans -->
   <url>
     <loc>https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/</loc>
     <lastmod>2026-03-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/n8n/guide/vps-self-hosting-n8n/</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/n8n-community-edition/</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/license-and-regulations/</loc>
-    <lastmod>2026-03-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/choose-right-ai-model/</loc>
-    <lastmod>2026-03-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/ai-inference-providers/</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/vector-stores-and-rag/</loc>
-    <lastmod>2026-03-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/where-to-get-n8n-help/</loc>
-    <lastmod>2026-03-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/automate-n8n-with-claude/</loc>
-    <lastmod>2026-03-31</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/ai-agent-node/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://axshul.site/n8n/guide/is-n8n-dead/</loc>
-    <lastmod>2026-04-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
+
   <url>
     <loc>https://axshul.site/n8n/guide/n8n-cloud-plans/</loc>
     <lastmod>2026-04-09</lastmod>
@@ -156,36 +140,109 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Project pages -->
+  <!-- Editions and Licensing -->
+  <url>
+    <loc>https://axshul.site/n8n/guide/n8n-community-edition/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://axshul.site/n8n/guide/license-and-regulations/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- AI and Models -->
+  <url>
+    <loc>https://axshul.site/n8n/guide/choose-right-ai-model/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://axshul.site/n8n/guide/ai-inference-providers/</loc>
+    <lastmod>2026-03-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://axshul.site/n8n/guide/ai-agent-node/</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://axshul.site/n8n/guide/vector-stores-and-rag/</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://axshul.site/n8n/guide/automate-n8n-with-claude/</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Community and Help -->
+  <url>
+    <loc>https://axshul.site/n8n/guide/where-to-get-n8n-help/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Opinion / Evergreen -->
+  <url>
+    <loc>https://axshul.site/n8n/guide/is-n8n-dead/</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════
+       Side Projects and Experiments
+  ═══════════════════════════════════════ -->
   <url>
     <loc>https://axshul.site/Galaxy/</loc>
     <lastmod>2026-03-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/Nexus/</loc>
     <lastmod>2026-03-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/Notes/</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/Seek/</loc>
     <lastmod>2026-03-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
+
   <url>
     <loc>https://axshul.site/Terminal/</loc>
     <lastmod>2026-03-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 
 </urlset>

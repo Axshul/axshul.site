@@ -54,6 +54,173 @@
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <style>
+        /* ── Qixazow card ── */
+        .qixazow-card {
+            display: block !important;
+            padding: 0 !important;
+            background: linear-gradient(135deg, #050505 0%, #0d0d1f 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            border-bottom: none !important;
+        }
+        .qixazow-card:hover { background: linear-gradient(135deg, #050505 0%, #0d0d1f 100%) !important; }
+
+        .qixazow-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 440px;
+        }
+
+        .qixazow-content {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .qixazow-card .project-cat {
+            color: var(--accent-blue);
+            margin-bottom: 1.25rem;
+        }
+
+        .qixazow-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+        }
+
+        .qixazow-desc {
+            color: rgba(255,255,255,0.72);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            max-width: 480px;
+        }
+
+        .qixazow-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.25rem;
+        }
+        .qixazow-tags span {
+            padding: 0.35rem 0.9rem;
+            border: 1px solid rgba(0,68,255,0.45);
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .qixazow-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 2.25rem;
+            background: var(--accent-blue);
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.82rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: opacity 0.25s;
+            width: fit-content;
+        }
+        .qixazow-cta:hover { opacity: 0.85; }
+
+        /* right panel */
+        .qixazow-visual {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0,68,255,0.08) 0%, rgba(0,68,255,0.18) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3.5rem 3rem;
+            overflow: hidden;
+        }
+        .qixazow-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,68,255,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,68,255,0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .qixazow-tiles {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            width: 100%;
+        }
+        .qixazow-tile {
+            padding: 1.1rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+        .tile-label {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.35rem;
+        }
+        .tile-text {
+            display: block;
+            color: rgba(255,255,255,0.78);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .qixazow-inner {
+                grid-template-columns: 1fr;
+            }
+            .qixazow-visual {
+                padding: 3rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .qixazow-content {
+                padding: 2.5rem 2rem;
+            }
+            .qixazow-desc {
+                font-size: 0.97rem;
+                max-width: 100%;
+            }
+            .qixazow-visual {
+                padding: 2.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .qixazow-content {
+                padding: 2rem 1.5rem;
+            }
+            .qixazow-visual {
+                padding: 2rem 1.5rem;
+            }
+            .qixazow-cta {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+
     <!-- JSON-LD: Person -->
     <script type="application/ld+json">
     {
@@ -293,6 +460,45 @@
                     </div>
                 </article>
 
+                <!-- Qixazow -->
+                <article class="project-card qixazow-card" data-scroll>
+                    <div class="qixazow-inner">
+                        <div class="qixazow-content">
+                            <span class="project-cat">Joint Venture &bull; AI Media &bull; Automation</span>
+                            <h3 class="qixazow-title">Qixazow<i>.com</i></h3>
+                            <p class="qixazow-desc">
+                                A joint venture with two fellow AI professionals. A publication and consultancy built for people who want to stay ahead of the AI curve. Deep-dive articles on n8n, Claude, and the tools shaping tomorrow, plus hands-on AI integration for businesses.
+                            </p>
+                            <div class="qixazow-tags">
+                                <span>n8n</span>
+                                <span>Claude</span>
+                                <span>AI Automation</span>
+                                <span>Business AI</span>
+                            </div>
+                            <a href="https://qixazow.com" target="_blank" rel="noopener noreferrer" class="qixazow-cta">
+                                Visit Qixazow &rarr;
+                            </a>
+                        </div>
+                        <div class="qixazow-visual" aria-hidden="true">
+                            <div class="qixazow-grid-bg"></div>
+                            <div class="qixazow-tiles">
+                                <div class="qixazow-tile">
+                                    <span class="tile-label">Articles &amp; Insights</span>
+                                    <span class="tile-text">Stay ahead of the AI curve with expert-written guides</span>
+                                </div>
+                                <div class="qixazow-tile">
+                                    <span class="tile-label">Business AI Integration</span>
+                                    <span class="tile-text">We bring AI into your workflows and workstreams</span>
+                                </div>
+                                <div class="qixazow-tile">
+                                    <span class="tile-label">Video Content</span>
+                                    <span class="tile-text">In-depth video breakdowns of AI tools and trends</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
             </div>
         </div>
     </section>
@@ -405,11 +611,12 @@
                         <a href="https://github.com/axshul" target="_blank">GitHub</a>
                         <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
                         <a href="https://twitter.com/Anshul_Namdev0" target="_blank">Twitter</a>
+                        <a href="https://qixazow.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); font-weight: 700;">Qixazow</a>
                     </div>
                 </div>
             </div>
             <div class="footer-content" style="border-top: 1px solid var(--border-light); padding-top: 2rem;">
-                <span class="copyright">&copy; 2026 Anshul Namdev. All Rights Reserved.</span>
+                <span class="copyright">&copy; 2026 Anshul Namdev. All Rights Reserved. &bull; Co-founder at <a href="https://qixazow.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); font-weight: 700;">Qixazow.com</a></span>
                 <a href="#" class="back-to-top">Back to Top &uarr;</a>
             </div>
         </div>
