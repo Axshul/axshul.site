@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Guide & Digital Archive — Anshul Namdev</title>
+    <meta name="description" content="A digital archive of common n8n problems, solutions, and best practices. Masterclass guides for workflow automation, AI models, self-hosting, and more.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+
+    <style>
+        body { cursor: none; }
+
+        /* ── Page shell ── */
+        .guide-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Hero header ── */
+        .guide-hero {
+            margin-top: var(--nav-h);
+            padding: 4rem 2rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-border);
+        }
+        .guide-hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--red);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .guide-hero-eyebrow::before,
+        .guide-hero-eyebrow::after {
+            content: '';
+            width: 24px;
+            height: 1.5px;
+            background: var(--red);
+        }
+        .guide-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 0.75rem;
+        }
+        .guide-hero h1 em { font-style: italic; color: var(--red); }
+        .guide-hero-sub {
+            font-size: 0.95rem;
+            color: var(--gray);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ── Sticky search ── */
+        .search-sticky {
+            position: sticky;
+            top: var(--nav-h);
+            z-index: 50;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--gray-border);
+            padding: 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .search-bar-unified {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            border: 2px solid rgba(215,38,56,0.15);
+            clip-path: var(--px-clip);
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .search-bar-unified:focus-within {
+            border-color: var(--red);
+        }
+        .search-tag-select {
+            flex-shrink: 0;
+            min-width: 7rem;
+            padding: 0 1.4rem 0 0.9rem;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            border-right: 1px solid var(--gray-border);
+            color: var(--gray);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+        }
+        .search-tag-select:focus { outline: none; }
+        .search-input-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            color: var(--red);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.9rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            background: transparent;
+            border: none;
+            color: var(--black);
+        }
+        .search-input:focus { outline: none; }
+        .search-input::placeholder { color: #bbb; }
+        .search-clear {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            margin-right: 0.4rem;
+            border: none;
+            background: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+        .search-clear:hover { color: var(--red); }
+        .search-clear.visible { display: flex; }
+        .search-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--gray);
+        }
+        .search-meta kbd {
+            background: rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip-sm);
+            padding: 0.1rem 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+        }
+
+        /* ── Articles grid ── */
+        .articles-section {
+            flex: 1;
+            padding: 2rem 2rem 4rem;
+            max-width: var(--container);
+            margin: 0 auto;
+            width: 100%;
+        }
+        .no-results {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 2rem;
+            text-align: center;
+            gap: 0.75rem;
+            color: var(--gray);
+        }
+        .no-results.visible { display: flex; }
+        .no-results-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .no-results-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .no-results-sub { font-size: 0.85rem; max-width: 320px; line-height: 1.6; }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+            gap: 1rem;
+        }
+
+        /* ── Article card ── */
+        .article-card {
+            display: flex;
+            flex-direction: column;
+            padding: 1.25rem 1.4rem;
+            background: var(--white);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip);
+            text-decoration: none;
+            color: var(--gray);
+            transition: border-color 0.25s, transform 0.25s, background 0.25s, opacity 0.3s;
+            opacity: 0;
+            animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .article-card:nth-child(1)  { animation-delay: 0.05s; }
+        .article-card:nth-child(2)  { animation-delay: 0.10s; }
+        .article-card:nth-child(3)  { animation-delay: 0.15s; }
+        .article-card:nth-child(4)  { animation-delay: 0.20s; }
+        .article-card:nth-child(5)  { animation-delay: 0.25s; }
+        .article-card:nth-child(6)  { animation-delay: 0.30s; }
+        .article-card:nth-child(n+7){ animation-delay: 0.35s; }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .article-card:hover {
+            border-color: rgba(215,38,56,0.3);
+            background: rgba(215,38,56,0.02);
+            transform: translateY(-3px);
+            color: var(--black);
+        }
+        .article-card.dim {
+            opacity: 0.15;
+            pointer-events: none;
+            transform: scale(0.97);
+            animation: none;
+        }
+        .article-card.match {
+            border-color: var(--red);
+            background: rgba(215,38,56,0.03);
+            animation: none;
+            opacity: 1;
+        }
+        .card-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--red);
+            background: rgba(215,38,56,0.08);
+            padding: 0.22em 0.6em;
+            clip-path: var(--px-clip-sm);
+            margin-bottom: 0.6rem;
+            align-self: flex-start;
+        }
+        .card-title {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--black);
+            margin-bottom: 0.4rem;
+        }
+        .card-desc {
+            font-size: 0.8rem;
+            color: var(--gray);
+            line-height: 1.55;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-footer {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--gray);
+        }
+        .card-footer-date { font-family: var(--font-mono); }
+        .card-footer-arrow {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: transform 0.2s;
+        }
+        .article-card:hover .card-footer-arrow { transform: translateX(4px); }
+
+        /* ── Dropdown ── */
+        .search-dropdown {
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip);
+            overflow: hidden;
+            display: none;
+        }
+        .search-dropdown.visible { display: block; animation: dropIn 0.2s ease; }
+        @keyframes dropIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            padding: 0.85rem 1.1rem;
+            text-decoration: none;
+            color: var(--black);
+            border-bottom: 1px solid var(--gray-border);
+            transition: background 0.15s;
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background: rgba(215,38,56,0.04); }
+        .dropdown-item-icon {
+            width: 2rem;
+            height: 2rem;
+            background: rgba(215,38,56,0.08);
+            clip-path: var(--px-clip-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--red);
+            flex-shrink: 0;
+            font-family: var(--font-mono);
+        }
+        .dropdown-item-body { flex: 1; min-width: 0; }
+        .dropdown-item-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .dropdown-item-desc {
+            font-size: 0.7rem;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .dropdown-item-tag {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--red);
+            flex-shrink: 0;
+        }
+        .dropdown-empty {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* ── Nav badge ── */
+        .article-count-badge {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.06em;
+            color: var(--gray);
+            background: rgba(0,0,0,0.04);
+            border: 1px solid var(--gray-border);
+            padding: 0.2rem 0.6rem;
+            clip-path: var(--px-clip-sm);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .guide-hero { padding: 3rem 1rem 1.5rem; }
+            .search-sticky { padding: 0.75rem 1rem; }
+            .articles-section { padding: 1.5rem 1rem 3rem; }
+            .articles-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .card-desc { -webkit-line-clamp: 2; }
+            .search-meta { display: none; }
+        }
+        @media (max-width: 480px) {
+            .articles-grid { grid-template-columns: 1fr; }
+            .guide-hero h1 { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Noise -->
+    <div class="noise"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Full-page geometric grid -->
+    <div class="geo-grid" id="geoGrid" aria-hidden="true">
+        <svg class="geo-grid-svg" preserveAspectRatio="none">
+            <defs>
+                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <g class="geo-grid-lines" id="geoLines"></g>
+            <g class="geo-grid-nodes" id="geoNodes"></g>
+        </svg>
+    </div>
+
+<div class="guide-page">
+
+    <!-- Nav -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../../" class="nav-logo">
+                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+                <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-left:0.6rem;">/ Archive</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="../" class="nav-link"><span class="nav-index">01</span>Hub</a>
+                <a href="./" class="nav-link active"><span class="nav-index">02</span>Archive</a>
+            </div>
+            <span class="article-count-badge" id="articleCount">&mdash; articles</span>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="guide-hero" data-reveal>
+        <div class="guide-hero-eyebrow">n8n Digital Archive</div>
+        <h1>Find in <em>Archive</em></h1>
+        <p class="guide-hero-sub">Guides, solutions, and best practices for n8n workflow automation.</p>
+    </header>
+
+    <!-- Sticky search -->
+    <div class="search-sticky">
+        <div class="search-bar-unified">
+            <select id="tagFilter" class="search-tag-select">
+                <option value="">All tags</option>
+                <option value="__latest__">Latest</option>
+            </select>
+            <div class="search-input-wrap">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by title, category, or topic..." autocomplete="off" spellcheck="false">
+            </div>
+            <button class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
+        </div>
+        <div class="search-meta">
+            <span>Type to filter</span>
+            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> to focus</span>
+            <span><kbd>Esc</kbd> to clear</span>
+        </div>
+        <div class="search-dropdown" id="searchDropdown"></div>
+    </div>
+
+    <!-- Articles -->
+    <main class="articles-section">
+        <div class="no-results" id="noResults">
+            <div class="no-results-icon">&#128269;</div>
+            <div class="no-results-title">No matches found</div>
+            <div class="no-results-sub">Try a different keyword or clear the filter.</div>
+        </div>
+        <div class="articles-grid" id="articlesGrid"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+                </div>
+                <div class="footer-right">
+                    <a href="../../">Portfolio</a>
+                    <a href="../">n8n Hub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="../../script.js"></script>
+<script>
+const ARTICLES = [
+    { slug: 'what-is-n8n',               title: 'What is n8n?',                 category: 'Overview',     description: 'A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it is for, and how to get started.', date: '2026-03-29' },
+    { slug: 'build-your-first-workflow',  title: 'How to Build Your First n8n Workflow', category: 'Getting Started', description: 'A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.', date: '2026-03-29' },
+    { slug: 'n8n-cloud-vs-self-hosted',  title: 'n8n Cloud vs. Self-Hosted',    category: 'Architecture', description: 'Compare n8n Cloud with self-hosted options. Covers data residency, scalability, maintenance, and when to choose each approach.', date: '2026-03-20' },
+    { slug: 'how-to-setup-n8n',          title: 'How To Setup n8n',             category: 'Setup',        description: 'Step-by-step setup for n8n via cloud signup, NPM install, or Docker. Includes environment variables and initial configuration.', date: '2026-03-21' },
+    { slug: 'vps-self-hosting-n8n',      title: 'VPS Self-Hosting for n8n',     category: 'Hosting',      description: 'Deploy n8n on DigitalOcean, Linode, or Hetzner. SSL, backups, and resource sizing for production workflows.', date: '2026-03-21' },
+    { slug: 'license-and-regulations',   title: 'License and Regulations',      category: 'Strategy',     description: "Understand n8n's Sustainable Use License, Fair Use policy, and compliance for commercial and internal use.", date: '2026-03-21' },
+    { slug: 'choose-right-ai-model',     title: 'Choosing the Right AI Model',  category: 'AI Models',    description: 'Compare GPT-4, Claude, DeepSeek, and open models in n8n. Cost, latency, and quality trade-offs for automation.', date: '2026-03-21' },
+    { slug: 'where-to-get-n8n-help',     title: 'Where to Get Help',            category: 'Community',    description: 'n8n community forum, Discord, GitHub issues, and documentation. When to ask where, and how to get fast answers.', date: '2026-03-21' },
+    { slug: 'ai-inference-providers',    title: 'AI Inference Providers for n8n', category: 'AI Infrastructure', description: 'Compare every major AI inference provider: OpenRouter, Groq, Together AI, Fireworks, Mistral, and more. Free tiers, speed, and how to avoid vendor lock-in.', date: '2026-03-24' },
+    { slug: 'n8n-community-edition',     title: 'n8n Community Edition: Features, Limits, and Free Unlocks', category: 'Setup', description: 'What the free self-hosted Community Edition includes, what it excludes, and how to unlock three extra features at no cost by registering your instance.', date: '2026-03-25' },
+    { slug: 'vector-stores-and-rag',     title: 'Vector Stores and RAG in n8n', category: 'AI Infrastructure', description: 'Set up Pinecone or Qdrant with n8n, inject documents, and build AI agents that answer questions from your own data. Includes real workflow diagrams.', date: '2026-03-26' },
+    { slug: 'automate-n8n-with-claude',  title: 'Automate n8n with Claude: Build Workflows Using AI', category: 'AI Automation', description: 'Connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI.', date: '2026-03-31' },
+    { slug: 'ai-agent-node',             title: 'The n8n AI Agent Node: Complete Guide', category: 'AI Agents', description: 'A deep-dive into every option, setting, tool, memory type, output parser, and model in the AI Agent node.', date: '2026-04-04' },
+    { slug: 'is-n8n-dead',              title: 'Is n8n Dead?', category: 'Opinion', description: 'Every few months someone declares n8n dead. Claude can generate workflow JSON, AI agents are rising, and yet n8n just hit a $2.5B valuation.', date: '2026-04-05' },
+    { slug: 'n8n-cloud-plans',          title: 'n8n Cloud Plans Breakdown (2026)', category: 'Pricing', description: 'A complete breakdown of every n8n Cloud plan. Executions, concurrency, AI credits, features, and who each plan is actually for.', date: '2026-04-09' },
+];
+
+let query = '';
+let tag = '';
+
+const tagSelect = document.getElementById('tagFilter');
+const cats = [...new Set(ARTICLES.map(a => a.category))].sort();
+cats.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c; o.textContent = c;
+    tagSelect.appendChild(o);
+});
+
+function score(a, q) {
+    if (!q) return 1;
+    const words = q.toLowerCase().split(/\s+/);
+    let s = 0;
+    words.forEach(w => {
+        if (a.title.toLowerCase().includes(w)) s += 10;
+        if (a.category.toLowerCase().includes(w)) s += 8;
+        if (a.description.toLowerCase().includes(w)) s += 3;
+    });
+    return s;
+}
+
+function getList() {
+    let list = [...ARTICLES];
+    if (tag === '__latest__') {
+        list.sort((a, b) => b.date.localeCompare(a.date));
+    } else if (tag) {
+        list = list.filter(a => a.category === tag);
+    }
+    if (query) {
+        list = list.map(a => ({ ...a, _score: score(a, query) }))
+                   .sort((a, b) => b._score - a._score);
+    }
+    return list;
+}
+
+function fmtDate(d) {
+    const dt = new Date(d);
+    const day = dt.getUTCDate();
+    const month = dt.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+    const year = dt.getUTCFullYear();
+    return day + '. ' + month + '. ' + year;
+}
+
+function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
+
+function render() {
+    const grid = document.getElementById('articlesGrid');
+    const noRes = document.getElementById('noResults');
+    const countEl = document.getElementById('articleCount');
+    const dropdown = document.getElementById('searchDropdown');
+    const clearBtn = document.getElementById('searchClear');
+
+    const list = getList();
+    const hasQuery = query.trim().length > 0;
+
+    countEl.textContent = list.length + ' article' + (list.length !== 1 ? 's' : '');
+    clearBtn.classList.toggle('visible', hasQuery);
+
+    if (hasQuery) {
+        const hits = list.filter(a => a._score > 0).slice(0, 5);
+        if (hits.length) {
+            dropdown.innerHTML = hits.map((a, i) =>
+                '<a href="' + a.slug + '/" class="dropdown-item">' +
+                    '<div class="dropdown-item-icon">' + String(i+1).padStart(2,'0') + '</div>' +
+                    '<div class="dropdown-item-body">' +
+                        '<div class="dropdown-item-title">' + esc(a.title) + '</div>' +
+                        '<div class="dropdown-item-desc">' + esc(a.description) + '</div>' +
+                    '</div>' +
+                    '<div class="dropdown-item-tag">' + esc(a.category) + '</div>' +
+                '</a>'
+            ).join('');
+        } else {
+            dropdown.innerHTML = '<div class="dropdown-empty">No matches found</div>';
+        }
+        dropdown.classList.add('visible');
+    } else {
+        dropdown.classList.remove('visible');
+        dropdown.innerHTML = '';
+    }
+
+    if (list.length === 0) {
+        noRes.classList.add('visible');
+        grid.innerHTML = '';
+        return;
+    }
+    noRes.classList.remove('visible');
+
+    grid.style.display = 'none';
+    grid.innerHTML = list.map(a => {
+        const isMatch = !hasQuery || ((a._score || 1) > 0);
+        const cls = hasQuery ? (isMatch ? 'match' : 'dim') : '';
+        return '<a href="' + a.slug + '/" class="article-card ' + cls + '">' +
+                '<span class="card-tag">' + esc(a.category) + '</span>' +
+                '<span class="card-title">' + esc(a.title) + '</span>' +
+                '<span class="card-desc">' + esc(a.description) + '</span>' +
+                '<div class="card-footer">' +
+                    '<span class="card-footer-date">' + fmtDate(a.date) + '</span>' +
+                    '<span class="card-footer-arrow">&rarr;</span>' +
+                '</div>' +
+            '</a>';
+    }).join('');
+    void grid.offsetWidth;
+    grid.style.display = '';
+}
+
+document.getElementById('searchInput').addEventListener('input', e => {
+    query = e.target.value;
+    render();
+});
+tagSelect.addEventListener('change', e => {
+    tag = e.target.value;
+    render();
+});
+document.getElementById('searchClear').addEventListener('click', () => {
+    document.getElementById('searchInput').value = '';
+    query = '';
+    render();
+    document.getElementById('searchInput').focus();
+});
+document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+    }
+    if (e.key === 'Escape') {
+        document.getElementById('searchInput').value = '';
+        query = '';
+        render();
+        document.getElementById('searchInput').blur();
+    }
+});
+document.addEventListener('click', e => {
+    if (!e.target.closest('.search-sticky')) {
+        document.getElementById('searchDropdown').classList.remove('visible');
+    }
+});
+
+render();
+</script>
+</body>
+</html>

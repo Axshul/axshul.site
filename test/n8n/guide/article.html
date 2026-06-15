@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article — n8n Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+
+    <style>
+        body { cursor: none; }
+
+        .article-wrap {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 3rem) 2rem 4rem;
+        }
+
+        .reader-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .reader-main {
+            min-width: 0;
+        }
+        .reader-header { margin-bottom: 2.5rem; }
+        .reader-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+        .ar-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(215,38,56,0.06);
+            border: 1px solid rgba(215,38,56,0.15);
+            color: var(--red);
+            padding: 0.3rem 0.8rem;
+            clip-path: var(--px-clip-sm);
+        }
+        .reader-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .reader-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--gray);
+            letter-spacing: 0.04em;
+        }
+
+        .reader-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        .reader-body h3 {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        .reader-body p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: rgba(10,10,10,0.8);
+            margin-bottom: 1rem;
+        }
+        .reader-body a {
+            color: var(--red);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .reader-body ul, .reader-body ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .reader-body li {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: rgba(10,10,10,0.8);
+            margin-bottom: 0.3rem;
+        }
+        .reader-body code {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            background: rgba(0,0,0,0.05);
+            padding: 0.15rem 0.4rem;
+            clip-path: var(--px-clip-sm);
+        }
+        .reader-body strong { color: var(--black); }
+
+        /* Sidebar */
+        .reader-sidebar {
+            position: sticky;
+            top: calc(var(--nav-h) + 2rem);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip);
+            padding: 1.5rem;
+            background: var(--white);
+        }
+        .rs-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+        .reader-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .ra-av {
+            width: 36px; height: 36px;
+            background: var(--red);
+            color: var(--white);
+            clip-path: var(--px-clip-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .ra-name { font-weight: 600; font-size: 0.85rem; }
+        .ra-role { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gray); }
+
+        .sb-divider {
+            border: none;
+            border-top: 1px solid var(--gray-border);
+            margin: 1.5rem 0;
+        }
+
+        .sb-link {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+            padding: 0.3rem 0;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+        .sb-link:hover {
+            color: var(--red);
+            padding-left: 0.4rem;
+        }
+
+        .spinner {
+            width: 24px; height: 24px;
+            border: 3px solid var(--gray-border);
+            border-top: 3px solid var(--red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .reader-layout {
+                grid-template-columns: 1fr;
+            }
+            .reader-sidebar {
+                position: static;
+            }
+            .article-wrap { padding-left: 1rem; padding-right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Noise -->
+    <div class="noise"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Nav -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../../" class="nav-logo">
+                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+                <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-left:0.6rem;">/ Automations</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="index.html" class="nav-link"><span class="nav-index">01</span>Archive</a>
+                <a href="../" class="nav-link"><span class="nav-index">02</span>Hub</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="article-wrap">
+        <div class="reader-layout">
+            <main class="reader-main" id="reader-content">
+                <div style="text-align:center; padding: 5rem 0;">
+                    <div class="spinner" style="margin: 0 auto 1.5rem;"></div>
+                    <p style="color:var(--gray);">Loading article data...</p>
+                </div>
+            </main>
+
+            <aside class="reader-sidebar">
+                <div class="rs-label">Written By</div>
+                <div class="reader-author">
+                    <div class="ra-av">AN</div>
+                    <div>
+                        <div class="ra-name">Anshul Namdev</div>
+                        <div class="ra-role">AI / Automation Eng.</div>
+                    </div>
+                </div>
+                <hr class="sb-divider">
+                <a href="index.html" class="pixel-btn pixel-btn-outline pixel-btn-sm" style="width:100%;text-align:center;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">&larr; Back to Archive</span>
+                    </span>
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+                </div>
+                <div class="footer-right">
+                    <a href="../../">Portfolio</a>
+                    <a href="../">n8n Hub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <script src="articlesData.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+        const contentDiv = document.getElementById('reader-content');
+
+        if (!articleId) {
+            contentDiv.innerHTML = '<h2>Article not found</h2><p style="margin-top:1rem;">Return to the <a href="index.html" style="color:var(--red);text-decoration:underline;">archive</a> to select an article.</p>';
+            return;
+        }
+
+        const articles = window.n8nArticles || [];
+        const article = articles.find(a => a.id === articleId);
+
+        if (!article) {
+            contentDiv.innerHTML = '<h2>Article not found</h2><p style="margin-top:1rem;">This article may have been moved.</p>';
+            return;
+        }
+
+        const tagsHtml = article.tags.map(t =>
+            '<span class="ar-tag">' + t + '</span>'
+        ).join('');
+
+        contentDiv.innerHTML =
+            '<header class="reader-header">' +
+                '<div class="reader-tags">' + tagsHtml + '</div>' +
+                '<h1 class="reader-title">' + article.title + '</h1>' +
+                '<div class="reader-meta">Published on ' + article.date + ' &middot; By ' + article.author + '</div>' +
+            '</header>' +
+            '<div class="reader-body">' + article.content + '</div>';
+        document.title = article.title + ' — n8n Guide';
+    });
+    </script>
+</body>
+</html>

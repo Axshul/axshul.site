@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build Your First n8n Workflow — n8n Guide</title>
+    <meta name="description" content="A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.">
+    <meta property="og:title" content="How to Build Your First n8n Workflow — n8n Guide">
+    <meta property="og:description" content="A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.">
+    <meta property="og:type" content="article">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../style.css">
+
+    <style>
+        body { cursor: none; }
+
+        .article-wrap {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 3rem) 2rem 4rem;
+        }
+        .reader-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+            align-items: start;
+        }
+        .reader-main { min-width: 0; }
+        .reader-header { margin-bottom: 2.5rem; }
+        .reader-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .ar-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            background: rgba(215,38,56,0.06);
+            border: 1px solid rgba(215,38,56,0.15);
+            color: var(--red);
+            padding: 0.3rem 0.8rem;
+            clip-path: var(--px-clip-sm);
+        }
+        .reader-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .reader-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; color: var(--gray); letter-spacing: 0.04em;
+        }
+        .reader-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem; font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        .reader-body h3 {
+            font-family: var(--font-body);
+            font-size: 1.1rem; font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        .reader-body p {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 1rem;
+        }
+        .reader-body a { color: var(--red); text-decoration: underline; font-weight: 600; }
+        .reader-body ul, .reader-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .reader-body li {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 0.3rem;
+        }
+        .reader-body code {
+            font-family: var(--font-mono); font-size: 0.82rem;
+            background: rgba(0,0,0,0.05); padding: 0.15rem 0.4rem;
+        }
+        .reader-body strong { color: var(--black); }
+
+        .reader-sidebar {
+            position: sticky; top: calc(var(--nav-h) + 2rem);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip); padding: 1.5rem;
+            background: var(--white);
+        }
+        .rs-label {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 1rem;
+        }
+        .reader-author {
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+        }
+        .ra-av {
+            width: 36px; height: 36px; background: var(--red); color: var(--white);
+            clip-path: var(--px-clip-sm); display: flex; align-items: center;
+            justify-content: center; font-family: var(--font-mono);
+            font-size: 0.65rem; font-weight: 700; flex-shrink: 0;
+        }
+        .ra-name { font-weight: 600; font-size: 0.85rem; }
+        .ra-role { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gray); }
+        .sb-divider { border: none; border-top: 1px solid var(--gray-border); margin: 1.5rem 0; }
+        .sb-link {
+            display: block; font-size: 0.8rem; color: var(--gray);
+            padding: 0.3rem 0; transition: color 0.2s, padding-left 0.2s;
+        }
+        .sb-link:hover { color: var(--red); padding-left: 0.4rem; }
+        .read-progress {
+            width: 100%; height: 3px; background: rgba(0,0,0,0.06);
+            overflow: hidden; margin-bottom: 1.5rem;
+        }
+        .read-progress-bar {
+            width: 0%; height: 100%; background: var(--red);
+            transition: width 0.1s;
+        }
+        .rp-head {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            color: var(--gray); margin-bottom: 0.4rem;
+            display: flex; justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .reader-layout { grid-template-columns: 1fr; }
+            .reader-sidebar { position: static; }
+            .article-wrap { padding-left: 1rem; padding-right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="geo-grid" id="geoGrid" aria-hidden="true">
+        <svg class="geo-grid-svg" preserveAspectRatio="none">
+            <defs>
+                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <g class="geo-grid-lines" id="geoLines"></g>
+            <g class="geo-grid-nodes" id="geoNodes"></g>
+        </svg>
+    </div>
+
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../../../" class="nav-logo">
+                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+                <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-left:0.6rem;">/ Automations</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="../" class="nav-link"><span class="nav-index">01</span>Archive</a>
+                <a href="../../" class="nav-link"><span class="nav-index">02</span>Hub</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="article-wrap">
+        <div class="reader-layout">
+            <main class="reader-main" data-reveal>
+                <header class="reader-header">
+                    <div class="reader-tags">
+                        <span class="ar-tag">Beginner</span>
+                        <span class="ar-tag">Workflows</span>
+                        <span class="ar-tag">Getting Started</span>
+                    </div>
+                    <h1 class="reader-title">How to Build Your First n8n Workflow</h1>
+                    <div class="reader-meta">Published on Mar 29, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+
+                    <h2>Before You Begin: Get n8n Running</h2>
+                    <p>If you haven't set up n8n yet, that's the very first thing to sort out. There are a few ways to run it, but if you're just starting out the answer is simple: <strong>go with n8n Cloud</strong>. Don't think about self-hosting at this stage. Self-hosting brings in server management, Docker, reverse proxies, and SSL certificates. None of that is useful when you're still learning the fundamentals of automation.</p>
+                    <p>Head over to <a href="https://app.n8n.cloud/" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">app.n8n.cloud</a>, sign up, and your workspace is ready in seconds. Save the self-hosting conversation for later, once you actually know what you're building and why you'd need it.</p>
+
+                    <div style="background:rgba(0,0,0,0.02); border:1px solid var(--gray-border); border-left: 3px solid var(--red); clip-path: var(--px-clip-sm); padding: 1.25rem 1.5rem; margin: 2rem 0;">
+                        <p style="margin:0; font-size: 0.9rem; color: var(--gray);">Want a deeper breakdown of setup options and the cloud vs. self-hosted tradeoffs? These two articles cover it:</p>
+                        <ul style="margin: 0.75rem 0 0 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
+                            <li><a href="../how-to-setup-n8n/" target="_blank" style="color:var(--red);text-decoration:underline;font-size:0.9rem;">How To Setup n8n: Cloud, NPM, and Docker →</a></li>
+                            <li><a href="../n8n-cloud-vs-self-hosted/" target="_blank" style="color:var(--red);text-decoration:underline;font-size:0.9rem;">n8n Cloud vs. Self-Hosted: Which One Should You Pick? →</a></li>
+                        </ul>
+                    </div>
+
+                    <h2>Step 1: Do the Level 1 Course. Thoroughly.</h2>
+                    <p>Once you have n8n running, your first move is to go through the official <a href="https://docs.n8n.io/courses/level-one/" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">n8n Level 1 Course</a>. This is not optional reading. Go through it completely, step by step, and actually build what it asks you to build inside your own n8n instance.</p>
+                    <p>This course covers the core concepts that everything else in n8n is built on: triggers, nodes, expressions, data flow, and how items move through a workflow. If you skip sections or skim through it, you will hit walls later that feel confusing but are actually just gaps from rushing this part.</p>
+
+                    <div style="background:rgba(0,0,0,0.02); border:1px solid var(--gray-border); clip-path: var(--px-clip-sm); padding: 1.25rem 1.5rem; margin: 2rem 0;">
+                        <p style="margin:0 0 0.5rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray);">What Level 1 covers</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; color: var(--gray);">
+                            <li>Triggers and how workflows start</li>
+                            <li>Nodes and connecting them on the canvas</li>
+                            <li>Expressions and referencing data between nodes</li>
+                            <li>How items flow through a workflow</li>
+                            <li>Basic error handling and testing</li>
+                        </ul>
+                    </div>
+
+                    <p>Don't underestimate it just because it's labeled "Level 1". Most people who struggle with n8n early on simply didn't go through this carefully enough.</p>
+
+                    <h2>Step 2: Build Something Real for Yourself</h2>
+                    <p>Once you've finished the Level 1 course, don't immediately jump to the next one. Take a step back and think about a real problem in your own life or work that automation could solve. It doesn't have to be complex. Some ideas to get you thinking:</p>
+                    <ul>
+                        <li>Automatically save email attachments to Google Drive</li>
+                        <li>Get a daily summary of your calendar events sent to Telegram</li>
+                        <li>Post a message to Slack whenever a form is submitted</li>
+                        <li>Sync data between two tools you already use</li>
+                    </ul>
+                    <p>Pick something small and actually build it. This is where the real learning happens. The course gives you the vocabulary. Building your own workflow gives you the fluency. You'll run into small problems, figure them out, and come out the other side with a much stronger intuition for how n8n thinks.</p>
+                    <p>This hands-on phase is not a detour. It's the most important part of the process.</p>
+
+                    <h2>Step 3: Level 2 Course (When You're Ready)</h2>
+                    <p>Once you've built a few workflows on your own and feel comfortable navigating the canvas, you can move on to the <a href="https://docs.n8n.io/courses/level-two/" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">n8n Level 2 Course</a>. This one goes deeper. It covers advanced data manipulation, sub-workflows, error handling, and building production-grade automations.</p>
+                    <p>Level 2 assumes you already have a solid foundation. If you jump into it without completing Level 1 and getting some hands-on time, a lot of it won't click. The concepts build on each other. Do Level 1 first, build something real, then come back to this.</p>
+
+                    <div style="background:rgba(0,0,0,0.02); border:1px solid var(--gray-border); border-left: 3px solid #f59e0b; clip-path: var(--px-clip-sm); padding: 1.25rem 1.5rem; margin: 2rem 0;">
+                        <p style="margin:0; font-size: 0.9rem; color: var(--gray);"><strong style="color: #f59e0b;">Important:</strong> Do not skip to Level 2 without completing Level 1 first. The courses are designed to build on each other and skipping ahead will leave real gaps in your understanding.</p>
+                    </div>
+
+                    <h2>These Courses Are Just the Beginning</h2>
+                    <p>Both courses together cover maybe 5 to 10 percent of what n8n can actually do. n8n connects hundreds of applications, supports custom code, webhooks, AI agents, vector stores, and a lot more. The ecosystem is genuinely vast.</p>
+                    <p>On top of that, n8n ships new versions and features constantly. New nodes, new integrations, new capabilities. It's an actively evolving platform. The courses give you the foundation to navigate all of that, but the real depth comes from exploring, experimenting, and building things that matter to you.</p>
+                    <p>Think of the courses as your entry point, not your destination.</p>
+
+                    <h2>Where to Get Help (and How to Ask)</h2>
+                    <p>When you run into problems, the <a href="https://community.n8n.io/" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">n8n Community Forum</a> is the right place to go. But there's an important distinction to make.</p>
+                    <p>Do not go to the community asking questions that the Level 1 or Level 2 courses already answer. If you haven't gone through the courses yet, the community is not a shortcut around them. Posting basic questions that are covered in the official documentation is a fast way to not get helpful responses, and it's not a great use of anyone's time.</p>
+
+                    <div style="background:rgba(0,0,0,0.02); border:1px solid var(--gray-border); border-left: 3px solid var(--red); clip-path: var(--px-clip-sm); padding: 1.25rem 1.5rem; margin: 2rem 0;">
+                        <p style="margin:0 0 0.5rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray);">Good questions to ask the community</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; color: var(--gray);">
+                            <li>A node behaving unexpectedly during a course exercise</li>
+                            <li>An expression not evaluating the way you expect</li>
+                            <li>An integration that isn't working despite following the docs</li>
+                            <li>A specific error you can't resolve after trying yourself</li>
+                        </ul>
+                    </div>
+
+                    <p>Come with context, share what you've tried, and you'll get genuinely useful help. For a full breakdown of where to find help and how to use those resources well:</p>
+                    <ul>
+                        <li><a href="../where-to-get-n8n-help/" target="_blank" style="color:var(--red);text-decoration:underline;">Where to Get n8n Help: Community, Docs, and More →</a></li>
+                    </ul>
+
+                    <h2>The Short Version</h2>
+                    <p>Start with n8n Cloud. Do the Level 1 course properly. Build something real. Then do Level 2 when you're ready. Explore from there. The platform rewards curiosity and hands-on time more than anything else.</p>
+
+                
+                </div>
+            </main>
+
+            <aside class="reader-sidebar" data-reveal>
+                <div class="rp-head">
+                    <span>READING PROGRESS</span>
+                    <span>6 MIN</span>
+                </div>
+                <div class="read-progress">
+                    <div class="read-progress-bar" id="read-progress-bar"></div>
+                </div>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label">Written By</div>
+                <a href="../../../" style="text-decoration:none;display:block;">
+                    <div class="reader-author">
+                        <div class="ra-av">AN</div>
+                        <div>
+                            <div class="ra-name">Anshul Namdev</div>
+                            <div class="ra-role">AI / Automation Eng.</div>
+                        </div>
+                    </div>
+                </a>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label" style="margin-top:0;">Resources</div>
+                    <a href="https://docs.n8n.io/courses/level-one/" class="sb-link">Level 1 Course ↗</a>
+                    <a href="https://docs.n8n.io/courses/level-two/" class="sb-link">Level 2 Course ↗</a>
+                    <a href="https://community.n8n.io/" class="sb-link">n8n Community ↗</a>
+                    <a href="../how-to-setup-n8n/" class="sb-link">Setup Guide →</a>
+                    <a href="../n8n-cloud-vs-self-hosted/" class="sb-link">Cloud vs Self-Hosted →</a>
+                    <a href="../where-to-get-n8n-help/" class="sb-link">Where to Get Help →</a>
+                    <hr class="sb-divider">
+
+
+                <button id="share-btn" class="pixel-btn pixel-btn-primary pixel-btn-sm" style="width:100%;margin-bottom:0.8rem;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">Share Article</span>
+                    </span>
+                </button>
+                <a href="../" class="pixel-btn pixel-btn-outline pixel-btn-sm" style="width:100%;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">&larr; Back to Archive</span>
+                    </span>
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+                </div>
+                <div class="footer-right">
+                    <a href="../../../">Portfolio</a>
+                    <a href="../../">n8n Hub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../../script.js"></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.pixel-btn-text').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.pixel-btn-text').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

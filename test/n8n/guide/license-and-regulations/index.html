@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License and Regulations in n8n — n8n Guide</title>
+    <meta name="description" content="A definitive breakdown of n8n&#39;s fair-code Sustainable Use License (SUL). Learn exactly what commercial usage is permitted and what is strictly prohibited.">
+    <meta property="og:title" content="License and Regulations in n8n — n8n Guide">
+    <meta property="og:description" content="A definitive breakdown of n8n&#39;s fair-code Sustainable Use License (SUL). Learn exactly what commercial usage is permitted and what is strictly prohibited.">
+    <meta property="og:type" content="article">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../style.css">
+
+    <style>
+        body { cursor: none; }
+
+        .article-wrap {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 3rem) 2rem 4rem;
+        }
+        .reader-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+            align-items: start;
+        }
+        .reader-main { min-width: 0; }
+        .reader-header { margin-bottom: 2.5rem; }
+        .reader-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .ar-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            background: rgba(215,38,56,0.06);
+            border: 1px solid rgba(215,38,56,0.15);
+            color: var(--red);
+            padding: 0.3rem 0.8rem;
+            clip-path: var(--px-clip-sm);
+        }
+        .reader-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .reader-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; color: var(--gray); letter-spacing: 0.04em;
+        }
+        .reader-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem; font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        .reader-body h3 {
+            font-family: var(--font-body);
+            font-size: 1.1rem; font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        .reader-body p {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 1rem;
+        }
+        .reader-body a { color: var(--red); text-decoration: underline; font-weight: 600; }
+        .reader-body ul, .reader-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .reader-body li {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 0.3rem;
+        }
+        .reader-body code {
+            font-family: var(--font-mono); font-size: 0.82rem;
+            background: rgba(0,0,0,0.05); padding: 0.15rem 0.4rem;
+        }
+        .reader-body strong { color: var(--black); }
+
+        .reader-sidebar {
+            position: sticky; top: calc(var(--nav-h) + 2rem);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip); padding: 1.5rem;
+            background: var(--white);
+        }
+        .rs-label {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 1rem;
+        }
+        .reader-author {
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+        }
+        .ra-av {
+            width: 36px; height: 36px; background: var(--red); color: var(--white);
+            clip-path: var(--px-clip-sm); display: flex; align-items: center;
+            justify-content: center; font-family: var(--font-mono);
+            font-size: 0.65rem; font-weight: 700; flex-shrink: 0;
+        }
+        .ra-name { font-weight: 600; font-size: 0.85rem; }
+        .ra-role { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gray); }
+        .sb-divider { border: none; border-top: 1px solid var(--gray-border); margin: 1.5rem 0; }
+        .sb-link {
+            display: block; font-size: 0.8rem; color: var(--gray);
+            padding: 0.3rem 0; transition: color 0.2s, padding-left 0.2s;
+        }
+        .sb-link:hover { color: var(--red); padding-left: 0.4rem; }
+        .read-progress {
+            width: 100%; height: 3px; background: rgba(0,0,0,0.06);
+            overflow: hidden; margin-bottom: 1.5rem;
+        }
+        .read-progress-bar {
+            width: 0%; height: 100%; background: var(--red);
+            transition: width 0.1s;
+        }
+        .rp-head {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            color: var(--gray); margin-bottom: 0.4rem;
+            display: flex; justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .reader-layout { grid-template-columns: 1fr; }
+            .reader-sidebar { position: static; }
+            .article-wrap { padding-left: 1rem; padding-right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="geo-grid" id="geoGrid" aria-hidden="true">
+        <svg class="geo-grid-svg" preserveAspectRatio="none">
+            <defs>
+                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <g class="geo-grid-lines" id="geoLines"></g>
+            <g class="geo-grid-nodes" id="geoNodes"></g>
+        </svg>
+    </div>
+
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../../../" class="nav-logo">
+                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+                <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-left:0.6rem;">/ Automations</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="../" class="nav-link"><span class="nav-index">01</span>Archive</a>
+                <a href="../../" class="nav-link"><span class="nav-index">02</span>Hub</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="article-wrap">
+        <div class="reader-layout">
+            <main class="reader-main" data-reveal>
+                <header class="reader-header">
+                    <div class="reader-tags">
+                        <span class="ar-tag">Architecture</span>
+                        <span class="ar-tag">Strategy</span>
+                    </div>
+                    <h1 class="reader-title">Navigating n8n Licenses: What You Can and Cannot Do</h1>
+                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+                    <h2>Fair-Code vs Open Source</h2>
+                    <p>It is a common misconception that n8n is strictly "Open Source." According to the Open Source Initiative (OSI), true open-source licenses cannot legally limit what you do with the software commercially. Instead, n8n operates on a <strong>fair-code</strong> model. Their source code is 100% visible and modifiable by the public, but they invoke commercial restrictions to prevent massive corporations from ripping off their product and putting them out of business.</p>
+
+                    <h2>The Sustainable Use License (SUL)</h2>
+                    <p>Almost everything hosted on the primary n8n GitHub repository (excluding specific enterprise files) falls under the <strong>Sustainable Use License (SUL)</strong>, a license pioneered by n8n themselves. The golden rule of this license is that you may use, modify, and distribute n8n freely - <strong>as long as it is for your "internal business purposes" or non-commercial use.</strong></p>
+
+                    <h2>What is STRICTLY PROHIBITED </h2>
+                    <p>Under the SUL, you cannot sell a product or service where the inherent value is derived <em>substantially</em> from n8n's engine. If you violate these terms, your license is immediately terminated.</p>
+                    
+                    <ul>
+                        <li><strong>White-Labeling:</strong> You cannot skin the n8n UI with your own logo and sell access to it as your own workflow platform.</li>
+                        <li><strong>Commercial Hosting:</strong> You cannot spin up instances of n8n on your own servers and charge clients a monthly fee to just "access and use" n8n. If you want to do this, you become a competitor to n8n Cloud.</li>
+                        <li><strong>User-Credentialed SaaS Backends:</strong> You cannot use n8n silently in the background of your SaaS app to fetch a user's data using <strong>their</strong> credentials. For example, if you build an app where your user logs into their HubSpot account, and you map those credentials into n8n to sync their data, you are violating the license.</li>
+                    </ul>
+
+                    <h2>What is COMPLETELY ALLOWED </h2>
+                    <p>The license is highly permissive for internal tooling and consulting architectures.</p>
+
+                    <ul>
+                        <li><strong>Internal Data Sync:</strong> Syncing your company's own CRM to your internal PostgreSQL database.</li>
+                        <li><strong>Selling Consulting Services:</strong> You are 100% legally allowed to be an n8n Expert and charge clients $150/hr to <em>build</em> workflows for them, maintain their internal servers, or write custom nodes. <em>(Note: n8n actually removed their old Commons Clause license specifically so consultants could do this!)</em></li>
+                        <li><strong>Company-Credentialed SaaS Backends:</strong> If you embed an AI Chatbot into your app, and n8n handles the webhooks using <strong>your company's</strong> OpenAI API keys to reply to the user, this is perfectly fine. The user is not supplying credentials.</li>
+                        <li><strong>Creating Official Integrations:</strong> Building an n8n node for your SaaS product to allow other n8n users to connect to your service.</li>
+                    </ul>
+
+                    <h2>Need to bypass these restrictions?</h2>
+                    <p>If your startup's entire business model revolves around white-labeling n8n or embedding it deeply into a user-facing SaaS where users provide their own app credentials, n8n allows this through a separate commercial agreement called <strong>n8n Embed</strong>. This requires opening a dialogue with their sales team.</p>
+
+                    <p>Additionally, certain highly advanced features inside the n8n codebase (files with `.ee.` in the name) fall under the proprietary <strong>n8n Enterprise License</strong>. These features are strictly locked behind paid enterprise subscription tiers for production environments.</p>
+
+                    <hr style="border: 0; border-top: 1px solid var(--gray-border); margin: 3rem 0;">
+                    <p><em>Disclaimer: This article is an architectural synopsis, not formal legal advice. If your use-case resides in a grey area, you should email n8n directly at <strong>license@n8n.io</strong>.</em></p>
+
+                
+                </div>
+            </main>
+
+            <aside class="reader-sidebar" data-reveal>
+                <div class="rp-head">
+                    <span>READING PROGRESS</span>
+                    <span>4 MIN</span>
+                </div>
+                <div class="read-progress">
+                    <div class="read-progress-bar" id="read-progress-bar"></div>
+                </div>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label">Written By</div>
+                <a href="../../../" style="text-decoration:none;display:block;">
+                    <div class="reader-author">
+                        <div class="ra-av">AN</div>
+                        <div>
+                            <div class="ra-name">Anshul Namdev</div>
+                            <div class="ra-role">AI / Automation Eng.</div>
+                        </div>
+                    </div>
+                </a>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label" style="margin-top:0;">Resources</div>
+                    <a href="https://docs.n8n.io/hosting/license/" class="sb-link">Official SUL Documentation ↗</a>
+                    <a href="mailto:license@n8n.io" class="sb-link">Contact n8n Legal Team ↗</a>
+                    <a href="https://n8n.io/embed/" class="sb-link">Explore n8n Embed ↗</a>
+                    <hr class="sb-divider">
+
+
+                <button id="share-btn" class="pixel-btn pixel-btn-primary pixel-btn-sm" style="width:100%;margin-bottom:0.8rem;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">Share Article</span>
+                    </span>
+                </button>
+                <a href="../" class="pixel-btn pixel-btn-outline pixel-btn-sm" style="width:100%;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">&larr; Back to Archive</span>
+                    </span>
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+                </div>
+                <div class="footer-right">
+                    <a href="../../../">Portfolio</a>
+                    <a href="../../">n8n Hub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../../script.js"></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.pixel-btn-text').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.pixel-btn-text').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

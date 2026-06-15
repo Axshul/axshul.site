@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n Community Edition: Features, Limits, and Free Unlocks — n8n Guide</title>
+    <meta name="description" content="A complete breakdown of what the n8n Community Edition includes, what it excludes, and how to unlock extra features for free by registering your instance.">
+    <meta property="og:title" content="n8n Community Edition: Features, Limits, and Free Unlocks — n8n Guide">
+    <meta property="og:description" content="A complete breakdown of what the n8n Community Edition includes, what it excludes, and how to unlock extra features for free by registering your instance.">
+    <meta property="og:type" content="article">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../style.css">
+
+    <style>
+        body { cursor: none; }
+
+        .article-wrap {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 3rem) 2rem 4rem;
+        }
+        .reader-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+            align-items: start;
+        }
+        .reader-main { min-width: 0; }
+        .reader-header { margin-bottom: 2.5rem; }
+        .reader-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .ar-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            background: rgba(215,38,56,0.06);
+            border: 1px solid rgba(215,38,56,0.15);
+            color: var(--red);
+            padding: 0.3rem 0.8rem;
+            clip-path: var(--px-clip-sm);
+        }
+        .reader-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .reader-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; color: var(--gray); letter-spacing: 0.04em;
+        }
+        .reader-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem; font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        .reader-body h3 {
+            font-family: var(--font-body);
+            font-size: 1.1rem; font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        .reader-body p {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 1rem;
+        }
+        .reader-body a { color: var(--red); text-decoration: underline; font-weight: 600; }
+        .reader-body ul, .reader-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .reader-body li {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 0.3rem;
+        }
+        .reader-body code {
+            font-family: var(--font-mono); font-size: 0.82rem;
+            background: rgba(0,0,0,0.05); padding: 0.15rem 0.4rem;
+        }
+        .reader-body strong { color: var(--black); }
+
+        .reader-sidebar {
+            position: sticky; top: calc(var(--nav-h) + 2rem);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip); padding: 1.5rem;
+            background: var(--white);
+        }
+        .rs-label {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 1rem;
+        }
+        .reader-author {
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+        }
+        .ra-av {
+            width: 36px; height: 36px; background: var(--red); color: var(--white);
+            clip-path: var(--px-clip-sm); display: flex; align-items: center;
+            justify-content: center; font-family: var(--font-mono);
+            font-size: 0.65rem; font-weight: 700; flex-shrink: 0;
+        }
+        .ra-name { font-weight: 600; font-size: 0.85rem; }
+        .ra-role { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gray); }
+        .sb-divider { border: none; border-top: 1px solid var(--gray-border); margin: 1.5rem 0; }
+        .sb-link {
+            display: block; font-size: 0.8rem; color: var(--gray);
+            padding: 0.3rem 0; transition: color 0.2s, padding-left 0.2s;
+        }
+        .sb-link:hover { color: var(--red); padding-left: 0.4rem; }
+        .read-progress {
+            width: 100%; height: 3px; background: rgba(0,0,0,0.06);
+            overflow: hidden; margin-bottom: 1.5rem;
+        }
+        .read-progress-bar {
+            width: 0%; height: 100%; background: var(--red);
+            transition: width 0.1s;
+        }
+        .rp-head {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            color: var(--gray); margin-bottom: 0.4rem;
+            display: flex; justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .reader-layout { grid-template-columns: 1fr; }
+            .reader-sidebar { position: static; }
+            .article-wrap { padding-left: 1rem; padding-right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="geo-grid" id="geoGrid" aria-hidden="true">
+        <svg class="geo-grid-svg" preserveAspectRatio="none">
+            <defs>
+                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <g class="geo-grid-lines" id="geoLines"></g>
+            <g class="geo-grid-nodes" id="geoNodes"></g>
+        </svg>
+    </div>
+
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../../../" class="nav-logo">
+                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+                <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-left:0.6rem;">/ Automations</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="../" class="nav-link"><span class="nav-index">01</span>Archive</a>
+                <a href="../../" class="nav-link"><span class="nav-index">02</span>Hub</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="article-wrap">
+        <div class="reader-layout">
+            <main class="reader-main" data-reveal>
+                <header class="reader-header">
+                    <div class="reader-tags">
+                        <span class="ar-tag">Setup</span>
+                        <span class="ar-tag">Strategy</span>
+                    </div>
+                    <h1 class="reader-title">n8n Community Edition: Features, Limits, and Free Unlocks</h1>
+                    <div class="reader-meta">Published on Mar 25, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+
+                    <h2>What Is the Community Edition?</h2>
+                    <p>When you self-host n8n without purchasing a paid plan, you are running the <strong>Community Edition</strong>. It is free, open-weight, and includes the vast majority of n8n's feature set. For most individual developers, freelancers, and small teams building internal automations, the Community Edition is everything you need.</p>
+                    <p>Understanding exactly where the Community Edition ends and the paid plans begin is critical before you architect a production system. Discovering a necessary feature is locked after you have built can force a disruptive and expensive migration.</p>
+
+                    <!-- Feature comparison table -->
+                    <div class="model-chart-wrap" style="margin: 3rem 0; padding: 2.5rem; background: rgba(0,0,0,0.02); border: 1px solid var(--gray-border); clip-path: var(--px-clip-sm); overflow-x: auto;">
+                        <h3 style="margin-top:0; margin-bottom:1.5rem; font-family:var(--font-body); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--gray);">Edition Feature Comparison</h3>
+                        <table style="width: 100%; min-width: 560px; border-collapse: collapse; text-align: left; font-family: var(--font-body);">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--gray-border); color: var(--gray); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em;">
+                                    <th style="padding: 1rem 1rem 1rem 0;">Feature</th>
+                                    <th style="padding: 1rem; text-align: center;">Community</th>
+                                    <th style="padding: 1rem; text-align: center;">Registered</th>
+                                    <th style="padding: 1rem; text-align: center;">Enterprise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Core workflow execution</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Queue mode</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Logging</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Workflow folders</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Debug in editor</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Custom execution data</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Custom Variables</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Environments</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">External secrets</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Git version control</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">SSO (SAML / LDAP)</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Projects</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1rem 1rem 1rem 0; color: var(--black);">Log streaming</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: var(--gray);">No</td>
+                                    <td style="padding: 1rem; text-align: center; color: #1a8a4a; font-weight: 700;">Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>What the Community Edition Does Not Include</h2>
+                    <p>The community edition has a very specific set of omissions. These are not missing due to instability or incompleteness — they are deliberately gated behind paid plans to sustain n8n's development. Knowing them upfront is essential before committing to a self-hosted deployment.</p>
+                    <ul>
+                        <li><strong>Custom Variables:</strong> Instance-wide variables you can define once and reference across all workflows. Without this, each workflow must redeclare its own constants or pull them from environment variables manually.</li>
+                        <li><strong>Environments:</strong> The ability to maintain separate staging and production configurations from a single n8n admin panel. Without this, environment separation requires running entirely separate n8n instances.</li>
+                        <li><strong>External Secrets:</strong> Native integration with secret managers like HashiCorp Vault or AWS Secrets Manager. On the community edition, credentials are stored directly in n8n's own encrypted database.</li>
+                        <li><strong>External Storage for Binary Data:</strong> By default, binary files (images, PDFs, attachments) are stored in the local filesystem. Enterprise plans support routing binary data to S3 or similar object storage, which is critical for high-volume workflows.</li>
+                        <li><strong>Log Streaming:</strong> Pushing execution logs to external observability platforms (Datadog, Splunk, etc.) in real time. Basic logging to local files is included in the community edition, but forwarding is not.</li>
+                        <li><strong>Multi-Main Mode:</strong> Running multiple n8n main process instances simultaneously for high-availability failover. Queue mode (a single worker pool) is included, but true active-active redundancy is Enterprise-only.</li>
+                        <li><strong>Projects:</strong> A workspace-level organization layer above individual workflows, allowing teams to partition access by project scope. Missing on Community; only the instance owner and the workflow creator can access workflows.</li>
+                        <li><strong>SSO (SAML / LDAP):</strong> Single Sign-On integration with enterprise identity providers. Users on Community must authenticate with local n8n accounts only.</li>
+                        <li><strong>Workflow and Credential Sharing:</strong> On Community, only the instance owner and the user who created a workflow or credential set can access it. There is no fine-grained permission system between team members.</li>
+                        <li><strong>Version Control Using Git:</strong> The built-in Git integration for pushing workflow exports to a repository and switching between branches is Enterprise-only. Manual JSON exports remain available on Community as a workaround.</li>
+                    </ul>
+
+                    <h2>The Registered Community Edition</h2>
+                    <p>n8n offers a genuinely compelling middle ground: by registering your self-hosted instance with your email address, you unlock three additional features completely free of charge. The license does not expire once activated.</p>
+                    <p>The three features unlocked by registration are:</p>
+                    <ul>
+                        <li><strong>Folders:</strong> Organize all your workflows into a hierarchical folder structure directly inside the n8n editor. This feature alone becomes essential once an instance grows beyond 20 to 30 workflows.</li>
+                        <li><strong>Debug in Editor:</strong> Copy and pin execution data from a previous run into an active workflow session. This allows you to replay a specific problematic execution payload directly in the editor without needing to manually trigger the workflow again.</li>
+                        <li><strong>Custom Execution Data:</strong> Attach, search, and annotate custom metadata to any workflow execution. This is particularly powerful for building audit trails, tagging executions with customer IDs, or flagging specific runs for review.</li>
+                    </ul>
+
+                    <h2>How to Register a New Instance</h2>
+                    <p>If you are setting up n8n for the first time, the registration option is presented during the initial account creation flow. Simply enter your email address when prompted and a license key will be sent immediately.</p>
+
+                    <h2>How to Register an Existing Instance</h2>
+                    <p>If your instance is already running without registration, activating the free features takes under two minutes:</p>
+                    <ol>
+                        <li>Select the three-dot icon in the lower-left corner of the n8n editor.</li>
+                        <li>Select <strong>Settings</strong>, then navigate to <strong>Usage and plan</strong>.</li>
+                        <li>Select <strong>Unlock</strong>, enter your email address, and select <strong>Send me a free license key</strong>.</li>
+                        <li>Check your inbox for the license email.</li>
+                        <li>Activate by clicking the button in the email, or by returning to <strong>Settings &gt; Usage and plan</strong> and selecting <strong>Enter activation key</strong>.</li>
+                    </ol>
+                    <p>Once activated, the license is permanent. n8n may adjust the set of features included in the registered unlock tier in the future, but previously unlocked features will not be revoked from existing activations.</p>
+
+                    <h2>When You Need to Upgrade Beyond Community</h2>
+                    <p>The community edition handles the overwhelming majority of real-world automation use cases. The decision to upgrade typically comes down to one of three specific requirements:</p>
+                    <ul>
+                        <li><strong>Multi-user team access with permissions:</strong> If more than one person needs to own, edit, or share specific workflows independently, you need at least the Starter Cloud plan or Business self-hosted plan for the Sharing feature.</li>
+                        <li><strong>Enterprise Identity and Compliance:</strong> If your organization mandates SSO, LDAP integration, external secret management, or audit log streaming to a SIEM, the Enterprise plan addresses all of these together.</li>
+                        <li><strong>Environment promotion pipelines:</strong> If your team operates a formal staging-to-production workflow promotion cycle and requires Git-based version control of n8n workflow definitions, the Enterprise Git integration is the only native solution.</li>
+                    </ul>
+                    <p>For everything else, a registered Community Edition instance is a fully capable foundation for serious production automation infrastructure.</p>
+
+                    <hr style="border: 0; border-top: 1px solid var(--gray-border); margin: 3rem 0;">
+                    <p><em>Feature availability may change across n8n releases. Always verify against the <strong>Usage and plan</strong> panel in your running instance and the official n8n pricing page for the most current plan breakdown.</em></p>
+
+                
+                </div>
+            </main>
+
+            <aside class="reader-sidebar" data-reveal>
+                <div class="rp-head">
+                    <span>READING PROGRESS</span>
+                    <span>6 MIN</span>
+                </div>
+                <div class="read-progress">
+                    <div class="read-progress-bar" id="read-progress-bar"></div>
+                </div>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label">Written By</div>
+                <a href="../../../" style="text-decoration:none;display:block;">
+                    <div class="reader-author">
+                        <div class="ra-av">AN</div>
+                        <div>
+                            <div class="ra-name">Anshul Namdev</div>
+                            <div class="ra-role">AI / Automation Eng.</div>
+                        </div>
+                    </div>
+                </a>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label" style="margin-top:0;">Resources</div>
+                    <a href="https://docs.n8n.io/hosting/community-edition-features/" class="sb-link">Official Community Edition Docs ↗</a>
+                    <a href="https://n8n.io/pricing/" class="sb-link">n8n Pricing Plans ↗</a>
+                    <a href="https://docs.n8n.io/hosting/installation/docker/" class="sb-link">Self-Hosting with Docker ↗</a>
+                    <hr class="sb-divider">
+
+
+                <button id="share-btn" class="pixel-btn pixel-btn-primary pixel-btn-sm" style="width:100%;margin-bottom:0.8rem;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">Share Article</span>
+                    </span>
+                </button>
+                <a href="../" class="pixel-btn pixel-btn-outline pixel-btn-sm" style="width:100%;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">&larr; Back to Archive</span>
+                    </span>
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+                </div>
+                <div class="footer-right">
+                    <a href="../../../">Portfolio</a>
+                    <a href="../../">n8n Hub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../../script.js"></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.pixel-btn-text').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.pixel-btn-text').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

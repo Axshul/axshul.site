@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where to Get n8n Help: Forum, Discord, GitHub & Support Channels — n8n Guide</title>
+    <meta name="description" content="Every place to get n8n help in 2026: the community forum, Discord server, GitHub issues, official docs, and email support. When to use each one and how to write a request that actually gets answered.">
+    <meta property="og:title" content="Where to Get n8n Help: Forum, Discord, GitHub & Support Channels — n8n Guide">
+    <meta property="og:description" content="Every place to get n8n help in 2026: the community forum, Discord server, GitHub issues, official docs, and email support. When to use each one and how to write a request that actually gets answered.">
+    <meta property="og:type" content="article">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../style.css">
+
+    <style>
+        body { cursor: none; }
+
+        .article-wrap {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 3rem) 2rem 4rem;
+        }
+        .reader-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 3rem;
+            align-items: start;
+        }
+        .reader-main { min-width: 0; }
+        .reader-header { margin-bottom: 2.5rem; }
+        .reader-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .ar-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            background: rgba(215,38,56,0.06);
+            border: 1px solid rgba(215,38,56,0.15);
+            color: var(--red);
+            padding: 0.3rem 0.8rem;
+            clip-path: var(--px-clip-sm);
+        }
+        .reader-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600; letter-spacing: -0.03em; line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .reader-meta {
+            font-family: var(--font-mono);
+            font-size: 0.7rem; color: var(--gray); letter-spacing: 0.04em;
+        }
+        .reader-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem; font-weight: 600;
+            margin: 2.5rem 0 1rem;
+        }
+        .reader-body h3 {
+            font-family: var(--font-body);
+            font-size: 1.1rem; font-weight: 600;
+            margin: 2rem 0 0.75rem;
+        }
+        .reader-body p {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 1rem;
+        }
+        .reader-body a { color: var(--red); text-decoration: underline; font-weight: 600; }
+        .reader-body ul, .reader-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        .reader-body li {
+            font-size: 0.95rem; line-height: 1.8;
+            color: rgba(10,10,10,0.8); margin-bottom: 0.3rem;
+        }
+        .reader-body code {
+            font-family: var(--font-mono); font-size: 0.82rem;
+            background: rgba(0,0,0,0.05); padding: 0.15rem 0.4rem;
+        }
+        .reader-body strong { color: var(--black); }
+
+        .reader-sidebar {
+            position: sticky; top: calc(var(--nav-h) + 2rem);
+            border: 1px solid var(--gray-border);
+            clip-path: var(--px-clip); padding: 1.5rem;
+            background: var(--white);
+        }
+        .rs-label {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 1rem;
+        }
+        .reader-author {
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+        }
+        .ra-av {
+            width: 36px; height: 36px; background: var(--red); color: var(--white);
+            clip-path: var(--px-clip-sm); display: flex; align-items: center;
+            justify-content: center; font-family: var(--font-mono);
+            font-size: 0.65rem; font-weight: 700; flex-shrink: 0;
+        }
+        .ra-name { font-weight: 600; font-size: 0.85rem; }
+        .ra-role { font-family: var(--font-mono); font-size: 0.6rem; color: var(--gray); }
+        .sb-divider { border: none; border-top: 1px solid var(--gray-border); margin: 1.5rem 0; }
+        .sb-link {
+            display: block; font-size: 0.8rem; color: var(--gray);
+            padding: 0.3rem 0; transition: color 0.2s, padding-left 0.2s;
+        }
+        .sb-link:hover { color: var(--red); padding-left: 0.4rem; }
+        .read-progress {
+            width: 100%; height: 3px; background: rgba(0,0,0,0.06);
+            overflow: hidden; margin-bottom: 1.5rem;
+        }
+        .read-progress-bar {
+            width: 0%; height: 100%; background: var(--red);
+            transition: width 0.1s;
+        }
+        .rp-head {
+            font-family: var(--font-mono); font-size: 0.6rem;
+            color: var(--gray); margin-bottom: 0.4rem;
+            display: flex; justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .reader-layout { grid-template-columns: 1fr; }
+            .reader-sidebar { position: static; }
+            .article-wrap { padding-left: 1rem; padding-right: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="geo-grid" id="geoGrid" aria-hidden="true">
+        <svg class="geo-grid-svg" preserveAspectRatio="none">
+            <defs>
+                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <g class="geo-grid-lines" id="geoLines"></g>
+            <g class="geo-grid-nodes" id="geoNodes"></g>
+        </svg>
+    </div>
+
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../../../" class="nav-logo">
+                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+                <span style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-left:0.6rem;">/ Automations</span>
+            </a>
+            <div class="nav-center" id="navLinks">
+                <a href="../" class="nav-link"><span class="nav-index">01</span>Archive</a>
+                <a href="../../" class="nav-link"><span class="nav-index">02</span>Hub</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="article-wrap">
+        <div class="reader-layout">
+            <main class="reader-main" data-reveal>
+                <header class="reader-header">
+                    <div class="reader-tags">
+                        <span class="ar-tag">Support</span>
+                        <span class="ar-tag">Community</span>
+                    </div>
+                    <h1 class="reader-title">Where to Get n8n Help: Forum, Discord, GitHub and Support Channels</h1>
+                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
+                </header>
+
+                <div class="reader-body">
+
+                    <h2>The Rule Before You Ask Anything</h2>
+                    <p>n8n has a genuinely active support ecosystem. The community forum has thousands of solved threads, the Discord moves fast, and the docs cover most standard use cases. Before posting anywhere, run a quick search. The odds that someone has hit your exact issue before are high, and a solved thread gets you an answer in seconds rather than waiting for a reply.</p>
+                    <p>When you do need to ask, the channel you pick matters. Posting a billing question on the community forum will get you a slower, less useful response than emailing support directly. Posting a workflow logic question to support email will get you redirected to the forum. Knowing which channel handles what saves everyone time.</p>
+
+                    <div style="background: rgba(215,38,56,0.04); border: 1px solid rgba(215,38,56,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">💡</span>
+                        <p style="margin:0; font-size: 0.9rem; color: var(--gray);">Quick tip: when posting a workflow question anywhere, always include your workflow JSON. Select your nodes on the canvas, hit <code>Cmd/Ctrl + C</code>, and paste the raw JSON into your post inside a code block. Without it, helpers are guessing.</p>
+                    </div>
+
+                    <h2>1. The Community Forum</h2>
+                    <p>The <a href="https://community.n8n.io/" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">official n8n Community Forum</a> is the primary support channel for workflow questions. It is heavily moderated by n8n staff and developers, and the search index is deep. Most common problems have already been solved here.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0;">
+                        <div style="border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; overflow: hidden;">
+                            <div style="background: rgba(34,197,94,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(34,197,94,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 0.8rem;">✅</span>
+                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #22c55e;">Post here for</span>
+                            </div>
+                            <div style="padding: 0.9rem 1.1rem;">
+                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--gray); line-height: 1.9;">
+                                    <li>Workflow design and logic questions</li>
+                                    <li>Code node JavaScript help</li>
+                                    <li>Debugging API errors and node behaviour</li>
+                                    <li>Third-party integration questions</li>
+                                    <li>Self-hosting setup and configuration</li>
+                                    <li>Feature requests and general discussion</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; overflow: hidden;">
+                            <div style="background: rgba(239,68,68,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(239,68,68,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 0.8rem;">🚫</span>
+                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #ef4444;">Do not post here for</span>
+                            </div>
+                            <div style="padding: 0.9rem 1.1rem;">
+                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--gray); line-height: 1.9;">
+                                    <li>n8n Cloud billing issues</li>
+                                    <li>Workspace provisioning errors</li>
+                                    <li>Sensitive internal data or credentials</li>
+                                    <li>Enterprise licensing questions</li>
+                                    <li>Managed infrastructure failures</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>2. The n8n Discord Server</h2>
+                    <p>The <a href="https://discord.com/invite/n8n" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">n8n Discord</a> is where the community moves in real time. It is faster and more conversational than the forum, which makes it good for quick questions, sharing workflows, and getting a second opinion on something you are building. The forum is better for complex, searchable problems that benefit from a structured thread. Discord is better for "does anyone know if X is possible" or "quick sanity check on this approach."</p>
+
+                    <div style="border: 1px solid rgba(88,101,242,0.25); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
+                        <div style="background: rgba(88,101,242,0.07); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(88,101,242,0.2); display: flex; align-items: center; gap: 0.6rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.033.055a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" fill="#5865F2"/></svg>
+                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #5865f2;">n8n Discord Server</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                            <div>
+                                <p style="margin: 0 0 0.3rem 0; font-size: 0.9rem; color: var(--black);">Real-time community chat, workflow sharing, and quick questions.</p>
+                                <p style="margin: 0; font-size: 0.8rem; color: var(--gray);">Active channels for general help, showcase, and AI automation.</p>
+                            </div>
+                            <a href="https://discord.com/invite/n8n" target="_blank" style="flex-shrink: 0; background: #5865f2; color: #fff; font-family: var(--font-body); font-size: 0.8rem; font-weight: 700; padding: 0.55rem 1.1rem; clip-path: var(--px-clip-sm); text-decoration: none; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Join Discord ↗</a>
+                        </div>
+                    </div>
+
+                    <p>A few things to keep in mind on Discord: responses are not guaranteed and threads do not persist as well as forum posts. If your question is complex or you want it to be searchable for others later, post it on the forum instead. Discord is a complement to the forum, not a replacement.</p>
+
+                    <h2>3. Official Email Support</h2>
+                    <p>For account-level issues and anything involving n8n's managed infrastructure, email is the right channel. The community cannot help with these, and posting them publicly is a bad idea anyway.</p>
+
+                    <div style="border: 1px solid rgba(215,38,56,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
+                        <div style="background: rgba(215,38,56,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(215,38,56,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.75rem;">✦</span>
+                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red);">Email Channels</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.85rem;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <code style="font-size: 0.8rem; background: rgba(215,38,56,0.08); color: var(--red); padding: 0.2em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.1rem;">support@n8n.io</code>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--gray);">n8n Cloud account issues, billing discrepancies, workspace provisioning failures, and managed infrastructure problems.</p>
+                            </div>
+                            <div style="border-top: 1px solid var(--gray-border); padding-top: 0.85rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <code style="font-size: 0.8rem; background: rgba(215,38,56,0.08); color: var(--red); padding: 0.2em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.1rem;">help@n8n.io</code>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--gray);">Enterprise licensing inquiries, annual subscription execution top-ups, and general account management.</p>
+                            </div>
+                            <div style="border-top: 1px solid var(--gray-border); padding-top: 0.85rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <code style="font-size: 0.8rem; background: rgba(215,38,56,0.08); color: var(--red); padding: 0.2em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.1rem;">nodes@n8n.io</code>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--gray);">Building custom community nodes from scratch and need architectural guidance from the core integration engineers.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>4. GitHub for Core Engine Bugs</h2>
+                    <p>If you have confirmed that a core node or the n8n engine itself is broken across all setups (not just your configuration), open a bug report on the <a href="https://github.com/n8n-io/n8n/issues" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">n8n GitHub repository</a>. The repo is actively triaged by the internal product team and releases happen frequently.</p>
+                    <p>Before opening an issue, search existing ones first. Duplicate reports slow down triage. If your issue already exists, add a comment with your environment details rather than opening a new ticket.</p>
+
+                    <div style="background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">⚠️</span>
+                        <p style="margin:0; font-size: 0.9rem; color: var(--gray);">GitHub issues are for confirmed bugs in the core engine, not for workflow help or configuration questions. Posting a "how do I do X" question as a GitHub issue will get it closed and redirected to the forum.</p>
+                    </div>
+
+                    <h2>5. How to Write a Request That Gets Answered</h2>
+                    <p>The quality of the response you get directly mirrors the quality of the information you provide. Whether you are posting on the forum, Discord, or emailing support, include these every time:</p>
+
+                    <div style="border: 1px solid rgba(215,38,56,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
+                        <div style="background: rgba(215,38,56,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(215,38,56,0.15); display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 0.75rem;">✦</span>
+                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red);">Always Include</span>
+                        </div>
+                        <div style="padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--red); background: rgba(215,38,56,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">01</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--black);">Execution environment</p><p style="margin: 0; font-size: 0.82rem; color: var(--gray);">n8n Cloud, Docker self-hosted, NPM local, or Railway. Each has different constraints and the answer often depends on this.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--gray-border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--red); background: rgba(215,38,56,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">02</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--black);">Exact version number</p><p style="margin: 0; font-size: 0.82rem; color: var(--gray);">Bugs get patched frequently. Stating you are on v1.115.3 helps engineers isolate whether it is a known regression or something new.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--gray-border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--red); background: rgba(215,38,56,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">03</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--black);">Exact error output</p><p style="margin: 0; font-size: 0.82rem; color: var(--gray);">Do not say "it failed." Paste the full JSON error trace from the failed execution node. Screenshots of error messages are also useful.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--gray-border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--red); background: rgba(215,38,56,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">04</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--black);">Workflow JSON (for workflow questions)</p><p style="margin: 0; font-size: 0.82rem; color: var(--gray);">Select your nodes, hit Cmd/Ctrl + C, and paste the JSON in a code block. Without this, helpers are guessing at your node configuration.</p></div>
+                            </div>
+                            <div style="border-top: 1px solid var(--gray-border); padding-top: 0.75rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                                <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--red); background: rgba(215,38,56,0.08); padding: 0.15em 0.5em; border-radius: 5px; flex-shrink: 0; margin-top: 0.15rem;">05</span>
+                                <div><p style="margin: 0 0 0.15rem 0; font-size: 0.85rem; font-weight: 700; color: var(--black);">Workspace URL (Cloud support only)</p><p style="margin: 0; font-size: 0.82rem; color: var(--gray);">When emailing Cloud support, include your workspace URL or internal workspace ID so they can pull logs immediately without back-and-forth.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>6. Official Documentation</h2>
+                    <p>The <a href="https://docs.n8n.io/" target="_blank" style="color:var(--red);text-decoration:underline;font-weight:700;">n8n documentation</a> covers every node, credential type, and core concept. It is the first place to check before posting anywhere. The docs are actively maintained and most standard use cases are covered in detail, including the AI agent node, sub-workflows, error handling, and self-hosting configuration.</p>
+                    <p>The docs also include a built-in search that is reasonably good. If you are looking for how a specific node works or what a particular setting does, start there.</p>
+
+                    <div style="background:rgba(0,0,0,0.02); border:1px solid var(--gray-border); border-radius: 10px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
+                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray);">Related reading</p>
+                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
+                            <li><a href="../what-is-n8n/" style="color:var(--red);text-decoration:underline;">What is n8n?</a></li>
+                            <li><a href="../n8n-community-edition/" style="color:var(--red);text-decoration:underline;">n8n Community Edition: Features, Limits, and Free Unlocks</a></li>
+                            <li><a href="../n8n-cloud-plans/" style="color:var(--red);text-decoration:underline;">n8n Cloud Plans Breakdown</a></li>
+                        </ul>
+                    </div>
+
+                
+                </div>
+            </main>
+
+            <aside class="reader-sidebar" data-reveal>
+                <div class="rp-head">
+                    <span>READING PROGRESS</span>
+                    <span>6 MIN</span>
+                </div>
+                <div class="read-progress">
+                    <div class="read-progress-bar" id="read-progress-bar"></div>
+                </div>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label">Written By</div>
+                <a href="../../../" style="text-decoration:none;display:block;">
+                    <div class="reader-author">
+                        <div class="ra-av">AN</div>
+                        <div>
+                            <div class="ra-name">Anshul Namdev</div>
+                            <div class="ra-role">AI / Automation Eng.</div>
+                        </div>
+                    </div>
+                </a>
+
+                <hr class="sb-divider">
+
+                <div class="rs-label" style="margin-top:0;">Resources</div>
+                    <a href="https://community.n8n.io/" class="sb-link">Community Forum ↗</a>
+                    <a href="https://discord.com/invite/n8nAlao" class="sb-link">Discord Server ↗</a>
+                    <a href="https://docs.n8n.io/" class="sb-link">Documentation ↗</a>
+                    <a href="https://github.com/n8n-io/n8n/issues" class="sb-link">GitHub Issues ↗</a>
+                    <hr class="sb-divider">
+
+
+                <button id="share-btn" class="pixel-btn pixel-btn-primary pixel-btn-sm" style="width:100%;margin-bottom:0.8rem;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">Share Article</span>
+                    </span>
+                </button>
+                <a href="../" class="pixel-btn pixel-btn-outline pixel-btn-sm" style="width:100%;">
+                    <span class="pixel-btn-inner" style="justify-content:center;width:100%;">
+                        <span class="pixel-btn-text">&larr; Back to Archive</span>
+                    </span>
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+                </div>
+                <div class="footer-right">
+                    <a href="../../../">Portfolio</a>
+                    <a href="../../">n8n Hub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../../script.js"></script>
+    <script>
+        document.addEventListener("scroll", () => {
+            const contentBlock = document.querySelector('.reader-main');
+            let progress = 0;
+            if (contentBlock) {
+                const scrollPos = window.scrollY;
+                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
+                progress = Math.min((scrollPos / totalScroll) * 100, 100);
+            }
+            const bar = document.getElementById('read-progress-bar');
+            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        });
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.querySelector('.pixel-btn-text').textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.querySelector('.pixel-btn-text').textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
