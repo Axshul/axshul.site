@@ -3,1046 +3,1316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Anshul Namdev / Code &amp; Thoughts</title>
-    <meta name="description" content="Technical writings, dev logs, tutorials and live Hacker News - Anshul Namdev's reading hub.">
+    <title>Blog — Anshul Namdev / Code &amp; Thoughts</title>
+    <meta name="description" content="Technical writings, AI automation insights, n8n guides, and a live Hacker News feed — Anshul Namdev's digital hub.">
     <meta name="author" content="Anshul Namdev">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../style.css">
+    <!-- Absolute paths — works on blog.axshul.site subdomain -->
+    <link rel="stylesheet" href="https://axshul.site/style.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://axshul.site/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://axshul.site/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://axshul.site/assets/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="https://axshul.site/assets/favicon/favicon.ico">
+    <link rel="manifest" href="https://axshul.site/assets/favicon/site.webmanifest">
 
     <style>
-        /* ══════════════════════════════════════════
-           BLOG PAGE — INLINE STYLES
-        ══════════════════════════════════════════ */
-        body { cursor: none; }
+/* ═══════════════════════════════════════════════════════
+   BLOG PAGE — COMPLETE DESIGN SYSTEM
+   blog.axshul.site | axshul.site/blog
+═══════════════════════════════════════════════════════ */
 
-        /* ── HERO ── */
-        .blog-hero {
-            min-height: 55vh;
-            padding: calc(var(--nav-h) + 4rem) 0 3rem;
-            position: relative;
-        }
-        .blog-hero-inner {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        .blog-hero-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-        .blog-hero-title {
-            font-family: var(--font-display);
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 400;
-            line-height: 1.05;
-            color: var(--black);
-            margin-bottom: 1.5rem;
-        }
-        .blog-hero-title em {
-            color: var(--red);
-            font-style: italic;
-        }
-        .blog-hero-sub {
-            font-size: 1.1rem;
-            line-height: 1.75;
-            color: var(--gray);
-            max-width: 680px;
-            margin-bottom: 2rem;
-        }
-        .blog-hero-meta {
-            display: flex;
-            gap: 2.5rem;
-        }
-        .bhm-stat {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-        .bhm-num {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--black);
-            line-height: 1;
-        }
-        .bhm-lbl {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gray);
-        }
+/* ── Base overrides ── */
+body { cursor: none; overflow-x: hidden; }
+@media (max-width: 768px) { body { cursor: auto; } }
 
-        /* ── SECTION HEADS ── */
-        .bs-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--gray-border);
-        }
-        .bs-label {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-        .bs-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            font-weight: 400;
-            color: var(--black);
-            line-height: 1.15;
-        }
-        .bs-title em {
-            color: var(--red);
-            font-style: italic;
-        }
-        .bs-link {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.06em;
-            color: var(--red);
-            white-space: nowrap;
-            transition: opacity 0.3s;
-        }
-        .bs-link:hover { opacity: 0.7; }
+/* ── CSS variables for blog ── */
+:root {
+    --qx-green: #00ff2b;
+    --qx-green-dim: rgba(0,255,43,0.06);
+    --qx-green-glow: rgba(0,255,43,0.18);
+    --qx-green-border: rgba(0,255,43,0.22);
+    --qx-dark: #050a05;
+    --qx-dark-2: #0a120a;
+    --hn-orange: #ff6600;
+    --hn-orange-dim: rgba(255,102,0,0.08);
+    --hn-orange-border: rgba(255,102,0,0.2);
+    --hn-dark: #0a0806;
+    --terminal-green: #39ff14;
+    --terminal-dim: rgba(57,255,20,0.12);
+}
 
-        /* ── MY WRITINGS / ARCHIVE BANNER ── */
-        .blog-section { padding: 4rem 0; }
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.blog-hero {
+    min-height: 60vh;
+    padding: calc(var(--nav-h) + 5rem) 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+.blog-hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+        linear-gradient(rgba(215,38,56,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(215,38,56,0.025) 1px, transparent 1px);
+    background-size: 50px 50px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 50%, rgba(0,0,0,0.4) 0%, transparent 70%);
+    mask-image: radial-gradient(ellipse 80% 70% at 30% 50%, rgba(0,0,0,0.4) 0%, transparent 70%);
+}
+.blog-hero-inner { position: relative; z-index: 2; }
 
-        .archive-banner {
-            background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 60%, #8B0000 100%);
-            clip-path: var(--px-clip-lg);
-            padding: 3.5rem 3rem;
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1.5rem;
-        }
-        .archive-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            background: rgba(255,255,255,0.15);
-            padding: 0.35rem 0.9rem;
-            clip-path: var(--px-clip-sm);
-        }
-        .archive-chip-dot {
-            width: 5px; height: 5px;
-            background: var(--white);
-            border-radius: 50%;
-        }
-        .archive-banner-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-            font-weight: 400;
-            line-height: 1.15;
-        }
-        .archive-banner-title em {
-            font-style: italic;
-            color: rgba(255,255,255,0.85);
-        }
-        .archive-banner-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: rgba(255,255,255,0.8);
-            max-width: 600px;
-        }
-        .archive-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0;
-            margin-top: 0.5rem;
-        }
-        .archive-cta-text {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            padding: 0.75rem 1.6rem;
-            background: var(--white);
-            color: var(--red);
-            clip-path: polygon(
-                8px 0%, 100% 0%,
-                100% 0%, 100% 100%,
-                100% 100%, 8px 100%,
-                0% calc(100% - 8px), 0% 8px
-            );
-            transition: background 0.3s, color 0.3s;
-        }
-        .archive-cta-icon {
-            width: 44px; height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--white);
-            color: var(--red);
-            font-size: 1.2rem;
-            font-weight: 700;
-            clip-path: polygon(
-                0% 0%, calc(100% - 8px) 0%,
-                100% 8px, 100% calc(100% - 8px),
-                calc(100% - 8px) 100%, 0% 100%,
-                0% 100%, 0% 0%
-            );
-            transition: background 0.3s, color 0.3s;
-        }
-        .archive-cta:hover .archive-cta-text,
-        .archive-cta:hover .archive-cta-icon {
-            background: var(--black);
-            color: var(--white);
-        }
+.blog-hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-mono); font-size: 0.68rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray);
+    margin-bottom: 1.6rem;
+    opacity: 0; transform: translateY(16px);
+    animation: heroReveal 0.6s var(--ease) 0.1s forwards;
+}
+.blog-hero-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red); animation: dotPulse 1.8s ease infinite;
+}
+@keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.65)} }
 
-        /* ── LIVE DIVIDER ── */
-        .live-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 2rem 0;
-            border-top: 1px solid var(--gray-border);
-            border-bottom: 1px solid var(--gray-border);
-            margin: 2rem 0;
-        }
-        .ld-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--red);
-        }
-        .ld-dot {
-            width: 6px; height: 6px;
-            background: var(--red);
-            border-radius: 50%;
-            animation: ldPulse 1.5s ease-in-out infinite;
-        }
-        @keyframes ldPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.7); }
-        }
-        .hn-refresh-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--gray);
-            background: none;
-            border: 1px solid var(--gray-border);
-            clip-path: var(--px-clip-sm);
-            padding: 0.4rem 0.8rem;
-            transition: all 0.3s;
-            cursor: none;
-        }
-        .hn-refresh-btn:hover {
-            border-color: var(--red);
-            color: var(--red);
-        }
-        .hn-refresh-btn.spinning svg {
-            animation: spin 0.8s linear;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+.blog-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 7.5vw, 6rem);
+    font-weight: 400; line-height: 1.0; color: var(--black);
+    margin-bottom: 1.8rem;
+    opacity: 0; transform: translateY(22px);
+    animation: heroReveal 0.65s var(--ease) 0.2s forwards;
+}
+.blog-hero-title em { color: var(--red); font-style: italic; }
 
-        /* ── HN SECTION ── */
-        .hn-section {
-            padding: 3rem 0;
-        }
-        .hn-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            background: var(--red);
-            color: var(--white);
-            padding: 0.2rem 0.45rem;
-            clip-path: var(--px-clip-sm);
-            line-height: 1;
-        }
+.blog-hero-sub {
+    font-size: 1.05rem; line-height: 1.8; color: var(--gray);
+    max-width: 560px; margin-bottom: 2.5rem;
+    opacity: 0; transform: translateY(18px);
+    animation: heroReveal 0.6s var(--ease) 0.35s forwards;
+}
 
-        /* ── HN CARD GRID (Best Stories - horizontal scroll) ── */
-        .hn-scroll-container {
-            position: relative;
-        }
-        .hn-grid {
-            display: flex;
-            gap: 1rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 1rem;
-            -webkit-overflow-scrolling: touch;
-        }
-        .hn-grid::-webkit-scrollbar { height: 4px; }
-        .hn-grid::-webkit-scrollbar-track { background: var(--gray-light); }
-        .hn-grid::-webkit-scrollbar-thumb {
-            background: var(--red);
-            clip-path: var(--px-clip-sm);
-        }
+@keyframes heroReveal {
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        .hn-card {
-            flex: 0 0 300px;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            padding: 1.5rem;
-            border: 1px solid var(--gray-border);
-            clip-path: var(--px-clip);
-            background: var(--white);
-            transition: border-color 0.3s, transform 0.3s var(--ease);
-            min-height: 200px;
-        }
-        .hn-card:hover {
-            border-color: var(--red);
-            transform: translateY(-3px);
-        }
-        .hn-card-domain {
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--red);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .hn-card-title {
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            font-weight: 600;
-            line-height: 1.4;
-            color: var(--black);
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .hn-card-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: auto;
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.06em;
-            color: var(--gray);
-        }
-        .hn-card-meta span {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        .hn-meta-accent { color: var(--red); font-weight: 700; }
+.blog-hero-stats {
+    display: flex; gap: 3rem; flex-wrap: wrap;
+    opacity: 0; transform: translateY(14px);
+    animation: heroReveal 0.6s var(--ease) 0.5s forwards;
+}
+.bhs-item { display: flex; flex-direction: column; gap: 0.25rem; }
+.bhs-num {
+    font-family: var(--font-display); font-size: 2.2rem;
+    font-weight: 600; color: var(--black); line-height: 1;
+}
+.bhs-lbl {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray);
+}
 
-        /* ── HN ASK/SHOW GRID ── */
-        .hn-ask-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
-        }
+/* ══════════════════════════════════════════
+   SECTION UTILITIES
+══════════════════════════════════════════ */
+.blog-section { padding: 5rem 0; }
+.blog-section + .blog-section { padding-top: 0; }
 
-        /* ── HN JOBS LIST ── */
-        .hn-jobs-list {
-            display: flex;
-            flex-direction: column;
-        }
-        .hn-job-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.2rem 0;
-            border-bottom: 1px solid var(--gray-border);
-            transition: padding-left 0.3s var(--ease);
-        }
-        .hn-job-row:hover {
-            padding-left: 0.5rem;
-        }
-        .hn-job-title {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--black);
-            line-height: 1.4;
-            flex: 1;
-        }
-        .hn-job-time {
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.06em;
-            color: var(--gray);
-            white-space: nowrap;
-        }
+.bs-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 2.5rem; padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--gray-border);
+}
+.bs-label {
+    font-family: var(--font-mono); font-size: 0.68rem;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray);
+    margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.bs-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400; color: var(--black); line-height: 1.1;
+}
+.bs-title em { color: var(--red); font-style: italic; }
+.bs-action {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    letter-spacing: 0.06em; color: var(--red);
+    white-space: nowrap; transition: opacity 0.3s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.bs-action:hover { opacity: 0.65; }
 
-        /* ── SKELETON LOADERS ── */
-        .hn-skel-card {
-            flex: 0 0 300px;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            padding: 1.5rem;
-            border: 1px solid var(--gray-border);
-            clip-path: var(--px-clip);
-        }
-        .hn-skel-line {
-            height: 12px;
-            clip-path: var(--px-clip-sm);
-        }
-        .hn-skeleton {
-            background: linear-gradient(90deg, var(--gray-light) 25%, #e8e8e8 50%, var(--gray-light) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s ease-in-out infinite;
-        }
-        .w-3 { width: 30%; }
-        .w-7 { width: 70%; }
-        .w-8 { width: 80%; }
-        .w-10 { width: 100%; }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
+/* reveal on scroll */
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+[data-reveal].revealed { opacity: 1; transform: translateY(0); }
 
-        /* Skeleton for ask grid */
-        .hn-ask-grid .hn-skel-card {
-            flex: none;
-            min-height: 160px;
-        }
-        /* Skeleton for jobs list */
-        .hn-jobs-list .hn-skel-card {
-            flex: none;
-            min-height: auto;
-            height: 70px;
-            border: none;
-            border-bottom: 1px solid var(--gray-border);
-            clip-path: none;
-            flex-direction: row;
-            gap: 1rem;
-            align-items: center;
-        }
-        .hn-jobs-list .hn-skel-card > div {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+/* ══════════════════════════════════════════
+   QIXAZOW FEATURE BLOCK — GREEN NEON THEME
+══════════════════════════════════════════ */
+.qx-feature {
+    position: relative; overflow: hidden;
+    background: var(--qx-dark);
+    clip-path: var(--px-clip-lg);
+    padding: 0;
+    margin-bottom: 2rem;
+}
 
-        .hn-sentinel {
-            height: 1px;
-            width: 100%;
-        }
+/* Animated scanline overlay */
+.qx-feature::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,255,43,0.015) 3px,
+        rgba(0,255,43,0.015) 4px
+    );
+    animation: scanlines 8s linear infinite;
+}
+@keyframes scanlines { 0%{background-position:0 0} 100%{background-position:0 40px} }
 
-        /* ── BLOG FOOTER ── */
-        .blog-footer {
-            border-top: 1px solid var(--gray-border);
-            padding: 2.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 4rem;
-        }
-        .bf-copy {
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-        .bf-copy a {
-            color: var(--black);
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .bf-copy a:hover { color: var(--red); }
-        .bf-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .bf-links a {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--gray);
-            transition: color 0.3s;
-        }
-        .bf-links a:hover { color: var(--red); }
+.qx-feature-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 480px;
+}
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            body { cursor: auto; }
-            .blog-hero { min-height: auto; padding-top: calc(var(--nav-h) + 2rem); }
-            .blog-hero-title { font-size: clamp(2.2rem, 8vw, 3rem); }
-            .blog-hero-meta { gap: 1.5rem; }
-            .bhm-num { font-size: 1.5rem; }
-            .archive-banner { padding: 2.5rem 1.5rem; }
-            .archive-banner-title { font-size: 1.6rem; }
-            .hn-card { flex: 0 0 260px; min-height: 180px; padding: 1.2rem; }
-            .hn-ask-grid { grid-template-columns: 1fr; }
-            .live-divider { flex-wrap: wrap; }
-            .blog-footer { flex-direction: column; gap: 1rem; text-align: center; }
-            .bf-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
-        }
+.qx-feature-left {
+    padding: 3.5rem;
+    display: flex; flex-direction: column; gap: 0; justify-content: center;
+    border-right: 1px solid var(--qx-green-border);
+}
+
+.qx-brand-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--qx-green); margin-bottom: 1.6rem;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.qx-feature.revealed .qx-brand-tag { opacity: 1; transition-delay: 0.1s; }
+.qx-brand-tag-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--qx-green);
+    box-shadow: 0 0 8px var(--qx-green), 0 0 20px rgba(0,255,43,0.4);
+    animation: qxPulse 2s ease infinite;
+}
+@keyframes qxPulse {
+    0%,100% { box-shadow: 0 0 8px var(--qx-green), 0 0 20px rgba(0,255,43,0.4); transform: scale(1); }
+    50% { box-shadow: 0 0 14px var(--qx-green), 0 0 40px rgba(0,255,43,0.6), 0 0 60px rgba(0,255,43,0.2); transform: scale(1.15); }
+}
+
+.qx-feature-title {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.0;
+    font-size: clamp(2.2rem, 4vw, 3.5rem); color: #fff; margin-bottom: 1.4rem;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.qx-feature.revealed .qx-feature-title { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.qx-feature-title em { color: var(--qx-green); font-style: italic; text-shadow: 0 0 30px rgba(0,255,43,0.5); }
+
+.qx-feature-desc {
+    font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.6);
+    max-width: 400px; margin-bottom: 2.2rem;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.qx-feature.revealed .qx-feature-desc { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+
+.qx-cta {
+    display: inline-flex; align-items: center; gap: 0;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.qx-feature.revealed .qx-cta { opacity: 1; transform: translateY(0); transition-delay: 0.48s; }
+.qx-cta-text {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.8rem 1.8rem;
+    background: var(--qx-green); color: #000;
+    clip-path: polygon(8px 0%,100% 0%,100% 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+.qx-cta:hover .qx-cta-text {
+    background: #fff;
+    box-shadow: 0 0 30px rgba(0,255,43,0.5), 0 0 60px rgba(0,255,43,0.2);
+}
+.qx-cta-icon {
+    width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center;
+    background: var(--qx-green); color: #000; font-size: 1.1rem;
+    clip-path: polygon(0% 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%);
+    transition: background 0.3s;
+}
+.qx-cta:hover .qx-cta-icon { background: #fff; }
+
+.qx-feature-right {
+    padding: 3rem;
+    display: flex; flex-direction: column; gap: 1rem; justify-content: center;
+}
+
+.qx-stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    margin-bottom: 1rem;
+}
+.qx-stat {
+    padding: 1.4rem 1.2rem;
+    border: 1px solid var(--qx-green-border);
+    background: var(--qx-green-dim);
+    display: flex; flex-direction: column; gap: 0.3rem;
+    clip-path: var(--px-clip-sm);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), border-color 0.3s, background 0.3s;
+}
+.qx-feature.revealed .qx-stat { opacity: 1; transform: translateY(0); }
+.qx-feature.revealed .qx-stat:nth-child(1) { transition-delay: 0.3s; }
+.qx-feature.revealed .qx-stat:nth-child(2) { transition-delay: 0.4s; }
+.qx-feature.revealed .qx-stat:nth-child(3) { transition-delay: 0.5s; }
+.qx-feature.revealed .qx-stat:nth-child(4) { transition-delay: 0.6s; }
+.qx-stat:hover { border-color: var(--qx-green); background: rgba(0,255,43,0.1); }
+.qx-stat-num {
+    font-family: var(--font-display); font-size: 1.8rem; font-weight: 600;
+    color: var(--qx-green); line-height: 1;
+    text-shadow: 0 0 20px rgba(0,255,43,0.4);
+}
+.qx-stat-lbl {
+    font-family: var(--font-mono); font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+
+.qx-tag-cloud {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    opacity: 0; transition: opacity 0.5s 0.65s;
+}
+.qx-feature.revealed .qx-tag-cloud { opacity: 1; }
+.qx-tag {
+    font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem; color: var(--qx-green);
+    border: 1px solid var(--qx-green-border);
+    clip-path: var(--px-clip-sm);
+    transition: border-color 0.3s, background 0.3s;
+}
+.qx-tag:hover { border-color: var(--qx-green); background: var(--qx-green-dim); }
+
+/* Ambient green glow behind block */
+.qx-feature-glow {
+    position: absolute; top: -20%; right: -10%;
+    width: 50%; height: 140%;
+    background: radial-gradient(ellipse, rgba(0,255,43,0.06) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+}
+
+/* ══════════════════════════════════════════
+   N8N GUIDE FEATURE BLOCK — BLUE/MONO THEME
+══════════════════════════════════════════ */
+.n8n-feature {
+    position: relative; overflow: hidden;
+    background: #08080f;
+    clip-path: var(--px-clip-lg);
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.n8n-feature-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 400px;
+}
+
+.n8n-feature-left {
+    padding: 3.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid rgba(99,102,241,0.2);
+}
+
+.n8n-brand-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #818cf8; margin-bottom: 1.6rem;
+}
+.n8n-feature-title {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.0;
+    font-size: clamp(2rem, 3.5vw, 3rem); color: #fff; margin-bottom: 1.4rem;
+}
+.n8n-feature-title em { color: #818cf8; font-style: italic; }
+.n8n-feature-desc {
+    font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.55);
+    max-width: 400px; margin-bottom: 2.2rem;
+}
+.n8n-cta {
+    display: inline-flex; align-items: center; gap: 0;
+}
+.n8n-cta-text {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.8rem 1.8rem;
+    background: #818cf8; color: #fff;
+    clip-path: polygon(8px 0%,100% 0%,100% 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+    transition: background 0.3s;
+}
+.n8n-cta:hover .n8n-cta-text { background: #a5b4fc; }
+.n8n-cta-icon {
+    width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center;
+    background: #818cf8; color: #fff; font-size: 1.1rem;
+    clip-path: polygon(0% 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%);
+    transition: background 0.3s;
+}
+.n8n-cta:hover .n8n-cta-icon { background: #a5b4fc; }
+
+.n8n-feature-right {
+    padding: 3rem;
+    display: flex; flex-direction: column; gap: 0.7rem; justify-content: center;
+}
+.n8n-article-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid rgba(99,102,241,0.15);
+    background: rgba(99,102,241,0.04);
+    clip-path: var(--px-clip-sm);
+    transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease);
+    text-decoration: none;
+}
+.n8n-article-row:hover {
+    border-color: rgba(99,102,241,0.5);
+    background: rgba(99,102,241,0.1);
+    transform: translateX(4px);
+}
+.n8n-art-idx {
+    font-family: var(--font-mono); font-size: 0.58rem;
+    color: #4f46e5; letter-spacing: 0.08em; flex-shrink: 0;
+}
+.n8n-art-title {
+    font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.8);
+    flex: 1; line-height: 1.35;
+}
+.n8n-art-arrow { color: rgba(99,102,241,0.5); font-size: 0.9rem; flex-shrink: 0; }
+.n8n-article-row:hover .n8n-art-arrow { color: #818cf8; }
+
+.n8n-feature-glow {
+    position: absolute; top: -30%; left: -5%;
+    width: 45%; height: 160%;
+    background: radial-gradient(ellipse, rgba(99,102,241,0.07) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+}
+
+/* ══════════════════════════════════════════
+   HACKER NEWS — TERMINAL AESTHETIC
+══════════════════════════════════════════ */
+.hn-universe {
+    background: var(--hn-dark);
+    padding: 4rem 0;
+    position: relative; overflow: hidden;
+}
+
+/* Matrix rain effect bg */
+.hn-matrix-bg {
+    position: absolute; inset: 0; overflow: hidden;
+    pointer-events: none; z-index: 0; opacity: 0.4;
+}
+.hn-matrix-col {
+    position: absolute; top: -100%; display: flex; flex-direction: column;
+    font-family: var(--font-mono); font-size: 0.6rem; line-height: 1.4;
+    color: rgba(255,102,0,0.3);
+    animation: matrixFall linear infinite;
+}
+@keyframes matrixFall {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(200vh); }
+}
+
+.hn-universe-inner { position: relative; z-index: 2; }
+
+/* Terminal header */
+.hn-terminal-header {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,102,0,0.15);
+    clip-path: var(--px-clip);
+    margin-bottom: 3rem;
+}
+.hn-terminal-dots { display: flex; gap: 0.4rem; }
+.hn-td { width: 10px; height: 10px; border-radius: 50%; }
+.hn-td-r { background: #ff5f57; }
+.hn-td-y { background: #febc2e; }
+.hn-td-g { background: #28c840; }
+.hn-terminal-title {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    letter-spacing: 0.1em; color: rgba(255,102,0,0.6);
+    text-transform: uppercase;
+}
+.hn-terminal-live {
+    margin-left: auto; display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.6rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #28c840;
+}
+.hn-live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #28c840;
+    box-shadow: 0 0 6px #28c840;
+    animation: livePulse 1.5s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1;box-shadow:0 0 6px #28c840} 50%{opacity:0.4;box-shadow:none} }
+
+/* HN section head */
+.hn-section-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 1.8rem; padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255,102,0,0.12);
+}
+.hn-section-label {
+    font-family: var(--font-mono); font-size: 0.65rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,102,0,0.6); margin-bottom: 0.4rem;
+    display: flex; align-items: center; gap: 0.6rem;
+}
+.hn-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700;
+    letter-spacing: 0.08em; background: var(--hn-orange); color: #fff;
+    padding: 0.18rem 0.45rem; clip-path: var(--px-clip-sm); line-height: 1;
+}
+.hn-section-title {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 400; color: #fff; line-height: 1.1;
+}
+.hn-section-title em { color: var(--hn-orange); font-style: italic; }
+.hn-external-link {
+    font-family: var(--font-mono); font-size: 0.68rem;
+    letter-spacing: 0.06em; color: rgba(255,102,0,0.5);
+    display: flex; align-items: center; gap: 0.3rem;
+    transition: color 0.3s;
+    white-space: nowrap;
+}
+.hn-external-link:hover { color: var(--hn-orange); }
+
+/* Refresh button */
+.hn-refresh-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,102,0,0.5); background: none;
+    border: 1px solid rgba(255,102,0,0.2);
+    clip-path: var(--px-clip-sm); padding: 0.45rem 1rem;
+    cursor: none; transition: all 0.3s;
+}
+.hn-refresh-btn:hover { border-color: var(--hn-orange); color: var(--hn-orange); }
+.hn-refresh-btn.spinning svg { animation: spin360 0.8s linear; }
+@keyframes spin360 { to { transform: rotate(360deg); } }
+
+/* ── HN BEST STORIES — wide scroll cards ── */
+.hn-scroll-outer { position: relative; }
+.hn-scroll-outer::after {
+    content: ''; position: absolute; right: 0; top: 0; bottom: 1rem;
+    width: 80px; pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--hn-dark));
+    z-index: 5;
+}
+
+.hn-stories-grid {
+    display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+}
+.hn-stories-grid::-webkit-scrollbar { height: 3px; }
+.hn-stories-grid::-webkit-scrollbar-track { background: rgba(255,102,0,0.06); }
+.hn-stories-grid::-webkit-scrollbar-thumb { background: var(--hn-orange); }
+
+.hn-story-card {
+    flex: 0 0 320px; scroll-snap-align: start;
+    display: flex; flex-direction: column; gap: 1rem;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,102,0,0.15);
+    clip-path: var(--px-clip);
+    transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease);
+    text-decoration: none;
+    opacity: 0; transform: translateY(20px) scale(0.97);
+    animation: cardSlideIn 0.45s var(--ease) forwards;
+    min-height: 210px;
+}
+.hn-story-card:hover {
+    border-color: var(--hn-orange);
+    background: rgba(255,102,0,0.05);
+    transform: translateY(-4px) scale(1.01);
+}
+@keyframes cardSlideIn {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.hn-card-domain {
+    font-family: var(--font-mono); font-size: 0.58rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--hn-orange); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hn-card-title {
+    font-size: 0.92rem; font-weight: 600; line-height: 1.45; color: rgba(255,255,255,0.88);
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.hn-card-meta {
+    display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: auto;
+    font-family: var(--font-mono); font-size: 0.58rem; color: rgba(255,255,255,0.35);
+}
+.hn-meta-pts { color: var(--hn-orange); font-weight: 700; }
+
+/* ── HN ASK & SHOW — masonry-style grid ── */
+.hn-ask-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+    gap: 1rem;
+}
+.hn-ask-card {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    padding: 1.4rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,102,0,0.12);
+    clip-path: var(--px-clip);
+    text-decoration: none;
+    opacity: 0; transform: translateY(16px);
+    animation: cardSlideIn 0.4s var(--ease) forwards;
+    transition: border-color 0.3s, background 0.3s;
+}
+.hn-ask-card:hover { border-color: rgba(255,102,0,0.5); background: rgba(255,102,0,0.04); }
+.hn-ask-type {
+    font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.2rem 0.55rem; display: inline-block;
+    clip-path: var(--px-clip-sm);
+}
+.hn-ask-type.type-ask { background: rgba(255,102,0,0.15); color: var(--hn-orange); }
+.hn-ask-type.type-show { background: rgba(57,255,20,0.1); color: #39ff14; }
+.hn-ask-title {
+    font-size: 0.9rem; font-weight: 500; line-height: 1.5; color: rgba(255,255,255,0.82);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.hn-ask-meta {
+    font-family: var(--font-mono); font-size: 0.57rem; color: rgba(255,255,255,0.3);
+    display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: auto;
+}
+
+/* ── HN JOBS — sleek list ── */
+.hn-jobs-list { display: flex; flex-direction: column; }
+.hn-job-row {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: center; gap: 1rem;
+    padding: 1.1rem 0.5rem;
+    border-bottom: 1px solid rgba(255,102,0,0.08);
+    text-decoration: none;
+    transition: padding-left 0.3s var(--ease), background 0.3s;
+    opacity: 0; transform: translateX(-10px);
+    animation: jobRowIn 0.4s var(--ease) forwards;
+}
+@keyframes jobRowIn { to { opacity: 1; transform: translateX(0); } }
+.hn-job-row:hover { padding-left: 1rem; background: rgba(255,102,0,0.03); }
+.hn-job-company {
+    font-family: var(--font-mono); font-size: 0.58rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--hn-orange); margin-bottom: 0.25rem;
+}
+.hn-job-title { font-size: 0.9rem; font-weight: 500; color: rgba(255,255,255,0.75); line-height: 1.4; }
+.hn-job-time {
+    font-family: var(--font-mono); font-size: 0.56rem;
+    color: rgba(255,255,255,0.25); white-space: nowrap;
+}
+
+/* ── SKELETON STATES ── */
+.hn-skel { background: linear-gradient(90deg, rgba(255,102,0,0.06) 25%, rgba(255,102,0,0.12) 50%, rgba(255,102,0,0.06) 75%); background-size: 200% 100%; animation: shimmerHN 1.5s ease-in-out infinite; }
+@keyframes shimmerHN { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+.hn-skel-card-placeholder {
+    flex: 0 0 320px; min-height: 210px;
+    border: 1px solid rgba(255,102,0,0.08);
+    clip-path: var(--px-clip);
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem;
+}
+.hn-skel-grid-placeholder {
+    border: 1px solid rgba(255,102,0,0.08);
+    clip-path: var(--px-clip);
+    padding: 1.4rem; display: flex; flex-direction: column; gap: 0.75rem; min-height: 160px;
+}
+.hn-skel-line { height: 10px; border-radius: 2px; }
+.sk-w3{width:30%} .sk-w6{width:60%} .sk-w8{width:80%} .sk-w10{width:100%}
+
+/* ── HN Section spacing ── */
+.hn-section { padding: 2.5rem 0; }
+.hn-section + .hn-section { border-top: 1px solid rgba(255,102,0,0.06); }
+.hn-sentinel { height: 1px; }
+
+/* ── DIVIDER between sections ── */
+.hn-divider {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 2rem 0; border-top: 1px solid rgba(255,102,0,0.1);
+    border-bottom: 1px solid rgba(255,102,0,0.1);
+    margin: 0 0 2.5rem;
+}
+.hn-divider-label {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.65rem;
+    font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--hn-orange);
+}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+.blog-footer-spacer { height: 4rem; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .qx-feature-inner,
+    .n8n-feature-inner { grid-template-columns: 1fr; }
+    .qx-feature-left,
+    .n8n-feature-left { border-right: none; border-bottom: 1px solid var(--qx-green-border); padding: 2.5rem 2rem; }
+    .qx-feature-right,
+    .n8n-feature-right { padding: 2rem; }
+    .n8n-feature-left { border-bottom-color: rgba(99,102,241,0.2); }
+    .qx-stat-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+    .blog-hero { min-height: auto; padding: calc(var(--nav-h) + 3rem) 0 3rem; }
+    .blog-hero-title { font-size: clamp(2.8rem, 10vw, 3.5rem); }
+    .blog-hero-stats { gap: 2rem; }
+    .bs-head { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .hn-story-card { flex: 0 0 280px; }
+    .hn-ask-grid { grid-template-columns: 1fr; }
+    .hn-terminal-header { padding: 0.75rem 1rem; }
+    .qx-feature-left, .n8n-feature-left { padding: 2rem 1.5rem; }
+    .qx-feature-right, .n8n-feature-right { padding: 1.5rem; }
+    .qx-feature-title { font-size: 2rem; }
+    .hn-divider { flex-wrap: wrap; gap: 1rem; }
+}
     </style>
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
 </head>
 <body>
 
-    <!-- Noise -->
-    <div class="noise"></div>
+<!-- Noise -->
+<div class="noise"></div>
 
-    <!-- Full-page geometric grid -->
-    <div class="geo-grid" id="geoGrid" aria-hidden="true">
-        <svg class="geo-grid-svg" preserveAspectRatio="none">
-            <defs>
-                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
-                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
-                </radialGradient>
-            </defs>
-            <g class="geo-grid-lines" id="geoLines"></g>
-            <g class="geo-grid-nodes" id="geoNodes"></g>
-        </svg>
+<!-- Geo grid -->
+<div class="geo-grid" id="geoGrid" aria-hidden="true">
+    <svg class="geo-grid-svg" preserveAspectRatio="none">
+        <defs>
+            <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
+            </radialGradient>
+        </defs>
+        <g class="geo-grid-lines" id="geoLines"></g>
+        <g class="geo-grid-nodes" id="geoNodes"></g>
+    </svg>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-inner">
+        <div class="loader-blocks"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="loader-text">LOADING<span class="blink">_</span></div>
     </div>
+</div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
-
-    <!-- LOADER -->
-    <div class="loader" id="loader">
-        <div class="loader-inner">
-            <div class="loader-blocks">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="loader-text">LOADING<span class="blink">_</span></div>
+<!-- NAV -->
+<nav class="nav scrolled" id="nav">
+    <div class="nav-inner">
+        <a href="https://axshul.site/" class="nav-logo">
+            <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+        </a>
+        <div class="nav-center" id="navLinks">
+            <a href="https://axshul.site/about/" class="nav-link"><span class="nav-index">01</span>About</a>
+            <a href="https://axshul.site/work/" class="nav-link"><span class="nav-index">02</span>Work</a>
+            <a href="https://axshul.site/experience/" class="nav-link"><span class="nav-index">03</span>Journey</a>
+            <a href="https://axshul.site/n8n/" class="nav-link"><span class="nav-index">04</span>N8N</a>
+            <a href="#" class="nav-link active"><span class="nav-index">05</span>Blog</a>
+            <a href="https://axshul.site/contact/" class="nav-link"><span class="nav-index">06</span>Contact</a>
         </div>
+        <a href="https://axshul.site/contact/" class="pixel-btn pixel-btn-sm nav-cta-btn">
+            <span class="pixel-btn-inner">
+                <span class="pixel-btn-text">Let's Talk</span>
+                <span class="pixel-btn-icon">&rsaquo;</span>
+            </span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span>
+        </button>
     </div>
+</nav>
 
-    <!-- NAV -->
-    <nav class="nav scrolled" id="nav">
-        <div class="nav-inner">
-            <a href="../" class="nav-logo">
-                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
-            </a>
-            <div class="nav-center" id="navLinks">
-                <a href="../about/" class="nav-link"><span class="nav-index">01</span>About</a>
-                <a href="../work/" class="nav-link"><span class="nav-index">02</span>Work</a>
-                <a href="../experience/" class="nav-link"><span class="nav-index">03</span>Journey</a>
-                <a href="./" class="nav-link active"><span class="nav-index">04</span>Blog</a>
-                <a href="../contact/" class="nav-link"><span class="nav-index">05</span>Contact</a>
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="blog-hero">
+    <div class="container">
+        <div class="blog-hero-inner">
+            <div class="blog-hero-eyebrow">
+                <span class="blog-hero-eyebrow-dot"></span>
+                axshul.site &middot; Blog
             </div>
-            <a href="../contact/" class="pixel-btn pixel-btn-sm nav-cta-btn">
-                <span class="pixel-btn-inner">
-                    <span class="pixel-btn-text">Let's Talk</span>
-                    <span class="pixel-btn-icon">&rsaquo;</span>
-                </span>
-            </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span><span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- ════════════════════════════════════════
-         HERO
-    ════════════════════════════════════════ -->
-    <section class="blog-hero">
-        <div class="container">
-            <div class="blog-hero-inner" data-reveal>
-                <div class="blog-hero-eyebrow">Anshul Namdev &middot; axshul.site/blog</div>
-
-                <h1 class="blog-hero-title">
-                    Code &amp;<br><em>Thoughts</em>.
-                </h1>
-
-                <p class="blog-hero-sub">
-                    Writings on AI automation, systems programming, and the craft of building software &mdash; plus a live window into what the world's sharpest engineers are talking about right now.
-                </p>
-
-                <div class="blog-hero-meta">
-                    <div class="bhm-stat">
-                        <span class="bhm-num" id="postCount">6</span>
-                        <span class="bhm-lbl">Posts</span>
-                    </div>
-                    <div class="bhm-stat">
-                        <span class="bhm-num">3</span>
-                        <span class="bhm-lbl">Categories</span>
-                    </div>
+            <h1 class="blog-hero-title">
+                Code &amp; <em>Thoughts.</em>
+            </h1>
+            <p class="blog-hero-sub">
+                AI automation, systems programming, the craft of building software &mdash; plus a live terminal window into what the world's sharpest engineers are thinking about right now.
+            </p>
+            <div class="blog-hero-stats">
+                <div class="bhs-item">
+                    <span class="bhs-num">∞</span>
+                    <span class="bhs-lbl">Live HN Stories</span>
+                </div>
+                <div class="bhs-item">
+                    <span class="bhs-num">15+</span>
+                    <span class="bhs-lbl">n8n Guides</span>
+                </div>
+                <div class="bhs-item">
+                    <span class="bhs-num">3</span>
+                    <span class="bhs-lbl">Platforms</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ════════════════════════════════════════
-         MY WRITINGS
-    ════════════════════════════════════════ -->
-    <section class="blog-section container" id="writings">
+<!-- ═══════════════════════════════════════
+     FEATURED WRITING PLATFORMS
+═══════════════════════════════════════ -->
+<section class="blog-section">
+    <div class="container">
         <div class="bs-head" data-reveal>
             <div>
-                <div class="bs-label">My Writings</div>
-                <h2 class="bs-title">Latest <em>Posts</em></h2>
+                <div class="bs-label">Featured Platforms</div>
+                <h2 class="bs-title">Where I <em>Write</em></h2>
             </div>
         </div>
 
-        <!-- Archive Banner -->
-        <div data-reveal>
-            <div class="archive-banner">
-                <div class="archive-chip">
-                    <span class="archive-chip-dot"></span>
-                    The Next Chapter
+        <!-- QIXAZOW BLOCK -->
+        <div class="qx-feature" data-reveal>
+            <div class="qx-feature-glow"></div>
+            <div class="qx-feature-inner">
+                <!-- Left: Copy -->
+                <div class="qx-feature-left">
+                    <div class="qx-brand-tag">
+                        <span class="qx-brand-tag-dot"></span>
+                        Co-Founded Venture &middot; Live
+                    </div>
+                    <h2 class="qx-feature-title">
+                        Qixazow<em>.com</em>
+                    </h2>
+                    <p class="qx-feature-desc">
+                        A publication and consultancy co-founded with two fellow AI professionals. We cover n8n automation, Claude AI integration, business workflows, and the practical edge of AI tooling. No fluff. Just signal.
+                    </p>
+                    <a href="https://qixazow.com" target="_blank" rel="noopener" class="qx-cta">
+                        <span class="qx-cta-text">Visit Qixazow</span>
+                        <span class="qx-cta-icon">&rarr;</span>
+                    </a>
                 </div>
-                <h3 class="archive-banner-title">Explore The Digital <em>Archive</em></h3>
-                <p class="archive-banner-text">
-                    I have transitioned my technical writings into a heavily curated, premium digital archive. Discover advanced automation blueprints, deep-dive tutorials, and structural system setups deployed entirely on n8n.
-                </p>
-                <a href="../n8n/guide/" class="archive-cta">
-                    <span class="archive-cta-text">Enter The Archive</span>
-                    <span class="archive-cta-icon">&rarr;</span>
-                </a>
+                <!-- Right: Stats -->
+                <div class="qx-feature-right">
+                    <div class="qx-stat-grid">
+                        <div class="qx-stat">
+                            <span class="qx-stat-num">n8n</span>
+                            <span class="qx-stat-lbl">Automation Guides</span>
+                        </div>
+                        <div class="qx-stat">
+                            <span class="qx-stat-num">AI</span>
+                            <span class="qx-stat-lbl">Integration Deep-dives</span>
+                        </div>
+                        <div class="qx-stat">
+                            <span class="qx-stat-num">3</span>
+                            <span class="qx-stat-lbl">Co-Founders</span>
+                        </div>
+                        <div class="qx-stat">
+                            <span class="qx-stat-num">100%</span>
+                            <span class="qx-stat-lbl">Practical Content</span>
+                        </div>
+                    </div>
+                    <div class="qx-tag-cloud">
+                        <span class="qx-tag">n8n Workflows</span>
+                        <span class="qx-tag">Claude AI</span>
+                        <span class="qx-tag">Business AI</span>
+                        <span class="qx-tag">Automation</span>
+                        <span class="qx-tag">Consultancy</span>
+                        <span class="qx-tag">Video Content</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- ════════════════════════════════════════
-         LIVE DIVIDER
-    ════════════════════════════════════════ -->
-    <div class="container">
-        <div class="live-divider" data-reveal>
-            <div class="ld-badge">
-                <div class="ld-dot"></div>
-                Live
+        <!-- N8N GUIDE BLOCK -->
+        <div class="n8n-feature" data-reveal>
+            <div class="n8n-feature-glow"></div>
+            <div class="n8n-feature-inner">
+                <!-- Left: Copy -->
+                <div class="n8n-feature-left">
+                    <div class="n8n-brand-tag">
+                        ◈ Digital Archive &middot; axshul.site
+                    </div>
+                    <h2 class="n8n-feature-title">
+                        The n8n <em>Guide</em>
+                    </h2>
+                    <p class="n8n-feature-desc">
+                        A heavily curated digital archive of n8n problems, solutions, and blueprints. From self-hosting to AI agents — searchable, structured, and built for operators who want results fast.
+                    </p>
+                    <a href="https://axshul.site/n8n/guide/" class="n8n-cta">
+                        <span class="n8n-cta-text">Enter the Archive</span>
+                        <span class="n8n-cta-icon">&rarr;</span>
+                    </a>
+                </div>
+                <!-- Right: Article list -->
+                <div class="n8n-feature-right">
+                    <a href="https://axshul.site/n8n/guide/what-is-n8n/" class="n8n-article-row">
+                        <span class="n8n-art-idx">01</span>
+                        <span class="n8n-art-title">What is n8n? The Complete Guide</span>
+                        <span class="n8n-art-arrow">&rsaquo;</span>
+                    </a>
+                    <a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" class="n8n-article-row">
+                        <span class="n8n-art-idx">02</span>
+                        <span class="n8n-art-title">n8n Cloud vs Self-Hosted: Which to Choose</span>
+                        <span class="n8n-art-arrow">&rsaquo;</span>
+                    </a>
+                    <a href="https://axshul.site/n8n/guide/build-your-first-workflow/" class="n8n-article-row">
+                        <span class="n8n-art-idx">03</span>
+                        <span class="n8n-art-title">Build Your First Workflow from Scratch</span>
+                        <span class="n8n-art-arrow">&rsaquo;</span>
+                    </a>
+                    <a href="https://axshul.site/n8n/guide/ai-agent-node/" class="n8n-article-row">
+                        <span class="n8n-art-idx">04</span>
+                        <span class="n8n-art-title">AI Agent Node: Full Breakdown</span>
+                        <span class="n8n-art-arrow">&rsaquo;</span>
+                    </a>
+                    <a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" class="n8n-article-row">
+                        <span class="n8n-art-idx">05</span>
+                        <span class="n8n-art-title">VPS Self-Hosting n8n: Step by Step</span>
+                        <span class="n8n-art-arrow">&rsaquo;</span>
+                    </a>
+                    <a href="https://axshul.site/n8n/guide/" class="n8n-article-row" style="border-color:rgba(99,102,241,0.3)">
+                        <span class="n8n-art-idx">+</span>
+                        <span class="n8n-art-title" style="color:#818cf8">View all articles in the archive</span>
+                        <span class="n8n-art-arrow" style="color:#818cf8">&rsaquo;</span>
+                    </a>
+                </div>
             </div>
-            <button id="hnRefreshBtn" class="hn-refresh-btn" title="Refresh Live Feed">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
-                </svg>
-                <span>Refresh</span>
-            </button>
         </div>
     </div>
+</section>
 
-    <!-- ════════════════════════════════════════
-         HN - BEST STORIES
-    ════════════════════════════════════════ -->
-    <section class="hn-section" id="hn-best">
-        <div class="container">
-            <div class="bs-head" data-reveal>
+<!-- ═══════════════════════════════════════
+     HACKER NEWS LIVE TERMINAL
+═══════════════════════════════════════ -->
+<div class="hn-universe" id="hnUniverse">
+    <!-- Matrix rain background -->
+    <div class="hn-matrix-bg" id="matrixBg" aria-hidden="true"></div>
+
+    <div class="hn-universe-inner container">
+
+        <!-- Terminal chrome header -->
+        <div class="hn-terminal-header">
+            <div class="hn-terminal-dots">
+                <div class="hn-td hn-td-r"></div>
+                <div class="hn-td hn-td-y"></div>
+                <div class="hn-td hn-td-g"></div>
+            </div>
+            <div class="hn-terminal-title">hacker-news.firebaseio.com &mdash; live feed</div>
+            <div class="hn-terminal-live">
+                <div class="hn-live-dot"></div>
+                Connected
+            </div>
+            <button id="hnRefreshBtn" class="hn-refresh-btn" title="Refresh">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+                </svg>
+                Refresh
+            </button>
+        </div>
+
+        <!-- ── BEST STORIES ── -->
+        <div class="hn-section" id="hn-best">
+            <div class="hn-section-head">
                 <div>
-                    <div class="bs-label">
+                    <div class="hn-section-label">
                         <span class="hn-badge">HN</span>
                         Best Stories
                     </div>
-                    <h2 class="bs-title">What's <em>Trending</em></h2>
+                    <h2 class="hn-section-title">What's <em>Trending</em></h2>
                 </div>
-                <a href="https://news.ycombinator.com/best" target="_blank" rel="noopener" class="bs-link">
-                    Open on HN &rarr;
+                <a href="https://news.ycombinator.com/best" target="_blank" rel="noopener" class="hn-external-link">
+                    Open HN &rsaquo;
                 </a>
             </div>
-
-            <div class="hn-scroll-container" id="hn-best-scroll">
-                <div class="hn-grid" id="hn-best-grid">
-                    <!-- Skeleton cards -->
-                    <div class="hn-skel-card">
-                        <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        <div class="hn-skel-line w-10 hn-skeleton"></div>
-                        <div class="hn-skel-line w-8 hn-skeleton"></div>
-                        <div class="hn-skel-line w-7 hn-skeleton" style="margin-top:auto;"></div>
-                    </div>
-                    <div class="hn-skel-card">
-                        <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        <div class="hn-skel-line w-10 hn-skeleton"></div>
-                        <div class="hn-skel-line w-8 hn-skeleton"></div>
-                        <div class="hn-skel-line w-7 hn-skeleton" style="margin-top:auto;"></div>
-                    </div>
-                    <div class="hn-skel-card">
-                        <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        <div class="hn-skel-line w-10 hn-skeleton"></div>
-                        <div class="hn-skel-line w-8 hn-skeleton"></div>
-                        <div class="hn-skel-line w-7 hn-skeleton" style="margin-top:auto;"></div>
-                    </div>
+            <div class="hn-scroll-outer">
+                <div class="hn-stories-grid" id="hn-best-grid">
+                    <!-- Skeletons injected by JS init -->
                 </div>
                 <div class="hn-sentinel" data-category="best"></div>
             </div>
         </div>
-    </section>
 
-    <!-- ════════════════════════════════════════
-         HN - ASK & SHOW
-    ════════════════════════════════════════ -->
-    <section class="hn-section" id="hn-ask">
-        <div class="container">
-            <div class="bs-head" data-reveal>
-                <div>
-                    <div class="bs-label">
-                        <span class="hn-badge">HN</span>
-                        Discussions
-                    </div>
-                    <h2 class="bs-title">Ask &amp; <em>Show</em></h2>
+        <!-- ── ASK & SHOW ── -->
+        <div class="hn-section" id="hn-ask">
+            <div class="hn-divider">
+                <div class="hn-divider-label">
+                    <div class="hn-live-dot"></div>
+                    Discussions
                 </div>
-                <a href="https://news.ycombinator.com/ask" target="_blank" rel="noopener" class="bs-link">
-                    Ask HN &rarr;
+            </div>
+            <div class="hn-section-head">
+                <div>
+                    <div class="hn-section-label">
+                        <span class="hn-badge">HN</span>
+                        Ask &amp; Show HN
+                    </div>
+                    <h2 class="hn-section-title">Community <em>Talks</em></h2>
+                </div>
+                <a href="https://news.ycombinator.com/ask" target="_blank" rel="noopener" class="hn-external-link">
+                    Ask HN &rsaquo;
                 </a>
             </div>
-
-            <div class="hn-scroll-container" id="hn-ask-scroll">
-                <div class="hn-ask-grid" id="hn-ask-grid">
-                    <div class="hn-skel-card">
-                        <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        <div class="hn-skel-line w-10 hn-skeleton"></div>
-                        <div class="hn-skel-line w-8 hn-skeleton"></div>
-                    </div>
-                    <div class="hn-skel-card">
-                        <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        <div class="hn-skel-line w-10 hn-skeleton"></div>
-                        <div class="hn-skel-line w-8 hn-skeleton"></div>
-                    </div>
-                    <div class="hn-skel-card">
-                        <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        <div class="hn-skel-line w-10 hn-skeleton"></div>
-                        <div class="hn-skel-line w-8 hn-skeleton"></div>
-                    </div>
-                </div>
-                <div class="hn-sentinel" data-category="ask"></div>
-            </div>
+            <div class="hn-ask-grid" id="hn-ask-grid"></div>
+            <div class="hn-sentinel" data-category="ask"></div>
         </div>
-    </section>
 
-    <!-- ════════════════════════════════════════
-         HN - JOBS
-    ════════════════════════════════════════ -->
-    <section class="hn-section" id="hn-jobs">
-        <div class="container">
-            <div class="bs-head" data-reveal>
-                <div>
-                    <div class="bs-label">
-                        <span class="hn-badge">HN</span>
-                        Who's Hiring
-                    </div>
-                    <h2 class="bs-title">Jobs <em>Board</em></h2>
+        <!-- ── JOBS ── -->
+        <div class="hn-section" id="hn-jobs">
+            <div class="hn-divider">
+                <div class="hn-divider-label">
+                    <div class="hn-live-dot"></div>
+                    Who's Hiring
                 </div>
-                <a href="https://news.ycombinator.com/jobs" target="_blank" rel="noopener" class="bs-link">
-                    All Jobs &rarr;
+            </div>
+            <div class="hn-section-head">
+                <div>
+                    <div class="hn-section-label">
+                        <span class="hn-badge">HN</span>
+                        Jobs Board
+                    </div>
+                    <h2 class="hn-section-title">Opportunities <em>Board</em></h2>
+                </div>
+                <a href="https://news.ycombinator.com/jobs" target="_blank" rel="noopener" class="hn-external-link">
+                    All Jobs &rsaquo;
                 </a>
             </div>
+            <div class="hn-jobs-list" id="hn-jobs-list"></div>
+            <div class="hn-sentinel" data-category="jobs"></div>
+        </div>
 
-            <div class="hn-scroll-container" id="hn-jobs-scroll">
-                <div class="hn-jobs-list" id="hn-jobs-list">
-                    <div class="hn-skel-card">
-                        <div>
-                            <div class="hn-skel-line w-7 hn-skeleton"></div>
-                            <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        </div>
-                    </div>
-                    <div class="hn-skel-card">
-                        <div>
-                            <div class="hn-skel-line w-8 hn-skeleton"></div>
-                            <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        </div>
-                    </div>
-                    <div class="hn-skel-card">
-                        <div>
-                            <div class="hn-skel-line w-7 hn-skeleton"></div>
-                            <div class="hn-skel-line w-3 hn-skeleton"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hn-sentinel" data-category="jobs"></div>
+    </div>
+</div>
+
+<div class="blog-footer-spacer"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
+                <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
+            </div>
+            <div class="footer-right">
+                <a href="https://github.com/axshul" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com/Anshul_Namdev0" target="_blank">Twitter</a>
+                <a href="https://qixazow.com" target="_blank">Qixazow</a>
             </div>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- ════════════════════════════════════════
-         FOOTER
-    ════════════════════════════════════════ -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-inner">
-                <div class="footer-left">
-                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
-                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
-                </div>
-                <div class="footer-right">
-                    <a href="https://github.com/axshul" target="_blank">GitHub</a>
-                    <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
-                    <a href="https://twitter.com/Anshul_Namdev0" target="_blank">Twitter</a>
-                    <a href="https://qixazow.com" target="_blank">Qixazow</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+<!-- Scripts — absolute paths for subdomain hosting -->
+<script src="https://axshul.site/script.js"></script>
 
-    <!-- Scripts -->
-    <script src="../script.js"></script>
-    <script>
-        // Blog data stub (the HN fetcher needs this)
-        window.blogPosts = [];
-    </script>
-    <script>
-    /* ══════════════════════════════════════════
-       HN LIVE FEED — SELF-CONTAINED FETCHER
-    ══════════════════════════════════════════ */
-    (function() {
-        'use strict';
-
-        const API = 'https://hacker-news.firebaseio.com/v0/';
-        const BATCH = 10;
-
-        // State per category
-        const state = {
-            best:  { ids: [], loaded: 0, fetching: false, container: null },
-            ask:   { ids: [], loaded: 0, fetching: false, container: null },
-            jobs:  { ids: [], loaded: 0, fetching: false, container: null }
-        };
-
-        // ── Helpers ──
-        function timeAgo(ts) {
-            const diff = Math.floor((Date.now() / 1000) - ts);
-            if (diff < 60) return diff + 's ago';
-            if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
-            if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-            return Math.floor(diff / 86400) + 'd ago';
+<script>
+/* ════════════════════════════════════════════════════════
+   MATRIX RAIN — background for HN section
+════════════════════════════════════════════════════════ */
+(function() {
+    var bg = document.getElementById('matrixBg');
+    if (!bg) return;
+    var chars = '01アイウエオカキクケコHACKERNEWSABCDEFGH0123456789';
+    var cols = Math.floor(window.innerWidth / 22);
+    for (var i = 0; i < cols; i++) {
+        var col = document.createElement('div');
+        col.className = 'hn-matrix-col';
+        col.style.left = (i * 22) + 'px';
+        col.style.animationDuration = (8 + Math.random() * 12) + 's';
+        col.style.animationDelay = (-Math.random() * 15) + 's';
+        var content = '';
+        for (var j = 0; j < 35; j++) {
+            content += chars[Math.floor(Math.random() * chars.length)] + '<br>';
         }
+        col.innerHTML = content;
+        bg.appendChild(col);
+    }
+})();
 
-        function extractDomain(url) {
-            if (!url) return 'news.ycombinator.com';
-            try {
-                return new URL(url).hostname.replace(/^www\./, '');
-            } catch {
-                return 'news.ycombinator.com';
+/* ════════════════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════════════════ */
+(function() {
+    var els = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(function(el) { el.classList.add('revealed'); });
+        return;
+    }
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) {
+                e.target.classList.add('revealed');
+                obs.unobserve(e.target);
             }
-        }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el) { obs.observe(el); });
+})();
 
-        // ── Clear skeletons ──
-        function clearSkeletons(container) {
-            const skels = container.querySelectorAll('.hn-skel-card');
-            skels.forEach(s => s.remove());
-        }
+/* ════════════════════════════════════════════════════════
+   HN LIVE FEED
+════════════════════════════════════════════════════════ */
+(function() {
+    'use strict';
 
-        // ── Create card (Best / Ask / Show) ──
-        function createCard(item) {
-            const card = document.createElement('a');
-            card.className = 'hn-card';
-            card.href = item.url || ('https://news.ycombinator.com/item?id=' + item.id);
-            card.target = '_blank';
-            card.rel = 'noopener';
+    var API   = 'https://hacker-news.firebaseio.com/v0/';
+    var BATCH = 12;
 
-            const domain = extractDomain(item.url);
-            const points = item.score || 0;
-            const comments = item.descendants || 0;
-            const author = item.by || 'unknown';
-            const time = item.time ? timeAgo(item.time) : '';
+    var state = {
+        best: { ids: [], loaded: 0, fetching: false, container: null },
+        ask:  { ids: [], loaded: 0, fetching: false, container: null },
+        jobs: { ids: [], loaded: 0, fetching: false, container: null }
+    };
 
-            card.innerHTML =
-                '<div class="hn-card-domain">' + domain + '</div>' +
-                '<div class="hn-card-title">' + (item.title || 'Untitled') + '</div>' +
-                '<div class="hn-card-meta">' +
-                    '<span><span class="hn-meta-accent">' + points + '</span> pts</span>' +
-                    '<span>' + author + '</span>' +
-                    '<span>' + time + '</span>' +
-                    '<span>' + comments + ' comments</span>' +
+    /* ── Helpers ── */
+    function timeAgo(ts) {
+        var d = Math.floor((Date.now() / 1000) - ts);
+        if (d < 60) return d + 's ago';
+        if (d < 3600) return Math.floor(d / 60) + 'm ago';
+        if (d < 86400) return Math.floor(d / 3600) + 'h ago';
+        return Math.floor(d / 86400) + 'd ago';
+    }
+    function domain(url) {
+        if (!url) return 'news.ycombinator.com';
+        try { return new URL(url).hostname.replace(/^www\./, ''); } catch(e) { return 'news.ycombinator.com'; }
+    }
+    function esc(s) {
+        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    /* ── Skeleton builders ── */
+    function bestSkeletons(container) {
+        var html = '';
+        for (var i = 0; i < 5; i++) {
+            html += '<div class="hn-skel-card-placeholder">' +
+                '<div class="hn-skel-line sk-w3 hn-skel"></div>' +
+                '<div class="hn-skel-line sk-w10 hn-skel"></div>' +
+                '<div class="hn-skel-line sk-w8 hn-skel"></div>' +
+                '<div class="hn-skel-line sk-w6 hn-skel" style="margin-top:auto"></div>' +
                 '</div>';
-
-            return card;
         }
-
-        // ── Create job row ──
-        function createJobRow(item) {
-            const row = document.createElement('a');
-            row.className = 'hn-job-row';
-            row.href = item.url || ('https://news.ycombinator.com/item?id=' + item.id);
-            row.target = '_blank';
-            row.rel = 'noopener';
-
-            const time = item.time ? timeAgo(item.time) : '';
-
-            row.innerHTML =
-                '<div class="hn-job-title">' + (item.title || 'Untitled Position') + '</div>' +
-                '<div class="hn-job-time">' + time + '</div>';
-
-            return row;
+        container.innerHTML = html;
+    }
+    function askSkeletons(container) {
+        var html = '';
+        for (var i = 0; i < 6; i++) {
+            html += '<div class="hn-skel-grid-placeholder">' +
+                '<div class="hn-skel-line sk-w3 hn-skel"></div>' +
+                '<div class="hn-skel-line sk-w10 hn-skel"></div>' +
+                '<div class="hn-skel-line sk-w8 hn-skel"></div>' +
+                '</div>';
         }
-
-        // ── Fetch a single item ──
-        function fetchItem(id) {
-            return fetch(API + 'item/' + id + '.json')
-                .then(function(r) { return r.json(); })
-                .catch(function() { return null; });
+        container.innerHTML = html;
+    }
+    function jobSkeletons(container) {
+        var html = '';
+        for (var i = 0; i < 5; i++) {
+            html += '<div style="padding:1.1rem 0.5rem;border-bottom:1px solid rgba(255,102,0,0.08)">' +
+                '<div class="hn-skel-line sk-w6 hn-skel" style="height:10px;margin-bottom:6px"></div>' +
+                '<div class="hn-skel-line sk-w3 hn-skel" style="height:8px"></div>' +
+                '</div>';
         }
+        container.innerHTML = html;
+    }
 
-        // ── Load next batch for a category ──
-        function loadBatch(category) {
-            var s = state[category];
-            if (s.fetching || s.loaded >= s.ids.length) return;
-            s.fetching = true;
+    /* ── Card builders ── */
+    function makeStoryCard(item, delay) {
+        var a = document.createElement('a');
+        a.className = 'hn-story-card';
+        a.href = item.url || ('https://news.ycombinator.com/item?id=' + item.id);
+        a.target = '_blank'; a.rel = 'noopener';
+        a.style.animationDelay = delay + 'ms';
+        var pts = item.score || 0;
+        var comments = item.descendants || 0;
+        a.innerHTML =
+            '<div class="hn-card-domain">' + esc(domain(item.url)) + '</div>' +
+            '<div class="hn-card-title">' + esc(item.title || 'Untitled') + '</div>' +
+            '<div class="hn-card-meta">' +
+                '<span class="hn-meta-pts">' + pts + ' pts</span>' +
+                '<span>' + esc(item.by || 'anon') + '</span>' +
+                '<span>' + (item.time ? timeAgo(item.time) : '') + '</span>' +
+                '<span>' + comments + ' comments</span>' +
+            '</div>';
+        return a;
+    }
 
-            var slice = s.ids.slice(s.loaded, s.loaded + BATCH);
-            var promises = slice.map(fetchItem);
+    function makeAskCard(item, delay) {
+        var a = document.createElement('a');
+        a.className = 'hn-ask-card';
+        a.href = 'https://news.ycombinator.com/item?id=' + item.id;
+        a.target = '_blank'; a.rel = 'noopener';
+        a.style.animationDelay = delay + 'ms';
+        var isShow = (item.title || '').toLowerCase().startsWith('show hn');
+        var typeClass = isShow ? 'type-show' : 'type-ask';
+        var typeLabel = isShow ? 'Show HN' : 'Ask HN';
+        a.innerHTML =
+            '<span class="hn-ask-type ' + typeClass + '">' + typeLabel + '</span>' +
+            '<div class="hn-ask-title">' + esc(item.title || 'Untitled') + '</div>' +
+            '<div class="hn-ask-meta">' +
+                '<span class="hn-meta-pts">' + (item.score || 0) + ' pts</span>' +
+                '<span>' + esc(item.by || 'anon') + '</span>' +
+                '<span>' + (item.time ? timeAgo(item.time) : '') + '</span>' +
+            '</div>';
+        return a;
+    }
 
-            Promise.all(promises).then(function(items) {
-                if (s.loaded === 0) clearSkeletons(s.container);
+    function makeJobRow(item, delay) {
+        var a = document.createElement('a');
+        a.className = 'hn-job-row';
+        a.href = item.url || ('https://news.ycombinator.com/item?id=' + item.id);
+        a.target = '_blank'; a.rel = 'noopener';
+        a.style.animationDelay = delay + 'ms';
+        var title = esc(item.title || 'Untitled Position');
+        var company = '';
+        var m = title.match(/^([^(]+)\s*\(/);
+        if (m) {
+            company = m[1].trim();
+        }
+        a.innerHTML =
+            (company ? '<div><div class="hn-job-company">' + company + '</div>' : '<div>') +
+            '<div class="hn-job-title">' + title + '</div></div>' +
+            '<div class="hn-job-time">' + (item.time ? timeAgo(item.time) : '') + '</div>';
+        return a;
+    }
 
-                items.forEach(function(item) {
-                    if (!item) return;
+    /* ── Fetch helpers ── */
+    function fetchItem(id) {
+        return fetch(API + 'item/' + id + '.json').then(function(r) { return r.json(); }).catch(function() { return null; });
+    }
 
-                    if (category === 'jobs') {
-                        s.container.appendChild(createJobRow(item));
-                    } else {
-                        s.container.appendChild(createCard(item));
+    function loadBatch(cat) {
+        var s = state[cat];
+        if (s.fetching || s.loaded >= s.ids.length) return;
+        s.fetching = true;
+        var slice = s.ids.slice(s.loaded, s.loaded + BATCH);
+        Promise.all(slice.map(fetchItem)).then(function(items) {
+            if (s.loaded === 0) s.container.innerHTML = '';
+            var baseDelay = 0;
+            items.forEach(function(item) {
+                if (!item) return;
+                baseDelay += 50;
+                if (cat === 'best') s.container.appendChild(makeStoryCard(item, baseDelay));
+                else if (cat === 'ask') s.container.appendChild(makeAskCard(item, baseDelay));
+                else s.container.appendChild(makeJobRow(item, baseDelay));
+            });
+            s.loaded += slice.length;
+            s.fetching = false;
+        }).catch(function() { s.fetching = false; });
+    }
+
+    function fetchIds(endpoint, cat) {
+        return fetch(API + endpoint + '.json')
+            .then(function(r) { return r.json(); })
+            .then(function(ids) {
+                state[cat].ids = ids || [];
+                state[cat].loaded = 0;
+                loadBatch(cat);
+            })
+            .catch(function(err) { console.error('HN error (' + cat + '):', err); });
+    }
+
+    function init() {
+        var bestGrid  = document.getElementById('hn-best-grid');
+        var askGrid   = document.getElementById('hn-ask-grid');
+        var jobsList  = document.getElementById('hn-jobs-list');
+        if (!bestGrid || !askGrid || !jobsList) return;
+
+        state.best.container = bestGrid;
+        state.ask.container  = askGrid;
+        state.jobs.container = jobsList;
+
+        bestSkeletons(bestGrid);
+        askSkeletons(askGrid);
+        jobSkeletons(jobsList);
+
+        fetchIds('beststories', 'best');
+        fetchIds('jobstories', 'jobs');
+
+        Promise.all([
+            fetch(API + 'askstories.json').then(function(r) { return r.json(); }),
+            fetch(API + 'showstories.json').then(function(r) { return r.json(); })
+        ]).then(function(res) {
+            var a = res[0] || [], s = res[1] || [], m = [];
+            var max = Math.max(a.length, s.length);
+            for (var i = 0; i < max; i++) {
+                if (i < a.length) m.push(a[i]);
+                if (i < s.length) m.push(s[i]);
+            }
+            state.ask.ids = m; state.ask.loaded = 0; loadBatch('ask');
+        }).catch(function(e) { console.error('HN ask/show:', e); });
+
+        /* Infinite scroll */
+        if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var cat = e.target.getAttribute('data-category');
+                        if (cat && state[cat]) loadBatch(cat);
                     }
                 });
+            }, { rootMargin: '300px' });
+            document.querySelectorAll('.hn-sentinel').forEach(function(s) { obs.observe(s); });
+        }
 
-                s.loaded += slice.length;
-                s.fetching = false;
-            }).catch(function() {
-                s.fetching = false;
+        /* Refresh */
+        var btn = document.getElementById('hnRefreshBtn');
+        if (btn) {
+            btn.addEventListener('click', function() {
+                btn.classList.add('spinning');
+                setTimeout(function() { btn.classList.remove('spinning'); }, 800);
+                ['best','ask','jobs'].forEach(function(cat) {
+                    state[cat].ids = []; state[cat].loaded = 0; state[cat].fetching = false;
+                });
+                bestSkeletons(bestGrid);
+                askSkeletons(askGrid);
+                jobSkeletons(jobsList);
+                fetchIds('beststories','best');
+                fetchIds('jobstories','jobs');
+                Promise.all([
+                    fetch(API + 'askstories.json').then(function(r){ return r.json(); }),
+                    fetch(API + 'showstories.json').then(function(r){ return r.json(); })
+                ]).then(function(res) {
+                    var a=res[0]||[],s=res[1]||[],m=[];
+                    var max=Math.max(a.length,s.length);
+                    for(var i=0;i<max;i++){if(i<a.length)m.push(a[i]);if(i<s.length)m.push(s[i]);}
+                    state.ask.ids=m; state.ask.loaded=0; loadBatch('ask');
+                });
             });
         }
+    }
 
-        // ── Fetch story IDs for a category ──
-        function fetchStoryIds(endpoint, category) {
-            return fetch(API + endpoint + '.json')
-                .then(function(r) { return r.json(); })
-                .then(function(ids) {
-                    state[category].ids = ids || [];
-                    state[category].loaded = 0;
-                    loadBatch(category);
-                })
-                .catch(function(err) {
-                    console.error('HN fetch error (' + category + '):', err);
-                });
-        }
-
-        // ── Set up containers ──
-        function init() {
-            state.best.container = document.getElementById('hn-best-grid');
-            state.ask.container  = document.getElementById('hn-ask-grid');
-            state.jobs.container = document.getElementById('hn-jobs-list');
-
-            if (!state.best.container || !state.ask.container || !state.jobs.container) return;
-
-            // Fetch all feeds
-            fetchStoryIds('beststories', 'best');
-
-            // For ask: merge askstories + showstories
-            Promise.all([
-                fetch(API + 'askstories.json').then(function(r) { return r.json(); }),
-                fetch(API + 'showstories.json').then(function(r) { return r.json(); })
-            ]).then(function(results) {
-                var askIds = results[0] || [];
-                var showIds = results[1] || [];
-                // Interleave them
-                var merged = [];
-                var maxLen = Math.max(askIds.length, showIds.length);
-                for (var i = 0; i < maxLen; i++) {
-                    if (i < askIds.length) merged.push(askIds[i]);
-                    if (i < showIds.length) merged.push(showIds[i]);
-                }
-                state.ask.ids = merged;
-                state.ask.loaded = 0;
-                loadBatch('ask');
-            }).catch(function(err) {
-                console.error('HN ask/show fetch error:', err);
-            });
-
-            fetchStoryIds('jobstories', 'jobs');
-
-            // Infinite scroll via IntersectionObserver
-            var sentinels = document.querySelectorAll('.hn-sentinel');
-            if ('IntersectionObserver' in window) {
-                var observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            var cat = entry.target.getAttribute('data-category');
-                            if (cat && state[cat]) {
-                                loadBatch(cat);
-                            }
-                        }
-                    });
-                }, { rootMargin: '200px' });
-
-                sentinels.forEach(function(s) { observer.observe(s); });
-            }
-
-            // Refresh button
-            var refreshBtn = document.getElementById('hnRefreshBtn');
-            if (refreshBtn) {
-                refreshBtn.addEventListener('click', function() {
-                    refreshBtn.classList.add('spinning');
-                    setTimeout(function() { refreshBtn.classList.remove('spinning'); }, 800);
-
-                    // Reset all
-                    ['best', 'ask', 'jobs'].forEach(function(cat) {
-                        state[cat].ids = [];
-                        state[cat].loaded = 0;
-                        state[cat].fetching = false;
-                        state[cat].container.innerHTML = '';
-                    });
-
-                    fetchStoryIds('beststories', 'best');
-                    fetchStoryIds('jobstories', 'jobs');
-
-                    Promise.all([
-                        fetch(API + 'askstories.json').then(function(r) { return r.json(); }),
-                        fetch(API + 'showstories.json').then(function(r) { return r.json(); })
-                    ]).then(function(results) {
-                        var askIds = results[0] || [];
-                        var showIds = results[1] || [];
-                        var merged = [];
-                        var maxLen = Math.max(askIds.length, showIds.length);
-                        for (var i = 0; i < maxLen; i++) {
-                            if (i < askIds.length) merged.push(askIds[i]);
-                            if (i < showIds.length) merged.push(showIds[i]);
-                        }
-                        state.ask.ids = merged;
-                        state.ask.loaded = 0;
-                        loadBatch('ask');
-                    });
-                });
-            }
-        }
-
-        // Run when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-    })();
-    </script>
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+</script>
 
 </body>
 </html>
