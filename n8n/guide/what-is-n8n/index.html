@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What is n8n? - n8n Guide</title>
-    <meta name="description" content="A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it's for, and how to get started.">
-    <meta property="og:title" content="What is n8n? - n8n Guide">
-    <meta property="og:description" content="A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it's for, and how to get started.">
+    <title>What is n8n? The Complete Introduction - n8n Guide</title>
+    <meta name="description" content="Everything you need to know about n8n: the open-source workflow automation platform with 500+ integrations, AI agent capabilities, and self-hosting. A thorough introduction.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="what is n8n, n8n explained, workflow automation, open source automation, n8n vs Zapier, n8n introduction 2026">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/what-is-n8n/">
+    <meta property="og:title" content="What is n8n? The Complete Introduction">
+    <meta property="og:description" content="Everything you need to know about n8n: the open-source workflow automation platform with 500+ integrations, AI agent capabilities, and self-hosting.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,9 +20,489 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <style>
+        /* ── THEME OVERRIDE: RED ── */
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+
+        /* ── PROGRESS BAR ── */
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+
+        /* ── HERO ── */
+        .g-hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem 0;
+            text-align: center;
+        }
+        .g-hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .g-tag {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 0.3rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-mono);
+        }
+        .g-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .g-hero h1 em {
+            font-style: italic;
+            color: var(--blue);
+        }
+        .g-hero-sub {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .g-hero-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            margin-bottom: 3rem;
+        }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+
+        /* ── STATS STRIP ── */
+        .g-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        .g-stat {
+            background: var(--bg);
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+        .g-stat-num {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        .g-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* ── TABLE OF CONTENTS ── */
+        .g-toc {
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+        .g-toc-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+        .g-toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem 3rem;
+        }
+        .g-toc-grid a {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.25s;
+        }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--blue);
+            font-weight: 700;
+            min-width: 1.5rem;
+        }
+
+        /* ── SECTION SYSTEM ── */
+        .g-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+        }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .g-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--blue);
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .g-section-head h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--text);
+            margin: 0;
+            line-height: 1.2;
+        }
+        .g-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-mid);
+            margin-bottom: 1.5rem;
+        }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text a:hover { color: var(--blue-dk); }
+        .g-text code {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            color: var(--blue);
+        }
+        .g-text strong { color: var(--text); }
+        .g-text em { font-style: italic; }
+
+        /* ── CALLOUT BOX ── */
+        .g-callout {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--blue);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+        }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul {
+            margin: 0.75rem 0 0;
+            padding-left: 1.25rem;
+            list-style: disc;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+
+        /* ── PATH COMPARISON CARDS ── */
+        .g-path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .g-path-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .g-path-card:hover { border-color: var(--blue); box-shadow: 0 4px 24px rgba(215,38,56,0.06); }
+        .g-path-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 1rem;
+        }
+        .g-path-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .g-path-code {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+        .g-path-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .g-path-card li {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        .g-path-card li::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .g-path-best {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .g-path-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+        .g-path-cta:hover { gap: 0.8rem; }
+
+        /* ── RESOURCE GRID ── */
+        .g-resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .g-resource-card {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .g-resource-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(215,38,56,0.06); }
+        .g-resource-card .rc-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+        .g-resource-card .rc-title {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.35rem;
+        }
+        .g-resource-card .rc-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        /* ── FAQ ACCORDION ── */
+        .g-faq { margin: 2rem 0; }
+        .g-faq details {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary {
+            padding: 1.25rem 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            list-style: none;
+            transition: color 0.3s;
+            user-select: none;
+        }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after {
+            content: '+';
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            transition: transform 0.3s, color 0.3s;
+            flex-shrink: 0;
+        }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+        .g-faq .faq-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .g-faq .faq-body li {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+        }
+        .g-faq .faq-body li strong { color: var(--text); }
+        .g-faq .faq-body li a { color: var(--blue); text-decoration: underline; }
+        .g-faq .faq-body li code {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.82em;
+            color: var(--blue);
+        }
+
+        /* ── ENDCAP ── */
+        .g-endcap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            border-top: 1px solid var(--border);
+            padding-top: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .g-endcap-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+        .g-endcap-author:hover .ec-name { color: var(--blue); }
+        .g-endcap-av {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-weight: 700; color: var(--text); font-size: 0.95rem; transition: color 0.3s; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); }
+        .g-endcap-actions { display: flex; gap: 0.75rem; }
+        .g-endcap-actions button,
+        .g-endcap-actions a {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.55rem 1.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-mid);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .g-endcap-actions button:hover,
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+
+        /* ── FULL-BLEED SECTIONS ── */
+        .g-bleed {
+            background: var(--bg-off);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 0;
+            margin-bottom: 5rem;
+        }
+        .g-bleed > .g-section { padding-bottom: 0; }
+
+        /* ── REVEAL ANIMATION ── */
+        .g-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.4rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-path-grid { grid-template-columns: 1fr; }
+            .g-resource-grid { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; align-items: flex-start; }
+            .g-section-head h2 { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
     <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+
     <nav class="auto-nav">
         <div class="inner">
             <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
@@ -31,202 +514,440 @@
                 </svg>
             </button>
             <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">← Back to Archive</a></li>
+                <li><a href="../../">&#8592; Back to Archive</a></li>
                 <li><a href="../../">Hub</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="auto-wrap" style="padding-top: 5rem;">
-        <div class="reader-layout">
-            <main class="reader-main">
-                <header class="reader-header stagger-in">
-                    <div class="reader-tags">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Overview</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Automation</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Open Source</span>
-                    </div>
-                    <h1 class="reader-title">What is n8n?</h1>
-                    <div class="reader-meta">Published on Mar 29, 2026 · By Anshul Namdev</div>
-                </header>
 
-                <div class="reader-body">
+        <!-- ════════════════════════════════════════════
+             HERO
+        ════════════════════════════════════════════ -->
+        <header class="g-hero g-reveal">
+            <div class="g-hero-tags">
+                <span class="g-tag">Overview</span>
+                <span class="g-tag">Automation</span>
+                <span class="g-tag">Open Source</span>
+            </div>
+            <h1>What is <em>n8n</em>?<br>The Complete Introduction</h1>
+            <p class="g-hero-sub">The open-source workflow automation platform that connects your apps, builds AI agents, and runs on your own infrastructure. Everything you need to know, in one place.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
+        </header>
 
-                    <h2>The Short Answer</h2>
-                    <p>n8n is an open-source workflow automation platform that lets you connect apps, services, and APIs together visually, without writing a full application from scratch. Think of it as the connective tissue between every tool you use, with the ability to add logic, conditions, transformations, and even AI into the mix.</p>
-                    <p>It's built on a node-based canvas. Each node represents an action or a trigger: send an email, fetch data from an API, run a piece of code, call an AI model. You connect them together, and that chain becomes your workflow. When something happens (a form is submitted, a schedule fires, a webhook is received), the workflow runs automatically.</p>
-
-                    <h2>What Can You Actually Do With It?</h2>
-                    <p>n8n connects to hundreds of applications out of the box: Google Workspace, Slack, Notion, Airtable, GitHub, Stripe, HubSpot, PostgreSQL, and hundreds more. But beyond just connecting apps, it gives you real programming power inside the canvas. You can write JavaScript or Python directly in nodes, manipulate data structures, handle errors, build sub-workflows, and chain complex logic together.</p>
-                    <p>Some common things people build with n8n:</p>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0;">
-                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
-                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">Lead Pipelines</p>
-                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">Capture a form, enrich the data, add to CRM, notify the sales team on Slack.</p>
-                        </div>
-                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
-                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">Internal Reporting</p>
-                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">Pull data from multiple sources on a schedule and push a formatted summary to email or a dashboard.</p>
-                        </div>
-                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
-                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">Support Automation</p>
-                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">Triage incoming tickets, auto-respond to common queries, escalate edge cases to humans.</p>
-                        </div>
-                        <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem;">
-                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue);">Personal Automation</p>
-                            <p style="margin:0; font-size: 0.85rem; color: var(--text-mid);">Anything repetitive in your own life or work that you'd rather not do manually.</p>
-                        </div>
-                    </div>
-
-                    <p>The scope is genuinely wide. If two things have an API, n8n can almost certainly connect them.</p>
-
-                    <h2>AI Agents and the New Wave of Automation</h2>
-                    <p>One of the most powerful things n8n has evolved into is a platform for building AI-powered workflows and agents. You can wire in large language models like OpenAI, Anthropic, or local models via Ollama, and have them make decisions, generate content, classify data, or respond to inputs as part of a larger automated pipeline.</p>
-                    <p>Instead of rigid if/else logic, you can have an AI agent reason through a task, use tools you define, and take actions based on context. Combine that with n8n's ability to connect to any external service, and you can build agents that don't just think. They act. They can search the web, query a database, send messages, update records, and loop back based on results.</p>
-                    <p>For businesses, this means replacing entire categories of repetitive knowledge work. For individuals, it means having a personal automation layer that actually understands context rather than just following fixed rules.</p>
-
-                    <h2>Is n8n For You?</h2>
-
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 0 0 1.5rem 0;">
-                        <p style="margin:0; font-size: 1rem; color: var(--text-mid);">Yes. n8n is for everyone who wants to automate their work or business, whether you're a solo freelancer or a large organization.</p>
-                    </div>
-
-                    <p>If you're a non-technical person, the visual canvas is approachable enough to build real workflows without writing code. If you're a developer, the ability to drop into JavaScript or Python, use custom HTTP requests, and build complex branching logic means you're never hitting a ceiling. If you're running a business of any size, the ROI on replacing repetitive manual tasks with automated workflows is immediate and compounding.</p>
-                    <p>The question isn't really "is n8n for me?" It's "what would I automate first?"</p>
-
-                    <h2>Open Source and Self-Hostable</h2>
-                    <p>n8n is <a href="https://github.com/n8n-io/n8n" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">open source on GitHub</a> and can be self-hosted on your own infrastructure. This is a significant differentiator from tools like Zapier or Make. You own your data, your workflows, and your environment. There's no vendor lock-in, and for teams handling sensitive data, keeping everything on your own servers is often a hard requirement.</p>
-                    <p>That said, self-hosting comes with responsibility. You manage the server, updates, backups, and uptime. For most people starting out, the managed <strong>n8n Cloud</strong> is the right call. You get the full product without the ops overhead.</p>
-
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
-                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Explore your options</p>
-                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
-                            <li><a href="https://axshul.site/n8n/guide/how-to-setup-n8n/" style="color:var(--blue);text-decoration:underline;">How To Setup n8n: Cloud, NPM, and Docker →</a></li>
-                            <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" style="color:var(--blue);text-decoration:underline;">n8n Cloud vs. Self-Hosted: Which One Should You Pick? →</a></li>
-                            <li><a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" style="color:var(--blue);text-decoration:underline;">Self-Hosting n8n on a VPS →</a></li>
-                        </ul>
-                    </div>
-
-                    <h2>The Free Self-Hosted Version</h2>
-                    <p>If you go the self-hosted route, you'll be running the Community Edition, which is free. It gives you the full n8n canvas, all the core nodes, and the ability to run unlimited workflows on your own infrastructure. It's a genuinely capable product, not a stripped-down trial.</p>
-                    <p>There are some limitations compared to the paid Cloud or Enterprise tiers, like advanced user management, SSO, and certain collaboration features. But for most individuals and small teams, the Community Edition is more than enough to build serious automation.</p>
-                    <p>Full breakdown of what you get: <a href="https://axshul.site/n8n/guide/n8n-community-edition/" style="color:var(--blue);text-decoration:underline;">n8n Community Edition: What You Actually Get →</a></p>
-
-                    <h2>Licensing and Fair Use</h2>
-                    <p>n8n uses a <strong>Sustainable Use License</strong> for its source code, which is worth understanding before you build anything commercial on top of it. The short version: you can use n8n freely for internal automation, personal projects, and most business use cases. Where it gets nuanced is if you're building a product that competes with n8n itself or embedding it into a SaaS offering for others.</p>
-                    <p>It's a deliberate choice by the n8n team to keep the project sustainable while staying open. Worth reading before you go deep:</p>
-                    <ul>
-                        <li><a href="https://axshul.site/n8n/guide/license-and-regulations/" style="color:var(--blue);text-decoration:underline;">n8n License and Regulations: What You Need to Know →</a></li>
-                    </ul>
-
-                    <h2>Ready to Get Started?</h2>
-                    <p>If this is your first time with n8n, the best next step is simple: get it running and start building. The platform rewards hands-on time more than anything else, and the official courses are well-structured for getting you from zero to functional fast.</p>
-                    <p>This article walks you through the full path from setup to your first real workflow:</p>
-                    <ul>
-                        <li><a href="https://axshul.site/n8n/guide/build-your-first-workflow/" style="color:var(--blue);text-decoration:underline;">How to Build Your First n8n Workflow →</a></li>
-                    </ul>
-                    <p>n8n is one of those tools that compounds over time. The more workflows you build, the more you see where automation fits, and the faster you move. Start small, build something real, and go from there.</p>
-
-                </div>
-            </main>
-
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>7 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
-                    </div>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;">
-                                <img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;">
-                            </div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
-
-                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://github.com/n8n-io/n8n" target="_blank" class="sb-link">n8n on GitHub ↗</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/how-to-setup-n8n/" class="sb-link">Setup Guide →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" class="sb-link">Cloud vs Self-Hosted →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" class="sb-link">VPS Self-Hosting →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/n8n-community-edition/" class="sb-link">Community Edition →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/license-and-regulations/" class="sb-link">License & Regulations →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/build-your-first-workflow/" class="sb-link">Build Your First Workflow →</a></li>
-                    </ul>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">← Back to Archive</span>
-                    </a>
-                </div>
-            </aside>
+        <!-- ════ STATS STRIP ════ -->
+        <div class="g-stats g-reveal">
+            <div class="g-stat"><div class="g-stat-num">500+</div><div class="g-stat-label">Integrations</div></div>
+            <div class="g-stat"><div class="g-stat-num">OSS</div><div class="g-stat-label">Open Source</div></div>
+            <div class="g-stat"><div class="g-stat-num">50K+</div><div class="g-stat-label">GitHub Stars</div></div>
+            <div class="g-stat"><div class="g-stat-num">$2.5B</div><div class="g-stat-label">Valuation</div></div>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                © 2026 <a href="../../../">Anshul Namdev</a>
+        <!-- ════ TABLE OF CONTENTS ════ -->
+        <nav class="g-toc g-reveal">
+            <div class="g-toc-label">In This Guide</div>
+            <div class="g-toc-grid">
+                <a href="#short-answer"><span>01</span> The Short Answer</a>
+                <a href="#who"><span>05</span> Who is n8n For?</a>
+                <a href="#canvas"><span>02</span> How the Canvas Works</a>
+                <a href="#open-source"><span>06</span> Open Source &amp; Self-Hostable</a>
+                <a href="#build"><span>03</span> What You Can Build</a>
+                <a href="#cloud-vs-self"><span>07</span> Cloud vs Self-Hosted</a>
+                <a href="#ai"><span>04</span> AI Agents &amp; the New Wave</a>
+                <a href="#ecosystem"><span>08</span> The Ecosystem</a>
+                <a href="#start"><span>09</span> Getting Started</a>
             </div>
+        </nav>
+
+        <!-- ════════════════════════════════════════════
+             01 - THE SHORT ANSWER
+        ════════════════════════════════════════════ -->
+        <section id="short-answer" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>The Short Answer</h2>
+            </div>
+            <p class="g-text"><strong>n8n is an open-source workflow automation platform.</strong> It gives you a visual, node-based canvas where you connect apps, APIs, and services together into automated workflows. You can add logic, conditions, data transformations, custom code, and AI into every workflow you build. When something happens (a webhook fires, a schedule triggers, a form is submitted), your workflow runs automatically.</p>
+            <p class="g-text">Think of it as the connective tissue between every tool your business or personal stack relies on. Instead of manually copying data from one system to another, writing one-off scripts, or paying someone to do repetitive digital tasks, you build it once on the n8n canvas and let it run. The platform handles over <strong>500 built-in integrations</strong> out of the box, and anything with an API can be connected using the HTTP Request node.</p>
+            <p class="g-text">n8n was created by <strong>Jan Oberhauser</strong> in Berlin and first released in 2019. Since then it has grown into one of the most popular open-source automation tools in the world, with over 50,000 GitHub stars and a $2.5 billion valuation after its Series C funding. The project is backed by Sequoia Capital, Felicis Ventures, and other major investors.</p>
+
+            <div class="g-callout">
+                <p><strong>The name:</strong> n8n stands for "nodemation" (node + automation). The "8" represents the eight characters between the first "n" and the last "n". It is pronounced "n-eight-n."</p>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             02 - HOW THE CANVAS WORKS
+        ════════════════════════════════════════════ -->
+        <section id="canvas" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>How the Canvas Works</h2>
+            </div>
+            <p class="g-text">The n8n editor is a visual canvas where you build workflows by placing <strong>nodes</strong> and connecting them with wires. Each node is a discrete operation: a trigger that starts the workflow, an action that does something (send an email, query a database, call an API), or a logic gate that routes data based on conditions.</p>
+            <p class="g-text">Data flows through the workflow as <strong>items</strong>. Each item is a JSON object. When a trigger fires, it produces one or more items. Those items move through the connected nodes in sequence. Each node processes the incoming items, transforms them, filters them, or uses them to perform actions, then passes the results downstream.</p>
+            <p class="g-text">There are two categories of nodes you will work with constantly:</p>
+            <p class="g-text"><strong>Trigger nodes</strong> start your workflow. A Webhook Trigger listens for incoming HTTP requests. A Schedule Trigger fires at set intervals (every 5 minutes, every Monday at 9am). A Form Trigger presents a web form and fires when someone submits it. There are also app-specific triggers: "When a new row is added to Google Sheets," "When a message is posted in Slack," and dozens more.</p>
+            <p class="g-text"><strong>Action nodes</strong> do the work. These include app integrations (Gmail, Slack, Notion, Airtable, HubSpot), data manipulation (Merge, Split, Set, Aggregate), logic (If, Switch, Loop), code execution (JavaScript, Python), HTTP requests, and AI operations (LLM calls, agent reasoning, vector store queries).</p>
+            <p class="g-text">Inside every node, you can use <strong>expressions</strong> to reference data dynamically. Expressions let you pull values from previous nodes, apply functions, format strings, do math, and build dynamic payloads. The syntax is straightforward: <code>{{ $json.email }}</code> grabs the email field from the current item, <code>{{ $('Previous Node').item.json.name }}</code> references a specific field from a specific node.</p>
+            <p class="g-text">n8n distinguishes between <strong>manual executions</strong> (you click "Test Workflow" in the editor to run it once and see the output) and <strong>production executions</strong> (the workflow is active and runs automatically when triggered). This separation is critical for building and debugging safely before anything goes live.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             03 - WHAT YOU CAN BUILD
+        ════════════════════════════════════════════ -->
+        <section id="build" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>What You Can Build</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">The range of what people build with n8n is enormous. At a high level, it falls into two categories: business process automation and technical infrastructure automation. Most teams end up doing both.</p>
+
+            <div class="g-path-grid">
+                <div class="g-path-card">
+                    <div class="g-path-label">Operations</div>
+                    <h3>Business Automation</h3>
+                    <div class="g-path-code">Processes &middot; Pipelines &middot; Reporting</div>
+                    <ul>
+                        <li>Lead capture pipelines: form submission to CRM to Slack notification to email sequence, all in one workflow</li>
+                        <li>Internal reporting: pull data from multiple sources on a schedule and push a formatted summary to email or a dashboard</li>
+                        <li>Customer onboarding: trigger a welcome sequence when a user signs up, provision accounts, send personalized emails</li>
+                        <li>Invoice processing: extract data from incoming invoices, validate it, push to accounting software, flag exceptions for review</li>
+                    </ul>
+                    <p class="g-path-best">Best for: operations teams, founders, agencies, and anyone who wants to eliminate repetitive manual work.</p>
+                </div>
+                <div class="g-path-card">
+                    <div class="g-path-label">Engineering</div>
+                    <h3>Technical Automation</h3>
+                    <div class="g-path-code">APIs &middot; Infrastructure &middot; DevOps</div>
+                    <ul>
+                        <li>CI/CD notifications: post deployment results from GitHub Actions or GitLab to Slack with structured formatting</li>
+                        <li>Database syncing: keep records consistent across multiple databases or between your app and third-party services</li>
+                        <li>API orchestration: chain multiple API calls together with error handling, retries, and conditional branching</li>
+                        <li>Monitoring alerts: watch for anomalies in logs, metrics, or third-party services and trigger incident response workflows</li>
+                    </ul>
+                    <p class="g-path-best">Best for: developers, DevOps engineers, and technical teams who need reliable automation with real code access.</p>
+                </div>
+            </div>
+
+            <div class="g-callout">
+                <p><strong>More use cases people build constantly:</strong></p>
+                <ul>
+                    <li>AI-powered customer support bots with memory and tool access</li>
+                    <li>Social media content scheduling and cross-posting</li>
+                    <li>Document processing with OCR and AI classification</li>
+                    <li>E-commerce order fulfillment and inventory sync</li>
+                    <li>HR onboarding and offboarding checklists</li>
+                    <li>Competitive intelligence: scrape, parse, summarize, alert</li>
+                    <li>Personal productivity: daily digest emails, bookmark processing, note organization</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             04 - AI AGENTS AND THE NEW WAVE
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="ai" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>AI Agents &amp; the New Wave</h2>
+            </div>
+            <p class="g-text">This is where n8n separates itself from tools like Zapier and Make. While those platforms have added basic AI features, n8n has gone deep. The platform now functions as a full-featured <strong>AI agent builder</strong>, letting you create autonomous agents that reason, use tools, maintain memory, and take real actions across your connected services.</p>
+            <p class="g-text">The core of this is the <strong>Agent node</strong>. You give it an LLM (the reasoning brain), a set of tools (actions it can take), memory (conversation context), and an output parser (structured responses). The agent receives input, decides which tools to call and in what order, executes them, evaluates the results, and responds. It is not following a fixed script. It is reasoning through the task.</p>
+            <p class="g-text">n8n supports all the major LLM providers: <strong>OpenAI</strong> (GPT-4o, GPT-4.1, o3), <strong>Anthropic</strong> (Claude Opus, Sonnet, Haiku), <strong>Google</strong> (Gemini), and <strong>Ollama</strong> for running open-source models locally. You can swap providers without changing your workflow logic, which matters when pricing and capability shift rapidly.</p>
+            <p class="g-text">Beyond agents, n8n supports <strong>AI chains</strong> for simpler, deterministic flows: summarize this document, classify this email, extract structured data from this text. Chains are faster and cheaper than agents when you know exactly what you need. The key distinction: agents choose their own path; chains follow yours.</p>
+            <p class="g-text">For retrieval-augmented generation (RAG), n8n integrates with <strong>vector stores</strong> like Pinecone, Qdrant, Supabase, and in-memory options. You can build knowledge bases from your documents, embed them into vector space, and have your AI agents query them for context-aware answers. This is how you build AI systems that know about your specific business, products, and data.</p>
+
+            <div class="g-callout">
+                <p><strong>Go deeper on AI in n8n:</strong></p>
+                <ul>
+                    <li><a href="/n8n/guide/choose-right-ai-model/">Choose the Right AI Model for n8n &rarr;</a></li>
+                    <li><a href="/n8n/guide/ai-inference-providers/">AI Inference Providers for n8n &rarr;</a></li>
+                </ul>
+            </div>
+        </section>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+             05 - WHO IS N8N FOR?
+        ════════════════════════════════════════════ -->
+        <section id="who" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>Who is n8n For?</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">n8n serves a remarkably wide audience. The visual canvas makes it accessible to people who have never written code, while the deep technical capabilities keep experienced developers engaged. Here is how different users approach it.</p>
+
+            <div class="g-resource-grid">
+                <div class="g-resource-card" style="cursor:default;">
+                    <div class="rc-label">No-Code Path</div>
+                    <div class="rc-title">Non-Technical Users</div>
+                    <div class="rc-desc">The visual canvas, drag-and-drop nodes, and built-in integrations mean you can build real workflows without writing a single line of code. If you can use a spreadsheet, you can use n8n. The Academy courses start from zero and assume no programming background.</div>
+                </div>
+                <div class="g-resource-card" style="cursor:default;">
+                    <div class="rc-label">Full-Code Path</div>
+                    <div class="rc-title">Developers</div>
+                    <div class="rc-desc">Write JavaScript or Python directly in Code nodes. Make complex HTTP requests with full header and body control. Build sub-workflows, implement error handling patterns, use the n8n API programmatically, and create custom nodes. No ceiling on technical complexity.</div>
+                </div>
+                <div class="g-resource-card" style="cursor:default;">
+                    <div class="rc-label">ROI Path</div>
+                    <div class="rc-title">Businesses</div>
+                    <div class="rc-desc">Every manual process you automate is time and money saved, compounding over time. n8n scales from one-person operations to enterprise deployments. Self-host for data sovereignty, or use Cloud for instant setup. The ROI on replacing repetitive tasks is immediate.</div>
+                </div>
+            </div>
+
+            <p class="g-text" style="max-width:900px;">The common thread is this: if you have tasks that involve moving data between systems, making decisions based on information, or performing the same sequence of steps repeatedly, n8n is built to handle it.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             06 - OPEN SOURCE AND SELF-HOSTABLE
+        ════════════════════════════════════════════ -->
+        <section id="open-source" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>Open Source &amp; Self-Hostable</h2>
+            </div>
+            <p class="g-text">n8n's source code is publicly available on <a href="https://github.com/n8n-io/n8n" target="_blank">GitHub</a>, where it has accumulated over 50,000 stars. You can inspect the code, contribute to the project, build custom nodes, and deploy the entire platform on your own infrastructure. This is a significant differentiator from closed-source competitors like Zapier and Make, where you have zero visibility into what is running your workflows.</p>
+            <p class="g-text">The license is a <strong>Sustainable Use License</strong> (formerly described as "fair-code"). You can use n8n freely for internal automation, personal projects, and business operations. The restrictions apply when you try to compete with n8n itself or embed it into a product you sell as a service. For the vast majority of users, this distinction never matters. For the edge cases, read the details: <a href="/n8n/guide/license-and-regulations/">n8n License and Regulations &rarr;</a></p>
+            <p class="g-text"><strong>Self-hosting</strong> means you run n8n on your own server: a VPS, a Docker container on your local machine, a Kubernetes cluster, or any infrastructure you control. Your data never leaves your environment. Your workflow definitions, credentials, execution logs, and results all live on your hardware. For organizations handling sensitive data, regulated industries, or anyone who simply wants full control, this is not a nice-to-have. It is a requirement.</p>
+            <p class="g-text">The <strong>Community Edition</strong> is the free, self-hosted version. It includes the full canvas, all core nodes, unlimited workflows, and unlimited executions. Some features like advanced user management, SSO, and certain collaboration tools are reserved for the Enterprise tier, but for individuals and small teams, the Community Edition is genuinely complete.</p>
+
+            <div class="g-callout">
+                <p><strong>Self-hosting resources:</strong></p>
+                <ul>
+                    <li><a href="/n8n/guide/how-to-setup-n8n/">How To Setup n8n: Cloud, NPM, and Docker &rarr;</a></li>
+                    <li><a href="/n8n/guide/vps-self-hosting-n8n/">Self-Hosting n8n on a VPS &rarr;</a></li>
+                    <li><a href="/n8n/guide/n8n-community-edition/">n8n Community Edition: What You Actually Get &rarr;</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             07 - N8N CLOUD VS SELF-HOSTED
+        ════════════════════════════════════════════ -->
+        <section id="cloud-vs-self" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>n8n Cloud vs Self-Hosted</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">This is one of the first decisions new users face. Both options give you the same core n8n platform. The difference is in who manages the infrastructure, what you pay, and what you trade off.</p>
+
+            <div class="g-path-grid">
+                <div class="g-path-card">
+                    <div class="g-path-label">Managed</div>
+                    <h3>n8n Cloud</h3>
+                    <div class="g-path-code">app.n8n.cloud</div>
+                    <ul>
+                        <li>Instant setup: sign up and start building in seconds</li>
+                        <li>Automatic updates: always running the latest version</li>
+                        <li>Scaling handled for you: no server management</li>
+                        <li>Built-in backups, SSL, and monitoring</li>
+                        <li>Starts with a free tier, then usage-based pricing</li>
+                        <li>Ideal for getting started quickly without ops overhead</li>
+                    </ul>
+                    <p class="g-path-best">Best for: people who want to build workflows, not manage servers. Most beginners should start here.</p>
+                    <a href="/n8n/guide/n8n-cloud-plans/" class="g-path-cta">See Cloud Plans <span>&rarr;</span></a>
+                </div>
+                <div class="g-path-card">
+                    <div class="g-path-label">Self-Managed</div>
+                    <h3>Self-Hosted</h3>
+                    <div class="g-path-code">Your infrastructure</div>
+                    <ul>
+                        <li>Full control over your data and environment</li>
+                        <li>Complete data sovereignty: nothing leaves your servers</li>
+                        <li>Unlimited executions with no per-execution fees</li>
+                        <li>Customize and extend the platform freely</li>
+                        <li>Requires server management, updates, and backups</li>
+                        <li>Free Community Edition, or paid Enterprise for teams</li>
+                    </ul>
+                    <p class="g-path-best">Best for: developers, privacy-conscious organizations, and anyone with the technical ability to run a server.</p>
+                    <a href="/n8n/guide/n8n-cloud-vs-self-hosted/" class="g-path-cta">Full Comparison <span>&rarr;</span></a>
+                </div>
+            </div>
+
+            <div class="g-callout">
+                <p><strong>Our recommendation:</strong> If you are just discovering n8n, start with Cloud. The free tier gives you enough to learn the platform, build real workflows, and decide if n8n fits your needs. You can always migrate to self-hosted later. If you already know you need data sovereignty or unlimited executions, go straight to self-hosted.</p>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             08 - THE ECOSYSTEM
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="ecosystem" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>The Ecosystem</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">n8n is more than just the automation platform. There is a substantial ecosystem of community resources, learning materials, and extension points that make it easier to build, learn, and get help.</p>
+
+            <div class="g-faq">
+                <details open>
+                    <summary>500+ Built-in Nodes</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li>n8n ships with integrations for over 500 services: Google Workspace, Slack, Notion, Airtable, GitHub, Stripe, HubSpot, PostgreSQL, MySQL, MongoDB, Shopify, Mailchimp, Twilio, and hundreds more. Each node is purpose-built with the most common operations pre-configured, so you rarely need to touch raw API calls.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Community Nodes</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li>Beyond the built-in integrations, the n8n community publishes custom nodes for services and use cases not yet covered by the core team. Community nodes are installed via npm and extend the platform without modifying the core codebase. Browse them in the n8n community node directory.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>n8n Academy</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li>The official learning platform at <a href="https://learn.n8n.io" target="_blank">learn.n8n.io</a> offers structured, hands-on courses. The Quickstart (QS101) takes you from zero to building an AI agent in 3 to 5 hours. The Foundations program (N8N101, N8N102, N8N103) goes deeper across 9 to 14 hours. All courses are free and award verifiable badges on completion. <a href="/n8n/guide/build-your-first-workflow/">Full Academy guide &rarr;</a></li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Community Forum and Discord</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Community Forum</strong> (<a href="https://community.n8n.io" target="_blank">community.n8n.io</a>): the primary place for workflow help, bug reports, feature requests, and sharing automations. n8n staff are active here. If you are stuck on a workflow, this is where to ask.</li>
+                            <li><strong>Discord:</strong> the real-time chat community. Good for quick questions, sharing what you are building, and connecting with other n8n users. Less formal than the forum, faster responses.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Documentation</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li>The official documentation at <a href="https://docs.n8n.io" target="_blank">docs.n8n.io</a> covers every node, expression function, deployment option, and API endpoint. It is comprehensive and regularly updated. When in doubt about how something works, the docs are the definitive source.</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+
+            <div class="g-resource-grid" style="margin-top:2.5rem;">
+                <a href="https://community.n8n.io" target="_blank" class="g-resource-card">
+                    <div class="rc-label">Community</div>
+                    <div class="rc-title">n8n Community Forum</div>
+                    <div class="rc-desc">Workflow help, bug reports, feature requests, and shared automations from the community.</div>
+                </a>
+                <a href="https://docs.n8n.io" target="_blank" class="g-resource-card">
+                    <div class="rc-label">Reference</div>
+                    <div class="rc-title">Official Documentation</div>
+                    <div class="rc-desc">Comprehensive docs for every node, expression, deployment option, and API endpoint.</div>
+                </a>
+                <a href="/n8n/guide/where-to-get-n8n-help/" class="g-resource-card">
+                    <div class="rc-label">Guide</div>
+                    <div class="rc-title">Where to Get n8n Help</div>
+                    <div class="rc-desc">Every support channel, forum category, and resource in one guide.</div>
+                </a>
+            </div>
+        </section>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+             09 - GETTING STARTED
+        ════════════════════════════════════════════ -->
+        <section id="start" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">09</span>
+                <h2>Getting Started</h2>
+            </div>
+            <p class="g-text">The best way to learn n8n is to build something. Not to read about it, not to watch someone else do it, but to open the canvas and create a workflow that solves a real problem you have. The platform rewards hands-on time more than anything else.</p>
+            <p class="g-text">Here is the path we recommend:</p>
+            <p class="g-text"><strong>Step 1: Get n8n running.</strong> The fastest route is <a href="https://app.n8n.cloud/" target="_blank">n8n Cloud</a>. Sign up and your workspace is ready in seconds. Free tier, no credit card required. If you prefer self-hosting, follow our <a href="/n8n/guide/how-to-setup-n8n/">setup guide</a> for Docker, npm, or VPS deployment.</p>
+            <p class="g-text"><strong>Step 2: Build your first workflow.</strong> Our complete guide walks you through building a real, functional workflow from scratch. It covers triggers, nodes, data flow, expressions, and everything you need to understand how the platform works: <a href="/n8n/guide/build-your-first-workflow/">Build Your First n8n Workflow &rarr;</a></p>
+            <p class="g-text"><strong>Step 3: Take the Academy courses.</strong> The n8n Academy at <a href="https://learn.n8n.io" target="_blank">learn.n8n.io</a> offers structured, free courses. Start with QS101 (Quickstart) for a 3 to 5 hour fast-track, or begin the Foundations program with N8N101 for deeper coverage.</p>
+            <p class="g-text"><strong>Step 4: Start small, build something real.</strong> Pick the most annoying manual task in your day. Automate it. Then pick the next one. n8n is a tool that compounds over time. The more workflows you build, the more you see where automation fits, and the faster you move.</p>
+
+            <div class="g-callout">
+                <p><strong>Essential reading to continue:</strong></p>
+                <ul>
+                    <li><a href="/n8n/guide/how-to-setup-n8n/">How To Setup n8n: Cloud, NPM, and Docker &rarr;</a></li>
+                    <li><a href="/n8n/guide/build-your-first-workflow/">Build Your First n8n Workflow &rarr;</a></li>
+                    <li><a href="/n8n/guide/n8n-cloud-vs-self-hosted/">n8n Cloud vs Self-Hosted: Which One Should You Pick? &rarr;</a></li>
+                    <li><a href="/n8n/guide/n8n-community-edition/">n8n Community Edition: What You Actually Get &rarr;</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ════ THE SHORT VERSION ════ -->
+        <section class="g-section g-reveal" style="border-top:1px solid var(--border); padding-top:3rem;">
+            <div class="g-section-head">
+                <span class="g-num">&Sigma;</span>
+                <h2>The Short Version</h2>
+            </div>
+            <p class="g-text">n8n is an open-source workflow automation platform with over 500 integrations, a visual node-based editor, and deep AI agent capabilities. It is self-hostable, free to use via the Community Edition, and backed by a $2.5B valuation. You can build everything from simple app-to-app connections to fully autonomous AI agents that reason, use tools, and take actions across your stack. Start with <a href="https://app.n8n.cloud/" target="_blank">n8n Cloud</a> for the fastest setup, or <a href="/n8n/guide/how-to-setup-n8n/">self-host</a> for full control. Build your <a href="/n8n/guide/build-your-first-workflow/">first workflow</a>, take the free <a href="https://learn.n8n.io" target="_blank">Academy courses</a>, and go from there.</p>
+        </section>
+
+        <!-- ════ ENDCAP ════ -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
+        </div>
+
+        <footer class="auto-footer" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Patch MeshBasicMaterial to swap blue → red before 3d-anim.js runs
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if (contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+
+        document.addEventListener('scroll', () => {
+            const body = document.body;
+            const total = body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
 
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
                     });
                 }
             });
         }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

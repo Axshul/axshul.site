@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPS Self Hosting n8n - n8n Guide</title>
-    <meta name="description" content="Take control of your execution limits. An architect's guide to deploying n8n on a Virtual Private Server, evaluating providers like Hostinger, and the realities of DevOps.">
-    <meta property="og:title" content="VPS Self Hosting n8n - n8n Guide">
-    <meta property="og:description" content="Take control of your execution limits. An architect's guide to deploying n8n on a Virtual Private Server, evaluating providers like Hostinger, and the realities of DevOps.">
+    <title>Best VPS for Self-Hosting n8n: Provider Comparison - n8n Guide</title>
+    <meta name="description" content="Compare the best VPS providers for self-hosting n8n. RAM, CPU, storage, pricing, and datacenter comparisons for Hetzner, DigitalOcean, Hostinger, Vultr, Contabo, and Oracle Cloud.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="best VPS for n8n, n8n VPS hosting, Hetzner n8n, Hostinger n8n, DigitalOcean n8n, Vultr, Contabo, Oracle Cloud, n8n RAM, VPS pricing 2026">
+    <meta property="og:title" content="Best VPS for Self-Hosting n8n: Provider Comparison">
+    <meta property="og:description" content="Which VPS is best for running n8n? Compare providers, specs, and pricing to find the right server for your automation workloads.">
     <meta property="og:type" content="article">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,170 +23,612 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Best VPS for Self-Hosting n8n: Provider Comparison",
+      "description": "Compare the best VPS providers for self-hosting n8n with specs, pricing, and datacenter comparisons.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-03-21",
+      "dateModified": "2026-06-29",
+      "url": "https://axshul.site/n8n/guide/vps-self-hosting-n8n/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
+    }
+    </script>
+
+    <style>
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+        .g-hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 0; text-align: center; }
+        .g-hero-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+        .g-tag { background: var(--bg-off); border: 1px solid var(--border); color: var(--text-dim); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+        .g-hero h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .g-hero h1 em { font-style: italic; color: var(--blue); }
+        .g-hero-sub { font-family: var(--font-sans); font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; max-width: 600px; margin: 0 auto 2rem; }
+        .g-hero-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 3rem; }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+        .g-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 700px; margin: 0 auto 4rem; }
+        .g-stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+        .g-stat-num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
+        .g-stat-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+        .g-toc { max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem; }
+        .g-toc-label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.25rem; }
+        .g-toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 3rem; }
+        .g-toc-grid a { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-mid); display: flex; align-items: baseline; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.25s; }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); font-weight: 700; min-width: 1.5rem; }
+        .g-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 5rem; }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .g-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 0.1em; font-weight: 700; flex-shrink: 0; }
+        .g-section-head h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--text); margin: 0; line-height: 1.2; }
+        .g-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text strong { color: var(--text); }
+        .g-text code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-callout { background: var(--bg-off); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul { margin: 0.75rem 0 0; padding-left: 1.25rem; list-style: disc; display: flex; flex-direction: column; gap: 0.4rem; }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+        .g-table-wrap { overflow-x: auto; margin: 2rem 0; border-radius: 10px; border: 1px solid var(--border); }
+        .g-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans); }
+        .g-table thead tr { background: var(--blue-lt); border-bottom: 2px solid var(--blue-mid); }
+        .g-table th { text-align: left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; }
+        .g-table td { padding: 0.85rem 1.1rem; color: var(--text-mid); border-bottom: 1px solid var(--border); }
+        .g-table tbody tr:last-child td { border-bottom: none; }
+        .g-table .model-name { font-weight: 700; color: var(--text); }
+        .g-table .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+        .g-table .pick { background: var(--blue-lt); }
+        .g-faq { margin: 2rem 0; }
+        .g-faq details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.3s; }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary { padding: 1.25rem 1.5rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none; transition: color 0.3s; user-select: none; }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-dim); flex-shrink: 0; }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body { padding: 0 1.5rem 1.5rem; }
+        .g-faq .faq-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; margin: 0 0 0.75rem; }
+        .g-faq .faq-body p:last-child { margin: 0; }
+        .g-faq .faq-body code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+        .g-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+        .g-pick-card { border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; transition: border-color 0.3s; }
+        .g-pick-card:hover { border-color: var(--blue); }
+        .g-pick-card h4 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text); margin: 0 0 0.5rem; }
+        .g-pick-card p { font-size: 0.85rem; color: var(--text-mid); margin: 0; line-height: 1.6; }
+        .g-pick-card .g-pick-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); font-weight: 700; margin-bottom: 0.75rem; }
+        .g-endcap { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+        .g-endcap-author { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .g-endcap-av { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-family: var(--font-sans); font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+        .g-endcap-actions { display: flex; gap: 1rem; align-items: center; }
+        .g-endcap-actions button, .g-endcap-actions a { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; transition: all 0.25s; text-decoration: none; }
+        .g-endcap-actions button { background: var(--blue); color: #fff; border: none; }
+        .g-endcap-actions button:hover { background: var(--blue-dk); }
+        .g-endcap-actions a { color: var(--text-mid); border: 1px solid var(--border); background: transparent; }
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.2rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-section-head h2 { font-size: 1.6rem; }
+            .g-pick-grid { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .g-hero { padding: 2rem 1rem 0; }
+            .g-section { padding: 0 1rem 3rem; }
+            .g-toc { padding: 0 1rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Global 3D Roaming Geometry -->
-    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+    <div id="canvas-container" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-10;opacity:0.35;pointer-events:none;"></div>
+
     <nav class="auto-nav">
         <div class="inner">
             <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
-            
             <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
             <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">← Back to Archive</a></li>
+                <li><a href="../">Back to Archive</a></li>
                 <li><a href="../../">Hub</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="auto-wrap" style="padding-top: 5rem;">
-        
-        <div class="reader-layout">
-            <main class="reader-main">
-                <header class="reader-header stagger-in">
-                    <div class="reader-tags">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Hosting</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">VPS</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Infrastructure</span>
-                    </div>
-                    <h1 class="reader-title">The Complete Guide to VPS Self-Hosting for n8n</h1>
-                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
-                </header>
+    <div class="auto-wrap" style="padding-top:5rem;">
 
-                <div class="reader-body">
-                    <h2>Taking Control of Your Infrastructure</h2>
-                    <p>While n8n Cloud is undoubtedly the fastest way to get started, deploying n8n on a Virtual Private Server (VPS) unlocks the true superpowers of workflow automation: absolute data sovereignty and completely uncapped execution limits. When you host it yourself, you pay a flat monthly server fee, whether you process 10 workflows or 10 million.</p>
+        <section class="g-hero">
+            <div class="g-hero-tags">
+                <span class="g-tag">Hosting</span>
+                <span class="g-tag">Infrastructure</span>
+                <span class="g-tag">Comparison</span>
+            </div>
+            <h1>Best VPS for <em>n8n</em></h1>
+            <p class="g-hero-sub">Not all VPS providers are equal. This guide compares specs, pricing, datacenters, and real-world performance so you pick the right server for your n8n workloads.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
 
-                    <h2>1. Choosing a VPS Provider</h2>
-                    <p>Not all servers are created equal. n8n requires at least 1GB of RAM (2GB+ highly recommended) to run smoothly, especially when handling heavy JSON payloads or running browser automation nodes.</p>
-                    
-                    <h3>Hostinger (The Streamlined Choice)</h3>
-                    <p>Hostinger has recently become incredibly popular for n8n users because they offer an official <a href="https://www.hostinger.com/in/self-hosted-n8n" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">1-Click n8n VPS Template</a>. For roughly $5-$8 a month, you can deploy a robust KVM VPS where Docker, Nginx, and n8n are pre-configured out of the box. This bypasses the command-line heavy lifting.</p>
-                    
-                    <h3>DigitalOcean & Hetzner</h3>
-                    <p>For more technical users, DigitalOcean Droplets ($6/mo) offer incredibly stable Linux environments, while Hetzner offers unmatched raw CPU performance for enterprise-level data processing workloads. On these platforms, you will typically deploy n8n manually via Docker Compose.</p>
+            <div class="g-stats">
+                <div class="g-stat"><div class="g-stat-num">7</div><div class="g-stat-label">Providers Compared</div></div>
+                <div class="g-stat"><div class="g-stat-num">$0</div><div class="g-stat-label">Cheapest Option</div></div>
+                <div class="g-stat"><div class="g-stat-num">2 GB</div><div class="g-stat-label">Minimum RAM</div></div>
+                <div class="g-stat"><div class="g-stat-num">2026</div><div class="g-stat-label">Pricing Data</div></div>
+            </div>
+        </section>
 
-                    <h2>2. The Pros of VPS Hosting</h2>
-                    <ul>
-                        <li><strong>Zero Execution Costs:</strong> As SaaS tools (like Zapier) charge you per task, n8n on a VPS charges $0. Your only hard cost is the flat $5-$10 server fee.</li>
-                        <li><strong>Root Access:</strong> You can SSH into your server and install custom software. If your n8n workflow needs to execute a complex Python web-scraping script, you can install Python directly onto the VPS and run it from n8n using the Execute Command node.</li>
-                        <li><strong>Compliance:</strong> Perfect for handling healthcare or financial data. Your data never bounces through third-party proprietary servers.</li>
-                    </ul>
+        <nav class="g-toc">
+            <div class="g-toc-label">In This Article</div>
+            <div class="g-toc-grid">
+                <a href="#why-vps"><span>01</span> Why a VPS for n8n</a>
+                <a href="#specs"><span>02</span> Minimum Specs for n8n</a>
+                <a href="#providers"><span>03</span> Provider Comparison</a>
+                <a href="#deep-dive"><span>04</span> Provider Deep Dives</a>
+                <a href="#use-cases"><span>05</span> Best VPS by Use Case</a>
+                <a href="#cost"><span>06</span> Real Cost Breakdown</a>
+                <a href="#scaling"><span>07</span> Scaling and Upgrades</a>
+                <a href="#faq"><span>08</span> FAQ</a>
+            </div>
+        </nav>
 
-                    <h2>3. The Cons & Realities</h2>
-                    <p>Self-hosting is a double-edged sword. You are no longer just a workflow architect; you are now a DevOps engineer.</p>
-                    <ul>
-                        <li><strong>Maintenance Burden:</strong> You are responsible for executing regular terminal commands to pull the latest <code>n8nio/n8n:latest</code> Docker image and rebooting your containers.</li>
-                        <li><strong>Security Risks:</strong> You must configure server firewalls (UFW), safeguard your root SSH keys, and ensure your Nginx reverse-proxy is properly securing traffic with SSL certificates.</li>
-                        <li><strong>Memory Management:</strong> Poorly optimized workflows with infinite loops will crash your own server, requiring you to monitor logs and reboot instances manually.</li>
-                    </ul>
+        <!-- 01 -->
+        <section id="why-vps" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>Why a VPS for n8n</h2>
+            </div>
+            <p class="g-text">A VPS (Virtual Private Server) gives you a dedicated slice of a physical server with guaranteed CPU, RAM, and storage. For n8n, this means <strong>unlimited workflow executions</strong> at a flat monthly cost, <strong>full root access</strong> to install anything your workflows need (Python, Puppeteer, ffmpeg, custom binaries), and <strong>complete data sovereignty</strong> where nothing leaves your server.</p>
+            <p class="g-text">The alternative is <a href="/n8n/guide/n8n-cloud-plans/">n8n Cloud</a>, which handles all infrastructure for you but charges per execution. A single workflow polling every minute runs 43,200 times per month. On n8n Cloud Starter (2,500 executions), that exhausts your quota in under two days. On a $5/month VPS, it costs nothing extra.</p>
+            <p class="g-text"><strong>The tradeoff is real:</strong> you become your own DevOps engineer. Server updates, SSL renewals, Docker upgrades, backups, and security patches are your responsibility. If that sounds like too much overhead, n8n Cloud is the right choice. If you want control and cost efficiency, read on.</p>
 
-                    <h2>Final Verdict</h2>
-                    <p>If you are technically inclined and process high volumes of data, VPS hosting is the ultimate way to utilize n8n. Providers like Hostinger bridge the gap by automating the hard parts, leaving you with an incredibly powerful, low-cost automation engine.</p>
+            <div class="g-callout">
+                <p><strong>Already decided on a VPS?</strong> Head to our <a href="/n8n/guide/how-to-setup-n8n/">How to Setup n8n</a> guide for step-by-step Docker, Nginx, SSL, and PostgreSQL installation instructions.</p>
+            </div>
+        </section>
+
+        <!-- 02 -->
+        <section id="specs" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>Minimum Specs for n8n</h2>
+            </div>
+            <p class="g-text">n8n runs as a Node.js application with a PostgreSQL database. Both need to coexist on your VPS alongside a reverse proxy (Nginx or Caddy). Here is what each resource actually does and how much you need.</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Resource</th>
+                            <th>Minimum</th>
+                            <th>Recommended</th>
+                            <th>Why It Matters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="model-name">RAM</td>
+                            <td class="mono">2 GB</td>
+                            <td class="mono">4 GB</td>
+                            <td>n8n loads entire workflow payloads into memory. Large JSON objects, file processing, and concurrent executions spike RAM usage fast. 1 GB will crash under real workloads.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">CPU</td>
+                            <td class="mono">1 vCPU</td>
+                            <td class="mono">2 vCPU</td>
+                            <td>n8n is single-threaded per execution but runs multiple executions concurrently. 2 vCPUs let PostgreSQL and n8n share CPU without starving each other.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Storage</td>
+                            <td class="mono">20 GB SSD</td>
+                            <td class="mono">40+ GB SSD</td>
+                            <td>n8n stores execution history, credentials, and workflow data in PostgreSQL. Docker images, logs, and OS consume ~8 GB. NVMe SSDs give faster database queries.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Bandwidth</td>
+                            <td class="mono">1 TB/mo</td>
+                            <td class="mono">2+ TB/mo</td>
+                            <td>Webhook-heavy workflows and file transfers consume bandwidth. Most VPS providers include 1-3 TB. Hetzner includes 20 TB.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">OS</td>
+                            <td colspan="2" class="mono">Ubuntu 22.04 / 24.04 LTS</td>
+                            <td>Best Docker support, widest community documentation, and longest security update window. Debian 12 also works well.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="g-callout warn">
+                <p><strong>The 1 GB RAM trap:</strong> Many providers advertise $5/month plans with 1 GB RAM. These work for testing but will crash in production. n8n + PostgreSQL + Nginx already consume ~800 MB at idle. One complex workflow pushes you into OOM territory. Start at 2 GB minimum, 4 GB if you can afford it.</p>
+            </div>
+        </section>
+
+        <!-- 03 -->
+        <section id="providers" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>Provider Comparison</h2>
+            </div>
+            <p class="g-text">Prices reflect the cheapest plan that meets n8n's minimum requirements (2 GB RAM or more) as of mid-2026. All providers offer hourly billing unless noted.</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Plan</th>
+                            <th>CPU</th>
+                            <th>RAM</th>
+                            <th>Storage</th>
+                            <th>Bandwidth</th>
+                            <th>Price</th>
+                            <th>Datacenters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pick">
+                            <td class="model-name">Hetzner</td>
+                            <td class="mono">CX22</td>
+                            <td>2 vCPU</td>
+                            <td><strong>4 GB</strong></td>
+                            <td>40 GB NVMe</td>
+                            <td>20 TB</td>
+                            <td class="mono">~$4.50/mo</td>
+                            <td>Germany, Finland, US</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Hostinger</td>
+                            <td class="mono">KVM 2</td>
+                            <td>2 vCPU</td>
+                            <td><strong>8 GB</strong></td>
+                            <td>100 GB NVMe</td>
+                            <td>8 TB</td>
+                            <td class="mono">~$6/mo</td>
+                            <td>US, EU, Asia, S. America</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">DigitalOcean</td>
+                            <td class="mono">Basic</td>
+                            <td>1 vCPU</td>
+                            <td>2 GB</td>
+                            <td>50 GB SSD</td>
+                            <td>2 TB</td>
+                            <td class="mono">$12/mo</td>
+                            <td>US, EU, Asia, Australia</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Vultr</td>
+                            <td class="mono">Cloud</td>
+                            <td>1 vCPU</td>
+                            <td>2 GB</td>
+                            <td>50 GB SSD</td>
+                            <td>3 TB</td>
+                            <td class="mono">$12/mo</td>
+                            <td>32 locations worldwide</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Linode (Akamai)</td>
+                            <td class="mono">Shared</td>
+                            <td>1 vCPU</td>
+                            <td>2 GB</td>
+                            <td>50 GB SSD</td>
+                            <td>2 TB</td>
+                            <td class="mono">$12/mo</td>
+                            <td>US, EU, Asia</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Contabo</td>
+                            <td class="mono">VPS S</td>
+                            <td>4 vCPU</td>
+                            <td><strong>8 GB</strong></td>
+                            <td>50 GB NVMe</td>
+                            <td>32 TB</td>
+                            <td class="mono">~$7/mo</td>
+                            <td>Germany, US, Asia, AU</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Oracle Cloud</td>
+                            <td class="mono">Free Tier</td>
+                            <td>1/8 OCPU</td>
+                            <td>1 GB</td>
+                            <td>47 GB</td>
+                            <td>10 TB</td>
+                            <td class="mono">$0/mo</td>
+                            <td>US, EU, Asia, ME, S. America</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="g-callout">
+                <p><strong>Our pick:</strong> <strong>Hetzner CX22</strong> at ~$4.50/month offers the best value. You get 4 GB RAM, 2 vCPUs, NVMe storage, and 20 TB bandwidth. For beginners, <strong>Hostinger</strong> offers a 1-click n8n template that pre-installs everything.</p>
+            </div>
+        </section>
+
+        <!-- 04 -->
+        <section id="deep-dive" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>Provider Deep Dives</h2>
+            </div>
+
+            <p class="g-text"><strong>Hetzner</strong> is the price-to-performance king. Their CX22 plan gives you 4 GB RAM and 2 vCPUs for roughly what other providers charge for 1 GB. Datacenters are in Germany (Falkenstein, Nuremberg), Finland (Helsinki), and the US (Ashburn, Hillsboro). If your users or webhook sources are in Europe, Hetzner's latency is unbeatable. The downside: no Asian datacenters, and their control panel is more technical than competitors.</p>
+
+            <p class="g-text"><strong>Hostinger</strong> is the easiest on-ramp. They offer an <a href="https://www.hostinger.com/in/self-hosted-n8n" target="_blank" rel="noopener">official 1-click n8n VPS template</a> that pre-installs Docker, Nginx, and n8n. You get a running instance in under 10 minutes without touching the command line. Their KVM 2 plan at ~$6/month gives 8 GB RAM and 100 GB NVMe, which is more than enough for heavy production workloads. The tradeoff is that Hostinger's networking performance is slightly lower than Hetzner or DigitalOcean in benchmarks.</p>
+
+            <p class="g-text"><strong>DigitalOcean</strong> has the best documentation ecosystem in the industry. Their tutorials cover every aspect of server setup in step-by-step detail. The community is extremely active, and most "how to self-host X" blog posts target DigitalOcean. If you are learning self-hosting for the first time, the educational value justifies the premium pricing. They also offer managed databases (PostgreSQL as a service) if you want to separate your database from your VPS.</p>
+
+            <p class="g-text"><strong>Vultr</strong> stands out for geographic coverage. With 32 datacenter locations worldwide (including South Korea, Japan, Mumbai, Sao Paulo, Johannesburg), Vultr is the best choice if you need low-latency webhooks from a specific region. Their pricing mirrors DigitalOcean but with wider server location options.</p>
+
+            <p class="g-text"><strong>Contabo</strong> offers extreme specs at low prices. Their VPS S gives you 4 vCPU, 8 GB RAM, and 32 TB bandwidth for ~$7/month. The catch: Contabo oversells their hardware more aggressively than premium providers. CPU performance is inconsistent during peak hours, and support response times can stretch to days. Contabo works well for non-critical or batch workloads where occasional slowdowns are acceptable.</p>
+
+            <p class="g-text"><strong>Oracle Cloud Free Tier</strong> is genuinely free forever. Their Always Free tier includes a VM.Standard.E2.1.Micro with 1 GB RAM and 47 GB storage. This is tight for production n8n but works for personal testing or very light automations. The ARM-based A1 Flex instances (up to 4 OCPU, 24 GB RAM for free) are the real prize, but availability is limited and you may need to try repeatedly over several days to provision one.</p>
+
+            <p class="g-text"><strong>Linode (Akamai)</strong> offers reliable network performance backed by Akamai's CDN infrastructure. Their pricing matches DigitalOcean, and the platform is well-suited for users who want a no-surprises hosting experience. Support quality is consistently rated higher than most competitors.</p>
+        </section>
+
+        <!-- 05 -->
+        <section id="use-cases" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>Best VPS by Use Case</h2>
+            </div>
+
+            <div class="g-pick-grid">
+                <div class="g-pick-card">
+                    <div class="g-pick-label">Best Value</div>
+                    <h4>Hetzner CX22</h4>
+                    <p>4 GB RAM, 2 vCPU, ~$4.50/month. Best specs per dollar. Ideal for cost-conscious teams running moderate workloads in EU or US regions.</p>
                 </div>
-            </main>
-            
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <!-- Reading Progress -->
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>4 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
-                    </div>
-                    
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <!-- Written By Section -->
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
-
-                    <!-- Quick Links Section -->
-                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://www.hostinger.com/in/self-hosted-n8n" target="_blank" class="sb-link">Hostinger n8n VPS ↗</a></li>
-                        <li><a href="https://docs.n8n.io/hosting/" target="_blank" class="sb-link">Server Requirements Docs ↗</a></li>
-                        <li><a href="https://hub.docker.com/r/n8nio/n8n" target="_blank" class="sb-link">n8n Docker Hub ↗</a></li>
-                    </ul>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-                    
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-                    
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">← Back to Archive</span>
-                    </a>
+                <div class="g-pick-card">
+                    <div class="g-pick-label">Easiest Setup</div>
+                    <h4>Hostinger KVM 2</h4>
+                    <p>8 GB RAM, 1-click n8n install, ~$6/month. Zero command-line required. Perfect for beginners or anyone who values speed of deployment.</p>
                 </div>
-            </aside>
+                <div class="g-pick-card">
+                    <div class="g-pick-label">Best Docs / Learning</div>
+                    <h4>DigitalOcean Basic</h4>
+                    <p>2 GB RAM, $12/month. Premium pricing justified by world-class tutorials and community. Best if you are learning self-hosting.</p>
+                </div>
+                <div class="g-pick-card">
+                    <div class="g-pick-label">Free Forever</div>
+                    <h4>Oracle Cloud Free Tier</h4>
+                    <p>1 GB RAM (or up to 24 GB ARM), $0/month. Tight for production but unbeatable for personal testing or lightweight automations.</p>
+                </div>
+                <div class="g-pick-card">
+                    <div class="g-pick-label">Maximum Raw Specs</div>
+                    <h4>Contabo VPS S</h4>
+                    <p>8 GB RAM, 4 vCPU, ~$7/month. Highest specs at lowest price. Best for batch processing where consistent CPU is less critical.</p>
+                </div>
+                <div class="g-pick-card">
+                    <div class="g-pick-label">Global Low Latency</div>
+                    <h4>Vultr Cloud</h4>
+                    <p>2 GB RAM, $12/month. 32 datacenter locations worldwide. Best if your webhooks or users are in regions other providers do not cover.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06 -->
+        <section id="cost" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>Real Cost Breakdown</h2>
+            </div>
+            <p class="g-text">The VPS price is not your only cost. Here is what a production n8n setup actually costs per month when you factor in everything.</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Cost</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="model-name">VPS Server</td>
+                            <td class="mono">$4.50 - $12</td>
+                            <td>Your main recurring cost. Hetzner is cheapest, DigitalOcean/Vultr are premium.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Domain Name</td>
+                            <td class="mono">$1 - $2/mo</td>
+                            <td>~$12-15/year for a .com. Required for SSL certificates and webhook URLs. You may already own one.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">SSL Certificate</td>
+                            <td class="mono">$0</td>
+                            <td>Let's Encrypt provides free, auto-renewing certificates. No paid SSL needed.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Backups</td>
+                            <td class="mono">$0 - $2</td>
+                            <td>Local backups are free. Offsite storage (Backblaze B2, S3) costs ~$1-2/month for typical n8n data.</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Monitoring</td>
+                            <td class="mono">$0</td>
+                            <td>UptimeRobot (free tier), Hetrixtools, or simple cron-based health checks cost nothing.</td>
+                        </tr>
+                        <tr class="pick">
+                            <td class="model-name">Total (Budget)</td>
+                            <td class="mono"><strong>~$5 - $7/mo</strong></td>
+                            <td>Hetzner + existing domain + local backups. Unlimited executions.</td>
+                        </tr>
+                        <tr class="pick">
+                            <td class="model-name">Total (Premium)</td>
+                            <td class="mono"><strong>~$15 - $18/mo</strong></td>
+                            <td>DigitalOcean + domain + offsite backups. Still cheaper than n8n Cloud Starter ($20/mo for 2,500 executions).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="g-text"><strong>Comparison with n8n Cloud:</strong> n8n Cloud Starter costs $20/month (annual) for 2,500 executions. A self-hosted Hetzner setup at $5/month runs unlimited executions. If you run more than ~5 workflows regularly, self-hosting pays for itself immediately. The breakeven is roughly 2,500 executions/month. Below that, n8n Cloud's zero-maintenance convenience may be worth the premium.</p>
+
+            <div class="g-callout">
+                <p><strong>Hidden costs to watch:</strong> Bandwidth overages (rare with most providers), snapshot storage fees, and your own time for maintenance. Budget 1-2 hours per month for updates and monitoring on a stable setup.</p>
+            </div>
+        </section>
+
+        <!-- 07 -->
+        <section id="scaling" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>Scaling and Upgrades</h2>
+            </div>
+            <p class="g-text"><strong>When to upgrade:</strong> Monitor your server with <code>htop</code> and <code>docker stats</code>. Upgrade when you consistently see RAM usage above 80%, CPU sustained above 70%, or swap usage climbing. Slow webhook response times are another signal.</p>
+
+            <p class="g-text"><strong>Vertical scaling</strong> (bigger server) is the simplest path. Most providers let you resize your VPS with a few clicks. Hetzner, DigitalOcean, and Vultr all support live resizing. Your IP address stays the same, and the upgrade typically completes within minutes. Expect to move from a 4 GB plan to 8 GB when you hit ~50 active workflows or process large files regularly.</p>
+
+            <p class="g-text"><strong>Horizontal scaling</strong> (multiple servers) becomes relevant when you need high availability or are processing extremely high volumes. n8n supports queue mode where a main instance handles the editor and webhooks while separate worker instances process executions. This requires n8n's Enterprise license and is overkill for most self-hosters.</p>
+
+            <p class="g-text"><strong>Database separation</strong> is the first scaling step most people take. Move PostgreSQL to a managed database service (DigitalOcean Managed Databases, Hetzner Cloud Databases, or AWS RDS). This frees RAM on your VPS for n8n and gives you automatic database backups, replication, and maintenance.</p>
+
+            <div class="g-callout">
+                <p><strong>Scaling roadmap:</strong></p>
+                <ul>
+                    <li><strong>Stage 1:</strong> Single VPS with n8n + PostgreSQL (covers 90% of users)</li>
+                    <li><strong>Stage 2:</strong> VPS for n8n + managed database (when you hit 50+ active workflows)</li>
+                    <li><strong>Stage 3:</strong> Multiple workers + load balancer (enterprise scale, 500+ workflows)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 08 -->
+        <section id="faq" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>FAQ</h2>
+            </div>
+            <div class="g-faq">
+                <details>
+                    <summary>Can I run n8n on a $5/month 1 GB VPS?</summary>
+                    <div class="faq-body">
+                        <p>You can, but it will be unreliable. n8n + PostgreSQL + Nginx consume ~800 MB at idle. Any moderately complex workflow will push you into out-of-memory crashes. Adding 2 GB of swap space helps, but swap is slow and not a real solution. Start at 2 GB RAM minimum for any workload beyond basic testing.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Hetzner vs DigitalOcean: which should I pick?</summary>
+                    <div class="faq-body">
+                        <p>Hetzner if you want the best value. DigitalOcean if you want the best documentation and learning resources. Hetzner gives you 4 GB RAM for what DigitalOcean charges for 1 GB. But DigitalOcean's tutorials, managed services, and community support are meaningfully better for first-time self-hosters.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Is Oracle Cloud Free Tier actually free?</summary>
+                    <div class="faq-body">
+                        <p>Yes, Oracle's Always Free tier is genuinely free with no time limit. The catch is provisioning: the free ARM A1 instances (up to 24 GB RAM) are in high demand and often unavailable. You may need to run a provisioning script that retries every few minutes over several days. The x86 micro instance (1 GB RAM) is usually available immediately but is too small for production n8n.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Does the VPS location matter for n8n?</summary>
+                    <div class="faq-body">
+                        <p>It depends on your use case. If your workflows receive webhooks from services with users in a specific region, a nearby datacenter reduces latency. For GDPR compliance, you need a server within the EU. For most general automation workflows that call external APIs, the difference between US and EU servers is negligible (50-100ms).</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Should I use managed Kubernetes instead?</summary>
+                    <div class="faq-body">
+                        <p>No, unless you already run Kubernetes for other services. A managed K8s cluster (EKS, GKE, AKS) costs $70-150+/month minimum for the control plane alone, before any worker nodes. A $5 VPS with Docker Compose is simpler, cheaper, and easier to maintain for a single n8n instance.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>How do I actually install n8n on a VPS?</summary>
+                    <div class="faq-body">
+                        <p>We have a dedicated guide for that: <a href="/n8n/guide/how-to-setup-n8n/">How to Setup n8n</a> covers Docker installation, Docker Compose configuration, Nginx reverse proxy, SSL with Let's Encrypt, PostgreSQL setup, backups, and security hardening step by step.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>VPS vs AWS/GCP/Azure for n8n?</summary>
+                    <div class="faq-body">
+                        <p>A VPS is simpler and cheaper for n8n. AWS EC2, GCP Compute Engine, and Azure VMs are functionally VPS providers with more complex pricing, more configuration options, and higher costs. A comparable EC2 instance (t3.small, 2 GB RAM) costs ~$15-18/month before bandwidth charges. Use cloud providers only if you need their ecosystem (managed databases, Lambda, etc.) or your company already has cloud credits.</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="g-callout">
+                <p><strong>Related reading:</strong></p>
+                <ul>
+                    <li><a href="/n8n/guide/how-to-setup-n8n/">How to Setup n8n (Docker, Nginx, SSL)</a></li>
+                    <li><a href="/n8n/guide/n8n-cloud-vs-self-hosted/">n8n Cloud vs Self-Hosted</a></li>
+                    <li><a href="/n8n/guide/n8n-cloud-plans/">n8n Cloud Plans Breakdown</a></li>
+                    <li><a href="/n8n/guide/n8n-community-edition/">n8n Community Edition: Features and Limits</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ENDCAP -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                © 2026 <a href="../../../">Anshul Namdev</a>
-            </div>
+        <footer class="auto-footer" style="margin-top:4rem;border-top:1px solid var(--border);padding-top:3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
-    <!-- 3D Geometry Animation for Sidebar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
-    
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if(contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        document.addEventListener('scroll', () => {
+            const total = document.body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
-
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
-                    navigator.share({ title: document.title, url: window.location.href });
-                } else {
-                    navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
-                    });
-                }
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    shareBtn.textContent = 'Link Copied!';
+                    setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
+                });
             });
         }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

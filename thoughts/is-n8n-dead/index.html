@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is n8n Dead in 2026? No. Here's Why. - Anshul Namdev</title>
+    <meta name="description" content="AI can generate workflows, but it cannot architect enterprise-grade automation. n8n is not dead in 2026. It is more relevant than ever. A personal take from automation engineer Anshul Namdev.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="is n8n dead, n8n 2026, n8n vs AI, workflow automation future, n8n opinion, AI automation, n8n community, Anshul Namdev">
+    <meta property="og:title" content="Is n8n Dead in 2026? No. Here's Why.">
+    <meta property="og:description" content="AI can generate workflows, but it cannot architect enterprise-grade automation. n8n is not dead. A personal take from an automation engineer.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://axshul.site/thoughts/is-n8n-dead/">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta property="article:author" content="Anshul Namdev">
+    <meta property="article:published_time" content="2026-06-29">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <meta name="twitter:title" content="Is n8n Dead in 2026? No. Here's Why.">
+    <meta name="twitter:description" content="AI can generate workflows but cannot architect enterprise-grade automation. n8n is more relevant than ever.">
+    <link rel="canonical" href="https://axshul.site/thoughts/is-n8n-dead/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/n8n.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Is n8n Dead in 2026? No. Here's Why.",
+      "description": "AI can generate workflows, but it cannot architect enterprise-grade automation. n8n is not dead in 2026. It is more relevant than ever.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-06-29",
+      "dateModified": "2026-06-29",
+      "url": "https://axshul.site/thoughts/is-n8n-dead/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg",
+      "keywords": ["n8n", "workflow automation", "AI automation", "n8n 2026", "opinion"]
+    }
+    </script>
+
+    <style>
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+        .g-hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 0; text-align: center; }
+        .g-hero-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+        .g-tag { background: var(--bg-off); border: 1px solid var(--border); color: var(--text-dim); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+        .g-hero h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .g-hero h1 em { font-style: italic; color: var(--blue); }
+        .g-hero-sub { font-family: var(--font-sans); font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; max-width: 620px; margin: 0 auto 2rem; }
+        .g-hero-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 3rem; }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+        .g-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 700px; margin: 0 auto 4rem; }
+        .g-stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+        .g-stat-num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
+        .g-stat-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+        .g-toc { max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem; }
+        .g-toc-label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.25rem; }
+        .g-toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 3rem; }
+        .g-toc-grid a { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-mid); display: flex; align-items: baseline; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.25s; }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); font-weight: 700; min-width: 1.5rem; }
+        .g-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 5rem; }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .g-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 0.1em; font-weight: 700; flex-shrink: 0; }
+        .g-section-head h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--text); margin: 0; line-height: 1.2; }
+        .g-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text strong { color: var(--text); }
+        .g-text code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-callout { background: var(--bg-off); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+        .g-callout p { font-size: 0.92rem; color: var(--text-mid); margin: 0; line-height: 1.7; }
+        .g-callout ul { margin: 0.75rem 0 0; padding-left: 1.25rem; list-style: disc; display: flex; flex-direction: column; gap: 0.55rem; }
+        .g-callout li { font-size: 0.92rem; color: var(--text-mid); line-height: 1.6; }
+        .g-callout li strong { color: var(--text); }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+        .g-table-wrap { overflow-x: auto; margin: 2rem 0; border-radius: 10px; border: 1px solid var(--border); }
+        .g-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans); }
+        .g-table thead tr { background: var(--blue-lt); border-bottom: 2px solid var(--blue-mid); }
+        .g-table th { text-align: left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; }
+        .g-table td { padding: 0.85rem 1.1rem; color: var(--text-mid); border-bottom: 1px solid var(--border); }
+        .g-table tbody tr:last-child td { border-bottom: none; }
+        .g-table .model-name { font-weight: 700; color: var(--text); }
+        .g-table .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+        .g-table .pick { background: var(--blue-lt); }
+        .g-faq { margin: 2rem 0; }
+        .g-faq details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.3s; }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary { padding: 1.25rem 1.5rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none; transition: color 0.3s; user-select: none; }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-dim); flex-shrink: 0; }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body { padding: 0 1.5rem 1.5rem; }
+        .g-faq .faq-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; margin: 0 0 0.75rem; }
+        .g-faq .faq-body p:last-child { margin: 0; }
+        .g-faq .faq-body code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+        .g-endcap { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+        .g-endcap-author { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .g-endcap-av { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-family: var(--font-sans); font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+        .g-endcap-actions { display: flex; gap: 1rem; align-items: center; }
+        .g-endcap-actions button, .g-endcap-actions a { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; transition: all 0.25s; text-decoration: none; }
+        .g-endcap-actions button { background: var(--blue); color: #fff; border: none; }
+        .g-endcap-actions button:hover { background: var(--blue-dk); }
+        .g-endcap-actions a { color: var(--text-mid); border: 1px solid var(--border); background: transparent; }
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.2rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-section-head h2 { font-size: 1.6rem; }
+            .g-endcap { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .g-hero { padding: 2rem 1rem 0; }
+            .g-section { padding: 0 1rem 3rem; }
+            .g-toc { padding: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+    <div id="canvas-container" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-10;opacity:0.35;pointer-events:none;"></div>
+
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Thoughts</span></a>
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../">Back to Thoughts</a></li>
+                <li><a href="../../n8n/guide/">The Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top:5rem;">
+
+        <section class="g-hero">
+            <div class="g-hero-tags">
+                <span class="g-tag">Opinion</span>
+                <span class="g-tag">AI Automation</span>
+                <span class="g-tag">n8n</span>
+            </div>
+            <h1>Is n8n Dead <em>in 2026?</em></h1>
+            <p class="g-hero-sub">AI can generate workflows. It cannot architect enterprise-grade automation. n8n is not dying. It is becoming infrastructure. A personal take, backed by numbers.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../">Anshul Namdev</a></div>
+
+            <div class="g-stats">
+                <div class="g-stat"><div class="g-stat-num">60K+</div><div class="g-stat-label">Community Members</div></div>
+                <div class="g-stat"><div class="g-stat-num">50K+</div><div class="g-stat-label">GitHub Stars</div></div>
+                <div class="g-stat"><div class="g-stat-num">500+</div><div class="g-stat-label">Integrations</div></div>
+                <div class="g-stat"><div class="g-stat-num">2026</div><div class="g-stat-label">Still Shipping</div></div>
+            </div>
+        </section>
+
+        <nav class="g-toc">
+            <div class="g-toc-label">In This Article</div>
+            <div class="g-toc-grid">
+                <a href="#why-people-ask"><span>01</span> Why People Keep Asking</a>
+                <a href="#ai-cant-replace"><span>02</span> What AI Cannot Replace</a>
+                <a href="#revolution"><span>03</span> Revolution, Not a Bubble</a>
+                <a href="#medium"><span>04</span> n8n as the Medium</a>
+                <a href="#numbers"><span>05</span> By the Numbers</a>
+                <a href="#changed"><span>06</span> What Actually Changed</a>
+                <a href="#my-take"><span>07</span> My Personal Take</a>
+                <a href="#faq"><span>08</span> FAQ</a>
+            </div>
+        </nav>
+
+        <!-- 01 -->
+        <section id="why-people-ask" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>Why People Keep Asking</h2>
+            </div>
+            <p class="g-text">Every few months, someone posts "Is n8n dead?" on Reddit, Hacker News, or the n8n community forum. The question follows a pattern that applies to every open-source tool which reaches a certain size.</p>
+            <p class="g-text">The triggers are predictable. A pricing change. A competitor launches a flashy demo. An AI tool generates a workflow from a prompt. Someone builds a weekend project that "replaces" n8n. The discourse cycle begins.</p>
+            <div class="g-callout">
+                <p><strong>The pattern:</strong> Every successful open-source project gets declared dead at least twice a year. WordPress, Linux, Python, React. The declaration usually correlates with growth, not decline.</p>
+            </div>
+            <p class="g-text">The reason n8n keeps getting this question is that it sits at the intersection of two anxieties: the fear that AI will automate away automation tools, and the assumption that open-source projects eventually die when the company behind them needs revenue.</p>
+            <p class="g-text">Both fears are understandable. Both are wrong in n8n's case. Let me explain why.</p>
+        </section>
+
+        <!-- 02 -->
+        <section id="ai-cant-replace" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>What AI Cannot Replace</h2>
+            </div>
+            <p class="g-text">This is the core argument. Yes, AI can generate a workflow. Claude, GPT, and Gemini can all produce valid n8n JSON from a natural-language prompt. I have done it myself. It works for simple automations.</p>
+            <p class="g-text">But generating a workflow and architecting a production automation system are fundamentally different things.</p>
+            <div class="g-callout warn">
+                <p><strong>AI generates workflows. Humans architect systems.</strong> There is a reason civil engineers still exist even though CAD software can draw a bridge. The drawing is not the bridge.</p>
+            </div>
+            <p class="g-text">Here is what AI cannot do for you in production automation:</p>
+            <div class="g-callout">
+                <ul>
+                    <li><strong>Error recovery architecture.</strong> Production workflows fail: API rate limits, malformed payloads, expired tokens, upstream outages. Designing retry logic, dead-letter handling, fallback chains, and alerting for a 50-node workflow requires understanding how each service fails. AI does not have that context about your specific stack.</li>
+                    <li><strong>Data flow integrity.</strong> When you chain a dozen services together, data shape matters. One API returns dates as Unix timestamps, another as ISO strings, a third as plain text. AI generates the happy path. It cannot predict every edge case in your real data.</li>
+                    <li><strong>Security and compliance.</strong> Which credentials get stored where. Which data crosses which regional boundary. Whether PII passes through a third-party node. These are architectural decisions that require human judgment about your specific regulatory context.</li>
+                    <li><strong>Organizational knowledge.</strong> Why does the sales workflow skip Tuesdays? Because the CRM batch job runs Tuesday nights and the API is unreliable during that window. That is in nobody's documentation. It lives in the heads of the people who built and maintain the system.</li>
+                    <li><strong>Performance at scale.</strong> A workflow that processes 100 records a day is not the same as one processing 100,000. Queue management, webhook concurrency, memory, database connection pooling. These are infrastructure decisions, not prompt-engineering problems.</li>
+                </ul>
+            </div>
+            <p class="g-text">AI is a powerful assistant for automation engineers. It is not a replacement for them, the same way code assistants made developers faster without making developers unnecessary.</p>
+        </section>
+
+        <!-- 03 -->
+        <section id="revolution" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>Revolution, Not a Bubble</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">There is a separate question embedded in "Is n8n dead?" that has nothing to do with n8n specifically. It is whether AI automation itself is a passing trend. It is not, and that is not just speculation. The direction is already clear.</p>
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>2023</th>
+                            <th>2025</th>
+                            <th>2026 Direction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="model-name">Enterprise AI adoption</td><td>Early</td><td>Mainstream</td><td>Default expectation</td></tr>
+                        <tr><td class="model-name">AI in job requirements</td><td>Niche</td><td>Common</td><td>Baseline skill</td></tr>
+                        <tr><td class="model-name">Automation platform demand</td><td>Growing</td><td>Accelerating</td><td>Strategic priority</td></tr>
+                        <tr><td class="model-name">Workflow tooling landscape</td><td>Zapier / Make led</td><td>n8n, Temporal, Windmill rising</td><td>Specialized and fragmented</td></tr>
+                        <tr><td class="model-name">AI orchestration need</td><td>Optional</td><td>Important</td><td>Non-negotiable</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="g-text" style="max-width:900px;">AI automation has crossed the threshold from "interesting experiment" to "business necessity." Companies are no longer evaluating whether to use AI. They are evaluating which tools to use for it.</p>
+            <p class="g-text" style="max-width:900px;">This is the same pattern we saw with cloud computing, mobile, and DevOps. The question stopped being "should we?" and became "how do we?"</p>
+            <div class="g-callout">
+                <p><strong>The revolution is already underway.</strong> AI automation is not a bubble because it solves real problems at real scale. Every company that handles data, processes documents, or talks to customers needs automation. That is every company.</p>
+            </div>
+            <p class="g-text" style="max-width:900px;">n8n sits directly in this wave. It is not a speculative bet on AI. It is the connective tissue between AI models and business processes, the pipe through which AI actually reaches production.</p>
+        </section>
+
+        <!-- 04 -->
+        <section id="medium" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>n8n as the Medium</h2>
+            </div>
+            <p class="g-text">Here is what most people miss. They think of n8n as a product that competes with AI. It does not. n8n is the medium through which AI gets deployed.</p>
+            <p class="g-text">Think about it practically. You have an API key for a capable model. You have a business process that needs document classification. Between "I have an API key" and "my business runs on AI classification" sits a real engineering gap:</p>
+            <div class="g-callout">
+                <ul>
+                    <li>Receiving documents (webhook, email trigger, file watcher)</li>
+                    <li>Preprocessing (extracting text, normalizing formats)</li>
+                    <li>Calling the AI model (with retry, fallback, token management)</li>
+                    <li>Parsing the response (structured output, validation)</li>
+                    <li>Routing on the result (CRM update, Slack notification, database write)</li>
+                    <li>Error handling (what happens when the model returns garbage?)</li>
+                    <li>Logging, auditing, and compliance</li>
+                </ul>
+            </div>
+            <p class="g-text">n8n handles all of that. Every step. With a visual interface that non-engineers can read and modify, and with hundreds of native integrations so you are not writing API clients from scratch.</p>
+            <div class="g-callout">
+                <p><strong>n8n is to AI what the browser is to the internet.</strong> You do not interact with HTTP directly; you use a browser. You do not interact with raw LLM calls in production; you use an orchestration layer. n8n is that layer.</p>
+            </div>
+            <p class="g-text">And n8n keeps shipping features that cement this position: the AI Agent node, built-in vector store support, tool-calling nodes, memory management. These are not side features. They are the platform evolving into the default AI orchestration tool for teams that do not want to build everything from scratch. If you are deciding which model to wire in, I wrote a full breakdown on <a href="/n8n/guide/choose-right-ai-model/">choosing the right AI model for n8n</a> and on <a href="/n8n/guide/ai-inference-providers/">comparing inference providers</a>.</p>
+        </section>
+
+        <!-- 05 -->
+        <section id="numbers" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>By the Numbers</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">If n8n were dying, the numbers would show it. They show the opposite.</p>
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="model-name">GitHub stars</td><td>50,000+ and climbing</td></tr>
+                        <tr><td class="model-name">Funding</td><td>Multiple rounds, multi-billion-dollar valuation</td></tr>
+                        <tr><td class="model-name">Community forum</td><td>60,000+ members, active daily</td></tr>
+                        <tr><td class="model-name">Native integrations</td><td>500+ and expanding</td></tr>
+                        <tr><td class="model-name">Release cadence</td><td>Regular releases with major features</td></tr>
+                        <tr><td class="model-name">AI features</td><td>Agent node, vector stores, tool calling</td></tr>
+                        <tr><td class="model-name">Enterprise adoption</td><td>Growing, including large organizations</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="g-text" style="max-width:900px;">Dead projects do not raise round after round of funding. Dead projects do not hold 60,000+ active community members. Dead projects do not ship AI-native features every release cycle.</p>
+            <p class="g-text" style="max-width:900px;">Compare this to tools that actually stalled: Automate.io (acquired and absorbed), IFTTT (pivoted and scaled down), Huginn (effectively maintenance mode). n8n's trajectory looks nothing like those.</p>
+        </section>
+
+        <!-- 06 -->
+        <section id="changed" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>What Actually Changed</h2>
+            </div>
+            <p class="g-text">The question "Is n8n dead?" is really asking "Has the landscape changed in a way that makes n8n irrelevant?" Yes, the landscape changed. No, it did not make n8n irrelevant. It made n8n more important.</p>
+            <div class="g-callout">
+                <p><strong>Before AI (2020&ndash;2022):</strong> n8n was a workflow automation tool. You connected APIs, moved data, triggered actions. The competition was Zapier and Make. The pitch was "open-source, self-hosted, unlimited executions."</p>
+            </div>
+            <div class="g-callout">
+                <p><strong>After AI (2023&ndash;2026):</strong> n8n became an AI orchestration platform. The Agent node, vector stores, tool calling, memory nodes. The competition expanded to include code-first frameworks and custom scripts. The pitch became "visual AI agent builder with production-grade infrastructure."</p>
+            </div>
+            <p class="g-text">This is evolution, not death. n8n did not stand still while the world changed. It adapted faster than most expected. The team recognized that AI was not a threat to workflow automation. It was the biggest driver of workflow automation adoption in history.</p>
+            <p class="g-text">Every AI use case needs orchestration. Every agent needs tools. Every model call needs error handling. n8n provides all of this out of the box, with a visual interface that makes it accessible to teams who are not full-time AI engineers.</p>
+        </section>
+
+        <!-- 07 -->
+        <section id="my-take" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>My Personal Take</h2>
+            </div>
+            <p class="g-text">I will be direct. I work with n8n daily. I build production automation systems. I moderate the <a href="https://community.n8n.io/u/Anshul_Namdev/summary" target="_blank">community forum</a>. I have every reason to be biased, and I am being transparent about that.</p>
+            <p class="g-text">But bias aside, here is what I see from the inside:</p>
+            <p class="g-text"><strong>The community is not shrinking. It is accelerating.</strong> The forum is more active now than it was a couple of years ago. New users are not just hobbyists. They are enterprise teams migrating from Zapier because of execution limits, agencies building client automation systems, and AI engineers who need an orchestration layer that is not a Python notebook.</p>
+            <p class="g-text"><strong>AI made n8n more valuable, not less.</strong> The hardest sell for n8n used to be explaining why someone needed workflow automation at all. Now everyone understands they need it. The only question is which tool. And when the comparison is "n8n with unlimited self-hosted executions" versus a per-task SaaS bill that climbs with volume, the answer is often obvious.</p>
+            <p class="g-text"><strong>The code-versus-no-code debate is over.</strong> The winner is "both." n8n lets you drag and drop when that is faster and write code when that is necessary. The Code node, Function node, and custom node SDK mean you are never locked into a visual-only paradigm. That flexibility is exactly what AI workflows demand, because AI is messy. You need to parse JSON, handle streaming, manage tokens, and sometimes just write twenty lines of JavaScript to transform a response.</p>
+            <div class="g-callout warn">
+                <p><strong>My prediction:</strong> n8n will be to AI automation what Docker became to deployment. Not the only option, but the default assumption. When someone says "I need to deploy an AI workflow," the first answer will be "set up n8n."</p>
+            </div>
+            <p class="g-text">Is n8n perfect? No. The learning curve is real. The documentation has gaps. The UI can lag with very large workflows. Cloud pricing is higher than some alternatives.</p>
+            <p class="g-text">But "has room to improve" is not the same as "dead." Every tool I respect has a long list of things it does not do well yet. That is what makes it alive. Dead tools have no roadmap. n8n's roadmap is full.</p>
+        </section>
+
+        <!-- 08 -->
+        <section id="faq" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>FAQ</h2>
+            </div>
+            <div class="g-faq">
+                <details open>
+                    <summary>Will AI replace workflow automation tools like n8n?</summary>
+                    <div class="faq-body">
+                        <p>No. AI will generate workflows faster, but the need for an execution environment, error handling, monitoring, and integration management remains. AI replaces the typing, not the architecture. You still need a platform to run, monitor, and scale whatever AI helps you build.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Is n8n's open-source model sustainable?</summary>
+                    <div class="faq-body">
+                        <p>n8n uses a fair-code model under the Sustainable Use License. The core is free for self-hosting; revenue comes from n8n Cloud subscriptions and Enterprise licenses. With significant funding and a growing enterprise customer base, the business model is working. For the licensing details, see my <a href="/n8n/guide/license-and-regulations/">n8n license and regulations</a> guide.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What about competitors like Make, Zapier, or new AI-native tools?</summary>
+                    <div class="faq-body">
+                        <p>Competition is healthy and validates the market. n8n differentiates on self-hosting, unlimited executions, code flexibility, and AI-native features. Zapier and Make serve simpler, less technical use cases. Code-first frameworks serve Python-only teams. n8n occupies a unique position between them.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Should I still learn n8n in 2026?</summary>
+                    <div class="faq-body">
+                        <p>Yes. Automation engineering is one of the fastest-growing skill sets. n8n specifically gives you experience with visual workflow design, API integration, AI orchestration, and self-hosted infrastructure. Those skills transfer even if you eventually use a different tool. A good starting point is <a href="/n8n/guide/what-is-n8n/">what is n8n</a>.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Is the n8n community still active?</summary>
+                    <div class="faq-body">
+                        <p>Very. The community forum has 60,000+ members with daily activity, the Discord is active, and community node contributions keep expanding the ecosystem. I moderate the forum and can confirm firsthand that engagement is higher now than it has ever been.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What is the biggest risk to n8n's future?</summary>
+                    <div class="faq-body">
+                        <p>Not AI, and not competition. It is execution. n8n needs to keep shipping features that matter, improve performance and onboarding, and maintain the trust of its open-source community while growing enterprise revenue. So far it has balanced that well. The risk is only if it stops.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <div class="g-endcap">
+            <a href="../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Thoughts</a>
+            </div>
+        </div>
+
+        <footer class="auto-footer" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../">Anshul Namdev</a></div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Patch MeshBasicMaterial to swap blue → red before 3d-anim.js runs
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
+    <script src="../../assets/js/3d-anim.js"></script>
+    <script src="../../assets/js/text-highlight-share.js" defer></script>
+    <script>
+        document.getElementById('navToggle').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        document.addEventListener('scroll', () => {
+            const body = document.body;
+            const total = body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
+        });
+
+        const shareBtn = document.getElementById('shareBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (false) {
+                    navigator.share({ title: document.title, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
+                    });
+                }
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

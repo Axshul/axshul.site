@@ -249,15 +249,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    /* ── SCROLL REVEAL ── */
+    /* ── SCROLL REVEAL (staggered) ── */
+    const revealGroups = new Map();
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
+                const section = entry.target.closest('.section') || entry.target.closest('.hero') || document.body;
+                const key = section.id || 'root';
+                if (!revealGroups.has(key)) revealGroups.set(key, 0);
+                const idx = revealGroups.get(key);
+                revealGroups.set(key, idx + 1);
+                const delay = Math.min(idx * 120, 600);
+                entry.target.style.transitionDelay = delay + 'ms';
+                requestAnimationFrame(() => {
+                    entry.target.classList.add('revealed');
+                });
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
 
     document.querySelectorAll('[data-reveal]').forEach(el => {
         if (!el.closest('.hero')) {

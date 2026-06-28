@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vector Stores and RAG in n8n: Pinecone, Qdrant, and Document Pipelines — n8n Guide</title>
+    <title>Vector Stores and RAG in n8n: Pinecone, Qdrant, and Document Pipelines - n8n Guide</title>
     <meta name="description" content="A complete guide to Vector Stores and Retrieval-Augmented Generation in n8n. Set up Pinecone or Qdrant, inject documents, and build AI agents that answer questions from your own data.">
-    <meta property="og:title" content="Vector Stores and RAG in n8n: Pinecone, Qdrant, and Document Pipelines — n8n Guide">
+    <meta property="og:title" content="Vector Stores and RAG in n8n: Pinecone, Qdrant, and Document Pipelines - n8n Guide">
     <meta property="og:description" content="A complete guide to Vector Stores and Retrieval-Augmented Generation in n8n. Set up Pinecone or Qdrant, inject documents, and build AI agents that answer questions from your own data.">
     <meta property="og:type" content="article">
 
@@ -177,7 +177,7 @@
 
 
                     <h2>The Problem That RAG Solves</h2>
-                    <p>Every LLM has a knowledge cutoff date and a fixed context window. Ask GPT-4o about your company's internal product documentation, a PDF you uploaded last week, or data from your proprietary database and it simply cannot answer accurately — because it has never seen that information.</p>
+                    <p>Every LLM has a knowledge cutoff date and a fixed context window. Ask GPT-4o about your company's internal product documentation, a PDF you uploaded last week, or data from your proprietary database and it simply cannot answer accurately - because it has never seen that information.</p>
                     <p><strong>Retrieval-Augmented Generation (RAG)</strong> is the architectural pattern that solves this. Instead of stuffing your entire document into the prompt (which is expensive and breaks at scale), RAG works in two distinct phases:</p>
                     <ol>
                         <li><strong>Ingestion:</strong> Documents are split into smaller chunks, converted into numerical vector embeddings, and stored in a Vector Store database.</li>
@@ -299,7 +299,7 @@
                         <li>In n8n, add a Qdrant credential pointing to <code>http://qdrant:6333</code> (using the Docker service name). No API key is required for local deployments.</li>
                         <li>Replace the Pinecone Vector Store nodes in both workflows with Qdrant Vector Store nodes and select your collection. All other nodes remain identical.</li>
                     </ol>
-                    <p>The entire RAG architecture is provider-agnostic at the n8n level. Swapping Pinecone for Qdrant, Weaviate, or Supabase requires only changing the vector store node — the embedding model, data loader, and AI agent chain stay exactly the same.</p>
+                    <p>The entire RAG architecture is provider-agnostic at the n8n level. Swapping Pinecone for Qdrant, Weaviate, or Supabase requires only changing the vector store node - the embedding model, data loader, and AI agent chain stay exactly the same.</p>
 
                     <h2>What Goes Wrong: Common RAG Mistakes in n8n</h2>
                     <ul>

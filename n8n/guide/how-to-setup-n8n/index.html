@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How To Setup n8n - n8n Guide</title>
-    <meta name="description" content="A complete guide to provisioning your first n8n workspace. Learn how to launch via the managed Cloud, test locally with NPM, or deploy robustly with Docker containers.">
-    <meta property="og:title" content="How To Setup n8n - n8n Guide">
-    <meta property="og:description" content="A complete guide to provisioning your first n8n workspace. Learn how to launch via the managed Cloud, test locally with NPM, or deploy robustly with Docker containers.">
+    <title>How To Setup n8n: Cloud, NPM, Docker &amp; Docker Compose - n8n Guide</title>
+    <meta name="description" content="Step-by-step guide to setting up n8n. Cloud, NPM, Docker, and Docker Compose with PostgreSQL. Every method explained with production-ready configurations.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="how to setup n8n, install n8n, n8n docker, n8n npm, n8n cloud setup, n8n configuration, self-host n8n, n8n 2026">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/how-to-setup-n8n/">
+    <meta property="og:title" content="How To Setup n8n: Cloud, NPM, Docker &amp; Docker Compose">
+    <meta property="og:description" content="Step-by-step guide to setting up n8n. Cloud, NPM, Docker, and Docker Compose with PostgreSQL. Every method explained with production-ready configurations.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,14 +20,738 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <style>
+        /* ── THEME OVERRIDE: RED ── */
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+
+        /* ── PROGRESS BAR ── */
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+
+        /* ── HERO ── */
+        .g-hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem 0;
+            text-align: center;
+        }
+        .g-hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .g-tag {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 0.3rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-mono);
+        }
+        .g-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .g-hero h1 em {
+            font-style: italic;
+            color: var(--blue);
+        }
+        .g-hero-sub {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .g-hero-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            margin-bottom: 3rem;
+        }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+
+        /* ── STATS STRIP ── */
+        .g-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        .g-stat {
+            background: var(--bg);
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+        .g-stat-num {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        .g-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* ── TABLE OF CONTENTS ── */
+        .g-toc {
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+        .g-toc-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+        .g-toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem 3rem;
+        }
+        .g-toc-grid a {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.25s;
+        }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--blue);
+            font-weight: 700;
+            min-width: 1.5rem;
+        }
+
+        /* ── SECTION SYSTEM ── */
+        .g-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+        }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .g-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--blue);
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .g-section-head h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--text);
+            margin: 0;
+            line-height: 1.2;
+        }
+        .g-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-mid);
+            margin-bottom: 1.5rem;
+        }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text a:hover { color: var(--blue-dk); }
+        .g-text code {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            color: var(--blue);
+        }
+        .g-text strong { color: var(--text); }
+        .g-text em { font-style: italic; }
+
+        /* ── CALLOUT BOX ── */
+        .g-callout {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--blue);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+        }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul {
+            margin: 0.75rem 0 0;
+            padding-left: 1.25rem;
+            list-style: disc;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+
+        /* ── PATH COMPARISON CARDS ── */
+        .g-path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .g-path-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .g-path-card:hover { border-color: var(--blue); box-shadow: 0 4px 24px rgba(215,38,56,0.06); }
+        .g-path-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 1rem;
+        }
+        .g-path-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .g-path-code {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+        .g-path-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .g-path-card li {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        .g-path-card li::before {
+            content: '\2013';
+            position: absolute;
+            left: 0;
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .g-path-best {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .g-path-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+        .g-path-cta:hover { gap: 0.8rem; }
+
+        /* ── COURSE CARDS ── */
+        .g-course-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .g-course-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .g-course-card:hover { border-color: var(--blue); box-shadow: 0 8px 30px rgba(215,38,56,0.06); transform: translateY(-2px); }
+        .g-course-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .g-course-code {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: -0.02em;
+        }
+        .g-course-dur {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .g-course-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+        .g-course-desc {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+        .g-course-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex-grow: 1;
+        }
+        .g-course-list li {
+            font-size: 0.82rem;
+            color: var(--text-mid);
+            padding-left: 1rem;
+            position: relative;
+        }
+        .g-course-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--blue);
+        }
+        .g-course-prereq {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.02em;
+        }
+        .g-enroll {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.25rem;
+            background: var(--text);
+            color: white;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s, gap 0.3s;
+        }
+        .g-enroll:hover { background: var(--blue); gap: 0.75rem; }
+
+        /* ── GRADING BAR ── */
+        .g-grade-wrap { margin: 2.5rem 0; }
+        .g-grade-bar {
+            display: flex;
+            height: 56px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .g-grade-seg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            transition: flex-grow 0.4s;
+        }
+        .g-grade-seg:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.3); }
+        .g-grade-pct {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+        }
+        .g-grade-name {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.8);
+        }
+        .g-grade-pass {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--green-soft);
+        }
+
+        /* ── FAQ ACCORDION ── */
+        .g-faq { margin: 2rem 0; }
+        .g-faq details {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary {
+            padding: 1.25rem 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            list-style: none;
+            transition: color 0.3s;
+            user-select: none;
+        }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after {
+            content: '+';
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            transition: transform 0.3s, color 0.3s;
+            flex-shrink: 0;
+        }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+        .g-faq .faq-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .g-faq .faq-body li {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+        }
+        .g-faq .faq-body li strong { color: var(--text); }
+        .g-faq .faq-body li a { color: var(--blue); text-decoration: underline; }
+        .g-faq .faq-body li code {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.82em;
+            color: var(--blue);
+        }
+
+        /* ── RESOURCE GRID ── */
+        .g-resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .g-resource-card {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .g-resource-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(215,38,56,0.06); }
+        .g-resource-card .rc-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+        .g-resource-card .rc-title {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.35rem;
+        }
+        .g-resource-card .rc-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        /* ── DEPRECATION BANNER ── */
+        .g-deprecation {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+        .g-dep-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .g-dep-title {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .g-dep-text {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+        }
+
+        /* ── ENDCAP ── */
+        .g-endcap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            border-top: 1px solid var(--border);
+            padding-top: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .g-endcap-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+        .g-endcap-author:hover .ec-name { color: var(--blue); }
+        .g-endcap-av {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-weight: 700; color: var(--text); font-size: 0.95rem; transition: color 0.3s; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); }
+        .g-endcap-actions { display: flex; gap: 0.75rem; }
+        .g-endcap-actions button,
+        .g-endcap-actions a {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.55rem 1.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-mid);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .g-endcap-actions button:hover,
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+
+        /* ── FULL-BLEED SECTIONS ── */
+        .g-bleed {
+            background: var(--bg-off);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 0;
+            margin-bottom: 5rem;
+        }
+        .g-bleed > .g-section { padding-bottom: 0; }
+
+        /* ── REVEAL ANIMATION ── */
+        .g-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── CODE BLOCKS ── */
+        .g-code-block {
+            background: #1a1a2e;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+        .g-code-block pre {
+            margin: 0;
+            padding: 0;
+        }
+        .g-code-block code {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+            white-space: pre;
+        }
+        .g-code-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── ENV VAR TABLE ── */
+        .g-env-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .g-env-list li {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+        .g-env-list li code {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .g-env-list li p {
+            font-size: 0.85rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+            margin: 0.3rem 0 0;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.4rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-path-grid { grid-template-columns: 1fr; }
+            .g-course-grid { grid-template-columns: 1fr; }
+            .g-resource-grid { grid-template-columns: 1fr; }
+            .g-deprecation { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; align-items: flex-start; }
+            .g-section-head h2 { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Global 3D Roaming Geometry -->
     <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+
     <nav class="auto-nav">
         <div class="inner">
             <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
-            
             <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="6" x2="21" y2="6"/>
@@ -33,146 +760,509 @@
                 </svg>
             </button>
             <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">← Back to Archive</a></li>
+                <li><a href="../../">&#8592; Back to Archive</a></li>
                 <li><a href="../../">Hub</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="auto-wrap" style="padding-top: 5rem;">
-        
-        <div class="reader-layout">
-            <main class="reader-main">
-                <header class="reader-header stagger-in">
-                    <div class="reader-tags">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Setup</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Docker</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">NPM</span>
-                    </div>
-                    <h1 class="reader-title">How To Setup n8n: Cloud, NPM, and Docker</h1>
-                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
-                </header>
 
-                <div class="reader-body">
-                    <h2>1. The Easiest Path: n8n Cloud</h2>
-                    <p>If you are just starting out with workflow automation and don't want to deal with server maintenance, command lines, or environment variables, the officially managed <strong>n8n Cloud</strong> is by far your best option.</p>
-                    <p>Simply navigate to <a href="https://app.n8n.cloud/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">app.n8n.cloud</a>, sign up for an account, and your private workspace will be instantly provisioned. That is literally all it takes. Because the infrastructure team handles everything behind the scenes, you can immediately begin dragging and dropping nodes onto the canvas.</p>
+        <!-- ════════════════════════════════════════════
+             HERO
+        ════════════════════════════════════════════ -->
+        <header class="g-hero g-reveal">
+            <div class="g-hero-tags">
+                <span class="g-tag">Setup</span>
+                <span class="g-tag">Docker</span>
+                <span class="g-tag">Cloud</span>
+            </div>
+            <h1>How To Setup <em>n8n</em></h1>
+            <p class="g-hero-sub">Cloud, NPM, Docker, and Docker Compose. Every method explained step by step.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
+        </header>
 
-                    <h2>2. Local Execution: Installing via NPM</h2>
-                    <p>If you are a developer looking to experiment or build workflows locally before deploying them, the NPM (Node Package Manager) method is incredibly fast, especially on Windows.</p>
-                    <p>Assuming you have Node.js installed, open your command prompt or terminal and run the global installation command:</p>
-                    <pre><code>npm install -g n8n</code></pre>
-                    <p>Once the download completes, initializing the engine is as simple as typing the following into your terminal and pressing Enter:</p>
-                    <pre><code>n8n</code></pre>
-                    <p>This command automatically boots up a local server on your machine. You can then access the full n8n editor interface by opening your web browser directly to <code>http://localhost:5678</code>.</p>
+        <!-- ════ STATS STRIP ════ -->
+        <div class="g-stats g-reveal">
+            <div class="g-stat"><div class="g-stat-num">3</div><div class="g-stat-label">Methods</div></div>
+            <div class="g-stat"><div class="g-stat-num">2 min</div><div class="g-stat-label">Cloud Setup</div></div>
+            <div class="g-stat"><div class="g-stat-num">Free</div><div class="g-stat-label">Community Ed.</div></div>
+            <div class="g-stat"><div class="g-stat-num">&#10003;</div><div class="g-stat-label">Production Ready</div></div>
+        </div>
 
-                    <h2>3. Production Grade: Installing via Docker</h2>
-                    <p>When you are ready to deploy n8n permanently on a VPS (like a DigitalOcean Droplet or AWS EC2), Docker is the absolute industry standard. It isolates the engine entirely, making backups and version upgrades deeply reliable.</p>
-                    <p>Assuming you have Docker installed on your host machine, you can launch the container using the following standard bash command:</p>
-                    <pre><code>docker run -it --rm \
+        <!-- ════ TABLE OF CONTENTS ════ -->
+        <nav class="g-toc g-reveal">
+            <div class="g-toc-label">In This Guide</div>
+            <div class="g-toc-grid">
+                <a href="#choose"><span>01</span> Choose Your Method</a>
+                <a href="#compose"><span>05</span> Docker Compose for Production</a>
+                <a href="#cloud"><span>02</span> Method 1: n8n Cloud</a>
+                <a href="#env"><span>06</span> Environment Variables</a>
+                <a href="#npm"><span>03</span> Method 2: NPM</a>
+                <a href="#first-steps"><span>07</span> First Steps After Setup</a>
+                <a href="#docker"><span>04</span> Method 3: Docker</a>
+                <a href="#troubleshooting"><span>08</span> Troubleshooting</a>
+            </div>
+        </nav>
+
+        <!-- ════════════════════════════════════════════
+             01 - CHOOSE YOUR METHOD
+        ════════════════════════════════════════════ -->
+        <section id="choose" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>Choose Your Method</h2>
+            </div>
+            <p class="g-text">n8n gives you three installation paths. Each one trades convenience for control. The right choice depends on what you need right now, not what you might need six months from now. You can always migrate later.</p>
+
+            <p class="g-text"><strong>n8n Cloud</strong> is the managed option. You sign up, and n8n handles the server, SSL, backups, and updates. It takes about two minutes. <strong>NPM</strong> installs n8n as a global Node.js package on your local machine. It is fast for testing and learning, but not suitable for production. <strong>Docker</strong> is the standard for production deployments. It gives you isolation, reproducibility, and easy upgrades.</p>
+
+            <div class="g-callout">
+                <p><strong>Quick comparison:</strong></p>
+                <ul>
+                    <li><strong>n8n Cloud</strong> &ndash; Easiest. Managed hosting, automatic updates, SSL included. Best for beginners and teams.</li>
+                    <li><strong>NPM</strong> &ndash; Fastest to start. Local only. Best for development and learning.</li>
+                    <li><strong>Docker</strong> &ndash; Production standard. Full control. Best for VPS and server deployments.</li>
+                    <li><strong>Docker Compose</strong> &ndash; Docker with PostgreSQL, environment config, and restart policies. The recommended production setup.</li>
+                </ul>
+            </div>
+
+            <p class="g-text">If you are brand new to n8n and just want to try it, start with Cloud. If you are a developer who wants to run n8n alongside other tools on your machine, use NPM. If you are deploying n8n for a team or a client, go straight to Docker Compose with PostgreSQL.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             02 - METHOD 1: N8N CLOUD
+        ════════════════════════════════════════════ -->
+        <section id="cloud" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>Method 1: n8n Cloud</h2>
+            </div>
+            <p class="g-text">n8n Cloud is the fully managed option. You do not install anything, configure any server, or worry about SSL certificates. n8n runs the infrastructure and you build workflows.</p>
+
+            <p class="g-text">Go to <a href="https://app.n8n.cloud/" target="_blank">app.n8n.cloud</a>, create an account, and your workspace is ready in seconds. The free trial does not require a credit card. Once your trial starts, you get a fully functional n8n instance with a public URL, webhook endpoints, and the complete node library.</p>
+
+            <p class="g-text"><strong>What you get with Cloud:</strong></p>
+            <ul class="g-text" style="margin-top:-0.5rem; padding-left:1.5rem; list-style:disc; display:flex; flex-direction:column; gap:0.4rem;">
+                <li>Automatic updates to the latest n8n version</li>
+                <li>SSL/TLS encryption on your workspace URL</li>
+                <li>Managed backups of your workflows and credentials</li>
+                <li>Scaling and performance handled by n8n</li>
+                <li>Built-in execution history and logging</li>
+            </ul>
+
+            <p class="g-text">Cloud is best for beginners, solo operators, and teams who do not want to manage infrastructure. The tradeoff is cost: after the free trial, you pay a monthly fee based on your plan tier. For a detailed breakdown of pricing and features across tiers, see our <a href="../n8n-cloud-plans/">n8n Cloud Plans guide</a>.</p>
+
+            <div class="g-callout">
+                <p><strong>Not sure whether Cloud or self-hosted is right for you?</strong> Read our <a href="../n8n-cloud-vs-self-hosted/">Cloud vs. Self-Hosted comparison</a> for a full breakdown of costs, control, and trade-offs.</p>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             03 - METHOD 2: NPM
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="npm" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>Method 2: NPM (Local Development)</h2>
+            </div>
+            <p class="g-text">Installing n8n via NPM is the fastest way to get a local instance running. You need <strong>Node.js version 18 or higher</strong> installed on your machine. Check your version with <code>node -v</code>. If you need to install or update Node.js, use <a href="https://nodejs.org/" target="_blank">nodejs.org</a> or a version manager like <code>nvm</code>.</p>
+
+            <div class="g-code-label">Install n8n globally</div>
+            <div class="g-code-block">
+                <pre><code>npm install -g n8n</code></pre>
+            </div>
+
+            <div class="g-code-label">Start n8n</div>
+            <div class="g-code-block">
+                <pre><code>n8n start</code></pre>
+            </div>
+
+            <p class="g-text">After running <code>n8n start</code>, open your browser and go to <code>http://localhost:5678</code>. You will see the n8n setup screen where you create your owner account. All data is stored locally in <code>~/.n8n/</code> by default, including workflows, credentials, and execution logs.</p>
+
+            <p class="g-text">You can also run n8n without installing it globally by using <code>npx</code>:</p>
+
+            <div class="g-code-block">
+                <pre><code>npx n8n</code></pre>
+            </div>
+
+            <div class="g-callout warn">
+                <p><strong>NPM is not recommended for production.</strong> It uses SQLite by default, has no built-in process management, and does not survive server reboots without additional configuration. Use it for local development, testing, and learning. For production, use Docker or Docker Compose.</p>
+            </div>
+
+            <p class="g-text"><strong>Good for:</strong> local development, learning n8n, testing workflows before deployment, quick prototyping. <strong>Not good for:</strong> production servers, team environments, anything that needs to stay running 24/7.</p>
+        </section>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+             04 - METHOD 3: DOCKER
+        ════════════════════════════════════════════ -->
+        <section id="docker" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>Method 3: Docker</h2>
+            </div>
+            <p class="g-text">Docker is the production standard for self-hosted n8n. It gives you an isolated, reproducible environment that you can deploy on any VPS, cloud server, or local machine with Docker installed. Upgrades are as simple as pulling a new image.</p>
+
+            <p class="g-text">Make sure Docker is installed on your machine. You can verify with <code>docker --version</code>. If you need to install it, follow the official instructions at <a href="https://docs.docker.com/get-docker/" target="_blank">docs.docker.com</a>.</p>
+
+            <div class="g-code-label">Run n8n with Docker</div>
+            <div class="g-code-block">
+                <pre><code>docker run -it --rm \
   --name n8n \
   -p 5678:5678 \
   -v ~/.n8n:/home/node/.n8n \
   docker.n8n.io/n8nio/n8n</code></pre>
-                    <p>This command binds exactly to port <code>5678</code> and crucially mounts a local storage volume (<code>~/.n8n</code>) so that all your workflow data and credentials persist permanently, even if the container receives a reboot or version update.</p>
-                </div>
-            </main>
-            
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <!-- Reading Progress -->
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>3 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
-                    </div>
-                    
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+            </div>
 
-                    <!-- Written By Section -->
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
+            <p class="g-text">Here is what each flag does:</p>
+            <ul class="g-text" style="margin-top:-0.5rem; padding-left:1.5rem; list-style:disc; display:flex; flex-direction:column; gap:0.4rem;">
+                <li><code>-it</code> runs the container in interactive mode with a terminal attached</li>
+                <li><code>--rm</code> removes the container when it stops (the data persists in the volume)</li>
+                <li><code>--name n8n</code> gives the container a recognizable name</li>
+                <li><code>-p 5678:5678</code> maps port 5678 on your host to port 5678 in the container</li>
+                <li><code>-v ~/.n8n:/home/node/.n8n</code> mounts a host directory as a volume so your data persists between container restarts</li>
+            </ul>
 
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+            <p class="g-text">After running this command, open <code>http://localhost:5678</code> (or your server IP) in your browser. The volume mount at <code>~/.n8n</code> ensures your workflows, credentials, and execution history survive container restarts and image upgrades.</p>
 
-                    <!-- Quick Links Section -->
-                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://docs.n8n.io/manage-cloud/overview/" target="_blank" class="sb-link">n8n Cloud Guide ↗</a></li>
-                        <li><a href="https://docs.n8n.io/hosting/installation/npm/" target="_blank" class="sb-link">NPM Installation Docs ↗</a></li>
-                        <li><a href="https://docs.n8n.io/hosting/installation/docker/" target="_blank" class="sb-link">Docker Setup Guide ↗</a></li>
-                    </ul>
+            <div class="g-callout">
+                <p><strong>For production use,</strong> remove the <code>--rm</code> flag and add <code>--restart always</code> so the container restarts automatically after reboots. Better yet, use Docker Compose as described in the next section.</p>
+            </div>
 
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-                    
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-                    
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">← Back to Archive</span>
-                    </a>
-                </div>
-            </aside>
+            <p class="g-text">For a complete guide on deploying n8n on a VPS with Docker, including domain setup and SSL, see our <a href="../vps-self-hosting-n8n/">VPS Self-Hosting guide</a>.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             05 - DOCKER COMPOSE FOR PRODUCTION
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="compose" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>Docker Compose for Production</h2>
+            </div>
+            <p class="g-text">For any serious deployment, Docker Compose is the recommended approach. It lets you define n8n, its database, and all configuration in a single file. The setup below uses <strong>PostgreSQL</strong> instead of the default SQLite, which is critical for production. SQLite does not handle concurrent access well, and you will hit scaling limits quickly.</p>
+
+            <div class="g-code-label">docker-compose.yml</div>
+            <div class="g-code-block">
+                <pre><code>version: "3.8"
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=changeme
+      - N8N_HOST=your-domain.com
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://your-domain.com/
+      - N8N_ENCRYPTION_KEY=your-random-encryption-key
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16
+    container_name: n8n-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=n8n
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n8n"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  n8n_data:
+  postgres_data:</code></pre>
+            </div>
+
+            <p class="g-text"><strong>Key sections explained:</strong></p>
+            <ul class="g-text" style="margin-top:-0.5rem; padding-left:1.5rem; list-style:disc; display:flex; flex-direction:column; gap:0.4rem;">
+                <li><code>restart: always</code> ensures both containers restart after server reboots or crashes</li>
+                <li><code>DB_TYPE=postgresdb</code> switches n8n from SQLite to PostgreSQL</li>
+                <li><code>depends_on</code> with a health check ensures n8n waits for PostgreSQL to be ready before starting</li>
+                <li><code>N8N_ENCRYPTION_KEY</code> encrypts stored credentials. Set this once and never change it, or you will lose access to all saved credentials</li>
+                <li><code>WEBHOOK_URL</code> must match your public domain so webhook triggers work correctly</li>
+                <li>Named volumes (<code>n8n_data</code>, <code>postgres_data</code>) persist data independently of the containers</li>
+            </ul>
+
+            <div class="g-code-label">Start the stack</div>
+            <div class="g-code-block">
+                <pre><code>docker compose up -d</code></pre>
+            </div>
+
+            <div class="g-callout warn">
+                <p><strong>Change the default passwords.</strong> Replace <code>changeme</code> with strong, unique passwords before deploying. Generate an encryption key with <code>openssl rand -hex 32</code>. Never commit secrets to version control.</p>
+            </div>
+
+            <p class="g-text"><strong>Reverse proxy for SSL:</strong> In production, you should place a reverse proxy like <a href="https://caddyserver.com/" target="_blank">Caddy</a> or Nginx in front of n8n to handle SSL termination. Caddy is the easiest option because it provisions Let's Encrypt certificates automatically. Point your domain to your server, add a Caddyfile that reverse-proxies to <code>localhost:5678</code>, and you are done.</p>
+        </section>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                © 2026 <a href="../../../">Anshul Namdev</a>
+        <!-- ════════════════════════════════════════════
+             06 - ENVIRONMENT VARIABLES
+        ════════════════════════════════════════════ -->
+        <section id="env" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>Environment Variables</h2>
             </div>
+            <p class="g-text">n8n is configured almost entirely through environment variables. These are the ones you will use most often. Set them in your <code>docker-compose.yml</code>, your <code>.env</code> file, or your shell environment for NPM installs.</p>
+
+            <ul class="g-env-list">
+                <li>
+                    <code>N8N_HOST</code>
+                    <p>The domain or IP address where n8n is accessible. Example: <code>n8n.yourdomain.com</code>. Used for generating correct URLs in the UI and webhook endpoints.</p>
+                </li>
+                <li>
+                    <code>N8N_PORT</code>
+                    <p>The port n8n listens on. Defaults to <code>5678</code>. Change this if you have port conflicts or want to run on a different port.</p>
+                </li>
+                <li>
+                    <code>N8N_PROTOCOL</code>
+                    <p>Set to <code>https</code> when running behind a reverse proxy with SSL. Defaults to <code>http</code>.</p>
+                </li>
+                <li>
+                    <code>WEBHOOK_URL</code>
+                    <p>The public URL for incoming webhooks. Must include the protocol. Example: <code>https://n8n.yourdomain.com/</code>. If this is not set correctly, webhook triggers will generate URLs that external services cannot reach.</p>
+                </li>
+                <li>
+                    <code>N8N_ENCRYPTION_KEY</code>
+                    <p>A random string used to encrypt stored credentials. <strong>Set this once and never change it.</strong> If you lose or change this key, all saved credentials become unreadable and you will need to re-enter them. Generate one with <code>openssl rand -hex 32</code>.</p>
+                </li>
+                <li>
+                    <code>DB_TYPE</code>
+                    <p>The database backend. Options: <code>sqlite</code> (default) or <code>postgresdb</code>. Use PostgreSQL for any production deployment.</p>
+                </li>
+                <li>
+                    <code>DB_POSTGRESDB_HOST</code>, <code>DB_POSTGRESDB_PORT</code>, <code>DB_POSTGRESDB_DATABASE</code>, <code>DB_POSTGRESDB_USER</code>, <code>DB_POSTGRESDB_PASSWORD</code>
+                    <p>Connection details for your PostgreSQL database. Only needed when <code>DB_TYPE=postgresdb</code>.</p>
+                </li>
+                <li>
+                    <code>EXECUTIONS_MODE</code>
+                    <p>Set to <code>queue</code> to use Redis-backed queue mode for scaling n8n across multiple instances. Defaults to <code>regular</code> (single instance). Queue mode requires a Redis instance.</p>
+                </li>
+                <li>
+                    <code>N8N_BASIC_AUTH_ACTIVE</code>, <code>N8N_BASIC_AUTH_USER</code>, <code>N8N_BASIC_AUTH_PASSWORD</code>
+                    <p>Legacy basic authentication for the n8n UI. In current versions of n8n, user authentication is built in and these variables are deprecated. Only relevant if you are running an older version.</p>
+                </li>
+            </ul>
+
+            <div class="g-callout">
+                <p>For the complete list of environment variables, see the <a href="https://docs.n8n.io/hosting/configuration/environment-variables/" target="_blank">official n8n environment variables reference</a>.</p>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             07 - FIRST STEPS AFTER SETUP
+        ════════════════════════════════════════════ -->
+        <section id="first-steps" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>First Steps After Setup</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">Once n8n is running and you have created your owner account, here is what to do next. These steps apply regardless of which installation method you used.</p>
+
+            <p class="g-text" style="max-width:900px;"><strong>Create your first workflow.</strong> Click the "New Workflow" button, add a Manual Trigger node, connect it to a second node (try the HTTP Request node to fetch data from a public API), and execute it. This gets you familiar with the canvas, the node system, and how data flows between nodes. For a full walkthrough, see our <a href="../build-your-first-workflow/">Build Your First Workflow guide</a>.</p>
+
+            <p class="g-text" style="max-width:900px;"><strong>Set up credentials.</strong> Go to Settings &rarr; Credentials and add connections for the services you use. Gmail, Slack, Google Sheets, Notion, and similar services all require OAuth2 or API key credentials. n8n encrypts all credentials at rest using your <code>N8N_ENCRYPTION_KEY</code>.</p>
+
+            <p class="g-text" style="max-width:900px;"><strong>Explore the node library.</strong> n8n has 400+ built-in nodes covering everything from databases to AI providers. Open the node panel (click the + button on the canvas) and browse by category. If a service you need is not listed, the HTTP Request node can connect to any REST API.</p>
+
+            <p class="g-text" style="max-width:900px;"><strong>Enable community nodes.</strong> Community nodes are third-party integrations built by the n8n community. Go to Settings &rarr; Community Nodes to browse and install them. This unlocks hundreds of additional integrations. For more on the community edition and what it includes, see our <a href="../n8n-community-edition/">Community Edition guide</a>.</p>
+
+            <div class="g-resource-grid">
+                <a href="../what-is-n8n/" class="g-resource-card">
+                    <div class="rc-label">Foundation</div>
+                    <div class="rc-title">What is n8n?</div>
+                    <div class="rc-desc">The complete overview of n8n, its architecture, and where it fits in the automation landscape.</div>
+                </a>
+                <a href="../build-your-first-workflow/" class="g-resource-card">
+                    <div class="rc-label">Academy</div>
+                    <div class="rc-title">Build Your First Workflow</div>
+                    <div class="rc-desc">The n8n Academy course guide. All courses, grading, certificates, and badges explained.</div>
+                </a>
+                <a href="../choose-right-ai-model/" class="g-resource-card">
+                    <div class="rc-label">AI</div>
+                    <div class="rc-title">Choose the Right AI Model</div>
+                    <div class="rc-desc">How to pick the right LLM for your n8n AI workflows. Providers, costs, and performance compared.</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             08 - TROUBLESHOOTING
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="troubleshooting" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>Troubleshooting Common Issues</h2>
+            </div>
+            <p class="g-text" style="margin-bottom:2rem;">These are the problems people run into most often when setting up n8n. Click any issue to expand.</p>
+
+            <div class="g-faq">
+
+                <details>
+                    <summary>Port 5678 is already in use</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Cause:</strong> Another process is already using port 5678. This could be another n8n instance, a development server, or any other application.</li>
+                            <li><strong>Fix:</strong> Find what is using the port with <code>lsof -i :5678</code> (macOS/Linux) or <code>netstat -ano | findstr :5678</code> (Windows). Kill the process, or run n8n on a different port by setting <code>N8N_PORT=5679</code> in your environment or passing <code>-p 5679:5678</code> in your Docker command.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Permission denied on NPM install</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Cause:</strong> Global npm packages require write access to system directories. This is common on macOS and Linux without a Node version manager.</li>
+                            <li><strong>Fix (recommended):</strong> Use <code>npx n8n</code> instead of installing globally. This runs n8n without needing write permissions to global directories.</li>
+                            <li><strong>Fix (alternative):</strong> Install Node.js via <code>nvm</code> (Node Version Manager), which installs packages in your home directory. Or use <code>sudo npm install -g n8n</code> if you understand the security implications.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Docker container won't start</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Check the logs:</strong> Run <code>docker logs n8n</code> to see what is happening. Most issues show a clear error message.</li>
+                            <li><strong>Port conflict:</strong> Make sure port 5678 is not already in use. Use <code>docker ps</code> to see running containers.</li>
+                            <li><strong>Volume permissions:</strong> The n8n container runs as user <code>node</code> (UID 1000). Make sure the host directory you mount has the correct permissions: <code>sudo chown -R 1000:1000 ~/.n8n</code>.</li>
+                            <li><strong>Database not ready:</strong> If using Docker Compose with PostgreSQL, make sure the <code>depends_on</code> health check is configured. Without it, n8n may try to connect before PostgreSQL is ready.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Forgot owner account password</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>CLI reset:</strong> Run <code>n8n user-management:reset</code> from inside the container or on the host where n8n is installed. This resets the owner account and lets you set a new password on next login.</li>
+                            <li><strong>Docker:</strong> Run <code>docker exec -it n8n n8n user-management:reset</code> to execute the reset command inside the running container.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Webhook URL not working</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Cause:</strong> The <code>WEBHOOK_URL</code> environment variable is not set or does not match your public domain. n8n generates webhook URLs based on this variable. If it points to <code>localhost</code>, external services cannot reach it.</li>
+                            <li><strong>Fix:</strong> Set <code>WEBHOOK_URL=https://your-domain.com/</code> in your environment. Make sure the URL includes the protocol (<code>https://</code>) and a trailing slash. Restart n8n after changing the variable.</li>
+                            <li><strong>Also check:</strong> Your firewall allows incoming traffic on port 5678 (or your proxy port). Your reverse proxy is correctly forwarding requests. Your DNS points to the right server IP.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Database connection errors (PostgreSQL)</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Wrong credentials:</strong> Double-check that <code>DB_POSTGRESDB_USER</code>, <code>DB_POSTGRESDB_PASSWORD</code>, and <code>DB_POSTGRESDB_DATABASE</code> match what you configured in your PostgreSQL service.</li>
+                            <li><strong>Host not reachable:</strong> If using Docker Compose, the host should be the service name (<code>postgres</code>), not <code>localhost</code>. Docker networking resolves service names automatically.</li>
+                            <li><strong>Database does not exist:</strong> Make sure the <code>POSTGRES_DB</code> environment variable on the PostgreSQL container matches <code>DB_POSTGRESDB_DATABASE</code> on the n8n container. PostgreSQL creates the database on first start if <code>POSTGRES_DB</code> is set.</li>
+                            <li><strong>Port mismatch:</strong> The default PostgreSQL port is 5432. If you changed it, update <code>DB_POSTGRESDB_PORT</code> accordingly.</li>
+                        </ul>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+        </div>
+
+        <!-- ════ THE SHORT VERSION ════ -->
+        <section class="g-section g-reveal" style="border-top:1px solid var(--border); padding-top:3rem;">
+            <div class="g-section-head">
+                <span class="g-num">&Sigma;</span>
+                <h2>The Short Version</h2>
+            </div>
+            <p class="g-text">For trying n8n: go to <a href="https://app.n8n.cloud/" target="_blank">app.n8n.cloud</a> and sign up. Two minutes, no credit card. For local development: <code>npx n8n</code>. For production: use the Docker Compose file above with PostgreSQL, set your <code>N8N_ENCRYPTION_KEY</code> and <code>WEBHOOK_URL</code>, put a reverse proxy in front for SSL, and you are production-ready. Everything else is configuration.</p>
+        </section>
+
+        <!-- ════ ENDCAP ════ -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
+        </div>
+
+        <footer class="auto-footer" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
-    <!-- 3D Geometry Animation for Sidebar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Patch MeshBasicMaterial to swap blue → red before 3d-anim.js runs
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
-    
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if(contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+
+        document.addEventListener('scroll', () => {
+            const body = document.body;
+            const total = body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
 
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
                     });
                 }
             });
         }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

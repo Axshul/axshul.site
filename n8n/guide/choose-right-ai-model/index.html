@@ -3,230 +3,617 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choosing the Right AI Model for n8n - n8n Guide</title>
-    <meta name="description" content="A masterclass on selecting the perfect LLM for your n8n automation. Understand tool-calling benchmarks, context windows, and when to use GPT, Claude, DeepSeek, or Mistral.">
-    <meta property="og:title" content="Choosing the Right AI Model for n8n - n8n Guide">
-    <meta property="og:description" content="A masterclass on selecting the perfect LLM for your n8n automation. Understand tool-calling benchmarks, context windows, and when to use GPT, Claude, DeepSeek, or Mistral.">
+    <title>Choose the Right AI Model for n8n Workflows - n8n Guide</title>
+    <meta name="description" content="Which LLM to use for tool calling, OCR, reasoning, coding, and creative writing in n8n. Covers GPT-4.1, Claude, Gemini, DeepSeek, Llama, pricing, and practical recommendations.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="n8n AI model, best LLM for n8n, GPT vs Claude n8n, Gemini, DeepSeek, Llama, AI model pricing, n8n tool calling, OCR model">
+    <meta property="og:title" content="Choose the Right AI Model for n8n Workflows">
+    <meta property="og:description" content="Which LLM to use for tool calling, OCR, reasoning, coding, and creative writing in n8n. GPT-4.1, Claude, Gemini, DeepSeek, Llama compared with pricing.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@Anshul_Namdev0">
     <link rel="canonical" href="https://axshul.site/n8n/guide/choose-right-ai-model/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Architecture</span>
-                    </div>
-                    <h1 class="reader-title">Choosing the Right AI Model for n8n</h1>
-                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
-                </header>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Choose the Right AI Model for n8n Workflows",
+      "description": "Which LLM to use for tool calling, OCR, reasoning, coding, and creative writing in n8n workflows. Covers GPT-4.1, Claude, Gemini, DeepSeek, Llama with pricing.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-03-21",
+      "dateModified": "2026-06-29",
+      "url": "https://axshul.site/n8n/guide/choose-right-ai-model/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
+    }
+    </script>
 
-                <div class="reader-body">
-                    <h2>The Intelligence Engine of Your Workflows</h2>
-                    <p>When constructing AI Agents inside n8n via the Advanced AI nodes, the underlying large language model (LLM) you select will dictate the success or catastrophic failure of your automation. A model that excels at writing creative copy may outright fail when tasked with extracting structured JSON from a messy email. Here is the definitive guide on matching the exact model class to your specific n8n use-case.</p>
+    <style>
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
 
-                    <div class="model-chart-wrap" style="margin: 3rem 0; padding: 2.5rem; background: var(--bg-off); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto;">
-                        <h3 style="margin-top:0; margin-bottom:1.5rem; font-family:var(--font-sans); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-mid);">Advanced Capability Matrix</h3>
-                        
-                        <table style="width: 100%; min-width: 600px; border-collapse: collapse; text-align: left; font-family: var(--font-sans);">
-                            <thead>
-                                <tr style="border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em;">
-                                    <th style="padding: 1rem 1rem 1rem 0;">Model</th>
-                                    <th style="padding: 1rem;">Context Window</th>
-                                    <th style="padding: 1rem; width: 20%;">Tool Calling</th>
-                                    <th style="padding: 1rem; width: 20%;">Reasoning</th>
-                                    <th style="padding: 1rem; width: 20%;">Speed / Latency</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">GPT-4o</td>
-                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">128K</td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:98%; height:100%; background:var(--blue); border-radius:3px; box-shadow: 0 0 8px rgba(0, 122, 255, 0.4);"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:88%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:90%; height:100%; background:var(--text); border-radius:3px;"></div></div>
-                                    </td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Claude 3.5 Sonnet</td>
-                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">200K</td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:90%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:96%; height:100%; background:#1a8a4a; border-radius:3px; box-shadow: 0 0 8px rgba(26, 138, 74, 0.4);"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:82%; height:100%; background:var(--text); border-radius:3px;"></div></div>
-                                    </td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">DeepSeek R1</td>
-                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">128K</td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:75%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:99%; height:100%; background:#1a8a4a; border-radius:3px; box-shadow: 0 0 8px rgba(26, 138, 74, 0.5);"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:55%; height:100%; background:var(--text); border-radius:3px;"></div></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 1.25rem 1rem 1.25rem 0; font-weight: 700; color:var(--text);">Mistral 8x7B</td>
-                                    <td style="padding: 1.25rem 1rem; font-family:var(--font-mono); font-size: 0.85rem; color:var(--text-mid);">32K</td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:60%; height:100%; background:var(--blue); border-radius:3px;"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:65%; height:100%; background:#1a8a4a; border-radius:3px;"></div></div>
-                                    </td>
-                                    <td style="padding: 1.25rem 1rem;">
-                                        <div style="width:100%; height:5px; background:rgba(0,0,0,0.1); border-radius:3px;"><div style="width:100%; height:100%; background:var(--text); border-radius:3px; box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);"></div></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
-                        <div style="display:flex; gap:1.5rem; justify-content:flex-end; margin-top:2rem; font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;">
-                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:var(--blue); border-radius:2px;"></div>Tool Calling</span>
-                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:#1a8a4a; border-radius:2px;"></div>Reasoning</span>
-                            <span style="display:flex; align-items:center; gap:0.5rem;"><div style="width:12px; height:4px; background:var(--text); border-radius:2px;"></div>Speed</span>
-                        </div>
-                    </div>
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
 
-                    <h2>1. Tool Calling - The GPT Dominion</h2>
-                    <p>Tool Calling (or Function Calling) is the absolute backbone of n8n AI Agents. This is the process where the LLM realizes it doesn't know an answer, so it cleanly formats a JSON request to trigger another n8n node (like "GetRowFromPostgres" or "SearchGoogle").</p>
-                    <ul>
-                        <li><strong>The Recommendation:</strong> Use the <strong>OpenAI GPT-4o</strong> or <strong>GPT-4o-mini</strong>.</li>
-                        <li><strong>The Reason:</strong> OpenAI fundamentally pioneered function calling at the API level. Their models are rigorously fine-tuned to return 100% syntactically valid JSON arguments to trigger tools. If your n8n agent relies on executing 5 different tools in a specific sequence, deviating from OpenAI drastically increases your chance of schema hallucination.</li>
-                    </ul>
+        .g-hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 0; text-align: center; }
+        .g-hero-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+        .g-tag { background: var(--bg-off); border: 1px solid var(--border); color: var(--text-dim); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+        .g-hero h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .g-hero h1 em { font-style: italic; color: var(--blue); }
+        .g-hero-sub { font-family: var(--font-sans); font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; max-width: 600px; margin: 0 auto 2rem; }
+        .g-hero-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 3rem; }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
 
-                    <h2>2. Complex Reasoning & Research - Claude & DeepSeek</h2>
-                    <p>If your workflow does not require executing tools, but instead requires reading a massive 50-page PDF, finding logical inconsistencies, and summarizing deep technical insights, the landscape shifts.</p>
-                    <ul>
-                        <li><strong>Anthropic Claude 3.5 Sonnet:</strong> Widely regarded as the industry standard for extreme coding tasks and nuanced technical research without losing logic over long contexts.</li>
-                        <li><strong>DeepSeek R1:</strong> DeepSeek has forcefully disrupted the high-reasoning ecosystem by implementing internal "Chain of Thought" processing before outputting an answer. Unbeatable for complex mathematical reasoning or structural data analysis at a fraction of Western API costs.</li>
-                    </ul>
+        .g-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 700px; margin: 0 auto 4rem; }
+        .g-stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+        .g-stat-num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
+        .g-stat-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
 
-                    <h2>3. High Volume Data Pipelines - Qwen & Mistral</h2>
-                    <p>When you use the "Item Lists" node to split an array of 5,000 product reviews and run them through an LLM to extract sentiment analysis, you absolutely cannot use GPT-4o. The API costs will bankrupt the workflow.</p>
-                    <ul>
-                        <li><strong>The Recommendation:</strong> Utilize open-weights models served via Groq, Together AI, or local Ollama instances - specifically <strong>Mistral 8x7B</strong> or Alibaba's <strong>Qwen</strong>.</li>
-                        <li><strong>The Reason:</strong> These models are lightning fast and cost mere cents per million tokens. They are mathematically "smart enough" to do binary classifications (Postive/Negative) or basic keyword extraction at scale.</li>
-                    </ul>
+        .g-toc { max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem; }
+        .g-toc-label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.25rem; }
+        .g-toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 3rem; }
+        .g-toc-grid a { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-mid); display: flex; align-items: baseline; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.25s; }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); font-weight: 700; min-width: 1.5rem; }
 
-                    <h2>The Context Window Trap</h2>
-                    <p>It is incredibly tempting to use n8n to scrape 20 Wikipedia articles, compile them into a massive chunk of text, and throw it into a model with a 128K context window just because "it fits." This is a severe architectural mistake.</p>
-                    <p>As you approach the maximum limit of an LLM's context window:</p>
-                    <ol>
-                        <li><strong>Attention Dilution:</strong> The model begins to suffer from "Lost in the Middle" syndrome, where it completely forgets or hallucinates instructions buried in the center of the prompt.</li>
-                        <li><strong>High Latency:</strong> A 100K token prompt takes significantly longer for the API infrastructure to ingest (Time-To-First-Token), directly slowing down your n8n workflow execution time.</li>
-                        <li><strong>Cost:</strong> You pay for input tokens. Feeding massive unnecessary context is financially inefficient.</li>
-                    </ol>
-                    <p><strong>The n8n Solution:</strong> Instead of dumping raw data, use n8n's Vector Store integration. Chunk your documents, embed them into Qdrant or Pinecone, and use the <strong>Vector Store Tool</strong> so the LLM agent only retrieves the top 3 most relevant paragraphs before answering.</p>
+        .g-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 5rem; }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .g-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 0.1em; font-weight: 700; flex-shrink: 0; }
+        .g-section-head h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--text); margin: 0; line-height: 1.2; }
+        .g-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text a:hover { color: var(--blue-dk); }
+        .g-text code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-text strong { color: var(--text); }
+
+        .g-callout { background: var(--bg-off); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul { margin: 0.75rem 0 0; padding-left: 1.25rem; list-style: disc; display: flex; flex-direction: column; gap: 0.4rem; }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+
+        .g-table-wrap { overflow-x: auto; margin: 2rem 0; border-radius: 10px; border: 1px solid var(--border); }
+        .g-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans); }
+        .g-table thead tr { background: var(--blue-lt); border-bottom: 2px solid var(--blue-mid); }
+        .g-table th { text-align: left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; }
+        .g-table td { padding: 0.85rem 1.1rem; color: var(--text-mid); border-bottom: 1px solid var(--border); }
+        .g-table tbody tr:last-child td { border-bottom: none; }
+        .g-table .model-name { font-weight: 700; color: var(--text); }
+        .g-table .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+
+        .g-resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+        .g-resource-card { background: var(--bg-off); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-decoration: none; transition: border-color 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+        .g-resource-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(215,38,56,0.06); }
+        .g-resource-card .rc-label { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
+        .g-resource-card .rc-title { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+        .g-resource-card .rc-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; flex-grow: 1; }
+
+        .g-faq { margin: 2rem 0; }
+        .g-faq details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.3s; }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary { padding: 1.25rem 1.5rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none; transition: color 0.3s; user-select: none; }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-dim); transition: transform 0.3s, color 0.3s; flex-shrink: 0; }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body { padding: 0 1.5rem 1.5rem; }
+        .g-faq .faq-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; margin: 0; }
+
+        .g-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .g-endcap { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+        .g-endcap-author { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .g-endcap-av { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-family: var(--font-sans); font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+        .g-endcap-actions { display: flex; gap: 1rem; align-items: center; }
+        .g-endcap-actions button, .g-endcap-actions a { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; transition: all 0.25s; text-decoration: none; }
+        .g-endcap-actions button { background: var(--blue); color: #fff; border: none; }
+        .g-endcap-actions button:hover { background: var(--blue-dk); }
+        .g-endcap-actions a { color: var(--text-mid); border: 1px solid var(--border); background: transparent; }
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.2rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-section-head h2 { font-size: 1.6rem; }
+            .g-resource-grid { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .g-hero { padding: 2rem 1rem 0; }
+            .g-section { padding: 0 1rem 3rem; }
+            .g-toc { padding: 0 1rem; }
+            .g-hero-tags { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+    <div id="canvas-container" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-10;opacity:0.35;pointer-events:none;"></div>
+
+    <nav class="auto-nav">
+        <div class="inner">
+            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
+            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <ul class="nav-links-list" id="navLinks">
+                <li><a href="../">Back to Archive</a></li>
+                <li><a href="../../">Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auto-wrap" style="padding-top:5rem;">
+
+        <section class="g-hero">
+            <div class="g-hero-tags">
+                <span class="g-tag">AI Models</span>
+                <span class="g-tag">LLM</span>
+                <span class="g-tag">Pricing</span>
+            </div>
+            <h1>Choose the Right <em>AI Model</em> for n8n Workflows</h1>
+            <p class="g-hero-sub">Which LLM to use for tool calling, OCR, reasoning, coding, and creative writing inside n8n. Pricing, benchmarks, and practical recommendations for every use case.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
+
+            <div class="g-stats">
+                <div class="g-stat"><div class="g-stat-num">13+</div><div class="g-stat-label">Models Compared</div></div>
+                <div class="g-stat"><div class="g-stat-num">7</div><div class="g-stat-label">Use Cases</div></div>
+                <div class="g-stat"><div class="g-stat-num">$0.10</div><div class="g-stat-label">Cheapest /1M Tokens</div></div>
+                <div class="g-stat"><div class="g-stat-num">2026</div><div class="g-stat-label">Pricing</div></div>
+            </div>
+        </section>
+
+        <nav class="g-toc">
+            <div class="g-toc-label">In This Article</div>
+            <div class="g-toc-grid">
+                <a href="#framework"><span>01</span> The Decision Framework</a>
+                <a href="#models"><span>02</span> Models at a Glance</a>
+                <a href="#tools"><span>03</span> Tool Calling and Agents</a>
+                <a href="#reasoning"><span>04</span> Reasoning and Research</a>
+                <a href="#vision"><span>05</span> OCR, Scanning, and Vision</a>
+                <a href="#creative"><span>06</span> Creative Writing and Content</a>
+                <a href="#volume"><span>07</span> High-Volume Data Pipelines</a>
+                <a href="#coding"><span>08</span> Coding and Technical Tasks</a>
+                <a href="#cost"><span>09</span> The Cost Reality</a>
+            </div>
+        </nav>
+
+        <!-- 01 -->
+        <section id="framework" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>The Decision Framework</h2>
+            </div>
+            <p class="g-text">Every AI model sits on a spectrum of four variables: <strong>accuracy</strong>, <strong>speed</strong>, <strong>cost</strong>, and <strong>capability</strong>. No single model wins across all four. The right choice depends entirely on what your n8n workflow actually needs to accomplish.</p>
+            <p class="g-text">Before picking a model, answer these questions:</p>
+            <p class="g-text"><strong>What is the task?</strong> Tool calling (triggering other n8n nodes), document analysis, image processing, text generation, data classification, or code generation. Each category has clear leaders.</p>
+            <p class="g-text"><strong>What is your volume?</strong> A workflow processing 50 emails per day can afford GPT-4.1 at $2/million input tokens. A workflow classifying 50,000 product reviews cannot. Volume changes everything.</p>
+            <p class="g-text"><strong>What is your latency tolerance?</strong> A chatbot needs sub-second responses. A nightly batch job that processes reports can wait 30 seconds per call. Reasoning models like DeepSeek R1 think longer but produce better answers for complex tasks.</p>
+            <p class="g-text"><strong>Does it need to see images?</strong> Only multimodal models (GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro/Flash) can process screenshots, scanned documents, and photos. Text-only models cannot handle OCR or visual analysis.</p>
+
+            <div class="g-callout">
+                <p><strong>The n8n advantage:</strong> n8n's AI nodes are provider-agnostic. You can swap from GPT-4.1 to Claude Sonnet 4 by changing a single dropdown. Build your workflow once, then experiment with different models to find the best fit for your specific use case.</p>
+            </div>
+        </section>
+
+        <!-- 02 -->
+        <section id="models" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>Models at a Glance</h2>
+            </div>
+            <p class="g-text">Pricing is per 1 million tokens. One million tokens is roughly 750,000 words, far more than any single n8n workflow execution will use. For context, a typical email classification workflow uses 500 to 2,000 tokens per run.</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Provider</th>
+                            <th>Context</th>
+                            <th>Input $/1M</th>
+                            <th>Output $/1M</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="model-name">GPT-4.1</td>
+                            <td>OpenAI</td>
+                            <td class="mono">1M</td>
+                            <td class="mono">$2.00</td>
+                            <td class="mono">$8.00</td>
+                            <td>Tool calling, agents, coding</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">GPT-4.1 mini</td>
+                            <td>OpenAI</td>
+                            <td class="mono">1M</td>
+                            <td class="mono">$0.40</td>
+                            <td class="mono">$1.60</td>
+                            <td>Balanced cost/quality</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">GPT-4.1 nano</td>
+                            <td>OpenAI</td>
+                            <td class="mono">1M</td>
+                            <td class="mono">$0.10</td>
+                            <td class="mono">$0.40</td>
+                            <td>High-volume classification</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">GPT-4o</td>
+                            <td>OpenAI</td>
+                            <td class="mono">128K</td>
+                            <td class="mono">$2.50</td>
+                            <td class="mono">$10.00</td>
+                            <td>Multimodal, creative</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Claude Sonnet 4</td>
+                            <td>Anthropic</td>
+                            <td class="mono">200K</td>
+                            <td class="mono">$3.00</td>
+                            <td class="mono">$15.00</td>
+                            <td>Reasoning, coding, writing</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Claude Haiku 3.5</td>
+                            <td>Anthropic</td>
+                            <td class="mono">200K</td>
+                            <td class="mono">$0.80</td>
+                            <td class="mono">$4.00</td>
+                            <td>Fast classification, summaries</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Gemini 2.5 Pro</td>
+                            <td>Google</td>
+                            <td class="mono">1M</td>
+                            <td class="mono">$1.25</td>
+                            <td class="mono">$10.00</td>
+                            <td>Long docs, vision, reasoning</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Gemini 2.5 Flash</td>
+                            <td>Google</td>
+                            <td class="mono">1M</td>
+                            <td class="mono">$0.15</td>
+                            <td class="mono">$0.60</td>
+                            <td>Budget vision, fast tasks</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">DeepSeek R1</td>
+                            <td>DeepSeek</td>
+                            <td class="mono">128K</td>
+                            <td class="mono">$0.55</td>
+                            <td class="mono">$2.19</td>
+                            <td>Deep reasoning, math, logic</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">DeepSeek V3</td>
+                            <td>DeepSeek</td>
+                            <td class="mono">128K</td>
+                            <td class="mono">$0.27</td>
+                            <td class="mono">$1.10</td>
+                            <td>General tasks on a budget</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Llama 4 Maverick</td>
+                            <td>Meta (via Groq/Together)</td>
+                            <td class="mono">1M</td>
+                            <td class="mono">~$0.20</td>
+                            <td class="mono">~$0.60</td>
+                            <td>Open-weight, self-hostable</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Mistral Large</td>
+                            <td>Mistral</td>
+                            <td class="mono">128K</td>
+                            <td class="mono">$2.00</td>
+                            <td class="mono">$6.00</td>
+                            <td>EU compliance, multilingual</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Qwen 3</td>
+                            <td>Alibaba (via providers)</td>
+                            <td class="mono">128K</td>
+                            <td class="mono">~$0.15</td>
+                            <td class="mono">~$0.60</td>
+                            <td>Budget tasks, multilingual</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="g-text" style="font-size:0.85rem;color:var(--text-dim);">Prices reflect direct API pricing as of mid-2026. Prices via inference providers like OpenRouter, Groq, or Together AI may differ. Context windows shown are the advertised maximum.</p>
+        </section>
+
+        <!-- 03 -->
+        <section id="tools" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>Tool Calling and Agents</h2>
+            </div>
+            <p class="g-text">Tool calling is the backbone of n8n AI Agents. The model receives a task, decides which n8n nodes (tools) to execute and in what order, formats valid JSON arguments, evaluates the results, and decides the next step. A model that hallucinates tool arguments or returns malformed JSON will break your entire workflow.</p>
+            <p class="g-text"><strong>Top picks for n8n agents:</strong></p>
+            <p class="g-text"><strong>GPT-4.1</strong> is the industry leader for function calling. OpenAI pioneered this capability and their models are rigorously fine-tuned to return syntactically valid JSON. If your agent needs to execute 5 different tools in a specific sequence, GPT-4.1 has the highest reliability. GPT-4.1 mini offers nearly the same tool calling quality at one-fifth the cost.</p>
+            <p class="g-text"><strong>Claude Sonnet 4</strong> has excellent tool calling with the added benefit of superior reasoning about when to use which tool. It tends to make better decisions about tool ordering in complex multi-step scenarios, even if the raw JSON reliability is slightly below GPT-4.1.</p>
+            <p class="g-text"><strong>Gemini 2.5 Pro</strong> is competitive with both, especially for workflows that also require vision capabilities alongside tool use.</p>
+
+            <div class="g-callout warn">
+                <p><strong>Avoid for agents:</strong> DeepSeek R1 has strong reasoning but unreliable tool calling. Its chain-of-thought process sometimes produces verbose explanations instead of clean JSON tool calls. Use it for analysis, not for driving n8n agent workflows.</p>
+            </div>
+        </section>
+
+        <!-- 04 -->
+        <section id="reasoning" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>Reasoning and Research</h2>
+            </div>
+            <p class="g-text">When your workflow reads a 50-page contract, finds logical inconsistencies, cross-references clauses, and produces a structured summary, you need deep reasoning. Speed matters less here. Accuracy and coherence over long contexts matter more.</p>
+            <p class="g-text"><strong>Claude Sonnet 4</strong> excels at maintaining logical consistency across long documents. Its 200K context window handles massive inputs without the "lost in the middle" problem that affects some models. For legal analysis, technical research, and complex document processing, it is the most reliable choice.</p>
+            <p class="g-text"><strong>DeepSeek R1</strong> implements internal chain-of-thought reasoning before producing an answer. For mathematical proofs, structural data analysis, and problems requiring step-by-step logic, it often outperforms models that cost ten times more. The tradeoff is latency: R1 thinks longer before answering.</p>
+            <p class="g-text"><strong>Gemini 2.5 Pro</strong> has a 1M token context window, the largest of any major model. If your n8n workflow needs to process an entire codebase, a full book, or months of chat logs in a single call, Gemini is the only model that can handle it without chunking.</p>
+
+            <div class="g-callout">
+                <p><strong>Practical tip:</strong> Instead of feeding massive documents to a model directly, use n8n's Vector Store integration. Chunk your documents, embed them, and let the AI agent retrieve only the relevant sections. This reduces costs, improves accuracy, and works with any model regardless of context window size.</p>
+            </div>
+        </section>
+
+        <!-- 05 -->
+        <section id="vision" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>OCR, Scanning, and Vision</h2>
+            </div>
+            <p class="g-text">Vision capabilities let your n8n workflow process screenshots, scanned invoices, handwritten notes, product photos, and any other image. Not all models support this, and quality varies significantly.</p>
+            <p class="g-text"><strong>GPT-4.1</strong> and <strong>GPT-4o</strong> have excellent vision. They can read dense tables from scanned PDFs, extract data from receipts, and describe complex diagrams with high accuracy. GPT-4o tends to produce slightly more detailed visual descriptions.</p>
+            <p class="g-text"><strong>Claude Sonnet 4</strong> is exceptional at understanding the spatial layout and visual hierarchy of documents. For workflows that process structured forms, it often extracts data more accurately than GPT-4 because it better understands how fields relate to their labels.</p>
+            <p class="g-text"><strong>Gemini 2.5 Flash</strong> is the budget option for vision. At $0.15 per million input tokens, it is roughly 13x cheaper than GPT-4.1 for image processing. Quality is lower on complex layouts, but for basic OCR, receipt scanning, and simple image classification, it gets the job done at a fraction of the cost.</p>
+
+            <div class="g-callout">
+                <p><strong>n8n workflow pattern:</strong> Use the HTTP Request node to fetch an image, pass it to a vision-enabled LLM via the AI Agent or Basic LLM Chain node, and extract structured data as JSON. Then route that JSON to a spreadsheet, database, or CRM node.</p>
+            </div>
+        </section>
+
+        <!-- 06 -->
+        <section id="creative" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>Creative Writing and Content</h2>
+            </div>
+            <p class="g-text">For generating blog posts, marketing emails, product descriptions, social media captions, and other content, the model's writing style and tone control matter most.</p>
+            <p class="g-text"><strong>Claude Sonnet 4</strong> is widely regarded as the best writer among current LLMs. Its prose is natural, avoids robotic patterns, and it follows tone/style instructions precisely. For long-form content generation in n8n (newsletters, article drafts, detailed reports), Claude produces the most polished output.</p>
+            <p class="g-text"><strong>GPT-4o</strong> has a distinctive creative flair and is excellent at adapting to brand voices. It tends to be more enthusiastic and energetic in its writing style, which works well for marketing copy and social media content.</p>
+            <p class="g-text"><strong>For bulk content on a budget:</strong> GPT-4.1 mini or Gemini 2.5 Flash can generate acceptable drafts at a fraction of the cost. The quality gap is noticeable for premium content, but for internal communications, draft generation, and template-based content, they are more than sufficient.</p>
+        </section>
+
+        <!-- 07 -->
+        <section id="volume" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>High-Volume Data Pipelines</h2>
+            </div>
+            <p class="g-text">When your n8n workflow splits 5,000 product reviews through an Item Lists node and runs each through an LLM for sentiment analysis, cost becomes the dominant factor. Using GPT-4.1 at $2/million input tokens for 5,000 items is manageable. Using it for 500,000 items is not.</p>
+            <p class="g-text"><strong>GPT-4.1 nano</strong> at $0.10 per million input tokens is purpose-built for this. It handles binary classifications (positive/negative), keyword extraction, simple categorization, and data normalization at near-zero cost. For a batch of 10,000 short texts, input costs are roughly $0.005.</p>
+            <p class="g-text"><strong>Gemini 2.5 Flash</strong> at $0.15/million input tokens is another strong option, especially if your items include images or need slightly more nuanced analysis than nano can provide.</p>
+            <p class="g-text"><strong>Open-weight models via Groq or Together AI:</strong> If you need maximum throughput, Groq serves Llama models at extraordinary speeds (hundreds of tokens per second). For latency-sensitive batch jobs, Groq's speed combined with open-model pricing creates the fastest pipeline possible.</p>
+
+            <div class="g-callout warn">
+                <p><strong>The context window trap:</strong> It is tempting to concatenate 1,000 items into one massive prompt. Do not do this. Attention dilution causes the model to forget or hallucinate items in the middle. Instead, use n8n's Split In Batches or Item Lists nodes to process items individually or in small groups of 5 to 10.</p>
+            </div>
+        </section>
+
+        <!-- 08 -->
+        <section id="coding" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>Coding and Technical Tasks</h2>
+            </div>
+            <p class="g-text">n8n workflows often need LLMs to generate code: building JSON schemas, writing regex patterns, creating SQL queries, or producing JavaScript for the Code node. The model must produce syntactically valid, executable code on the first attempt.</p>
+            <p class="g-text"><strong>Claude Sonnet 4</strong> consistently leads coding benchmarks. It writes clean, well-structured code, handles edge cases proactively, and follows instructions about output format precisely. For workflows that use the Code node to transform data with AI-generated JavaScript, Claude produces the most reliable results.</p>
+            <p class="g-text"><strong>GPT-4.1</strong> is excellent for structured output. When you need the model to return valid JSON matching a specific schema (common in n8n data transformation workflows), GPT-4.1's training on structured output makes it exceptionally reliable.</p>
+            <p class="g-text"><strong>DeepSeek V3</strong> punches far above its price point for coding tasks. At $0.27 per million input tokens, it produces code quality comparable to models costing ten times more. If your n8n workflow generates code frequently and cost matters, DeepSeek V3 is the best value.</p>
+        </section>
+
+        <!-- 09 -->
+        <section id="cost" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">09</span>
+                <h2>The Cost Reality</h2>
+            </div>
+            <p class="g-text">Here is what common n8n workflow patterns actually cost per month, assuming typical token usage per execution:</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Workflow Pattern</th>
+                            <th>Runs/Month</th>
+                            <th>Tokens/Run</th>
+                            <th>GPT-4.1</th>
+                            <th>Claude Sonnet 4</th>
+                            <th>GPT-4.1 nano</th>
+                            <th>Gemini Flash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="model-name">Email classifier</td>
+                            <td class="mono">1,000</td>
+                            <td class="mono">~1K</td>
+                            <td class="mono">$0.01</td>
+                            <td class="mono">$0.02</td>
+                            <td class="mono">$0.0005</td>
+                            <td class="mono">$0.0008</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">AI chatbot</td>
+                            <td class="mono">5,000</td>
+                            <td class="mono">~3K</td>
+                            <td class="mono">$0.15</td>
+                            <td class="mono">$0.27</td>
+                            <td class="mono">N/A</td>
+                            <td class="mono">$0.01</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Document analysis</td>
+                            <td class="mono">200</td>
+                            <td class="mono">~20K</td>
+                            <td class="mono">$0.12</td>
+                            <td class="mono">$0.21</td>
+                            <td class="mono">N/A</td>
+                            <td class="mono">$0.01</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">Batch sentiment (50K items)</td>
+                            <td class="mono">50,000</td>
+                            <td class="mono">~500</td>
+                            <td class="mono">$0.60</td>
+                            <td class="mono">$1.05</td>
+                            <td class="mono">$0.03</td>
+                            <td class="mono">$0.05</td>
+                        </tr>
+                        <tr>
+                            <td class="model-name">AI agent (multi-tool)</td>
+                            <td class="mono">500</td>
+                            <td class="mono">~10K</td>
+                            <td class="mono">$0.30</td>
+                            <td class="mono">$0.53</td>
+                            <td class="mono">N/A</td>
+                            <td class="mono">$0.04</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="g-text" style="font-size:0.85rem;color:var(--text-dim);">Costs shown are approximate input token costs only. Output tokens cost more (2x to 5x input price). Actual costs depend on prompt length, response length, and caching. "N/A" means the model is not recommended for that task type.</p>
+
+            <p class="g-text">The key takeaway: for most n8n workflows, AI model costs are negligible. Even GPT-4.1 costs pennies per month for typical automation volumes. The model choice should be driven by quality and reliability first, cost second, unless you are processing tens of thousands of items per day.</p>
+
+            <div class="g-callout">
+                <p><strong>Related reading:</strong></p>
+                <ul>
+                    <li><a href="/n8n/guide/ai-inference-providers/">AI Inference Providers for n8n: Compare OpenRouter, Groq, Together AI, and more</a></li>
+                    <li><a href="/n8n/guide/what-is-n8n/">What is n8n? The Complete Introduction</a></li>
+                    <li><a href="/n8n/guide/how-to-setup-n8n/">How to Setup n8n</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">?</span>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="g-faq">
+                <details>
+                    <summary>Can I use multiple models in the same n8n workflow?</summary>
+                    <div class="faq-body"><p>Yes. You can use a cheap model like GPT-4.1 nano to classify incoming data, then route complex items to Claude Sonnet 4 for deep analysis. Use n8n's IF or Switch nodes to build these routing patterns. This gives you the best quality where it matters and the lowest cost everywhere else.</p></div>
+                </details>
+                <details>
+                    <summary>Which model should I start with if I have never used AI in n8n?</summary>
+                    <div class="faq-body"><p>Start with GPT-4.1 mini. It offers the best balance of cost, speed, and quality for most workflow types. Once your workflow is running, experiment with other models to see if you can get better results for your specific use case.</p></div>
+                </details>
+                <details>
+                    <summary>Can I run open-source models locally with n8n?</summary>
+                    <div class="faq-body"><p>Yes. n8n has a native Ollama integration. Install Ollama on your server, pull a model like Llama 3 or Qwen 3, and connect it to n8n. Local models have zero API costs but require significant GPU/CPU resources and have slower inference on consumer hardware.</p></div>
+                </details>
+                <details>
+                    <summary>Does n8n support streaming responses from LLMs?</summary>
+                    <div class="faq-body"><p>n8n processes LLM responses as complete outputs, not streams. The workflow waits for the full response before passing it to the next node. This means there is no visible difference between streaming and non-streaming models in terms of workflow behavior. Latency (time to full response) is what matters.</p></div>
+                </details>
+                <details>
+                    <summary>How do I handle rate limits from AI providers in n8n?</summary>
+                    <div class="faq-body"><p>Use n8n's built-in retry mechanism (available on every node) combined with the Split In Batches node to control throughput. Set a wait time between batches to stay within your provider's rate limits. For high-volume workflows, consider using multiple API keys or switching to providers like Groq that offer higher rate limits.</p></div>
+                </details>
+                <details>
+                    <summary>What about data privacy with cloud AI providers?</summary>
+                    <div class="faq-body"><p>Most major providers (OpenAI, Anthropic, Google) do not train on API inputs by default. However, if data residency is critical, consider using Mistral (EU-hosted), self-hosted open models via Ollama, or check your provider's data processing agreement. n8n itself, when self-hosted, keeps your workflow data on your own infrastructure.</p></div>
+                </details>
+            </div>
+        </section>
+
+        <!-- ENDCAP -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
                 </div>
-            </main>
-            
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <!-- Reading Progress -->
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>4 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
-                    </div>
-                    
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <!-- Written By Section -->
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
-
-                    <!-- Quick Links Section -->
-                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" class="sb-link">AI Model Leaderboards ↗</a></li>
-                        <li><a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" class="sb-link">OpenAI Tool Calling Docs ↗</a></li>
-                        <li><a href="https://docs.n8n.io/advanced-ai/" target="_blank" class="sb-link">n8n Advanced AI Nodes ↗</a></li>
-                    </ul>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-                    
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-                    
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">← Back to Archive</span>
-                    </a>
-                </div>
-            </aside>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                © 2026 <a href="../../../">Anshul Namdev</a>
-            </div>
+        <footer class="auto-footer" style="margin-top:4rem;border-top:1px solid var(--border);padding-top:3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
-    <!-- 3D Geometry Animation for Sidebar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
-    
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if(contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        document.addEventListener('scroll', () => {
+            const total = document.body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
-
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
                     });
                 }
             });
         }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>License and Regulations in n8n - n8n Guide</title>
-    <meta name="description" content="A definitive breakdown of n8n's fair-code Sustainable Use License (SUL). Learn exactly what commercial usage is permitted and what is strictly prohibited.">
-    <meta property="og:title" content="License and Regulations in n8n - n8n Guide">
-    <meta property="og:description" content="A definitive breakdown of n8n's fair-code Sustainable Use License (SUL). Learn exactly what commercial usage is permitted and what is strictly prohibited.">
+    <title>n8n License and Regulations - n8n Guide</title>
+    <meta name="description" content="A complete breakdown of n8n's Sustainable Use License, fair-code model, n8n Embed, Enterprise License, and what you can and cannot do commercially.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="n8n license, Sustainable Use License, fair-code, n8n commercial use, n8n Embed, n8n Enterprise License, n8n legal">
+    <meta property="og:title" content="n8n License and Regulations">
+    <meta property="og:description" content="A complete breakdown of n8n's Sustainable Use License, fair-code model, and what you can and cannot do commercially with n8n.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
     <meta name="twitter:card" content="summary_large_image">
@@ -21,170 +23,411 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "n8n License and Regulations",
+      "description": "A complete breakdown of n8n's Sustainable Use License, fair-code model, n8n Embed, Enterprise License, and what you can and cannot do commercially.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-03-21",
+      "dateModified": "2026-06-29",
+      "url": "https://axshul.site/n8n/guide/license-and-regulations/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
+    }
+    </script>
+
+    <style>
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+        .g-hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 0; text-align: center; }
+        .g-hero-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+        .g-tag { background: var(--bg-off); border: 1px solid var(--border); color: var(--text-dim); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+        .g-hero h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .g-hero h1 em { font-style: italic; color: var(--blue); }
+        .g-hero-sub { font-family: var(--font-sans); font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; max-width: 600px; margin: 0 auto 2rem; }
+        .g-hero-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 3rem; }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+        .g-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 700px; margin: 0 auto 4rem; }
+        .g-stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+        .g-stat-num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
+        .g-stat-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+        .g-toc { max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem; }
+        .g-toc-label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.25rem; }
+        .g-toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 3rem; }
+        .g-toc-grid a { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-mid); display: flex; align-items: baseline; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.25s; }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); font-weight: 700; min-width: 1.5rem; }
+        .g-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 5rem; }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .g-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 0.1em; font-weight: 700; flex-shrink: 0; }
+        .g-section-head h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--text); margin: 0; line-height: 1.2; }
+        .g-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text strong { color: var(--text); }
+        .g-text code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-callout { background: var(--bg-off); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul { margin: 0.75rem 0 0; padding-left: 1.25rem; list-style: disc; display: flex; flex-direction: column; gap: 0.4rem; }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+        .g-path-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2.5rem 0; }
+        .g-path-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem 2rem; display: flex; flex-direction: column; transition: border-color 0.3s, box-shadow 0.3s; }
+        .g-path-card:hover { border-color: var(--blue); box-shadow: 0 4px 24px rgba(215,38,56,0.06); }
+        .g-path-label { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; }
+        .g-path-card h3 { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; }
+        .g-path-card ul { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+        .g-path-card li { font-size: 0.9rem; color: var(--text-mid); padding-left: 1.25rem; position: relative; }
+        .g-path-card li::before { content: '-'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+        .g-faq { margin: 2rem 0; }
+        .g-faq details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.3s; }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary { padding: 1.25rem 1.5rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none; transition: color 0.3s; user-select: none; }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-dim); flex-shrink: 0; }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body { padding: 0 1.5rem 1.5rem; }
+        .g-faq .faq-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; margin: 0 0 0.75rem; }
+        .g-faq .faq-body p:last-child { margin: 0; }
+        .g-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+        .g-endcap { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+        .g-endcap-author { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .g-endcap-av { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-family: var(--font-sans); font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+        .g-endcap-actions { display: flex; gap: 1rem; align-items: center; }
+        .g-endcap-actions button, .g-endcap-actions a { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; transition: all 0.25s; text-decoration: none; }
+        .g-endcap-actions button { background: var(--blue); color: #fff; border: none; }
+        .g-endcap-actions button:hover { background: var(--blue-dk); }
+        .g-endcap-actions a { color: var(--text-mid); border: 1px solid var(--border); background: transparent; }
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.2rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-section-head h2 { font-size: 1.6rem; }
+            .g-path-grid { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .g-hero { padding: 2rem 1rem 0; }
+            .g-section { padding: 0 1rem 3rem; }
+            .g-toc { padding: 0 1rem; }
+        }
+    </style>
 </head>
 <body>
-    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+    <div id="canvas-container" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-10;opacity:0.35;pointer-events:none;"></div>
+
     <nav class="auto-nav">
         <div class="inner">
             <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
             <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
             <ul class="nav-links-list" id="navLinks">
-                <li><a href="../">← Back to Archive</a></li>
+                <li><a href="../">Back to Archive</a></li>
                 <li><a href="../../">Hub</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="auto-wrap" style="padding-top: 5rem;">
-        <div class="reader-layout">
-            <main class="reader-main">
-                <header class="reader-header stagger-in">
-                    <div class="reader-tags">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Architecture</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Strategy</span>
-                    </div>
-                    <h1 class="reader-title">Navigating n8n Licenses: What You Can and Cannot Do</h1>
-                    <div class="reader-meta">Published on Mar 21, 2026 · By Anshul Namdev</div>
-                </header>
+    <div class="auto-wrap" style="padding-top:5rem;">
 
-                <div class="reader-body">
-                    <h2>Fair-Code vs Open Source</h2>
-                    <p>It is a common misconception that n8n is strictly "Open Source." According to the Open Source Initiative (OSI), true open-source licenses cannot legally limit what you do with the software commercially. Instead, n8n operates on a <strong>fair-code</strong> model. Their source code is 100% visible and modifiable by the public, but they invoke commercial restrictions to prevent massive corporations from ripping off their product and putting them out of business.</p>
+        <section class="g-hero">
+            <div class="g-hero-tags">
+                <span class="g-tag">Licensing</span>
+                <span class="g-tag">Strategy</span>
+                <span class="g-tag">Compliance</span>
+            </div>
+            <h1>n8n License and <em>Regulations</em></h1>
+            <p class="g-hero-sub">What the Sustainable Use License means for your business, what you can and cannot do, and how n8n Embed and Enterprise licensing work.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
 
-                    <h2>The Sustainable Use License (SUL)</h2>
-                    <p>Almost everything hosted on the primary n8n GitHub repository (excluding specific enterprise files) falls under the <strong>Sustainable Use License (SUL)</strong>, a license pioneered by n8n themselves. The golden rule of this license is that you may use, modify, and distribute n8n freely - <strong>as long as it is for your "internal business purposes" or non-commercial use.</strong></p>
+            <div class="g-stats">
+                <div class="g-stat"><div class="g-stat-num">SUL</div><div class="g-stat-label">License Type</div></div>
+                <div class="g-stat"><div class="g-stat-num">Fair-Code</div><div class="g-stat-label">Model</div></div>
+                <div class="g-stat"><div class="g-stat-num">Embed</div><div class="g-stat-label">Commercial Option</div></div>
+                <div class="g-stat"><div class="g-stat-num">.ee.</div><div class="g-stat-label">Enterprise Files</div></div>
+            </div>
+        </section>
 
-                    <h2>What is STRICTLY PROHIBITED </h2>
-                    <p>Under the SUL, you cannot sell a product or service where the inherent value is derived <em>substantially</em> from n8n's engine. If you violate these terms, your license is immediately terminated.</p>
-                    
+        <nav class="g-toc">
+            <div class="g-toc-label">In This Article</div>
+            <div class="g-toc-grid">
+                <a href="#faircode"><span>01</span> Fair-Code vs Open Source</a>
+                <a href="#sul"><span>02</span> The Sustainable Use License</a>
+                <a href="#prohibited"><span>03</span> What is Strictly Prohibited</a>
+                <a href="#allowed"><span>04</span> What is Completely Allowed</a>
+                <a href="#enterprise"><span>05</span> The Enterprise License</a>
+                <a href="#embed"><span>06</span> n8n Embed</a>
+                <a href="#grey"><span>07</span> Grey Areas and Common Questions</a>
+                <a href="#clarity"><span>08</span> Getting Clarity</a>
+            </div>
+        </nav>
+
+        <!-- 01 -->
+        <section id="faircode" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>Fair-Code vs Open Source</h2>
+            </div>
+            <p class="g-text">A common misconception is that n8n is "open source." It is not, at least not by the strict definition of the Open Source Initiative (OSI). True open-source licenses (MIT, Apache 2.0, GPL) cannot legally restrict what you do with the software commercially. You can fork it, sell it, compete with it. The OSI definition is absolute on this point.</p>
+            <p class="g-text">n8n operates on a <strong>fair-code</strong> model instead. Their entire source code is publicly available on GitHub. You can read every line, modify it, contribute to it, and run it for your own purposes. The restriction is narrow but critical: you cannot use n8n's code to build a competing product or service.</p>
+            <p class="g-text"><strong>The licensing history matters.</strong> n8n originally launched under the Apache 2.0 license in 2019, a fully permissive open-source license. In 2020, they switched to the Commons Clause (which prohibited selling the software), and in 2022 they moved to the current Sustainable Use License (SUL). Each transition was driven by the same concern: preventing large companies from taking n8n's code, wrapping it in their own branding, and selling it as a competing hosted service without contributing back.</p>
+            <p class="g-text">The practical impact for most users is zero. If you are using n8n to automate your own business processes, build workflows for clients, or run internal tools, the license imposes no restrictions on you whatsoever.</p>
+        </section>
+
+        <!-- 02 -->
+        <section id="sul" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>The Sustainable Use License (SUL)</h2>
+            </div>
+            <p class="g-text">Almost everything in the n8n GitHub repository (excluding files with <code>.ee.</code> in the name) falls under the <strong>Sustainable Use License</strong>, a license pioneered by n8n themselves.</p>
+            <p class="g-text">The golden rule is simple: you may use, modify, and distribute n8n freely, as long as it is for your <strong>internal business purposes</strong> or <strong>non-commercial use</strong>.</p>
+            <p class="g-text">"Internal business purposes" means automating your own company's operations. Your CRM syncs, your lead routing, your data pipelines, your reporting workflows. The automation serves your business internally. It does not matter if your business is commercial, if you make money from the outcomes of those automations, or how many workflows you run. Internal use is unrestricted.</p>
+            <p class="g-text">"Non-commercial use" covers personal projects, education, research, and hobby automation. Students, tinkerers, and researchers can use n8n without any licensing concerns.</p>
+
+            <div class="g-callout">
+                <p><strong>Key distinction:</strong> The license restricts how you distribute and sell n8n itself, not what you build with it. Your workflows, your automations, your data, and the results they produce are entirely yours. The license does not claim any ownership or impose any restrictions on the output of your automations.</p>
+            </div>
+        </section>
+
+        <!-- 03 -->
+        <section id="prohibited" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>What is Strictly Prohibited</h2>
+            </div>
+            <p class="g-text">Under the SUL, you cannot sell a product or service where the primary value is derived from n8n's engine. If you violate these terms, your license is immediately and automatically terminated.</p>
+
+            <div class="g-path-grid">
+                <div class="g-path-card" style="border-color:rgba(239,68,68,0.3);">
+                    <div class="g-path-label" style="color:#ef4444;">White-Labeling</div>
+                    <h3>Rebranding n8n</h3>
                     <ul>
-                        <li><strong>White-Labeling:</strong> You cannot skin the n8n UI with your own logo and sell access to it as your own workflow platform.</li>
-                        <li><strong>Commercial Hosting:</strong> You cannot spin up instances of n8n on your own servers and charge clients a monthly fee to just "access and use" n8n. If you want to do this, you become a competitor to n8n Cloud.</li>
-                        <li><strong>User-Credentialed SaaS Backends:</strong> You cannot use n8n silently in the background of your SaaS app to fetch a user's data using <strong>their</strong> credentials. For example, if you build an app where your user logs into their HubSpot account, and you map those credentials into n8n to sync their data, you are violating the license.</li>
+                        <li>Skinning the n8n UI with your own logo</li>
+                        <li>Selling access to it as your own platform</li>
+                        <li>Presenting n8n as your proprietary technology</li>
                     </ul>
-
-                    <h2>What is COMPLETELY ALLOWED </h2>
-                    <p>The license is highly permissive for internal tooling and consulting architectures.</p>
-
+                </div>
+                <div class="g-path-card" style="border-color:rgba(239,68,68,0.3);">
+                    <div class="g-path-label" style="color:#ef4444;">Commercial Hosting</div>
+                    <h3>Selling n8n Access</h3>
                     <ul>
-                        <li><strong>Internal Data Sync:</strong> Syncing your company's own CRM to your internal PostgreSQL database.</li>
-                        <li><strong>Selling Consulting Services:</strong> You are 100% legally allowed to be an n8n Expert and charge clients $150/hr to <em>build</em> workflows for them, maintain their internal servers, or write custom nodes. <em>(Note: n8n actually removed their old Commons Clause license specifically so consultants could do this!)</em></li>
-                        <li><strong>Company-Credentialed SaaS Backends:</strong> If you embed an AI Chatbot into your app, and n8n handles the webhooks using <strong>your company's</strong> OpenAI API keys to reply to the user, this is perfectly fine. The user is not supplying credentials.</li>
-                        <li><strong>Creating Official Integrations:</strong> Building an n8n node for your SaaS product to allow other n8n users to connect to your service.</li>
+                        <li>Spinning up n8n instances on your servers</li>
+                        <li>Charging clients a monthly fee to use them</li>
+                        <li>Competing directly with n8n Cloud</li>
                     </ul>
-
-                    <h2>Need to bypass these restrictions?</h2>
-                    <p>If your startup's entire business model revolves around white-labeling n8n or embedding it deeply into a user-facing SaaS where users provide their own app credentials, n8n allows this through a separate commercial agreement called <strong>n8n Embed</strong>. This requires opening a dialogue with their sales team.</p>
-
-                    <p>Additionally, certain highly advanced features inside the n8n codebase (files with `.ee.` in the name) fall under the proprietary <strong>n8n Enterprise License</strong>. These features are strictly locked behind paid enterprise subscription tiers for production environments.</p>
-
-                    <hr style="border: 0; border-top: 1px solid var(--border); margin: 3rem 0;">
-                    <p><em>Disclaimer: This article is an architectural synopsis, not formal legal advice. If your use-case resides in a grey area, you should email n8n directly at <strong>license@n8n.io</strong>.</em></p>
-
                 </div>
-            </main>
-            
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <!-- Reading Progress -->
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>4 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
-                    </div>
-                    
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+            </div>
 
-                    <!-- Written By Section -->
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
+            <p class="g-text"><strong>User-credentialed SaaS backends</strong> are also prohibited. This is the subtlest violation. If you build a SaaS app where your user logs into their HubSpot account, and you route those credentials through n8n to sync their data, you are violating the license. The key factor: the end user's credentials are flowing through n8n, making n8n a core part of the service you are selling to them.</p>
 
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+            <div class="g-callout warn">
+                <p><strong>Important:</strong> These restrictions apply regardless of whether you charge money. Offering free hosted n8n instances to attract users to a broader platform still violates the license if the value proposition depends on n8n's capabilities.</p>
+            </div>
+        </section>
 
-                    <!-- Quick Links Section -->
-                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://docs.n8n.io/hosting/license/" target="_blank" class="sb-link">Official SUL Documentation ↗</a></li>
-                        <li><a href="mailto:license@n8n.io" class="sb-link">Contact n8n Legal Team ↗</a></li>
-                        <li><a href="https://n8n.io/embed/" target="_blank" class="sb-link">Explore n8n Embed ↗</a></li>
+        <!-- 04 -->
+        <section id="allowed" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>What is Completely Allowed</h2>
+            </div>
+            <p class="g-text">The license is highly permissive for internal tooling and consulting. Here is what you can do without any commercial agreement:</p>
+
+            <div class="g-path-grid">
+                <div class="g-path-card" style="border-color:rgba(34,197,94,0.3);">
+                    <div class="g-path-label" style="color:#22c55e;">Internal Automation</div>
+                    <h3>Your Own Business</h3>
+                    <ul>
+                        <li>Syncing your CRM to your database</li>
+                        <li>Automating internal reporting and alerts</li>
+                        <li>Processing orders, invoices, and emails</li>
+                        <li>Running AI agents on your own data</li>
                     </ul>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-                    
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-                    
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">← Back to Archive</span>
-                    </a>
                 </div>
-            </aside>
+                <div class="g-path-card" style="border-color:rgba(34,197,94,0.3);">
+                    <div class="g-path-label" style="color:#22c55e;">Consulting and Services</div>
+                    <h3>Building for Clients</h3>
+                    <ul>
+                        <li>Charging clients to build workflows</li>
+                        <li>Managing client n8n instances</li>
+                        <li>Writing custom n8n nodes</li>
+                        <li>Training and implementation services</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="g-text"><strong>Company-credentialed SaaS backends</strong> are also allowed. If you embed an AI chatbot into your app, and n8n handles the webhooks using your company's own API keys to respond to users, this is perfectly fine. The distinction is whose credentials flow through n8n: yours (allowed) versus your end user's (prohibited).</p>
+            <p class="g-text"><strong>Building community nodes</strong> is encouraged. Creating an n8n integration node for your SaaS product so other n8n users can connect to your service is allowed and actively supported by n8n's community node ecosystem.</p>
+            <p class="g-text"><strong>Contributing to n8n's codebase</strong> is welcomed. Pull requests, bug reports, documentation improvements, and community support are all part of the fair-code model.</p>
+
+            <div class="g-callout">
+                <p><strong>Historical note:</strong> n8n specifically removed their old Commons Clause license in part to ensure that consultants and freelancers could charge for n8n-related services. The current SUL was designed to protect n8n from direct competition while enabling a thriving ecosystem of service providers.</p>
+            </div>
+        </section>
+
+        <!-- 05 -->
+        <section id="enterprise" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>The Enterprise License</h2>
+            </div>
+            <p class="g-text">Within the n8n codebase, certain files contain <code>.ee.</code> in their filename. These files fall under a separate proprietary <strong>n8n Enterprise License</strong>, not the SUL. They contain features that are strictly gated behind paid plans.</p>
+            <p class="g-text">Enterprise-only features include:</p>
+            <p class="g-text"><strong>SSO and SAML/LDAP</strong> for integrating with enterprise identity providers like Okta, Azure AD, or Google Workspace. <strong>Git-based version control</strong> for pushing workflow definitions to a repository and managing branches. <strong>External secret stores</strong> for connecting to HashiCorp Vault or AWS Secrets Manager. <strong>Log streaming</strong> to Datadog, Splunk, or other observability platforms. <strong>Multiple deployment environments</strong> for dev, staging, and production separation. <strong>Projects</strong> for workspace-level organization with fine-grained access controls.</p>
+            <p class="g-text">These features exist in the public source code (you can read them), but they will not activate without a valid Enterprise license key. Attempting to enable them without a license violates the n8n Enterprise License terms.</p>
+
+            <div class="g-callout">
+                <p><strong>Related:</strong> For a detailed breakdown of which features are included at each tier, see <a href="/n8n/guide/n8n-cloud-plans/">n8n Cloud Plans Breakdown</a> and <a href="/n8n/guide/n8n-community-edition/">n8n Community Edition: Features, Limits, and Free Unlocks</a>.</p>
+            </div>
+        </section>
+
+        <!-- 06 -->
+        <section id="embed" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>n8n Embed</h2>
+            </div>
+            <p class="g-text">If your business model requires white-labeling n8n or embedding it deeply into a user-facing product, n8n offers a separate commercial agreement called <strong>n8n Embed</strong>.</p>
+            <p class="g-text">n8n Embed is designed for SaaS platforms that want to offer automation capabilities to their own users. Instead of building a workflow engine from scratch, you license n8n's engine and integrate it into your product. Your users interact with automation features powered by n8n, but branded as part of your platform.</p>
+            <p class="g-text"><strong>Common n8n Embed use cases:</strong></p>
+            <p class="g-text">CRM platforms adding workflow automation for their users. Project management tools offering integration capabilities. Customer support platforms building automated ticket routing. Marketing platforms enabling multi-channel campaign automation.</p>
+            <p class="g-text">n8n Embed requires a direct commercial agreement with n8n's sales team. Pricing is custom and based on your expected usage, number of end users, and deployment model. This is not a self-serve product. You can explore the details and contact their team at <a href="https://n8n.io/embed/" target="_blank">n8n.io/embed</a>.</p>
+        </section>
+
+        <!-- 07 -->
+        <section id="grey" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>Grey Areas and Common Questions</h2>
+            </div>
+            <div class="g-faq">
+                <details>
+                    <summary>Can I charge clients for n8n workflows I build?</summary>
+                    <div class="faq-body"><p>Yes, absolutely. You can charge any amount for consulting, implementation, maintenance, training, and workflow development services. The license explicitly permits this. You are selling your expertise and time, not n8n itself.</p></div>
+                </details>
+                <details>
+                    <summary>Can I run one n8n instance for multiple clients?</summary>
+                    <div class="faq-body"><p>This depends on the arrangement. If you are managing the instance and the workflows use your own credentials, this is allowed. If each client logs into the n8n UI directly and manages their own credentials within it, you are effectively hosting n8n as a service, which crosses into prohibited territory. The safest approach for agencies is to help each client set up and manage their own instance.</p></div>
+                </details>
+                <details>
+                    <summary>Can I fork n8n and modify the source code?</summary>
+                    <div class="faq-body"><p>You can modify the code for your own internal use. You can contribute changes back to n8n via pull requests. You cannot fork n8n and distribute your modified version as a competing product or service.</p></div>
+                </details>
+                <details>
+                    <summary>Can I use n8n in a regulated industry (healthcare, fintech)?</summary>
+                    <div class="faq-body"><p>Yes. The license imposes no industry restrictions. HIPAA, SOC 2, GDPR, and similar compliance requirements are operational concerns, not licensing ones. Self-hosting n8n gives you full control over data residency and access controls. For enterprise compliance features (SSO, audit logs, external secrets), you will need a paid plan.</p></div>
+                </details>
+                <details>
+                    <summary>Are the AI features (Agent node, LLM chains) covered by the same license?</summary>
+                    <div class="faq-body"><p>Yes. The AI nodes in n8n's Community Edition (Agent, Basic LLM Chain, Vector Store, Embedding) are covered by the SUL and are fully available for internal business use. The AI Workflow Builder (which generates workflows using AI) has limited credits on paid plans, but the nodes themselves are not restricted.</p></div>
+                </details>
+                <details>
+                    <summary>What happens if I accidentally violate the license?</summary>
+                    <div class="faq-body"><p>The license states that it terminates automatically upon violation. In practice, n8n's legal team would likely reach out before taking formal action. If you discover you are in a grey area, the best course of action is to proactively contact n8n at license@n8n.io to discuss your use case and find a compliant path forward.</p></div>
+                </details>
+            </div>
+        </section>
+
+        <!-- 08 -->
+        <section id="clarity" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>Getting Clarity</h2>
+            </div>
+            <p class="g-text">If your use case falls in a grey area, contact n8n directly. They are responsive and accustomed to fielding licensing questions from companies of all sizes.</p>
+            <p class="g-text"><strong>Email:</strong> <a href="mailto:license@n8n.io">license@n8n.io</a></p>
+            <p class="g-text">When you reach out, include: a description of your product or service, how n8n fits into your architecture, whether end users interact with n8n directly or indirectly, and whose credentials flow through the system. The more specific you are, the faster you will get a definitive answer.</p>
+
+            <div class="g-callout">
+                <p><strong>Related reading:</strong></p>
+                <ul>
+                    <li><a href="/n8n/guide/n8n-community-edition/">n8n Community Edition: Features, Limits, and Free Unlocks</a></li>
+                    <li><a href="/n8n/guide/n8n-cloud-plans/">n8n Cloud Plans Breakdown</a></li>
+                    <li><a href="/n8n/guide/vps-self-hosting-n8n/">VPS Self-Hosting for n8n</a></li>
+                    <li><a href="/n8n/guide/what-is-n8n/">What is n8n?</a></li>
+                </ul>
+            </div>
+
+            <p class="g-text" style="font-size:0.85rem;color:var(--text-dim);font-style:italic;margin-top:2rem;">Disclaimer: This article is an informational guide, not formal legal advice. If your use case resides in a grey area, consult n8n's licensing team directly at license@n8n.io for an authoritative determination.</p>
+        </section>
+
+        <!-- ENDCAP -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                © 2026 <a href="../../../">Anshul Namdev</a>
-            </div>
+        <footer class="auto-footer" style="margin-top:4rem;border-top:1px solid var(--border);padding-top:3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
-    <!-- 3D Geometry Animation for Sidebar -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
-    
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if(contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300; 
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+        document.addEventListener('scroll', () => {
+            const total = document.body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
-
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
                     });
                 }
             });
         }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

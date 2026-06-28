@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Build Your First n8n Workflow - n8n Guide</title>
-    <meta name="description" content="A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.">
-    <meta property="og:title" content="How to Build Your First n8n Workflow - n8n Guide">
-    <meta property="og:description" content="A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.">
+    <title>n8n Academy: The Complete Guide to Every Course, Certificate &amp; Badge - n8n Guide</title>
+    <meta name="description" content="Everything about the n8n Academy: all 4 courses explained, how grading works, certificates, badges, enrollment, and a full support FAQ. The only guide you need.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="n8n Academy, n8n courses, n8n certificate, n8n badge, learn n8n, n8n quickstart, n8n tutorial, build n8n workflow">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/build-your-first-workflow/">
+    <meta property="og:title" content="n8n Academy: The Complete Guide to Every Course, Certificate &amp; Badge">
+    <meta property="og:description" content="Everything about the n8n Academy: all 4 courses explained, how grading works, certificates, badges, enrollment, and a full support FAQ.">
     <meta property="og:type" content="article">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,9 +20,677 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <style>
+        /* ── THEME OVERRIDE: RED ── */
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+
+        /* ── PROGRESS BAR ── */
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+
+        /* ── HERO ── */
+        .g-hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem 0;
+            text-align: center;
+        }
+        .g-hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .g-tag {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 0.3rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: var(--font-mono);
+        }
+        .g-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        .g-hero h1 em {
+            font-style: italic;
+            color: var(--blue);
+        }
+        .g-hero-sub {
+            font-family: var(--font-sans);
+            font-size: 1.15rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .g-hero-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            margin-bottom: 3rem;
+        }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+
+        /* ── STATS STRIP ── */
+        .g-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        .g-stat {
+            background: var(--bg);
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+        .g-stat-num {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        .g-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* ── TABLE OF CONTENTS ── */
+        .g-toc {
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+        .g-toc-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+        .g-toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem 3rem;
+        }
+        .g-toc-grid a {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.25s;
+        }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--blue);
+            font-weight: 700;
+            min-width: 1.5rem;
+        }
+
+        /* ── SECTION SYSTEM ── */
+        .g-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+        }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .g-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--blue);
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .g-section-head h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--text);
+            margin: 0;
+            line-height: 1.2;
+        }
+        .g-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-mid);
+            margin-bottom: 1.5rem;
+        }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text a:hover { color: var(--blue-dk); }
+        .g-text code {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            color: var(--blue);
+        }
+        .g-text strong { color: var(--text); }
+        .g-text em { font-style: italic; }
+
+        /* ── CALLOUT BOX ── */
+        .g-callout {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--blue);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+        }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul {
+            margin: 0.75rem 0 0;
+            padding-left: 1.25rem;
+            list-style: disc;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+
+        /* ── PATH COMPARISON CARDS ── */
+        .g-path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .g-path-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .g-path-card:hover { border-color: var(--blue); box-shadow: 0 4px 24px rgba(215,38,56,0.06); }
+        .g-path-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 1rem;
+        }
+        .g-path-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .g-path-code {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+        }
+        .g-path-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .g-path-card li {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        .g-path-card li::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .g-path-best {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .g-path-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+        .g-path-cta:hover { gap: 0.8rem; }
+
+        /* ── COURSE CARDS ── */
+        .g-course-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .g-course-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .g-course-card:hover { border-color: var(--blue); box-shadow: 0 8px 30px rgba(215,38,56,0.06); transform: translateY(-2px); }
+        .g-course-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .g-course-code {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: -0.02em;
+        }
+        .g-course-dur {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+        .g-course-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+        .g-course-desc {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+        .g-course-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex-grow: 1;
+        }
+        .g-course-list li {
+            font-size: 0.82rem;
+            color: var(--text-mid);
+            padding-left: 1rem;
+            position: relative;
+        }
+        .g-course-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--blue);
+        }
+        .g-course-prereq {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.02em;
+        }
+        .g-enroll {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.25rem;
+            background: var(--text);
+            color: white;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s, gap 0.3s;
+        }
+        .g-enroll:hover { background: var(--blue); gap: 0.75rem; }
+
+        /* ── GRADING BAR ── */
+        .g-grade-wrap { margin: 2.5rem 0; }
+        .g-grade-bar {
+            display: flex;
+            height: 56px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .g-grade-seg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.15rem;
+            transition: flex-grow 0.4s;
+        }
+        .g-grade-seg:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.3); }
+        .g-grade-pct {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+        }
+        .g-grade-name {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.8);
+        }
+        .g-grade-pass {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--green-soft);
+        }
+
+        /* ── FAQ ACCORDION ── */
+        .g-faq { margin: 2rem 0; }
+        .g-faq details {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary {
+            padding: 1.25rem 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            list-style: none;
+            transition: color 0.3s;
+            user-select: none;
+        }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after {
+            content: '+';
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            transition: transform 0.3s, color 0.3s;
+            flex-shrink: 0;
+        }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body {
+            padding: 0 1.5rem 1.5rem;
+        }
+        .g-faq .faq-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .g-faq .faq-body li {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+        }
+        .g-faq .faq-body li strong { color: var(--text); }
+        .g-faq .faq-body li a { color: var(--blue); text-decoration: underline; }
+        .g-faq .faq-body li code {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.82em;
+            color: var(--blue);
+        }
+
+        /* ── RESOURCE GRID ── */
+        .g-resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .g-resource-card {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .g-resource-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(215,38,56,0.06); }
+        .g-resource-card .rc-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+        .g-resource-card .rc-title {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.35rem;
+        }
+        .g-resource-card .rc-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        /* ── DEPRECATION BANNER ── */
+        .g-deprecation {
+            background: var(--bg-off);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+        .g-dep-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .g-dep-title {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .g-dep-text {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+        }
+
+        /* ── ENDCAP ── */
+        .g-endcap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            border-top: 1px solid var(--border);
+            padding-top: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .g-endcap-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+        .g-endcap-author:hover .ec-name { color: var(--blue); }
+        .g-endcap-av {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-weight: 700; color: var(--text); font-size: 0.95rem; transition: color 0.3s; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); }
+        .g-endcap-actions { display: flex; gap: 0.75rem; }
+        .g-endcap-actions button,
+        .g-endcap-actions a {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.55rem 1.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-mid);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .g-endcap-actions button:hover,
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+
+        /* ── FULL-BLEED SECTIONS ── */
+        .g-bleed {
+            background: var(--bg-off);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 0;
+            margin-bottom: 5rem;
+        }
+        .g-bleed > .g-section { padding-bottom: 0; }
+
+        /* ── REVEAL ANIMATION ── */
+        .g-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.4rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-path-grid { grid-template-columns: 1fr; }
+            .g-course-grid { grid-template-columns: 1fr; }
+            .g-resource-grid { grid-template-columns: 1fr; }
+            .g-deprecation { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; align-items: flex-start; }
+            .g-section-head h2 { font-size: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
     <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+
     <nav class="auto-nav">
         <div class="inner">
             <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
@@ -31,198 +702,483 @@
                 </svg>
             </button>
             <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">← Back to Archive</a></li>
+                <li><a href="../../">&#8592; Back to Archive</a></li>
                 <li><a href="../../">Hub</a></li>
             </ul>
         </div>
     </nav>
 
     <div class="auto-wrap" style="padding-top: 5rem;">
-        <div class="reader-layout">
-            <main class="reader-main">
-                <header class="reader-header stagger-in">
-                    <div class="reader-tags">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Beginner</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Workflows</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Getting Started</span>
-                    </div>
-                    <h1 class="reader-title">How to Build Your First n8n Workflow</h1>
-                    <div class="reader-meta">Published on Mar 29, 2026 · By Anshul Namdev</div>
-                </header>
 
-                <div class="reader-body">
+        <!-- ════════════════════════════════════════════
+             HERO
+        ════════════════════════════════════════════ -->
+        <header class="g-hero g-reveal">
+            <div class="g-hero-tags">
+                <span class="g-tag">n8n Academy</span>
+                <span class="g-tag">Courses</span>
+                <span class="g-tag">Certificates</span>
+            </div>
+            <h1><em>n8n Academy</em><br>The Complete Guide</h1>
+            <p class="g-hero-sub">Every course, how grading works, certificates, badges, enrollment, and answers to every question people run into. The only guide you need.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
+        </header>
 
-                    <h2>Before You Begin: Get n8n Running</h2>
-                    <p>If you haven't set up n8n yet, that's the very first thing to sort out. There are a few ways to run it, but if you're just starting out the answer is simple: <strong>go with n8n Cloud</strong>. Don't think about self-hosting at this stage. Self-hosting brings in server management, Docker, reverse proxies, and SSL certificates. None of that is useful when you're still learning the fundamentals of automation.</p>
-                    <p>Head over to <a href="https://app.n8n.cloud/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">app.n8n.cloud</a>, sign up, and your workspace is ready in seconds. Save the self-hosting conversation for later, once you actually know what you're building and why you'd need it.</p>
-
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0;">
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);">Want a deeper breakdown of setup options and the cloud vs. self-hosted tradeoffs? These two articles cover it:</p>
-                        <ul style="margin: 0.75rem 0 0 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
-                            <li><a href="https://axshul.site/n8n/guide/how-to-setup-n8n/" target="_blank" style="color:var(--blue);text-decoration:underline;font-size:0.9rem;">How To Setup n8n: Cloud, NPM, and Docker →</a></li>
-                            <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" target="_blank" style="color:var(--blue);text-decoration:underline;font-size:0.9rem;">n8n Cloud vs. Self-Hosted: Which One Should You Pick? →</a></li>
-                        </ul>
-                    </div>
-
-                    <h2>Step 1: Do the Level 1 Course. Thoroughly.</h2>
-                    <p>Once you have n8n running, your first move is to go through the official <a href="https://docs.n8n.io/courses/level-one/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n Level 1 Course</a>. This is not optional reading. Go through it completely, step by step, and actually build what it asks you to build inside your own n8n instance.</p>
-                    <p>This course covers the core concepts that everything else in n8n is built on: triggers, nodes, expressions, data flow, and how items move through a workflow. If you skip sections or skim through it, you will hit walls later that feel confusing but are actually just gaps from rushing this part.</p>
-
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0;">
-                        <p style="margin:0 0 0.5rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">What Level 1 covers</p>
-                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; color: var(--text-mid);">
-                            <li>Triggers and how workflows start</li>
-                            <li>Nodes and connecting them on the canvas</li>
-                            <li>Expressions and referencing data between nodes</li>
-                            <li>How items flow through a workflow</li>
-                            <li>Basic error handling and testing</li>
-                        </ul>
-                    </div>
-
-                    <p>Don't underestimate it just because it's labeled "Level 1". Most people who struggle with n8n early on simply didn't go through this carefully enough.</p>
-
-                    <h2>Step 2: Build Something Real for Yourself</h2>
-                    <p>Once you've finished the Level 1 course, don't immediately jump to the next one. Take a step back and think about a real problem in your own life or work that automation could solve. It doesn't have to be complex. Some ideas to get you thinking:</p>
-                    <ul>
-                        <li>Automatically save email attachments to Google Drive</li>
-                        <li>Get a daily summary of your calendar events sent to Telegram</li>
-                        <li>Post a message to Slack whenever a form is submitted</li>
-                        <li>Sync data between two tools you already use</li>
-                    </ul>
-                    <p>Pick something small and actually build it. This is where the real learning happens. The course gives you the vocabulary. Building your own workflow gives you the fluency. You'll run into small problems, figure them out, and come out the other side with a much stronger intuition for how n8n thinks.</p>
-                    <p>This hands-on phase is not a detour. It's the most important part of the process.</p>
-
-                    <h2>Step 3: Level 2 Course (When You're Ready)</h2>
-                    <p>Once you've built a few workflows on your own and feel comfortable navigating the canvas, you can move on to the <a href="https://docs.n8n.io/courses/level-two/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n Level 2 Course</a>. This one goes deeper. It covers advanced data manipulation, sub-workflows, error handling, and building production-grade automations.</p>
-                    <p>Level 2 assumes you already have a solid foundation. If you jump into it without completing Level 1 and getting some hands-on time, a lot of it won't click. The concepts build on each other. Do Level 1 first, build something real, then come back to this.</p>
-
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-left: 3px solid #f59e0b; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0;">
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);"><strong style="color: #f59e0b;">Important:</strong> Do not skip to Level 2 without completing Level 1 first. The courses are designed to build on each other and skipping ahead will leave real gaps in your understanding.</p>
-                    </div>
-
-                    <h2>These Courses Are Just the Beginning</h2>
-                    <p>Both courses together cover maybe 5 to 10 percent of what n8n can actually do. n8n connects hundreds of applications, supports custom code, webhooks, AI agents, vector stores, and a lot more. The ecosystem is genuinely vast.</p>
-                    <p>On top of that, n8n ships new versions and features constantly. New nodes, new integrations, new capabilities. It's an actively evolving platform. The courses give you the foundation to navigate all of that, but the real depth comes from exploring, experimenting, and building things that matter to you.</p>
-                    <p>Think of the courses as your entry point, not your destination.</p>
-
-                    <h2>Where to Get Help (and How to Ask)</h2>
-                    <p>When you run into problems, the <a href="https://community.n8n.io/" target="_blank" style="color:var(--blue);text-decoration:underline;font-weight:700;">n8n Community Forum</a> is the right place to go. But there's an important distinction to make.</p>
-                    <p>Do not go to the community asking questions that the Level 1 or Level 2 courses already answer. If you haven't gone through the courses yet, the community is not a shortcut around them. Posting basic questions that are covered in the official documentation is a fast way to not get helpful responses, and it's not a great use of anyone's time.</p>
-
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0;">
-                        <p style="margin:0 0 0.5rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Good questions to ask the community</p>
-                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; color: var(--text-mid);">
-                            <li>A node behaving unexpectedly during a course exercise</li>
-                            <li>An expression not evaluating the way you expect</li>
-                            <li>An integration that isn't working despite following the docs</li>
-                            <li>A specific error you can't resolve after trying yourself</li>
-                        </ul>
-                    </div>
-
-                    <p>Come with context, share what you've tried, and you'll get genuinely useful help. For a full breakdown of where to find help and how to use those resources well:</p>
-                    <ul>
-                        <li><a href="https://axshul.site/n8n/guide/where-to-get-n8n-help/" target="_blank" style="color:var(--blue);text-decoration:underline;">Where to Get n8n Help: Community, Docs, and More →</a></li>
-                    </ul>
-
-                    <h2>The Short Version</h2>
-                    <p>Start with n8n Cloud. Do the Level 1 course properly. Build something real. Then do Level 2 when you're ready. Explore from there. The platform rewards curiosity and hands-on time more than anything else.</p>
-
-                </div>
-            </main>
-
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>6 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
-                    </div>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
-
-                    <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://docs.n8n.io/courses/level-one/" target="_blank" class="sb-link">Level 1 Course ↗</a></li>
-                        <li><a href="https://docs.n8n.io/courses/level-two/" target="_blank" class="sb-link">Level 2 Course ↗</a></li>
-                        <li><a href="https://community.n8n.io/" target="_blank" class="sb-link">n8n Community ↗</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/how-to-setup-n8n/" class="sb-link">Setup Guide →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" class="sb-link">Cloud vs Self-Hosted →</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/where-to-get-n8n-help/" class="sb-link">Where to Get Help →</a></li>
-                    </ul>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">← Back to Archive</span>
-                    </a>
-                </div>
-            </aside>
+        <!-- ════ STATS STRIP ════ -->
+        <div class="g-stats g-reveal">
+            <div class="g-stat"><div class="g-stat-num">4</div><div class="g-stat-label">Courses</div></div>
+            <div class="g-stat"><div class="g-stat-num">100%</div><div class="g-stat-label">Free</div></div>
+            <div class="g-stat"><div class="g-stat-num">&infin;</div><div class="g-stat-label">Self-Paced</div></div>
+            <div class="g-stat"><div class="g-stat-num">&check;</div><div class="g-stat-label">Verified Badges</div></div>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                © 2026 <a href="../../../">Anshul Namdev</a>
+        <!-- ════ TABLE OF CONTENTS ════ -->
+        <nav class="g-toc g-reveal">
+            <div class="g-toc-label">In This Guide</div>
+            <div class="g-toc-grid">
+                <a href="#setup"><span>01</span> Before You Begin</a>
+                <a href="#enrollment"><span>06</span> How Enrollment Works</a>
+                <a href="#paths"><span>02</span> Choose Your Path</a>
+                <a href="#faq"><span>07</span> Support FAQ</a>
+                <a href="#courses"><span>03</span> Course Catalog</a>
+                <a href="#legacy"><span>08</span> Legacy Courses</a>
+                <a href="#grading"><span>04</span> How Grading Works</a>
+                <a href="#help"><span>09</span> Where to Get Help</a>
+                <a href="#certs"><span>05</span> Certificates &amp; Badges</a>
             </div>
+        </nav>
+
+        <!-- ════════════════════════════════════════════
+             01 - BEFORE YOU BEGIN
+        ════════════════════════════════════════════ -->
+        <section id="setup" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>Before You Begin</h2>
+            </div>
+            <p class="g-text">The n8n Academy at <a href="https://learn.n8n.io" target="_blank">learn.n8n.io</a> is n8n's official learning platform. It replaces the old text-based Level 1 and Level 2 courses that lived on <code>docs.n8n.io</code>. Those legacy courses were retired on June 30, 2026. The Academy is now the single place to learn n8n through structured, hands-on courses.</p>
+            <p class="g-text">Every Academy course requires access to an n8n instance. The fastest path is <a href="https://app.n8n.cloud/" target="_blank">n8n Cloud</a> - sign up and your workspace is ready in seconds. Free trial, no credit card. You can self-host for free too, but if you're just starting out, save that complexity for later.</p>
+
+            <div class="g-callout">
+                <p>Want a deeper breakdown of setup options?</p>
+                <ul>
+                    <li><a href="https://axshul.site/n8n/guide/how-to-setup-n8n/" target="_blank">How To Setup n8n: Cloud, NPM, and Docker &rarr;</a></li>
+                    <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" target="_blank">n8n Cloud vs. Self-Hosted: Which One Should You Pick? &rarr;</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             02 - CHOOSE YOUR PATH
+        ════════════════════════════════════════════ -->
+        <section id="paths" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>Choose Your Path</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">The Academy offers two ways in. Both are free, both award badges and certificates on completion, and both are graded the same way. There is no wrong choice.</p>
+
+            <div class="g-path-grid">
+                <div class="g-path-card">
+                    <div class="g-path-label">Fast Track</div>
+                    <h3>Quickstart</h3>
+                    <div class="g-path-code">QS101 &middot; One course</div>
+                    <ul>
+                        <li>3&ndash;5 hours total</li>
+                        <li>Zero to building an AI agent</li>
+                        <li>Covers triggers, data, HTTP, errors, AI</li>
+                        <li>No prerequisites, no API keys until AI section</li>
+                        <li>1 badge on completion</li>
+                    </ul>
+                    <p class="g-path-best">Best for: fast learners who want one cohesive journey and don't mind moving quickly.</p>
+                    <a href="https://learn.n8n.io/courses/course-v1:n8n+QS101+2026H2/about" target="_blank" class="g-path-cta">Enroll in QS101 <span>&rarr;</span></a>
+                </div>
+                <div class="g-path-card">
+                    <div class="g-path-label">Deep Dive</div>
+                    <h3>Foundations Program</h3>
+                    <div class="g-path-code">N8N101 &rarr; N8N102 &rarr; N8N103</div>
+                    <ul>
+                        <li>9&ndash;14 hours across three courses</li>
+                        <li>Thorough coverage of every topic</li>
+                        <li>APIs, auth, sub-workflows, AI agents, testing</li>
+                        <li>Each course builds on the previous</li>
+                        <li>3 badges on completion</li>
+                    </ul>
+                    <p class="g-path-best">Best for: thorough learners who want deep coverage with clear milestones between topics.</p>
+                    <a href="https://learn.n8n.io/courses/course-v1:n8n+N8N101+2026H2/about" target="_blank" class="g-path-cta">Start with N8N101 <span>&rarr;</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             03 - COURSE CATALOG
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="courses" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>Course Catalog</h2>
+            </div>
+
+            <div class="g-course-grid">
+
+                <!-- QS101 -->
+                <div class="g-course-card">
+                    <div class="g-course-top">
+                        <span class="g-course-code">QS101</span>
+                        <span class="g-course-dur">3&ndash;5 hrs</span>
+                    </div>
+                    <h3>n8n Quickstart</h3>
+                    <p class="g-course-desc">The full arc in one course: triggers, scheduling, HTTP requests, data transformation, error handling, and building an AI agent for customer service.</p>
+                    <ul class="g-course-list">
+                        <li>Getting started with the n8n interface</li>
+                        <li>Working with data: expressions, merge, transform</li>
+                        <li>Building an AI customer service agent</li>
+                    </ul>
+                    <div class="g-course-prereq">Prerequisites: None</div>
+                    <a href="https://learn.n8n.io/courses/course-v1:n8n+QS101+2026H2/about" target="_blank" class="g-enroll">Enroll <span>&rarr;</span></a>
+                </div>
+
+                <!-- N8N101 -->
+                <div class="g-course-card">
+                    <div class="g-course-top">
+                        <span class="g-course-code">N8N101</span>
+                        <span class="g-course-dur">2&ndash;4 hrs</span>
+                    </div>
+                    <h3>Essentials: Your First Workflows</h3>
+                    <p class="g-course-desc">The starting point for the Foundations path. Learn the n8n interface, how data moves through workflows, triggers, scheduling, and data transformation.</p>
+                    <ul class="g-course-list">
+                        <li>Navigate the n8n interface and canvas</li>
+                        <li>Nodes, connections, and executions</li>
+                        <li>Triggers and scheduling</li>
+                        <li>n8n data structure (items, JSON properties)</li>
+                        <li>Map, transform, and merge data between nodes</li>
+                    </ul>
+                    <div class="g-course-prereq">Prerequisites: None</div>
+                    <a href="https://learn.n8n.io/courses/course-v1:n8n+N8N101+2026H2/about" target="_blank" class="g-enroll">Enroll <span>&rarr;</span></a>
+                </div>
+
+                <!-- N8N102 -->
+                <div class="g-course-card">
+                    <div class="g-course-top">
+                        <span class="g-course-code">N8N102</span>
+                        <span class="g-course-dur">4&ndash;6 hrs</span>
+                    </div>
+                    <h3>Integrations: APIs &amp; Connected Workflows</h3>
+                    <p class="g-course-desc">Connect n8n to external services, handle errors, make API calls with authentication, and work with webhooks and Data Tables.</p>
+                    <ul class="g-course-list">
+                        <li>Sub-workflows for modular design</li>
+                        <li>Conditional logic and loops</li>
+                        <li>Error handling with Error Trigger and Stop nodes</li>
+                        <li>API calls with authentication (OAuth2, keys, tokens)</li>
+                        <li>Webhook Trigger for incoming data</li>
+                        <li>Custom code with JavaScript or Python</li>
+                    </ul>
+                    <div class="g-course-prereq">Prerequisites: N8N101 recommended</div>
+                    <a href="https://learn.n8n.io/courses/course-v1:n8n+N8N102+2026H2/about" target="_blank" class="g-enroll">Enroll <span>&rarr;</span></a>
+                </div>
+
+                <!-- N8N103 -->
+                <div class="g-course-card">
+                    <div class="g-course-top">
+                        <span class="g-course-code">N8N103</span>
+                        <span class="g-course-dur">3&ndash;4 hrs</span>
+                    </div>
+                    <h3>In Practice: AI, Testing &amp; Best Practices</h3>
+                    <p class="g-course-desc">Build AI-powered workflows with Agent nodes, learn debugging and testing, and organize your work for production.</p>
+                    <ul class="g-course-list">
+                        <li>AI-powered workflows with Agent nodes, tools, memory</li>
+                        <li>AI chains vs. agents - when to use which</li>
+                        <li>Debugging via execution logs and the debugger</li>
+                        <li>Error handling patterns with Try/Catch</li>
+                        <li>Workflow organization, monitoring, version control</li>
+                    </ul>
+                    <div class="g-course-prereq">Prerequisites: N8N101 + N8N102 &middot; Requires AI provider API key</div>
+                    <a href="https://learn.n8n.io/courses/course-v1:n8n+N8N103+2026H2/about" target="_blank" class="g-enroll">Enroll <span>&rarr;</span></a>
+                </div>
+
+            </div>
+        </section>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+             04 - HOW GRADING WORKS
+        ════════════════════════════════════════════ -->
+        <section id="grading" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>How Grading Works</h2>
+            </div>
+            <p class="g-text">All four courses use the same grading structure. The hands-on exercises carry the most weight - these are real workflow-building tasks inside your own n8n instance, not multiple choice.</p>
+
+            <div class="g-grade-wrap">
+                <div class="g-grade-bar">
+                    <div class="g-grade-seg" style="flex: 10; background: #e87680;">
+                        <span class="g-grade-pct">10%</span>
+                        <span class="g-grade-name">Quizzes</span>
+                    </div>
+                    <div class="g-grade-seg" style="flex: 55; background: var(--blue);">
+                        <span class="g-grade-pct">55%</span>
+                        <span class="g-grade-name">Exercises</span>
+                    </div>
+                    <div class="g-grade-seg" style="flex: 35; background: var(--blue-dk);">
+                        <span class="g-grade-pct">35%</span>
+                        <span class="g-grade-name">Final Exam</span>
+                    </div>
+                </div>
+                <div class="g-grade-pass">&check; &nbsp;70% overall score to pass</div>
+            </div>
+
+            <p class="g-text">One thing that confuses people: the green checkmarks next to units track <em>viewing</em>, not completion. They don't affect your grade. Your grade comes only from quizzes, exercises, and the final exam.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             05 - CERTIFICATES & BADGES
+        ════════════════════════════════════════════ -->
+        <section id="certs" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>Certificates &amp; Badges</h2>
+            </div>
+            <p class="g-text">When you pass a course (70%+), you automatically receive a <strong>completion certificate</strong> (PDF, downloadable) and a <strong>verifiable badge</strong> powered by <a href="https://www.accredible.com/" target="_blank">Accredible</a>, shareable on LinkedIn and other platforms.</p>
+
+            <div class="g-callout warn">
+                <p><strong>Important distinction:</strong> These are <em>completion certificates</em>, not formal certifications. They confirm you completed the course and passed. n8n's formal certification program (earned through separate exams) launches in Q3 2026.</p>
+            </div>
+
+            <h3 style="font-family:var(--font-sans); font-size:1.05rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text); margin:2.5rem 0 1rem; font-weight:700;">Verifying a Certificate</h3>
+            <p class="g-text">Anyone can verify an n8n Academy certificate at the official verification page. You need the 32-character certificate ID. The system confirms the participant, course name, and event date.</p>
+            <p class="g-text"><a href="https://learn.n8n.io/certificate-verification" target="_blank">Verify a Certificate at learn.n8n.io &rarr;</a></p>
+
+            <h3 style="font-family:var(--font-sans); font-size:1.05rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text); margin:2.5rem 0 1rem; font-weight:700;">Sharing Your Badge on LinkedIn</h3>
+            <p class="g-text">After passing, you'll receive a badge email from Accredible. From your dashboard you can share directly to LinkedIn, download the badge image, or copy a public verification link. If you didn't get the email, check your spam - it comes from Accredible, not n8n. If it's not there, make sure your Academy profile is correct and post on the <a href="https://community.n8n.io/c/n8n-academy/41" target="_blank">n8n Academy forum</a>.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             06 - HOW ENROLLMENT WORKS
+        ════════════════════════════════════════════ -->
+        <section id="enrollment" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>How Enrollment Works</h2>
+            </div>
+            <p class="g-text">All courses are free. Go to <a href="https://learn.n8n.io/courses" target="_blank">learn.n8n.io/courses</a>, pick a course, and click Enroll. Create an account or sign in, and the course appears on your dashboard immediately. Courses are self-paced with no deadlines - start, pause, and resume whenever you want.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             07 - SUPPORT FAQ
+        ════════════════════════════════════════════ -->
+        <div class="g-bleed">
+        <section id="faq" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>Support FAQ</h2>
+            </div>
+            <p class="g-text" style="margin-bottom:2rem;">Based on the official <a href="https://sites.n8n.io/education-n8n-academy-support-faq" target="_blank">n8n Academy Support FAQ</a>. Click any category to expand.</p>
+
+            <div class="g-faq">
+
+                <details>
+                    <summary>Account &amp; Sign-in</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Can't register or email rejected:</strong> Use a personal or work email. Some disposable email providers are blocked. Try a different address.</li>
+                            <li><strong>No activation email:</strong> Check spam/junk. The email comes from the Academy platform, not n8n directly. If nothing after 15 minutes, try registering again.</li>
+                            <li><strong>Forgot password or account locked:</strong> Use the password reset flow on the login page. If locked after too many attempts, wait 30 minutes.</li>
+                            <li><strong>Wrong email on account:</strong> You can't change the email yourself. Contact support through the community forum.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Course Access &amp; Enrollment</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Course not showing on dashboard:</strong> Make sure you clicked "Enroll" on the course page, not just "View". Check that you're signed into the same account.</li>
+                            <li><strong>Enrolled but can't open content:</strong> Try a hard refresh (<code>Ctrl+Shift+R</code> / <code>Cmd+Shift+R</code>). Clear browser cache. Try a different browser or incognito mode.</li>
+                            <li><strong>Enroll button just refreshes the page:</strong> Disable browser extensions (especially ad blockers), clear cookies for <code>learn.n8n.io</code>, and try again. Usually a third-party cookie issue.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Progress &amp; Grades</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Progress page not updating:</strong> Green checkmarks track <em>viewing</em>, not grading. Your actual grade comes from quizzes, exercises, and the final exam. If exercise submissions aren't registering, try resubmitting.</li>
+                            <li><strong>Failing the course:</strong> You need 70% overall. Hands-on exercises (55% weight) are the biggest factor. Make sure you're actually submitting completed workflows, not just viewing the instructions.</li>
+                            <li><strong>Problem won't submit or locked out:</strong> Clear browser cache and try again. If it persists, post on the Academy forum with your course name and the specific exercise.</li>
+                            <li><strong>Peer-graded assignment stuck:</strong> These depend on other learners reviewing your work. If it's been more than a week, post on the forum.</li>
+                            <li><strong>Quiz or assessment disappeared:</strong> Usually a browser caching issue. Hard refresh, try incognito mode, or a different browser.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Certificate Issues</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Finished course but no certificate:</strong> You need to pass with 70%+. Check your grade on the progress page. If you've passed and still don't see it, allow up to 24 hours for processing.</li>
+                            <li><strong>Wrong name on certificate:</strong> Your certificate uses the name from your Academy profile. Update your profile name and contact support through the forum to get it reissued.</li>
+                            <li><strong>Certificate link broken:</strong> Try accessing it from your Academy dashboard instead of an old link. If the issue persists, post on the forum.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Badge Issues</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>No badge email:</strong> Check spam. The email comes from Accredible, not n8n. Allow up to 48 hours after passing.</li>
+                            <li><strong>Badge not appearing:</strong> Visit your <a href="https://www.credential.net/" target="_blank">Accredible dashboard</a> directly. Your badge should be there even if the email didn't arrive.</li>
+                            <li><strong>Wrong name on badge:</strong> This pulls from your Academy profile. Update it there, then contact the forum for a badge reissue.</li>
+                            <li><strong>Badge expired or revoked:</strong> Some badges have validity periods. Check the badge details for expiration info. If you believe it's an error, post on the forum.</li>
+                            <li><strong>Adding badge to LinkedIn:</strong> Open the badge in Accredible, click "Share", then "LinkedIn". It adds it as a certification entry on your profile. You can also manually add it using the badge URL.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Technical Issues</summary>
+                    <div class="faq-body">
+                        <ul>
+                            <li><strong>Video won't play:</strong> Try a different browser. Chrome and Firefox work best. Disable ad blockers and VPNs. Make sure JavaScript is enabled.</li>
+                            <li><strong>Page won't load or looks broken:</strong> Hard refresh. Clear cache. Try incognito mode. If on a corporate network, the firewall might be blocking resources.</li>
+                            <li><strong>Best browser settings:</strong> Use the latest Chrome or Firefox. Enable JavaScript and cookies. Disable extensions that might interfere.</li>
+                            <li><strong>Mobile support:</strong> The Academy works on mobile browsers but the experience is better on desktop, especially for hands-on exercises where you're switching between the Academy and your n8n instance.</li>
+                        </ul>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+        </div>
+
+        <!-- ════════════════════════════════════════════
+             08 - LEGACY COURSES
+        ════════════════════════════════════════════ -->
+        <section id="legacy" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>What Happened to Level 1 &amp; Level 2</h2>
+            </div>
+
+            <div class="g-deprecation">
+                <div class="g-dep-icon">&#128230;</div>
+                <div>
+                    <div class="g-dep-title">Legacy Courses Retired - June 30, 2026</div>
+                    <p class="g-dep-text">The original text-based courses at <code style="background:var(--bg-subtle); border:1px solid var(--border); padding:0.1rem 0.3rem; border-radius:4px; font-family:var(--font-mono); font-size:0.85em; color:var(--blue);">docs.n8n.io/courses/</code> and their associated community forum badges are now unavailable. All quiz endpoints have been shut down.</p>
+                </div>
+            </div>
+
+            <p class="g-text">If you earned a forum badge from the old courses, it stays on your community profile. No existing badges were removed. But new badges are only issued through the Academy.</p>
+            <p class="g-text">The QS101 Quickstart is the closest equivalent to the old courses - it covers similar ground but is updated and expanded with an AI section. If you completed the old courses and want to formalize it, taking QS101 is the fastest path to an Academy-issued credential.</p>
+        </section>
+
+        <!-- ════════════════════════════════════════════
+             09 - WHERE TO GET HELP
+        ════════════════════════════════════════════ -->
+        <section id="help" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">09</span>
+                <h2>Where to Get Help</h2>
+            </div>
+            <p class="g-text" style="max-width:900px;">If you're stuck on something the FAQ above doesn't cover, come with context: your course name, what you've tried, and screenshots if applicable. For a full breakdown of every n8n support channel, read our dedicated guide:</p>
+
+            <div class="g-callout" style="margin-bottom:2.5rem;">
+                <p><a href="/n8n/guide/where-to-get-n8n-help/">Where to Get n8n Help - The Complete Guide &rarr;</a></p>
+            </div>
+
+            <div class="g-resource-grid">
+                <a href="https://community.n8n.io/c/n8n-academy/41" target="_blank" class="g-resource-card">
+                    <div class="rc-label">Academy Issues</div>
+                    <div class="rc-title">n8n Academy Forum</div>
+                    <div class="rc-desc">Enrollment, grades, certificates, badges - post here for Academy-specific problems.</div>
+                </a>
+                <a href="https://community.n8n.io" target="_blank" class="g-resource-card">
+                    <div class="rc-label">Workflow Help</div>
+                    <div class="rc-title">n8n Community Forum</div>
+                    <div class="rc-desc">Nodes, expressions, integrations, workflow logic - the main community for n8n questions.</div>
+                </a>
+                <a href="https://sites.n8n.io/education-n8n-academy-support-faq" target="_blank" class="g-resource-card">
+                    <div class="rc-label">Official Docs</div>
+                    <div class="rc-title">Academy Support FAQ</div>
+                    <div class="rc-desc">n8n's own support FAQ covering account, enrollment, progress, and technical issues.</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ════ THE SHORT VERSION ════ -->
+        <section class="g-section g-reveal" style="border-top:1px solid var(--border); padding-top:3rem;">
+            <div class="g-section-head">
+                <span class="g-num">&Sigma;</span>
+                <h2>The Short Version</h2>
+            </div>
+            <p class="g-text">Sign up at <a href="https://learn.n8n.io" target="_blank">learn.n8n.io</a>. Pick QS101 for a fast single-course path, or start the Foundations program with N8N101 for deeper coverage. All courses are free, self-paced, and award verifiable badges on completion. Certificates can be verified at <a href="https://learn.n8n.io/certificate-verification" target="_blank">learn.n8n.io/certificate-verification</a>. The old Level 1/2 courses are gone. The Academy is the only path now.</p>
+        </section>
+
+        <!-- ════ ENDCAP ════ -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
+        </div>
+
+        <footer class="auto-footer" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Patch MeshBasicMaterial to swap blue → red before 3d-anim.js runs
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if (contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = Math.max(progress, 0) + '%';
+
+        document.addEventListener('scroll', () => {
+            const body = document.body;
+            const total = body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
 
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
                     });
                 }
             });
         }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

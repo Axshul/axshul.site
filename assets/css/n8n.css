@@ -1,5 +1,5 @@
 /*
- * Automations — Personal Workflow Hub
+ * Automations - Personal Workflow Hub
  * Theme: Interludio (matches axshul.site main design)
  * Fonts: Playfair Display (serif) + Roboto Condensed (sans)
  * Accent: #0044FF (electric blue)
@@ -32,7 +32,7 @@
 
     --max-w: 1320px;
     --r: 4px;
-    /* very subtle radius — keeps editorial feel */
+    /* very subtle radius - keeps editorial feel */
 }
 
 *,
@@ -101,7 +101,7 @@ ul {
     gap: 1.5rem;
 }
 
-/* Logo — serif italic like main site */
+/* Logo - serif italic like main site */
 .nav-logo {
     font-family: var(--font-serif);
     font-style: italic;
@@ -338,7 +338,7 @@ ul {
     margin-top: 0.15rem;
 }
 
-/* Right side visual — workflow nodes */
+/* Right side visual - workflow nodes */
 .hero-right {
     position: relative;
 }
@@ -669,7 +669,7 @@ ul {
     padding-right: 2.5rem;
 }
 
-/* Verify button — Interludio style */
+/* Verify button - Interludio style */
 .verify-btn {
     display: flex;
     justify-content: space-between;
@@ -1099,7 +1099,7 @@ ul {
 }
 
 /* ─────────────────────────────────────────────
-   MY CREATIONS — Empty State
+   MY CREATIONS - Empty State
 ───────────────────────────────────────────── */
 .creations-empty {
     border: 1px dashed var(--border-hi);
@@ -1226,7 +1226,7 @@ ul {
 }
 
 /* ─────────────────────────────────────────────
-   RESPONSIVE — Tablet (≤1080px)
+   RESPONSIVE - Tablet (≤1080px)
 ───────────────────────────────────────────── */
 @media (max-width: 1080px) {
     .auto-hero {
@@ -1263,7 +1263,7 @@ ul {
 }
 
 /* ─────────────────────────────────────────────
-   RESPONSIVE — Mobile (≤768px)
+   RESPONSIVE - Mobile (≤768px)
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {
 
@@ -1362,7 +1362,7 @@ ul {
         font-size: 0.6rem;
     }
 
-    /* Grid — single column */
+    /* Grid - single column */
     .grid {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -1378,7 +1378,7 @@ ul {
         grid-column: span 1;
     }
 
-    /* Cards — reduce padding */
+    /* Cards - reduce padding */
     .card {
         padding: 1.35rem 1.1rem;
     }
@@ -1424,7 +1424,7 @@ ul {
         height: 3.2rem;
     }
 
-    /* Link rows — hide secondary meta text */
+    /* Link rows - hide secondary meta text */
     .link-meta {
         display: none;
     }
@@ -1468,7 +1468,7 @@ ul {
         font-size: 1.5rem;
     }
 
-    /* Footer — stack vertically */
+    /* Footer - stack vertically */
     .auto-footer {
         flex-direction: column;
         gap: 1.25rem;
@@ -1483,7 +1483,7 @@ ul {
 }
 
 /* ─────────────────────────────────────────────
-   RESPONSIVE — Small phones (≤480px)
+   RESPONSIVE - Small phones (≤480px)
 ───────────────────────────────────────────── */
 @media (max-width: 480px) {
     .auto-wrap {
@@ -1524,7 +1524,7 @@ ul {
 }
 
 /* ─────────────────────────────────────────────
-   RESPONSIVE — iPhone SE / very small (≤375px)
+   RESPONSIVE - iPhone SE / very small (≤375px)
 ───────────────────────────────────────────── */
 @media (max-width: 375px) {
     .auto-wrap {

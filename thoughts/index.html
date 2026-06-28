@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thoughts - Anshul Namdev | AI & Automation Engineer</title>
+    <meta name="description" content="Personal opinions, hot takes, and reflections on AI, automation, tech, and engineering from Anshul Namdev. Unfiltered takes from an automation engineer.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="Anshul Namdev thoughts, AI opinions, automation hot takes, n8n opinion, tech engineering blog, AI automation 2026">
+    <meta property="og:title" content="Thoughts - Anshul Namdev">
+    <meta property="og:description" content="Personal opinions, hot takes, and reflections on AI, automation, tech, and engineering.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://axshul.site/thoughts/">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <link rel="canonical" href="https://axshul.site/thoughts/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Thoughts by Anshul Namdev",
+      "description": "Personal opinions, hot takes, and reflections on AI, automation, tech, and engineering.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "url": "https://axshul.site/thoughts/",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://axshul.site/" },
+          { "@type": "ListItem", "position": 2, "name": "Thoughts", "item": "https://axshul.site/thoughts/" }
+        ]
+      }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-off: #f8f8f8;
+            --bg-subtle: #f2f2f2;
+            --text: #0a0a0a;
+            --text-mid: #555;
+            --text-dim: #999;
+            --red: #D72638;
+            --red-dk: #B51E2E;
+            --red-lt: rgba(215,38,56,0.06);
+            --border: #e0e0e0;
+            --border-hi: #ccc;
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-display: 'Playfair Display', serif;
+            --max-w: 1400px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; transition: 0.25s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* NAV */
+        .th-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .th-nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .th-nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .th-nav-logo span { color: var(--text-dim); font-weight: 400; font-size: 0.7rem; font-family: var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; vertical-align: middle; margin-left: 0.5rem; }
+        .th-nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .th-nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-mid);
+        }
+        .th-nav-links a:hover { color: var(--red); }
+
+        /* HERO */
+        .th-hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            animation: fadeUp 0.8s ease both;
+        }
+        .th-hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+        .th-hero-eyebrow::before,
+        .th-hero-eyebrow::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+        }
+        .th-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .th-hero h1 em {
+            font-style: italic;
+            color: var(--red);
+        }
+        .th-hero-sub {
+            font-size: 1.05rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 550px;
+            margin: 0 auto 2rem;
+        }
+        .th-hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .th-stat-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--red);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        .th-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* SEARCH */
+        .th-search-wrap {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+            animation: fadeUp 0.8s ease 0.15s both;
+        }
+        .th-search {
+            width: 100%;
+            padding: 0.85rem 1.25rem 0.85rem 3rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-off);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .th-search:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(215,38,56,0.08);
+        }
+        .th-search::placeholder { color: var(--text-dim); }
+        .th-search-container {
+            position: relative;
+        }
+        .th-search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        /* ARTICLE GRID */
+        .th-articles {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem;
+            animation: fadeUp 0.8s ease 0.3s both;
+        }
+        .th-grid-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+        .th-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        .th-card {
+            display: block;
+            padding: 1.75rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+        }
+        .th-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 8px 28px rgba(215,38,56,0.06);
+            transform: translateY(-2px);
+        }
+        .th-card-top {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .th-card-tag {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--red);
+            background: var(--red-lt);
+            padding: 0.22em 0.65em;
+            border-radius: 4px;
+        }
+        .th-card-date {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+        }
+        .th-card-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .th-card-title em { color: var(--red); font-style: italic; }
+        .th-card-desc {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .th-card-cta {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--red);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: gap 0.3s;
+        }
+        .th-card:hover .th-card-cta { gap: 0.7rem; }
+
+        /* UPCOMING */
+        .th-upcoming {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            animation: fadeUp 0.8s ease 0.45s both;
+        }
+        .th-upcoming-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+        .th-upcoming-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .th-upcoming-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.8rem;
+            border: 1px dashed var(--border);
+            border-radius: 100px;
+            color: var(--text-dim);
+        }
+
+        /* FOOTER */
+        .th-footer {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .th-footer-copy {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+        .th-footer-copy a { color: var(--text-mid); }
+        .th-footer-copy a:hover { color: var(--red); }
+        .th-footer-links { display: flex; gap: 1.5rem; }
+        .th-footer-links a {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+        .th-footer-links a:hover { color: var(--red); }
+
+        @media (max-width: 768px) {
+            .th-hero { padding: 7rem 1.5rem 2rem; }
+            .th-hero h1 { font-size: 2rem; }
+            .th-hero-stats { gap: 2rem; }
+            .th-nav-links { gap: 1rem; }
+            .th-footer { flex-direction: column; gap: 1rem; text-align: center; }
+            .th-card { padding: 1.25rem 1.5rem; }
+            .th-card-title { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .th-hero { padding: 6rem 1rem 2rem; }
+            .th-hero-stats { flex-direction: column; gap: 1rem; }
+            .th-card-top { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="th-nav">
+        <div class="th-nav-inner">
+            <a href="../" class="th-nav-logo">AN.<span>/ Thoughts</span></a>
+            <div class="th-nav-links">
+                <a href="../">Home</a>
+                <a href="../work/">Work</a>
+                <a href="../n8n/">N8N</a>
+                <a href="../contact/">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="th-hero">
+        <div class="th-hero-eyebrow">Thoughts</div>
+        <h1>Raw <em>Opinions.</em></h1>
+        <p class="th-hero-sub">Personal takes on AI, automation, engineering culture, and the tech landscape. Unfiltered, unsponsored, sometimes wrong.</p>
+
+        <div class="th-hero-stats">
+            <div>
+                <span class="th-stat-num">1</span>
+                <span class="th-stat-label">Posts</span>
+            </div>
+            <div>
+                <span class="th-stat-num">Jun 29</span>
+                <span class="th-stat-label">Latest</span>
+            </div>
+            <div>
+                <span class="th-stat-num">All</span>
+                <span class="th-stat-label">Topics</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="th-articles">
+        <div class="th-grid-label">All Posts</div>
+        <div class="th-grid">
+            <a href="is-n8n-dead/" class="th-card">
+                <div class="th-card-top">
+                    <span class="th-card-tag">Opinion</span>
+                    <span class="th-card-tag">AI Automation</span>
+                    <span class="th-card-date">Jun 29, 2026</span>
+                </div>
+                <div class="th-card-title">Is n8n Dead <em>in 2026?</em></div>
+                <p class="th-card-desc">AI can generate workflows, but it cannot architect enterprise-grade automation. n8n is not dying. It is becoming infrastructure. A personal take backed by numbers.</p>
+                <span class="th-card-cta">Read <span>&rarr;</span></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="th-upcoming">
+        <div class="th-upcoming-label">Coming Soon</div>
+        <div class="th-upcoming-tags">
+            <span class="th-upcoming-tag">Engineering Culture</span>
+            <span class="th-upcoming-tag">Tool Reviews</span>
+            <span class="th-upcoming-tag">Automation Philosophy</span>
+            <span class="th-upcoming-tag">Industry Trends</span>
+        </div>
+    </div>
+
+    <footer class="th-footer">
+        <div class="th-footer-copy">&copy; 2026 <a href="../">Anshul Namdev</a></div>
+        <div class="th-footer-links">
+            <a href="../">Home</a>
+            <a href="../work/">Work</a>
+            <a href="../n8n/guide/">The Guide</a>
+        </div>
+    </footer>
+
+</body>
+</html>

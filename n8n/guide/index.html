@@ -3,49 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n Guide & Digital Archive — Anshul Namdev</title>
-    <meta name="description" content="A digital archive of common n8n problems, solutions, and best practices. Masterclass guides for workflow automation, AI models, self-hosting, and more.">
+    <title>n8n Guide 2026 - Setup, AI, Hosting & Pricing | Anshul Namdev</title>
+    <meta name="description" content="The complete n8n guide for 2026 by Anshul Namdev. 11+ in-depth articles on setup, AI models, self-hosting, VPS comparison, cloud plans, licensing, and workflow automation best practices.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="n8n guide, n8n tutorial 2026, n8n setup, n8n AI, n8n self-hosting, n8n cloud plans, n8n community edition, n8n VPS, workflow automation guide, Anshul Namdev n8n">
+    <meta property="og:title" content="n8n Guide 2026 - Setup, AI, Hosting & Pricing | Anshul Namdev">
+    <meta property="og:description" content="11+ in-depth articles on n8n setup, AI models, self-hosting, cloud plans, licensing, and automation best practices. Written by Anshul Namdev.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://axshul.site/n8n/guide/">
+    <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Anshul_Namdev0">
+    <meta name="twitter:title" content="n8n Guide 2026 - The Complete Resource">
+    <meta name="twitter:description" content="11+ in-depth n8n articles: setup, AI, hosting, pricing, licensing. By Anshul Namdev.">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "n8n Guide 2026 by Anshul Namdev",
+      "description": "The complete n8n guide for 2026. 11+ in-depth articles on setup, AI models, self-hosting, VPS comparison, cloud plans, licensing, and workflow automation.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "url": "https://axshul.site/n8n/guide/",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://axshul.site/" },
+          { "@type": "ListItem", "position": 2, "name": "n8n Hub", "item": "https://axshul.site/n8n/" },
+          { "@type": "ListItem", "position": 3, "name": "Guide", "item": "https://axshul.site/n8n/guide/" }
+        ]
+      }
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/n8n.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <link rel="manifest" href="/assets/favicon/site.webmanifest">
 
     <style>
-        /* ── Animations ── */
+        /* ── TOKENS ── */
+        :root {
+            --bg: #ffffff;
+            --bg-off: #f8f8f8;
+            --bg-subtle: #f2f2f2;
+            --text: #0a0a0a;
+            --text-mid: #555;
+            --text-dim: #999;
+            --red: #D72638;
+            --red-dk: #B51E2E;
+            --red-lt: rgba(215,38,56,0.06);
+            --border: #e0e0e0;
+            --border-hi: #ccc;
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-display: 'Playfair Display', serif;
+            --max-w: 1400px;
+        }
+
+        /* ── RESET ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; transition: 0.25s; }
+        img { max-width: 100%; display: block; }
+        ul { list-style: none; }
+
+        /* ── ANIMATIONS ── */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
+            from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scaleX(0.92) translateY(8px); }
-            to   { opacity: 1; transform: scaleX(1) translateY(0); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .guide-hero-eyebrow { animation: fadeUp 0.5s ease both; animation-delay: 0.05s; }
-        .guide-hero h1      { animation: fadeUp 0.55s ease both; animation-delay: 0.15s; }
-        .guide-hero-sub     { animation: fadeUp 0.55s ease both; animation-delay: 0.25s; }
-        .search-sticky      { animation: fadeDown 0.45s ease both; animation-delay: 0.35s; }
+        /* ── PAGE SHELL ── */
+        .gp { min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* ── Page shell ── */
-        body { overflow-x: hidden; }
-
-        .guide-page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ── Top nav bar ── */
-        .guide-nav {
+        /* ── NAV ── */
+        .gp-nav {
             position: fixed;
             top: 0; left: 0; right: 0;
             height: 3.5rem;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -54,111 +101,202 @@
             border-bottom: 1px solid var(--border);
             z-index: 100;
         }
-        .guide-nav a {
-            font-family: var(--font-sans);
+        .gp-nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
             font-weight: 700;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-mid);
-            transition: color 0.2s;
+            color: var(--text);
         }
-        .guide-nav a:hover { color: var(--blue); }
-        .guide-nav-right { display: flex; align-items: center; gap: 1.5rem; }
-        .article-count-badge {
+        .gp-nav-logo span {
             font-family: var(--font-mono);
-            font-size: 0.68rem;
+            font-size: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+        .gp-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+        .gp-nav-right a {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-mid);
+        }
+        .gp-nav-right a:hover { color: var(--red); }
+        .gp-count {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
             color: var(--text-dim);
             background: var(--bg-subtle);
             border: 1px solid var(--border);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
+            padding: 0.2rem 0.7rem;
+            border-radius: 100px;
         }
 
-        /* ── Hero header (below nav) ── */
-        .guide-hero {
+        /* ── HERO ── */
+        @keyframes heroPulse {
+            0%, 100% { opacity: 0.45; }
+            50%      { opacity: 0.9; }
+        }
+        @keyframes heroFloat {
+            0%   { transform: translate(0, 0) scale(1); }
+            33%  { transform: translate(12px, -8px) scale(1.05); }
+            66%  { transform: translate(-8px, 6px) scale(0.97); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes heroDrift {
+            0%   { background-position: 0% 0%; }
+            100% { background-position: 60px 60px; }
+        }
+        .gp-hero {
             margin-top: 3.5rem;
-            padding: 3.5rem 2rem 2rem;
+            padding: 5rem 2.5rem 3.5rem;
             text-align: center;
             border-bottom: 1px solid var(--border);
-            background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+            background: linear-gradient(180deg, var(--bg-off) 0%, var(--bg) 100%);
+            animation: fadeUp 0.6s ease both;
+            position: relative;
+            overflow: hidden;
         }
-        .guide-hero-eyebrow {
-            font-family: var(--font-sans);
+        .gp-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(215,38,56,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(215,38,56,0.06) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: heroDrift 8s linear infinite;
+            pointer-events: none;
+        }
+        .gp-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(215,38,56,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(215,38,56,0.04) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(215,38,56,0.03) 0%, transparent 45%);
+            pointer-events: none;
+        }
+        .gp-hero > * { position: relative; z-index: 1; }
+        .gp-hero-nodes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .gp-hero-node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--red);
+            animation: heroPulse 3s ease-in-out infinite, heroFloat 12s ease-in-out infinite;
+        }
+        .gp-hero-node:nth-child(1)  { top: 18%; left: 8%;  animation-delay: 0s, 0s; }
+        .gp-hero-node:nth-child(2)  { top: 72%; left: 15%; animation-delay: 0.6s, -2s; width: 4px; height: 4px; }
+        .gp-hero-node:nth-child(3)  { top: 30%; left: 85%; animation-delay: 1.2s, -4s; }
+        .gp-hero-node:nth-child(4)  { top: 65%; left: 90%; animation-delay: 0.3s, -6s; width: 5px; height: 5px; }
+        .gp-hero-node:nth-child(5)  { top: 45%; left: 5%;  animation-delay: 0.9s, -3s; width: 4px; height: 4px; }
+        .gp-hero-node:nth-child(6)  { top: 12%; left: 45%; animation-delay: 1.5s, -5s; width: 3px; height: 3px; }
+        .gp-hero-node:nth-child(7)  { top: 80%; left: 70%; animation-delay: 0.4s, -7s; width: 5px; height: 5px; }
+        .gp-hero-node:nth-child(8)  { top: 25%; left: 65%; animation-delay: 1.1s, -1s; width: 4px; height: 4px; }
+        .gp-hero-node:nth-child(9)  { top: 55%; left: 35%; animation-delay: 0.7s, -8s; width: 3px; height: 3px; }
+        .gp-hero-node:nth-child(10) { top: 85%; left: 50%; animation-delay: 1.4s, -4s; }
+        .gp-hero-connector {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(215,38,56,0.15), transparent);
+            animation: heroPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .gp-hero-connector:nth-child(11) { top: 22%; left: 8%; width: 120px; transform: rotate(15deg); animation-delay: 0.5s; }
+        .gp-hero-connector:nth-child(12) { top: 68%; left: 12%; width: 80px; transform: rotate(-25deg); animation-delay: 1.0s; }
+        .gp-hero-connector:nth-child(13) { top: 35%; left: 80%; width: 100px; transform: rotate(40deg); animation-delay: 1.5s; }
+        .gp-hero-connector:nth-child(14) { top: 50%; left: 30%; width: 60px; transform: rotate(-10deg); animation-delay: 0.8s; }
+        .gp-hero-connector:nth-child(15) { top: 78%; left: 65%; width: 90px; transform: rotate(30deg); animation-delay: 1.2s; }
+        .gp-hero-eyebrow {
+            font-family: var(--font-mono);
             font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            color: var(--blue);
-            margin-bottom: 0.75rem;
+            color: var(--red);
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
-        .guide-hero-eyebrow::before,
-        .guide-hero-eyebrow::after {
+        .gp-hero-eyebrow::before,
+        .gp-hero-eyebrow::after {
             content: '';
-            width: 20px;
+            width: 24px;
             height: 1.5px;
-            background: var(--blue);
-            display: inline-block;
+            background: var(--red);
         }
-        .guide-hero h1 {
-            font-family: var(--font-serif);
-            font-size: clamp(2rem, 5vw, 3.2rem);
+        .gp-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
             font-weight: 700;
             letter-spacing: -0.02em;
-            line-height: 1.05;
+            line-height: 1.1;
             color: var(--text);
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
-        .guide-hero h1 i { font-style: italic; color: var(--blue); }
-        .guide-hero-sub {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 300;
+        .gp-hero h1 em { font-style: italic; color: var(--red); }
+        .gp-hero-sub {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 400;
             color: var(--text-mid);
-            max-width: 480px;
+            max-width: 520px;
             margin: 0 auto;
             line-height: 1.7;
         }
 
-        /* ── Sticky search zone ── */
-        .search-sticky {
+        /* ── STICKY SEARCH ── */
+        .gp-search-bar {
             position: sticky;
             top: 3.5rem;
             z-index: 50;
             background: rgba(255,255,255,0.96);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+            padding: 1.25rem 2.5rem;
+        }
+        .gp-search-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.75rem;
         }
-
-        .search-bar-unified {
+        .gp-search-row {
             display: flex;
             width: 100%;
-            max-width: 600px;
-            background: #fff;
-            border: 2px solid rgba(0,68,255,0.2);
+            max-width: 640px;
+            background: var(--bg);
+            border: 2px solid rgba(215,38,56,0.15);
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,68,255,0.08);
             overflow: hidden;
-            transition: border-color 0.25s, box-shadow 0.25s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .search-bar-unified:focus-within {
-            border-color: var(--blue);
-            box-shadow: 0 6px 28px rgba(0,68,255,0.15), 0 0 0 4px rgba(0,68,255,0.08);
+        .gp-search-row:focus-within {
+            border-color: var(--red);
+            box-shadow: 0 6px 28px rgba(215,38,56,0.1), 0 0 0 4px rgba(215,38,56,0.05);
         }
-        .search-tag-select {
+        .gp-tag-select {
             flex-shrink: 0;
-            min-width: 7rem;
-            padding: 0 1.4rem 0 0.9rem;
-            font-family: var(--font-sans);
+            min-width: 7.5rem;
+            padding: 0 1.4rem 0 1rem;
+            font-family: var(--font-body);
             font-size: 0.82rem;
             font-weight: 600;
             background: transparent;
@@ -167,43 +305,42 @@
             color: var(--text-mid);
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.5rem center;
         }
-        .search-tag-select:focus { outline: none; }
-        .search-input-wrap {
+        .gp-tag-select:focus { outline: none; }
+        .gp-input-wrap {
             flex: 1;
             display: flex;
             align-items: center;
             position: relative;
         }
-        .search-icon {
+        .gp-search-icon {
             position: absolute;
             left: 1rem;
-            color: var(--blue);
-            opacity: 0.7;
+            color: var(--red);
+            opacity: 0.6;
             pointer-events: none;
         }
-        .search-input {
+        .gp-input {
             width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.9rem;
-            font-family: var(--font-sans);
+            padding: 0.9rem 1rem 0.9rem 2.9rem;
+            font-family: var(--font-body);
             font-size: 0.95rem;
             background: transparent;
             border: none;
             color: var(--text);
         }
-        .search-input:focus { outline: none; }
-        .search-input::placeholder { color: var(--text-dim); }
-
-        .search-clear {
+        .gp-input:focus { outline: none; }
+        .gp-input::placeholder { color: var(--text-dim); }
+        .gp-clear {
             display: none;
             align-items: center;
             justify-content: center;
             width: 2rem;
             height: 2rem;
-            margin-right: 0.4rem;
+            margin-right: 0.5rem;
             border: none;
             background: none;
             color: var(--text-dim);
@@ -213,37 +350,228 @@
             transition: background 0.2s, color 0.2s;
             flex-shrink: 0;
         }
-        .search-clear:hover { background: var(--bg-subtle); color: var(--text); }
-        .search-clear.visible { display: flex; }
-
-        .search-meta {
+        .gp-clear:hover { background: var(--bg-subtle); color: var(--text); }
+        .gp-clear.visible { display: flex; }
+        .gp-search-meta {
             display: flex;
             align-items: center;
             gap: 1rem;
             font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-dim);
         }
-        .search-meta kbd {
+        .gp-search-meta kbd {
             background: var(--bg-subtle);
             border: 1px solid var(--border);
             border-radius: 4px;
             padding: 0.1rem 0.4rem;
             font-family: var(--font-mono);
-            font-size: 0.62rem;
+            font-size: 0.6rem;
         }
 
-        /* ── Articles grid ── */
-        .articles-section {
+        /* ── DROPDOWN ── */
+        .gp-dropdown {
+            width: 100%;
+            max-width: 640px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: none;
+        }
+        .gp-dropdown.visible { display: block; animation: slideIn 0.2s ease; }
+        .gp-dd-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.25rem;
+            text-decoration: none;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .gp-dd-item:last-child { border-bottom: none; }
+        .gp-dd-item:hover { background: var(--red-lt); }
+        .gp-dd-icon {
+            width: 2.2rem;
+            height: 2.2rem;
+            background: var(--red-lt);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--red);
+            flex-shrink: 0;
+            font-family: var(--font-mono);
+        }
+        .gp-dd-body { flex: 1; min-width: 0; }
+        .gp-dd-title { font-weight: 700; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .gp-dd-desc { font-size: 0.72rem; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .gp-dd-tag { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--red); flex-shrink: 0; }
+        .gp-dd-empty { padding: 1.5rem; text-align: center; color: var(--text-dim); font-size: 0.85rem; }
+
+        /* ── CATEGORY CHIPS ── */
+        .gp-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+        .gp-chip {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.35rem 0.9rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+        .gp-chip:hover { border-color: var(--red); color: var(--red); }
+        .gp-chip.active { background: var(--text); border-color: var(--text); color: white; }
+
+        /* ── FEATURED CARD ── */
+        .gp-featured {
+            max-width: var(--max-w);
+            margin: 2.5rem auto 0;
+            padding: 0 2.5rem;
+        }
+        .gp-feat-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            text-decoration: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            animation: fadeUp 0.5s ease both;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        .gp-feat-card:hover { border-color: var(--red); box-shadow: 0 12px 40px rgba(215,38,56,0.06); }
+        .gp-feat-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+        .gp-feat-cat {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: white;
+            background: var(--red);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+        }
+        .gp-feat-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+        .gp-feat-desc {
+            font-size: 0.95rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+        }
+        .gp-feat-cta {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--red);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: gap 0.3s;
+        }
+        .gp-feat-card:hover .gp-feat-cta { gap: 0.7rem; }
+        .gp-feat-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1rem;
+        }
+        .gp-feat-date {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+        .gp-feat-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .gp-feat-stat-num {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--red);
+            line-height: 1;
+        }
+        .gp-feat-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            margin-top: 0.2rem;
+        }
+
+        /* ── ARTICLES GRID ── */
+        .gp-grid-section {
             flex: 1;
-            padding: 2rem 2rem 4rem;
-            max-width: 1400px;
+            padding: 2.5rem 2.5rem 5rem;
+            max-width: var(--max-w);
             margin: 0 auto;
             width: 100%;
         }
+        .gp-grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .gp-grid-title {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+        }
+
+        .gp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
 
         /* No results */
-        .no-results {
+        .gp-empty {
             display: none;
             flex-direction: column;
             align-items: center;
@@ -252,103 +580,81 @@
             text-align: center;
             gap: 0.75rem;
             color: var(--text-dim);
+            grid-column: 1 / -1;
         }
-        .no-results.visible { display: flex; }
-        .no-results-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .no-results-title {
-            font-family: var(--font-serif);
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-mid);
-        }
-        .no-results-sub { font-size: 0.85rem; max-width: 320px; line-height: 1.6; }
+        .gp-empty.visible { display: flex; }
+        .gp-empty-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--text-mid); }
+        .gp-empty-sub { font-size: 0.85rem; max-width: 320px; line-height: 1.6; }
 
-        /* Grid */
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-            gap: 1rem;
-        }
-
-        /* Card */
-        .article-card {
+        /* ── CARD ── */
+        .gp-card {
             display: flex;
             flex-direction: column;
-            padding: 1.25rem 1.4rem;
-            background: #fff;
+            padding: 1.5rem 1.75rem;
+            background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 12px;
             text-decoration: none;
             color: var(--text-mid);
-            transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s, background 0.22s, opacity 0.3s;
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
             opacity: 0;
-            animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: slideIn 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
         }
-        .article-card:nth-child(1)  { animation-delay: 0.05s; }
-        .article-card:nth-child(2)  { animation-delay: 0.10s; }
-        .article-card:nth-child(3)  { animation-delay: 0.15s; }
-        .article-card:nth-child(4)  { animation-delay: 0.20s; }
-        .article-card:nth-child(5)  { animation-delay: 0.25s; }
-        .article-card:nth-child(6)  { animation-delay: 0.30s; }
-        .article-card:nth-child(n+7){ animation-delay: 0.35s; }
-        @keyframes cardIn {
-            from { opacity: 0; transform: translateY(16px) scale(0.98); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .article-card:hover {
-            border-color: var(--blue);
-            background: rgba(0,68,255,0.02);
-            box-shadow: 0 6px 24px rgba(0,68,255,0.1);
+        .gp-card:nth-child(1)  { animation-delay: 0.05s; }
+        .gp-card:nth-child(2)  { animation-delay: 0.10s; }
+        .gp-card:nth-child(3)  { animation-delay: 0.15s; }
+        .gp-card:nth-child(4)  { animation-delay: 0.20s; }
+        .gp-card:nth-child(5)  { animation-delay: 0.25s; }
+        .gp-card:nth-child(6)  { animation-delay: 0.30s; }
+        .gp-card:nth-child(n+7){ animation-delay: 0.35s; }
+        .gp-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 8px 28px rgba(215,38,56,0.06);
             transform: translateY(-3px);
             color: var(--text);
         }
-        .article-card.dim {
-            opacity: 0.15;
-            pointer-events: none;
-            transform: scale(0.97);
-            animation: none;
-        }
-        .article-card.match {
-            border-color: var(--blue);
-            background: rgba(0,68,255,0.03);
-            box-shadow: 0 0 0 2px rgba(0,68,255,0.12);
+        .gp-card.dim { opacity: 0.12; pointer-events: none; transform: scale(0.97); animation: none; }
+        .gp-card.match {
+            border-color: var(--red);
+            background: var(--red-lt);
+            box-shadow: 0 0 0 2px rgba(215,38,56,0.1);
             animation: none;
             opacity: 1;
         }
 
-        .card-tag {
+        .gp-card-tag {
             display: inline-block;
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--blue);
-            background: rgba(0,68,255,0.08);
-            padding: 0.22em 0.6em;
-            border-radius: 6px;
-            margin-bottom: 0.6rem;
+            color: var(--red);
+            background: var(--red-lt);
+            padding: 0.22em 0.65em;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
             align-self: flex-start;
         }
-        .card-title {
-            font-family: var(--font-sans);
-            font-size: 1rem;
+        .gp-card-title {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
             font-weight: 700;
             line-height: 1.35;
             color: var(--text);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
-        .card-desc {
-            font-size: 0.8rem;
+        .gp-card-desc {
+            font-size: 0.82rem;
             color: var(--text-dim);
-            line-height: 1.5;
+            line-height: 1.6;
             flex: 1;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        .card-footer {
-            margin-top: 1rem;
+        .gp-card-footer {
+            margin-top: 1.25rem;
             padding-top: 0.75rem;
             border-top: 1px solid var(--border);
             display: flex;
@@ -357,189 +663,220 @@
             font-size: 0.7rem;
             color: var(--text-dim);
         }
-        .card-footer-date { font-family: var(--font-mono); }
-        .card-footer-arrow {
-            color: var(--blue);
+        .gp-card-date { font-family: var(--font-mono); font-size: 0.65rem; }
+        .gp-card-arrow {
+            color: var(--red);
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: transform 0.2s;
         }
-        .article-card:hover .card-footer-arrow { transform: translateX(4px); }
+        .gp-card:hover .gp-card-arrow { transform: translateX(4px); }
 
-        /* ── Inline search dropdown ── */
-        .search-dropdown {
+        /* ── FOOTER ── */
+        .gp-footer {
+            border-top: 1px solid var(--border);
+            padding: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: var(--max-w);
+            margin: 0 auto;
             width: 100%;
-            max-width: 600px;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: none;
         }
-        .search-dropdown.visible { display: block; animation: dropIn 0.2s ease; }
-        @keyframes dropIn {
-            from { opacity: 0; transform: translateY(-6px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .gp-footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-dim);
         }
-        .dropdown-item {
+        .gp-footer-copy a { color: var(--text-mid); }
+        .gp-footer-copy a:hover { color: var(--red); }
+        .gp-footer-links {
             display: flex;
-            align-items: center;
-            gap: 0.9rem;
-            padding: 0.85rem 1.1rem;
-            text-decoration: none;
-            color: var(--text);
-            border-bottom: 1px solid var(--border);
-            transition: background 0.15s;
+            gap: 1.5rem;
         }
-        .dropdown-item:last-child { border-bottom: none; }
-        .dropdown-item:hover { background: var(--blue-lt); }
-        .dropdown-item-icon {
-            width: 2rem;
-            height: 2rem;
-            background: rgba(0,68,255,0.08);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--blue);
-            flex-shrink: 0;
+        .gp-footer-links a {
             font-family: var(--font-mono);
-        }
-        .dropdown-item-body { flex: 1; min-width: 0; }
-        .dropdown-item-title {
-            font-weight: 700;
-            font-size: 0.88rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .dropdown-item-desc {
-            font-size: 0.73rem;
+            font-size: 0.7rem;
             color: var(--text-dim);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
-        .dropdown-item-tag {
-            font-size: 0.58rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--blue);
-            flex-shrink: 0;
-        }
-        .dropdown-empty {
-            padding: 1.5rem;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
+        .gp-footer-links a:hover { color: var(--red); }
 
-        /* ── Responsive ── */
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .gp-grid { grid-template-columns: repeat(2, 1fr); }
+            .gp-feat-card { grid-template-columns: 1fr; gap: 1.5rem; }
+            .gp-feat-right { align-items: flex-start; flex-direction: row; }
+        }
         @media (max-width: 768px) {
-            .guide-nav { padding: 0 1rem; }
-            .guide-hero { padding: 2.5rem 1rem 1.5rem; }
-            .search-sticky { padding: 0.75rem 1rem; }
-            .articles-section { padding: 1.5rem 1rem 3rem; }
-            .articles-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-            .card-desc { -webkit-line-clamp: 2; }
+            .gp-nav { padding: 0 1.25rem; }
+            .gp-hero { padding: 3.5rem 1.25rem 2.5rem; }
+            .gp-search-bar { padding: 1rem 1.25rem; }
+            .gp-featured { padding: 0 1.25rem; }
+            .gp-feat-card { padding: 2rem; }
+            .gp-feat-title { font-size: 1.4rem; }
+            .gp-grid-section { padding: 1.5rem 1.25rem 3rem; }
+            .gp-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .gp-card { padding: 1.25rem; }
+            .gp-card-desc { -webkit-line-clamp: 2; }
+            .gp-chips { padding: 0 1.25rem; }
+            .gp-footer { padding: 2rem 1.25rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
         }
         @media (max-width: 480px) {
-            .articles-grid { grid-template-columns: 1fr; }
-            .guide-hero h1 { font-size: 1.9rem; }
+            .gp-grid { grid-template-columns: 1fr; }
+            .gp-hero h1 { font-size: 2rem; }
+            .gp-feat-right { flex-direction: column; }
         }
     </style>
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
-    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
-    <link rel="manifest" href="/assets/favicon/site.webmanifest">
 </head>
 <body>
 
-<div class="guide-page">
+<div class="gp">
 
     <!-- Nav -->
-    <nav class="guide-nav">
-        <a href="../../">AN. / Portfolio</a>
-        <div class="guide-nav-right">
-            <span class="article-count-badge" id="articleCount">— articles</span>
-            <a href="../">← Hub</a>
+    <nav class="gp-nav">
+        <a href="../../" class="gp-nav-logo">AN. <span>/ Guide</span></a>
+        <div class="gp-nav-right">
+            <span class="gp-count" id="articleCount"> - articles</span>
+            <a href="../">Hub</a>
         </div>
     </nav>
 
     <!-- Hero -->
-    <header class="guide-hero">
-        <div class="guide-hero-eyebrow">n8n Digital Archive</div>
-        <h1>Find in <i>Archive</i></h1>
-        <p class="guide-hero-sub">Guides, solutions, and best practices for n8n workflow automation.</p>
+    <header class="gp-hero">
+        <div class="gp-hero-nodes">
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-node"></div>
+            <div class="gp-hero-connector"></div>
+            <div class="gp-hero-connector"></div>
+            <div class="gp-hero-connector"></div>
+            <div class="gp-hero-connector"></div>
+            <div class="gp-hero-connector"></div>
+        </div>
+        <div class="gp-hero-eyebrow">n8n Digital Archive &middot; Updated 2026</div>
+        <h1>The n8n <em>Guide</em></h1>
+        <p class="gp-hero-sub">In-depth n8n guides, solutions, and best practices for 2026. Setup, AI, hosting, pricing, and licensing. Written from real experience by <a href="../../" style="color:var(--red);font-weight:600;">Anshul Namdev</a>, not summaries.</p>
     </header>
 
     <!-- Sticky search -->
-    <div class="search-sticky">
-        <div class="search-bar-unified">
-            <select id="tagFilter" class="search-tag-select">
-                <option value="">All tags</option>
-                <option value="__latest__">Latest</option>
-            </select>
-            <div class="search-input-wrap">
-                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by title, category, or topic…" autocomplete="off" spellcheck="false">
+    <div class="gp-search-bar">
+        <div class="gp-search-inner">
+            <div class="gp-search-row">
+                <select id="tagFilter" class="gp-tag-select">
+                    <option value="">All tags</option>
+                    <option value="__latest__">Latest</option>
+                </select>
+                <div class="gp-input-wrap">
+                    <svg class="gp-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" id="searchInput" class="gp-input" placeholder="Search by title, category, or topic..." autocomplete="off" spellcheck="false">
+                </div>
+                <button class="gp-clear" id="searchClear" aria-label="Clear search">&times;</button>
             </div>
-            <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+            <div class="gp-search-meta">
+                <span>Type to filter</span>
+                <span><kbd>Ctrl</kbd>+<kbd>K</kbd> to focus</span>
+                <span><kbd>Esc</kbd> to clear</span>
+            </div>
+            <div class="gp-dropdown" id="searchDropdown"></div>
         </div>
-        <div class="search-meta">
-            <span>Type to filter</span>
-            <span><kbd>Ctrl</kbd>+<kbd>K</kbd> to focus</span>
-            <span><kbd>Esc</kbd> to clear</span>
-        </div>
-        <div class="search-dropdown" id="searchDropdown"></div>
     </div>
 
-    <!-- Articles -->
-    <main class="articles-section">
-        <div class="no-results" id="noResults">
-            <div class="no-results-icon">🔍</div>
-            <div class="no-results-title">No matches found</div>
-            <div class="no-results-sub">Try a different keyword or clear the filter.</div>
+    <!-- Category chips -->
+    <div style="padding: 1.5rem 0 0; background: var(--bg);">
+        <div class="gp-chips" id="chipContainer"></div>
+    </div>
+
+    <!-- Featured article -->
+    <div class="gp-featured" id="featuredWrap"></div>
+
+    <!-- Articles grid -->
+    <main class="gp-grid-section">
+        <div class="gp-grid-header">
+            <span class="gp-grid-title" id="gridLabel">All Articles</span>
         </div>
-        <div class="articles-grid" id="articlesGrid"></div>
+        <div class="gp-grid" id="articlesGrid">
+            <div class="gp-empty" id="noResults">
+                <div style="font-size:2.5rem; margin-bottom:0.5rem;">&#128270;</div>
+                <div class="gp-empty-title">No matches found</div>
+                <div class="gp-empty-sub">Try a different keyword or clear the filter.</div>
+            </div>
+        </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="gp-footer">
+        <div class="gp-footer-copy">&copy; 2026 <a href="../../">Anshul Namdev</a></div>
+        <div class="gp-footer-links">
+            <a href="../">n8n Hub</a>
+            <a href="../../thoughts/">Thoughts</a>
+            <a href="../../">Portfolio</a>
+            <a href="https://github.com/axshul" target="_blank">GitHub</a>
+        </div>
+    </footer>
 </div>
 
 <script>
 const ARTICLES = [
-    { slug: 'what-is-n8n',               title: 'What is n8n?',                 category: 'Overview',     description: 'A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it is for, and how to get started.', date: '2026-03-29' },
-    { slug: 'build-your-first-workflow',  title: 'How to Build Your First n8n Workflow', category: 'Getting Started', description: 'A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.', date: '2026-03-29' },
-    { slug: 'n8n-cloud-vs-self-hosted',  title: 'n8n Cloud vs. Self-Hosted',    category: 'Architecture', description: 'Compare n8n Cloud with self-hosted options. Covers data residency, scalability, maintenance, and when to choose each approach.', date: '2026-03-20' },
-    { slug: 'how-to-setup-n8n',          title: 'How To Setup n8n',             category: 'Setup',        description: 'Step-by-step setup for n8n via cloud signup, NPM install, or Docker. Includes environment variables and initial configuration.', date: '2026-03-21' },
-    { slug: 'vps-self-hosting-n8n',      title: 'VPS Self-Hosting for n8n',     category: 'Hosting',      description: 'Deploy n8n on DigitalOcean, Linode, or Hetzner. SSL, backups, and resource sizing for production workflows.', date: '2026-03-21' },
-    { slug: 'license-and-regulations',   title: 'License and Regulations',      category: 'Strategy',     description: "Understand n8n's Sustainable Use License, Fair Use policy, and compliance for commercial and internal use.", date: '2026-03-21' },
-    { slug: 'choose-right-ai-model',     title: 'Choosing the Right AI Model',  category: 'AI Models',    description: 'Compare GPT-4, Claude, DeepSeek, and open models in n8n. Cost, latency, and quality trade-offs for automation.', date: '2026-03-21' },
-    { slug: 'where-to-get-n8n-help',     title: 'Where to Get Help',            category: 'Community',    description: 'n8n community forum, Discord, GitHub issues, and documentation. When to ask where, and how to get fast answers.', date: '2026-03-21' },
-    { slug: 'ai-inference-providers',    title: 'AI Inference Providers for n8n', category: 'AI Infrastructure', description: 'Compare every major AI inference provider: OpenRouter, Groq, Together AI, Fireworks, Mistral, and more. Free tiers, speed, and how to avoid vendor lock-in.', date: '2026-03-24' },
-    { slug: 'n8n-community-edition',     title: 'n8n Community Edition: Features, Limits, and Free Unlocks', category: 'Setup', description: 'What the free self-hosted Community Edition includes, what it excludes, and how to unlock three extra features at no cost by registering your instance.', date: '2026-03-25' },
-    { slug: 'vector-stores-and-rag',     title: 'Vector Stores and RAG in n8n', category: 'AI Infrastructure', description: 'Set up Pinecone or Qdrant with n8n, inject documents, and build AI agents that answer questions from your own data. Includes real workflow diagrams.', date: '2026-03-26' },
-    { slug: 'automate-n8n-with-claude',  title: 'Automate n8n with Claude: Build Workflows Using AI', category: 'AI Automation', description: 'Connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI — no manual node-by-node construction required.', date: '2026-03-31' },
-    { slug: 'ai-agent-node',             title: 'The n8n AI Agent Node: Complete Guide', category: 'AI Agents', description: 'A deep-dive into every option, setting, tool, memory type, output parser, and model in the AI Agent node. Includes when to use an agent vs. a simple LLM call, the $fromAI() function, architecture patterns, and debugging.', date: '2026-04-04' },
-    { slug: 'is-n8n-dead',              title: 'Is n8n Dead? Claude Can Generate Workflows, But That Changes Nothing', category: 'Opinion', description: 'Every few months someone declares n8n dead. Claude can generate workflow JSON, AI agents are rising, and yet n8n just hit a $2.5B valuation. Here is the honest breakdown of why n8n is not going anywhere.', date: '2026-04-05' },
-    { slug: 'n8n-cloud-plans',          title: 'n8n Cloud Plans Breakdown: Starter, Pro, Business & Enterprise (2026)', category: 'Pricing', description: 'A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, AI credits, features, and who each plan is actually for — including Enterprise. With a real comparison against Zapier and Make.', date: '2026-04-09' },
+    { slug: 'build-your-first-workflow',  title: 'n8n Academy: The Complete Guide to Every Course, Certificate & Badge', category: 'n8n Academy', description: 'Everything about the n8n Academy: all 4 courses explained, how grading works, certificates, badges, enrollment, and a full support FAQ. The only guide you need.', date: '2026-06-29' },
+    { slug: 'what-is-n8n',               title: 'What is n8n? The Complete 2026 Introduction', category: 'Overview',     description: 'A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it is for, and how to get started in 2026.', date: '2026-06-29' },
+    { slug: 'n8n-cloud-vs-self-hosted',  title: 'n8n Cloud vs. Self-Hosted: Which to Choose',    category: 'Architecture', description: 'Compare n8n Cloud with self-hosted options. Covers data residency, scalability, maintenance, and when to choose each approach.', date: '2026-03-20' },
+    { slug: 'how-to-setup-n8n',          title: 'How To Setup n8n (2026 Step-by-Step)', category: 'Setup',        description: 'Step-by-step setup for n8n via cloud signup, NPM install, or Docker. Includes environment variables, SSL, and initial configuration for 2026.', date: '2026-06-29' },
+    { slug: 'vps-self-hosting-n8n',      title: 'Best VPS for n8n: Provider Comparison & Pricing (2026)', category: 'Hosting', description: 'Which VPS is best for n8n? Compare Hetzner, Hostinger, DigitalOcean, Vultr, Linode, Contabo, and Oracle Cloud on RAM, storage, and 2026 pricing. Picks by use case.', date: '2026-06-29' },
+    { slug: 'license-and-regulations',   title: 'n8n License and Regulations Explained (2026)',  category: 'Strategy',     description: "A complete breakdown of n8n's Sustainable Use License, fair-code model, n8n Embed, Enterprise License, and what you can and cannot do commercially.", date: '2026-06-29' },
+    { slug: 'choose-right-ai-model',     title: 'How to Choose the Right AI Model for n8n Workflows (2026)', category: 'AI Models', description: 'Which LLM to use for scanning, OCR, reasoning, coding, creative writing, and tool calling in n8n. Covers GPT, Claude, Gemini, DeepSeek, Llama, and costs.', date: '2026-06-29' },
+    { slug: 'where-to-get-n8n-help',     title: 'Where to Get n8n Help: Forum, Discord & Docs', category: 'Community',    description: 'n8n community forum, Discord, GitHub issues, and documentation. When to ask where, and how to get fast answers from the n8n community.', date: '2026-06-29' },
+    { slug: 'ai-inference-providers',    title: 'Best AI Inference Providers for n8n: Pricing & Comparison (2026)', category: 'AI Infrastructure', description: 'Compare 8 AI inference providers for n8n: OpenRouter, Groq, Together AI, Fireworks, Mistral, Hugging Face, Ollama, and OpenAI. Per-token pricing, free tiers, speed, and how to avoid vendor lock-in.', date: '2026-06-29' },
+    { slug: 'n8n-community-edition',     title: 'n8n Community Edition: Features, Limits, and Free Unlocks', category: 'Setup', description: 'What the free self-hosted Community Edition includes, what it excludes, and how to unlock three extra features at no cost by registering your instance.', date: '2026-06-29' },
+    { slug: 'n8n-cloud-plans',          title: 'n8n Cloud Plans Breakdown: Starter, Pro, Business & Enterprise (2026)', category: 'Pricing', description: 'A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, AI credits, features, and who each plan is actually for. With a real comparison against Zapier and Make.', date: '2026-06-29' },
 ];
 
 let query = '';
 let tag = '';
 
-// Populate tag select
 const tagSelect = document.getElementById('tagFilter');
 const cats = [...new Set(ARTICLES.map(a => a.category))].sort();
+
 cats.forEach(c => {
     const o = document.createElement('option');
     o.value = c; o.textContent = c;
     tagSelect.appendChild(o);
+});
+
+const chipContainer = document.getElementById('chipContainer');
+const allChip = document.createElement('button');
+allChip.className = 'gp-chip active';
+allChip.textContent = 'All';
+allChip.dataset.tag = '';
+chipContainer.appendChild(allChip);
+
+const latestChip = document.createElement('button');
+latestChip.className = 'gp-chip';
+latestChip.textContent = 'Latest';
+latestChip.dataset.tag = '__latest__';
+chipContainer.appendChild(latestChip);
+
+cats.forEach(c => {
+    const chip = document.createElement('button');
+    chip.className = 'gp-chip';
+    chip.textContent = c;
+    chip.dataset.tag = c;
+    chipContainer.appendChild(chip);
+});
+
+chipContainer.addEventListener('click', e => {
+    const chip = e.target.closest('.gp-chip');
+    if (!chip) return;
+    chipContainer.querySelectorAll('.gp-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    tag = chip.dataset.tag;
+    tagSelect.value = tag;
+    render();
 });
 
 function score(a, q) {
@@ -570,10 +907,8 @@ function getList() {
 
 function fmtDate(d) {
     const dt = new Date(d);
-    const day = dt.getUTCDate();
-    const month = dt.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
-    const year = dt.getUTCFullYear();
-    return `${day}. ${month}. ${year}`;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${dt.getUTCDate()} ${months[dt.getUTCMonth()]} ${dt.getUTCFullYear()}`;
 }
 
 function esc(s) {
@@ -588,32 +923,30 @@ function render() {
     const countEl = document.getElementById('articleCount');
     const dropdown = document.getElementById('searchDropdown');
     const clearBtn = document.getElementById('searchClear');
+    const featWrap = document.getElementById('featuredWrap');
+    const gridLabel = document.getElementById('gridLabel');
 
     const list = getList();
     const hasQuery = query.trim().length > 0;
 
-    // count
-    countEl.textContent = `${list.length} article${list.length !== 1 ? 's' : ''}`;
-
-    // clear button
+    countEl.textContent = `${ARTICLES.length} articles`;
     clearBtn.classList.toggle('visible', hasQuery);
 
-    // dropdown (quick results while typing)
     if (hasQuery) {
         const hits = list.filter(a => a._score > 0).slice(0, 5);
         if (hits.length) {
             dropdown.innerHTML = hits.map((a, i) => `
-                <a href="${a.slug}/" class="dropdown-item">
-                    <div class="dropdown-item-icon">${String(i+1).padStart(2,'0')}</div>
-                    <div class="dropdown-item-body">
-                        <div class="dropdown-item-title">${esc(a.title)}</div>
-                        <div class="dropdown-item-desc">${esc(a.description)}</div>
+                <a href="${a.slug}/" class="gp-dd-item">
+                    <div class="gp-dd-icon">${String(i+1).padStart(2,'0')}</div>
+                    <div class="gp-dd-body">
+                        <div class="gp-dd-title">${esc(a.title)}</div>
+                        <div class="gp-dd-desc">${esc(a.description)}</div>
                     </div>
-                    <div class="dropdown-item-tag">${esc(a.category)}</div>
+                    <div class="gp-dd-tag">${esc(a.category)}</div>
                 </a>
             `).join('');
         } else {
-            dropdown.innerHTML = '<div class="dropdown-empty">No matches — try a different term</div>';
+            dropdown.innerHTML = '<div class="gp-dd-empty">No matches - try a different term</div>';
         }
         dropdown.classList.add('visible');
     } else {
@@ -621,69 +954,90 @@ function render() {
         dropdown.innerHTML = '';
     }
 
-    // grid
-    if (list.length === 0) {
+    // Featured: show first article when no query and no tag filter
+    if (!hasQuery && !tag) {
+        const feat = list[0];
+        featWrap.innerHTML = `
+            <a href="${feat.slug}/" class="gp-feat-card">
+                <div>
+                    <div class="gp-feat-label">Featured Guide</div>
+                    <div class="gp-feat-cat">${esc(feat.category)}</div>
+                    <div class="gp-feat-title">${esc(feat.title)}</div>
+                    <div class="gp-feat-desc">${esc(feat.description)}</div>
+                    <div class="gp-feat-cta">Read Guide <span>&rarr;</span></div>
+                </div>
+                <div class="gp-feat-right">
+                    <div class="gp-feat-date">${fmtDate(feat.date)}</div>
+                    <div class="gp-feat-stats">
+                        <div>
+                            <div class="gp-feat-stat-num">${ARTICLES.length}</div>
+                            <div class="gp-feat-stat-label">Guides</div>
+                        </div>
+                        <div>
+                            <div class="gp-feat-stat-num">${cats.length}</div>
+                            <div class="gp-feat-stat-label">Categories</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        `;
+        gridLabel.textContent = 'All Articles';
+    } else {
+        featWrap.innerHTML = '';
+        gridLabel.textContent = tag && tag !== '__latest__' ? tag : hasQuery ? 'Search Results' : 'Latest';
+    }
+
+    const gridItems = (!hasQuery && !tag) ? list.slice(1) : list;
+
+    if (gridItems.length === 0) {
         noRes.classList.add('visible');
         grid.innerHTML = '';
+        grid.appendChild(noRes);
         return;
     }
     noRes.classList.remove('visible');
 
-    // Re-trigger card animations on each render
     grid.style.display = 'none';
-    grid.innerHTML = list.map(a => {
+    let cardsHtml = gridItems.map(a => {
         const isMatch = !hasQuery || ((a._score ?? 1) > 0);
         const cls = hasQuery ? (isMatch ? 'match' : 'dim') : '';
         return `
-            <a href="${a.slug}/" class="article-card ${cls}">
-                <span class="card-tag">${esc(a.category)}</span>
-                <span class="card-title">${esc(a.title)}</span>
-                <span class="card-desc">${esc(a.description)}</span>
-                <div class="card-footer">
-                    <span class="card-footer-date">${fmtDate(a.date)}</span>
-                    <span class="card-footer-arrow">→</span>
+            <a href="${a.slug}/" class="gp-card ${cls}">
+                <span class="gp-card-tag">${esc(a.category)}</span>
+                <span class="gp-card-title">${esc(a.title)}</span>
+                <span class="gp-card-desc">${esc(a.description)}</span>
+                <div class="gp-card-footer">
+                    <span class="gp-card-date">${fmtDate(a.date)}</span>
+                    <span class="gp-card-arrow">&rarr;</span>
                 </div>
             </a>
         `;
     }).join('');
-    // Force reflow so animations replay
+
+    grid.innerHTML = cardsHtml;
+    grid.appendChild(noRes);
     void grid.offsetWidth;
     grid.style.display = '';
 }
 
-// Events
-document.getElementById('searchInput').addEventListener('input', e => {
-    query = e.target.value;
-    render();
-});
+document.getElementById('searchInput').addEventListener('input', e => { query = e.target.value; render(); });
 tagSelect.addEventListener('change', e => {
     tag = e.target.value;
+    chipContainer.querySelectorAll('.gp-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.tag === tag);
+    });
     render();
 });
 document.getElementById('searchClear').addEventListener('click', () => {
-    document.getElementById('searchInput').value = '';
-    query = '';
-    render();
+    document.getElementById('searchInput').value = ''; query = ''; render();
     document.getElementById('searchInput').focus();
 });
 document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        document.getElementById('searchInput').focus();
-    }
-    if (e.key === 'Escape') {
-        document.getElementById('searchInput').value = '';
-        query = '';
-        render();
-        document.getElementById('searchInput').blur();
-    }
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+    if (e.key === 'Escape') { document.getElementById('searchInput').value = ''; query = ''; render(); document.getElementById('searchInput').blur(); }
 });
-
-// Close dropdown on outside click
 document.addEventListener('click', e => {
-    if (!e.target.closest('.search-sticky')) {
-        document.getElementById('searchDropdown').classList.remove('visible');
-    }
+    if (!e.target.closest('.gp-search-bar')) document.getElementById('searchDropdown').classList.remove('visible');
 });
 
 render();

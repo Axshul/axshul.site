@@ -3,17 +3,17 @@ window.n8nArticles = [
     "id": "what-is-n8n",
     "title": "What is n8n?",
     "tags": ["Overview", "Automation", "Open Source"],
-    "description": "A complete introduction to n8n — the open-source workflow automation platform. Learn what it is, what it can do, who it's for, and how to get started.",
+    "description": "A complete introduction to n8n - the open-source workflow automation platform. Learn what it is, what it can do, who it's for, and how to get started.",
     "date": "2026-03-29",
     "author": "Anshul Namdev",
     "url": "/n8n/guide/what-is-n8n/"
   },
   {
     "id": "build-your-first-workflow",
-    "title": "How to Build Your First n8n Workflow",
-    "tags": ["Beginner", "Workflows", "Getting Started"],
-    "description": "A practical roadmap for building your first n8n workflow. From getting set up, to completing the official courses, to solving real problems with automation.",
-    "date": "2026-03-29",
+    "title": "n8n Academy: The Complete Guide to Every Course, Certificate & Badge",
+    "tags": ["n8n Academy", "Courses", "Certificates"],
+    "description": "Everything about the n8n Academy: all 4 courses explained, how grading works, certificates, badges, enrollment, and a full support FAQ. The only guide you need.",
+    "date": "2026-06-26",
     "author": "Anshul Namdev",
     "url": "/n8n/guide/build-your-first-workflow/"
   },
@@ -24,13 +24,13 @@ window.n8nArticles = [
     "description": "Secure your workflows against unverified payloads. Learn how to explicitly extract webhook headers and validate cryptographic signatures using internal Crypto nodes.",
     "date": "2026-03-18",
     "author": "Anshul Namdev",
-    "content": "<h2>Why Verify Webhooks?</h2><p>When exposing an n8n webhook URL to the public web, anyone with the URL can trigger your workflow. To ensure data integrity—especially for sensitive platforms like Stripe, GitHub, or Shopify—you must verify the cryptographic signature sent in the request headers.</p><h2>The Solution</h2><p>Stop trusting raw payloads. Validate signatures using n8n's Crypto node.</p><h3>Implementation Guide</h3><ol><li><strong>Enable Headers:</strong> Inside your Webhook node, map to the Options block and enable <strong>Include Headers</strong>. This allows n8n to output the header alongside the body.</li><li><strong>Calculate the Hash:</strong> Use a <strong>Crypto</strong> node. Set the Action to <em>Hash</em>, select the appropriate algorithm (e.g., HMAC SHA256), input your webhook secret, and use the raw webhook body as the value.</li><li><strong>Compare Hashes:</strong> Use an <strong>If</strong> node to compare the output of your Crypto node's hash with the signature provided in the headers (e.g., <code>headers['stripe-signature']</code>).</li></ol><p>If the expressions match, process the workflow as normal. If they fail, route to an HTTP response node emitting a 401 Unauthorized.</p>"
+    "content": "<h2>Why Verify Webhooks?</h2><p>When exposing an n8n webhook URL to the public web, anyone with the URL can trigger your workflow. To ensure data integrity-especially for sensitive platforms like Stripe, GitHub, or Shopify-you must verify the cryptographic signature sent in the request headers.</p><h2>The Solution</h2><p>Stop trusting raw payloads. Validate signatures using n8n's Crypto node.</p><h3>Implementation Guide</h3><ol><li><strong>Enable Headers:</strong> Inside your Webhook node, map to the Options block and enable <strong>Include Headers</strong>. This allows n8n to output the header alongside the body.</li><li><strong>Calculate the Hash:</strong> Use a <strong>Crypto</strong> node. Set the Action to <em>Hash</em>, select the appropriate algorithm (e.g., HMAC SHA256), input your webhook secret, and use the raw webhook body as the value.</li><li><strong>Compare Hashes:</strong> Use an <strong>If</strong> node to compare the output of your Crypto node's hash with the signature provided in the headers (e.g., <code>headers['stripe-signature']</code>).</li></ol><p>If the expressions match, process the workflow as normal. If they fail, route to an HTTP response node emitting a 401 Unauthorized.</p>"
   },
   {
     "id": "automate-n8n-with-claude",
     "title": "Automate n8n with Claude: Build Workflows Using AI",
     "tags": ["AI Automation", "Claude", "MCP", "Advanced"],
-    "description": "Connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI — no manual node-by-node construction required.",
+    "description": "Connect Claude to your n8n instance using MCP and the n8n API. Build, deploy, and manage complex workflows with AI - no manual node-by-node construction required.",
     "date": "2026-03-31",
     "author": "Anshul Namdev",
     "url": "/n8n/guide/automate-n8n-with-claude/"

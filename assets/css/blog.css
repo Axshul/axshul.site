@@ -1,5 +1,5 @@
 /* ============================================================
-   BLOG PAGE — axshul.site/blog
+   BLOG PAGE - axshul.site/blog
    Design tokens inherit from the main site's :root in style.css
    ============================================================ */
 
@@ -137,8 +137,8 @@
     color: #999;
 }
 
-/* HERO VISUAL — Diamond Animation */
-/* HERO VISUAL — Integrated 3D Graphic */
+/* HERO VISUAL - Diamond Animation */
+/* HERO VISUAL - Integrated 3D Graphic */
 .hero-visual {
     position: relative;
     width: 100%;
@@ -567,7 +567,7 @@
     padding: 0.2rem 0.65rem;
 }
 
-/* HN Best Stories — card grid */
+/* HN Best Stories - card grid */
 .hn-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -738,7 +738,7 @@
     color: var(--accent-blue, #0044FF);
 }
 
-/* HN Ask/Show — two column staggered */
+/* HN Ask/Show - two column staggered */
 .hn-ask-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -824,7 +824,7 @@
     gap: 0.75rem;
 }
 
-/* HN Jobs — list rows */
+/* HN Jobs - list rows */
 .hn-jobs-list {
     display: flex;
     flex-direction: column;

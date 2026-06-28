@@ -1,4 +1,4 @@
-/* Automations Page — Verifier + UI Logic */
+/* Automations Page - Verifier + UI Logic */
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             outLoader.classList.remove('show');
             resultBox.innerHTML = `<span style="color:var(--red-soft)">
-        ✕ Network error — check whether the webhook is online or CORS permits this origin.
+        ✕ Network error - check whether the webhook is online or CORS permits this origin.
       </span>`;
             outLabel.textContent = 'error';
             outLabel.style.color = 'var(--red-soft)';

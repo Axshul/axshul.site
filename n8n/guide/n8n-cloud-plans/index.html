@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>n8n Cloud Plans Breakdown: Starter, Pro, Business & Enterprise (2026) - n8n Guide</title>
-    <meta name="description" content="A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, storage, AI credits, features, and who each plan is actually for — including Enterprise.">
+    <meta name="description" content="A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, storage, AI credits, features, and who each plan is actually for.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="n8n cloud plans, n8n pricing, n8n starter, n8n pro, n8n business, n8n enterprise, n8n vs Zapier, n8n vs Make, n8n cost 2026">
     <meta property="og:title" content="n8n Cloud Plans Breakdown: Starter, Pro, Business & Enterprise (2026)">
-    <meta property="og:description" content="A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, storage, AI credits, features, and who each plan is actually for — including Enterprise.">
+    <meta property="og:description" content="Full breakdown of every n8n Cloud plan. Executions, concurrency, pricing, and the Zapier/Make cost comparison.">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://axshul.site/assets/img/anshul-namdev.jpg">
     <meta name="twitter:card" content="summary_large_image">
@@ -16,594 +18,689 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../../assets/css/n8n.css">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "n8n Cloud Plans Breakdown: Starter, Pro, Business & Enterprise (2026)",
-      "description": "A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, storage, AI credits, features, and who each plan is actually for — including Enterprise.",
-      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
-      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
-      "datePublished": "2026-04-09",
-      "url": "https://axshul.site/n8n/guide/n8n-cloud-plans/",
-      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
-    }
-    </script>
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "n8n Cloud Plans Breakdown: Starter, Pro, Business & Enterprise (2026)",
+      "description": "A complete breakdown of every n8n Cloud plan in 2026 with execution reality checks and Zapier/Make cost comparison.",
+      "author": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "publisher": { "@type": "Person", "name": "Anshul Namdev", "url": "https://axshul.site" },
+      "datePublished": "2026-04-09",
+      "dateModified": "2026-06-29",
+      "url": "https://axshul.site/n8n/guide/n8n-cloud-plans/",
+      "image": "https://axshul.site/assets/img/anshul-namdev.jpg"
+    }
+    </script>
+
+    <style>
+        body {
+            --blue: #D72638;
+            --blue-dk: #B51E2E;
+            --blue-lt: rgba(215, 38, 56, 0.07);
+            --blue-mid: rgba(215, 38, 56, 0.12);
+        }
+        .g-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9999; background: transparent; }
+        .g-progress-fill { height: 100%; width: 0%; background: var(--blue); transition: width 0.15s linear; }
+        .g-hero { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 0; text-align: center; }
+        .g-hero-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+        .g-tag { background: var(--bg-off); border: 1px solid var(--border); color: var(--text-dim); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+        .g-hero h1 { font-family: var(--font-serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; color: var(--text); letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .g-hero h1 em { font-style: italic; color: var(--blue); }
+        .g-hero-sub { font-family: var(--font-sans); font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; max-width: 620px; margin: 0 auto 2rem; }
+        .g-hero-meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em; margin-bottom: 3rem; }
+        .g-hero-meta a { color: var(--text-mid); text-decoration: underline; text-decoration-color: var(--border); }
+        .g-hero-meta a:hover { color: var(--blue); }
+        .g-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; max-width: 700px; margin: 0 auto 4rem; }
+        .g-stat { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
+        .g-stat-num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 0.3rem; }
+        .g-stat-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+        .g-toc { max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem; }
+        .g-toc-label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1.25rem; }
+        .g-toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 3rem; }
+        .g-toc-grid a { font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-mid); display: flex; align-items: baseline; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.25s; }
+        .g-toc-grid a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+        .g-toc-grid a span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); font-weight: 700; min-width: 1.5rem; }
+        .g-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 5rem; }
+        .g-section.wide { max-width: 1100px; }
+        .g-section-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .g-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 0.1em; font-weight: 700; flex-shrink: 0; }
+        .g-section-head h2 { font-family: var(--font-serif); font-size: 2rem; color: var(--text); margin: 0; line-height: 1.2; }
+        .g-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-mid); margin-bottom: 1.5rem; }
+        .g-text a { color: var(--blue); text-decoration: underline; font-weight: 700; }
+        .g-text strong { color: var(--text); }
+        .g-text code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
+        .g-callout { background: var(--bg-off); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 2rem 0; }
+        .g-callout p { font-size: 0.9rem; color: var(--text-mid); margin: 0; }
+        .g-callout ul { margin: 0.75rem 0 0; padding-left: 1.25rem; list-style: disc; display: flex; flex-direction: column; gap: 0.4rem; }
+        .g-callout li { font-size: 0.9rem; }
+        .g-callout a { color: var(--blue); text-decoration: underline; }
+        .g-callout.warn { border-left-color: #f59e0b; }
+        .g-callout.warn strong { color: #f59e0b; }
+        .g-table-wrap { overflow-x: auto; margin: 2rem 0; border-radius: 10px; border: 1px solid var(--border); }
+        .g-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans); }
+        .g-table thead tr { background: var(--blue-lt); border-bottom: 2px solid var(--blue-mid); }
+        .g-table th { text-align: left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700; }
+        .g-table td { padding: 0.85rem 1.1rem; color: var(--text-mid); border-bottom: 1px solid var(--border); }
+        .g-table tbody tr:last-child td { border-bottom: none; }
+        .g-table .plan-name { font-weight: 700; color: var(--text); }
+        .g-table .mono { font-family: var(--font-mono); font-size: 0.82rem; }
+        .g-plan-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 2rem 0; }
+        .g-plan-card-head { background: var(--blue-lt); padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--blue-mid); display: flex; align-items: center; justify-content: space-between; }
+        .g-plan-card-head h3 { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 0; }
+        .g-plan-card-head .price { font-family: var(--font-mono); font-size: 0.85rem; color: var(--blue); font-weight: 700; }
+        .g-plan-card-body { padding: 1.25rem; }
+        .g-plan-card-body ul { margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: var(--text-mid); list-style: disc; }
+        .g-plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 2rem 0; }
+        .g-plan-pick { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+        .g-plan-pick-head { background: var(--blue-lt); padding: 0.65rem 1.1rem; border-bottom: 1px solid var(--blue-mid); }
+        .g-plan-pick-head span { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); }
+        .g-plan-pick-body { padding: 0.9rem 1.1rem; }
+        .g-plan-pick-body ul { margin: 0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9; }
+        .g-list { list-style: none; padding: 0; margin: 2rem 0; display: flex; flex-direction: column; gap: 1rem; }
+        .g-list li { font-size: 1rem; line-height: 1.7; color: var(--text-mid); padding-left: 1.5rem; position: relative; }
+        .g-list li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 6px; height: 6px; background: var(--blue); border-radius: 50%; }
+        .g-list li strong { color: var(--text); }
+        .g-faq { margin: 2rem 0; }
+        .g-faq details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.3s; }
+        .g-faq details[open] { border-color: var(--blue); }
+        .g-faq summary { padding: 1.25rem 1.5rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 700; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; list-style: none; transition: color 0.3s; user-select: none; }
+        .g-faq summary::-webkit-details-marker { display: none; }
+        .g-faq summary::after { content: '+'; font-family: var(--font-mono); font-size: 1.2rem; color: var(--text-dim); flex-shrink: 0; }
+        .g-faq details[open] summary::after { content: '\2212'; color: var(--blue); }
+        .g-faq summary:hover { color: var(--blue); }
+        .g-faq .faq-body { padding: 0 1.5rem 1.5rem; }
+        .g-faq .faq-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; margin: 0 0 0.75rem; }
+        .g-faq .faq-body p:last-child { margin: 0; }
+        .g-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
+        .g-reveal.visible { opacity: 1; transform: translateY(0); }
+        .g-endcap { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+        .g-endcap-author { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+        .g-endcap-av { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; }
+        .g-endcap-av img { width: 100%; height: 100%; object-fit: cover; }
+        .ec-name { font-family: var(--font-sans); font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .ec-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+        .g-endcap-actions { display: flex; gap: 1rem; align-items: center; }
+        .g-endcap-actions button, .g-endcap-actions a { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; transition: all 0.25s; text-decoration: none; }
+        .g-endcap-actions button { background: var(--blue); color: #fff; border: none; }
+        .g-endcap-actions button:hover { background: var(--blue-dk); }
+        .g-endcap-actions a { color: var(--text-mid); border: 1px solid var(--border); background: transparent; }
+        .g-endcap-actions a:hover { border-color: var(--blue); color: var(--blue); }
+        .g-enterprise-form { margin: 2rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg-off); }
+        .g-enterprise-form-head { background: var(--blue-lt); padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--blue-mid); font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); }
+        @media (max-width: 768px) {
+            .g-hero h1 { font-size: 2.2rem; }
+            .g-stats { grid-template-columns: repeat(2, 1fr); }
+            .g-toc-grid { grid-template-columns: 1fr; }
+            .g-section-head h2 { font-size: 1.6rem; }
+            .g-plan-grid { grid-template-columns: 1fr; }
+            .g-endcap { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .g-hero { padding: 2rem 1rem 0; }
+            .g-section { padding: 0 1rem 3rem; }
+            .g-toc { padding: 0 1rem; }
+        }
+    </style>
 </head>
 <body>
-    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+    <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
+    <div id="canvas-container" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-10;opacity:0.35;pointer-events:none;"></div>
+
     <nav class="auto-nav">
         <div class="inner">
             <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
             <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
             <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">Back to Archive</a></li>
+                <li><a href="../">Back to Archive</a></li>
                 <li><a href="../../">Hub</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="auto-wrap" style="padding-top: 5rem;">
-        <div class="reader-layout">
-            <main class="reader-main">
-                <header class="reader-header stagger-in">
-                    <div class="reader-tags">
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Pricing</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Cloud</span>
-                        <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Strategy</span>
-                    </div>
-                    <h1 class="reader-title">n8n Cloud Plans Breakdown: Starter, Pro, Business &amp; Enterprise (2026)</h1>
-                    <div class="reader-meta">Published on Apr 9, 2026 · By Anshul Namdev</div>
-                </header>
+    <div class="auto-wrap" style="padding-top:5rem;">
 
-                <div class="reader-body">
+        <section class="g-hero">
+            <div class="g-hero-tags">
+                <span class="g-tag">Pricing</span>
+                <span class="g-tag">Cloud</span>
+                <span class="g-tag">Strategy</span>
+            </div>
+            <h1>n8n <em>Cloud Plans</em> Breakdown</h1>
+            <p class="g-hero-sub">Starter, Pro, Business, and Enterprise compared. Execution limits, concurrency, features, real-world cost analysis, and the Zapier/Make pricing gap.</p>
+            <div class="g-hero-meta">Updated Jun 29, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
 
-                    <h2>The Short Version</h2>
-                    <p>n8n overhauled its pricing in 2025. Active workflow limits are gone. Every paid plan now includes unlimited workflows, unlimited users, and every integration. The only variable that scales your cost is how many times your workflows run each month: executions. That single change makes n8n dramatically more predictable to budget for, and dramatically cheaper than Zapier or Make for anyone building complex automations.</p>
-                    <p>Here is the full breakdown of what each plan actually includes, what the limits mean in practice, and how to figure out which one fits your situation.</p>
+            <div class="g-stats">
+                <div class="g-stat"><div class="g-stat-num">4</div><div class="g-stat-label">Plans Available</div></div>
+                <div class="g-stat"><div class="g-stat-num">$20</div><div class="g-stat-label">Cheapest (Annual)</div></div>
+                <div class="g-stat"><div class="g-stat-num">1</div><div class="g-stat-label">Exec = Full Run</div></div>
+                <div class="g-stat"><div class="g-stat-num">2026</div><div class="g-stat-label">Pricing Data</div></div>
+            </div>
+        </section>
 
-                    <div style="background: rgba(0,68,255,0.04); border: 1px solid rgba(0,68,255,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">💡</span>
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);">One execution = one complete workflow run, from trigger to final node, regardless of how many steps it contains. A 3-node workflow and a 50-node workflow both cost exactly one execution. That is the key difference from Zapier (per task/step) and Make (per operation).</p>
-                    </div>
+        <nav class="g-toc">
+            <div class="g-toc-label">In This Article</div>
+            <div class="g-toc-grid">
+                <a href="#overview"><span>01</span> How n8n Pricing Works</a>
+                <a href="#comparison"><span>02</span> Plans at a Glance</a>
+                <a href="#starter"><span>03</span> Starter Plan</a>
+                <a href="#pro"><span>04</span> Pro Plan</a>
+                <a href="#business"><span>05</span> Business Plan</a>
+                <a href="#enterprise"><span>06</span> Enterprise Plan</a>
+                <a href="#executions"><span>07</span> Execution Reality Check</a>
+                <a href="#vs"><span>08</span> n8n vs Zapier vs Make</a>
+                <a href="#pick"><span>09</span> Which Plan to Pick</a>
+                <a href="#faq"><span>10</span> FAQ</a>
+            </div>
+        </nav>
 
-                    <!-- PLAN COMPARISON TABLE -->
-                    <h2>Plans at a Glance</h2>
-                    <div style="overflow-x: auto; margin: 1.5rem 0; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;">
-                        <table style="width:100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans);">
-                            <thead>
-                                <tr style="background: rgba(0,68,255,0.05); border-bottom: 2px solid rgba(0,68,255,0.15);">
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Plan</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Monthly</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Annual</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Executions/mo</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Concurrency</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Hosting</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="border-bottom: 1px solid var(--border); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">Starter</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">€24 / $24</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">€20 / $20</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 600;">2,500</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">5</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">n8n Cloud</span></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">Pro</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">€60 / $60</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">€50 / $50</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 600;">10k – 50k</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">20</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">n8n Cloud</span></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--border); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">Business</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">€800 / $800</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">€667 / $667</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 600;">40,000</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">200+</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(245,158,11,0.1); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Self-hosted</span></td>
-                                </tr>
-                                <tr style="background: rgba(255,255,255,0.02); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">Enterprise</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem;">Custom</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem;">Custom</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-dim); font-weight: 600;">Custom</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">200+</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(139,92,246,0.1); color: #8b5cf6; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Cloud / Self</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: -0.5rem;">Annual billing saves ~17% vs monthly. All cloud plans include a free trial, no credit card required. Prices shown in EUR/USD; n8n bills in EUR.</p>
+        <!-- 01 -->
+        <section id="overview" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">01</span>
+                <h2>How n8n Pricing Works</h2>
+            </div>
+            <p class="g-text">n8n overhauled its pricing in 2025. Active workflow limits are gone. Every paid plan now includes <strong>unlimited workflows</strong>, <strong>unlimited users</strong>, and <strong>every integration</strong>. The only variable that scales your cost is how many times your workflows run each month: executions.</p>
+            <p class="g-text">That single change makes n8n dramatically more predictable to budget for, and dramatically cheaper than Zapier or Make for anyone building complex automations.</p>
 
-                    <!-- STARTER -->
-                    <h2>Starter Plan — €24/month</h2>
-                    <p>The entry point for n8n Cloud. Starter is hosted entirely by n8n, so there is nothing to install, configure, or maintain. You get a live n8n instance in minutes.</p>
+            <div class="g-callout">
+                <p><strong>One execution = one complete workflow run</strong>, from trigger to final node, regardless of how many steps it contains. A 3-node workflow and a 50-node workflow both cost exactly one execution. That is the key difference from Zapier (per task/step) and Make (per operation).</p>
+            </div>
+        </section>
 
-                    <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
-                        <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15); display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.75rem;">✦</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">What You Get</span>
-                        </div>
-                        <div style="padding: 1rem 1.25rem;">
-                            <ul style="margin:0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-mid);">
-                                <li>2,500 workflow executions per month</li>
-                                <li>5 concurrent executions</li>
-                                <li>1 shared project</li>
-                                <li>Unlimited users, unlimited workflows, all integrations</li>
-                                <li>50 AI Workflow Builder credits per month</li>
-                                <li>7-day execution history</li>
-                                <li>Up to 100 GB data storage (shared across the instance)</li>
-                                <li>Executions and AI credits reset on the 1st of each month</li>
-                            </ul>
-                        </div>
-                    </div>
+        <!-- 02 -->
+        <section id="comparison" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">02</span>
+                <h2>Plans at a Glance</h2>
+            </div>
 
-                    <p><strong style="color:var(--text);">What 2,500 executions actually means:</strong> That works out to roughly 83 runs per day. A single scheduled workflow polling every 5 minutes burns through ~8,640 executions per month on its own. Starter is built for event-driven workflows triggered by webhooks, form submissions, or manual runs, not for high-frequency polling. If you have a handful of workflows that fire a few dozen times a day, Starter is plenty. If you are running anything on a tight schedule, you will hit the ceiling fast.</p>
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Plan</th>
+                            <th>Monthly</th>
+                            <th>Annual</th>
+                            <th>Executions/mo</th>
+                            <th>Concurrency</th>
+                            <th>Hosting</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="plan-name">Starter</td>
+                            <td class="mono">$24/mo</td>
+                            <td class="mono">$20/mo</td>
+                            <td><strong>2,500</strong></td>
+                            <td>5</td>
+                            <td>n8n Cloud</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Pro</td>
+                            <td class="mono">$60/mo</td>
+                            <td class="mono">$50/mo</td>
+                            <td><strong>10k - 50k</strong></td>
+                            <td>20</td>
+                            <td>n8n Cloud</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Business</td>
+                            <td class="mono">$800/mo</td>
+                            <td class="mono">$667/mo</td>
+                            <td><strong>40,000</strong></td>
+                            <td>200+</td>
+                            <td>Self-hosted</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Enterprise</td>
+                            <td class="mono">Custom</td>
+                            <td class="mono">Custom</td>
+                            <td><strong>Custom</strong></td>
+                            <td>200+</td>
+                            <td>Cloud / Self</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="g-text" style="font-size:0.85rem;">Annual billing saves roughly 17% vs monthly. All cloud plans include a free trial, no credit card required. n8n bills in EUR; USD equivalents are approximate.</p>
+        </section>
 
-                    <p><strong style="color:var(--text);">Concurrency matters more than most people realise:</strong> With only 5 concurrent executions, if 6 workflows trigger at the same moment, the 6th queues. For most solo builders this is fine. For anything with burst traffic like a webhook that fires 20 times in a second, it becomes a bottleneck.</p>
+        <!-- 03 -->
+        <section id="starter" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">03</span>
+                <h2>Starter Plan</h2>
+            </div>
 
-                    <div style="background: rgba(0,68,255,0.04); border: 1px solid rgba(0,68,255,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">👤</span>
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);"><strong style="color:var(--text);">Who it is for:</strong> Solo builders, freelancers, and indie hackers validating n8n in a light production setting. Also a solid starting point before committing to a higher tier. The free trial requires no credit card.</p>
-                    </div>
-
-                    <!-- PRO -->
-                    <h2>Pro Plan — €60/month</h2>
-                    <p>Pro is where most small teams and serious solo builders should land. It is a meaningful step up in every dimension that matters for production use.</p>
-
-                    <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
-                        <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15); display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.75rem;">✦</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">Everything in Starter, plus:</span>
-                        </div>
-                        <div style="padding: 1rem 1.25rem;">
-                            <ul style="margin:0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-mid);">
-                                <li>10,000 executions/month on Pro-1 tier; 50,000 on Pro-2 tier</li>
-                                <li>20 concurrent executions (4x Starter)</li>
-                                <li>3 shared projects</li>
-                                <li>150 AI Workflow Builder credits per month</li>
-                                <li>14-day execution history</li>
-                                <li>Admin roles for team management</li>
-                                <li>Global variables</li>
-                                <li>Workflow history (version rollback)</li>
-                                <li>Execution search</li>
-                                <li>7-day workflow insights dashboard</li>
-                                <li>Additional executions purchasable via Admin panel (monthly subscribers) or by emailing help@n8n.io (annual)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <p><strong style="color:var(--text);">Pro-1 vs Pro-2:</strong> n8n offers two Pro tiers. Pro-1 starts at 10,000 executions/month. Pro-2 scales to 50,000. Both share the same feature set, the only difference is execution volume. Monthly subscribers can add more executions directly from the Admin panel without contacting support.</p>
-
-                    <p><strong style="color:var(--text);">What 10,000 executions actually means:</strong> Roughly 333 runs per day, or a workflow firing every 4 to 5 minutes around the clock. This comfortably handles most small-to-medium production workloads: CRM syncs, lead routing, internal reporting, Slack notifications, and similar event-driven automations. The risk area is unpredictable volume. Chatbots and AI agent workflows can spike hard and fast.</p>
-
-                    <div style="background: rgba(0,68,255,0.04); border: 1px solid rgba(0,68,255,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">👥</span>
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);"><strong style="color:var(--text);">Who it is for:</strong> Small teams running production workflows, agencies managing client automations, and technical teams centralising their automation stack. The workflow history and admin roles become essential once more than one person is editing workflows.</p>
-                    </div>
-
-                    <!-- BUSINESS -->
-                    <h2>Business Plan — €800/month</h2>
-                    <p>Business is a fundamentally different category. The price jump from Pro is steep, roughly 13x, but so is the feature set. This is the plan for companies where automation is a core operational function, not a side project.</p>
-
-                    <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
-                        <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15); display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.75rem;">✦</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">Everything in Pro, plus:</span>
-                        </div>
-                        <div style="padding: 1rem 1.25rem;">
-                            <ul style="margin:0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-mid);">
-                                <li>40,000 executions/month</li>
-                                <li>200+ concurrent executions</li>
-                                <li>6 shared projects</li>
-                                <li>SSO, SAML, and LDAP authentication</li>
-                                <li>Git-based version control</li>
-                                <li>Multiple deployment environments (dev, staging, production)</li>
-                                <li>Workflow diff (compare versions visually)</li>
-                                <li>30-day insights retention</li>
-                                <li>Queue mode and scaling options</li>
-                                <li>Self-hosted (you manage the infrastructure; n8n provides the license)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div style="background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">⚠️</span>
-                        <div>
-                            <p style="margin:0 0 0.3rem 0; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #f59e0b;">Business is Self-Hosted</p>
-                            <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);">Unlike Starter and Pro, the Business plan runs on your own infrastructure. You pay n8n for the license key, and you pay separately for your servers. This gives you full data control and the ability to deploy on-premises or in your own cloud, which is often a hard requirement for regulated industries like healthcare, fintech, and legal.</p>
-                        </div>
-                    </div>
-
-                    <p><strong style="color:var(--text);">Startup discount:</strong> If your company has fewer than 20 employees, n8n's Startup Program gives you 50% off the Business plan, bringing it down to roughly €333/month billed annually. That is a significant unlock for smaller teams that need SSO or multi-environment support before they have grown into the full price.</p>
-
-                    <div style="background: rgba(0,68,255,0.04); border: 1px solid rgba(0,68,255,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">🏢</span>
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);"><strong style="color:var(--text);">Who it is for:</strong> Companies with under 100 employees that need SSO, version control, and environment management. If your IT team requires single sign-on for compliance, or your engineering team needs a proper dev/staging/prod workflow, Business is the minimum viable plan.</p>
-                    </div>
-
-                    <!-- ENTERPRISE -->
-                    <h2>Enterprise Plan — Custom Pricing</h2>
-                    <p>Enterprise is for large organisations and companies in regulated industries where compliance, governance, and dedicated support are non-negotiable. Pricing is custom: you contact n8n's sales team and negotiate based on your execution volume, hosting model, and support requirements.</p>
-
-                    <div style="border: 1px solid rgba(139,92,246,0.25); border-radius: 10px; overflow: hidden; margin: 1.5rem 0;">
-                        <div style="background: rgba(139,92,246,0.07); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(139,92,246,0.2); display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.75rem;">✦</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #8b5cf6;">Everything in Business, plus:</span>
-                        </div>
-                        <div style="padding: 1rem 1.25rem;">
-                            <ul style="margin:0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-mid);">
-                                <li>Unlimited shared projects</li>
-                                <li>200+ concurrent executions (configurable)</li>
-                                <li>365-day insights retention</li>
-                                <li>Extended data retention</li>
-                                <li>External secret store integration (e.g. HashiCorp Vault, AWS Secrets Manager)</li>
-                                <li>Log streaming (e.g. to Datadog, Splunk)</li>
-                                <li>1,000 AI Workflow Builder credits/month (Cloud Enterprise only)</li>
-                                <li>Dedicated SLA support</li>
-                                <li>Invoice billing</li>
-                                <li>Available as n8n Cloud hosted or fully self-hosted</li>
-                                <li>SOC 2 compliance (n8n undergoes continuous evaluation and annual audits)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <p><strong style="color:var(--text);">What Enterprise pricing looks like in practice:</strong> n8n does not publish Enterprise pricing publicly. Community discussions suggest contracts typically start at $1,000+/year and scale significantly with execution volume and support tier. The best approach is to contact sales directly with your expected monthly execution count, team size, and compliance requirements.</p>
-
-                    <p><strong style="color:var(--text);">Questions worth asking sales before signing:</strong></p>
-                    <ul style="color: var(--text-mid); font-size: 0.9rem; line-height: 1.8;">
-                        <li>How are executions counted and billed for self-hosted Enterprise?</li>
-                        <li>Is there a base fee plus per-execution charges, or purely per-execution?</li>
-                        <li>What happens if you exceed your execution quota mid-month?</li>
-                        <li>Are upgrades and downgrades possible without long-term contract lock-in?</li>
-                        <li>What does the dedicated SLA actually guarantee (uptime, response time)?</li>
-                        <li>Does the contract include a dedicated customer success manager?</li>
+            <div class="g-plan-card">
+                <div class="g-plan-card-head">
+                    <h3>Starter</h3>
+                    <span class="price">$24/mo ($20 annual)</span>
+                </div>
+                <div class="g-plan-card-body">
+                    <ul>
+                        <li>2,500 workflow executions per month</li>
+                        <li>5 concurrent executions</li>
+                        <li>1 shared project</li>
+                        <li>Unlimited users, unlimited workflows, all integrations</li>
+                        <li>50 AI Workflow Builder credits per month</li>
+                        <li>7-day execution history</li>
+                        <li>Up to 100 GB data storage</li>
+                        <li>Executions and AI credits reset on the 1st of each month</li>
                     </ul>
+                </div>
+            </div>
 
-                    <div style="background: rgba(0,68,255,0.04); border: 1px solid rgba(0,68,255,0.18); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">🏛️</span>
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);"><strong style="color:var(--text);">Who it is for:</strong> Organisations with 100+ employees, strict compliance requirements (HIPAA, SOC 2, data residency), or those migrating from large Zapier/Make deployments at scale. Also the right tier if you need log streaming into your existing observability stack or external secret store integration.</p>
-                    </div>
+            <p class="g-text"><strong>What 2,500 executions actually means:</strong> Roughly 83 runs per day. A single scheduled workflow polling every 5 minutes burns through roughly 8,640 executions per month on its own. Starter is built for event-driven workflows triggered by webhooks, form submissions, or manual runs. If you have a handful of workflows that fire a few dozen times a day, Starter is plenty. If you are running anything on a tight schedule, you will hit the ceiling fast.</p>
+            <p class="g-text"><strong>Concurrency matters more than most people realize:</strong> With only 5 concurrent executions, if 6 workflows trigger at the same moment, the 6th queues. For most solo builders this is fine. For anything with burst traffic like a webhook that fires 20 times in a second, it becomes a bottleneck.</p>
+            <p class="g-text"><strong>Who it is for:</strong> Solo builders, freelancers, and indie hackers validating n8n in a light production setting. Also a solid starting point before committing to a higher tier.</p>
+        </section>
 
-                    <!-- ENTERPRISE FORM -->
-                    <h2>Enquire About Enterprise</h2>
-                    <p>If Enterprise is the right fit for your organisation, the form below goes directly to n8n's team. Fill it out with your use case, execution estimates, and compliance requirements. They will come back with a tailored quote.</p>
+        <!-- 04 -->
+        <section id="pro" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">04</span>
+                <h2>Pro Plan</h2>
+            </div>
 
-                    <div style="margin: 2rem 0; border: 1px solid rgba(139,92,246,0.25); border-radius: 12px; overflow: hidden; background: var(--bg-off);">
-                        <div style="background: rgba(139,92,246,0.07); padding: 0.75rem 1.25rem; border-bottom: 1px solid rgba(139,92,246,0.2); font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #8b5cf6; display: flex; align-items: center; gap: 0.5rem;">
-                            <span>📋</span> n8n Enterprise Enquiry Form
-                        </div>
-                        <iframe
-                            src="https://n8n-community.typeform.com/to/y9X2YuGa?utm_campaign=upgrade-insights&utm_medium=embed&utm_source=n8n_app"
-                            style="width:100%; height:520px; border:none;"
-                            title="n8n Enterprise Enquiry Form"
-                            loading="lazy"
-                            allow="camera; microphone; autoplay; encrypted-media;"
-                        ></iframe>
-                    </div>
+            <div class="g-plan-card">
+                <div class="g-plan-card-head">
+                    <h3>Pro</h3>
+                    <span class="price">$60/mo ($50 annual)</span>
+                </div>
+                <div class="g-plan-card-body">
+                    <ul>
+                        <li>10,000 executions/month (Pro-1) or 50,000 (Pro-2)</li>
+                        <li>20 concurrent executions (4x Starter)</li>
+                        <li>3 shared projects</li>
+                        <li>150 AI Workflow Builder credits per month</li>
+                        <li>14-day execution history</li>
+                        <li>Admin roles for team management</li>
+                        <li>Global variables</li>
+                        <li>Workflow history (version rollback)</li>
+                        <li>Execution search</li>
+                        <li>7-day workflow insights dashboard</li>
+                        <li>Additional executions purchasable via Admin panel (monthly) or by emailing help@n8n.io (annual)</li>
+                    </ul>
+                </div>
+            </div>
 
-                    <!-- WHAT YOU CANNOT DO ON CLOUD -->
-                    <h2>What Cloud Plans Cannot Do</h2>
-                    <p>All n8n Cloud plans (Starter, Pro, and Enterprise Cloud) share a set of restrictions that only self-hosted deployments can bypass. These are not bugs or oversights; they are architectural constraints of a managed hosting environment.</p>
+            <p class="g-text"><strong>Pro-1 vs Pro-2:</strong> n8n offers two Pro tiers. Pro-1 starts at 10,000 executions/month. Pro-2 scales to 50,000. Both share the same feature set. The only difference is execution volume. Monthly subscribers can add more executions directly from the Admin panel without contacting support.</p>
+            <p class="g-text"><strong>What 10,000 executions actually means:</strong> Roughly 333 runs per day, or a workflow firing every 4 to 5 minutes around the clock. This comfortably handles most small-to-medium production workloads: CRM syncs, lead routing, internal reporting, Slack notifications, and similar event-driven automations.</p>
+            <p class="g-text"><strong>Who it is for:</strong> Small teams running production workflows, agencies managing client automations, and technical teams centralizing their automation stack. The workflow history and admin roles become essential once more than one person is editing workflows.</p>
+        </section>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0;">
-                        <div style="border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; overflow: hidden;">
-                            <div style="background: rgba(239,68,68,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(239,68,68,0.15); display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 0.8rem;">🚫</span>
-                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #ef4444;">Not Available on Cloud</span>
-                            </div>
-                            <div style="padding: 0.9rem 1.1rem;">
-                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
-                                    <li>Custom environment variables</li>
-                                    <li>Custom base URLs or domains</li>
-                                    <li>Port configuration</li>
-                                    <li>Proxy settings</li>
-                                    <li>Custom TLS/SSL certificates</li>
-                                    <li>Database backend selection</li>
-                                    <li>Queue mode adjustment</li>
-                                    <li>Worker count / concurrency tuning</li>
-                                    <li>Execution timeout customisation</li>
-                                    <li>Manual node include/exclude</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div style="border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; overflow: hidden;">
-                            <div style="background: rgba(34,197,94,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(34,197,94,0.15); display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 0.8rem;">✅</span>
-                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #22c55e;">Self-Hosted Only</span>
-                            </div>
-                            <div style="padding: 0.9rem 1.1rem;">
-                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
-                                    <li>Full environment variable control</li>
-                                    <li>Custom domain and base URL</li>
-                                    <li>Custom TLS certificates</li>
-                                    <li>PostgreSQL or SQLite backend choice</li>
-                                    <li>Queue mode with Redis</li>
-                                    <li>Multiple worker instances</li>
-                                    <li>Execution timeout tuning</li>
-                                    <li>Node allowlist/blocklist</li>
-                                    <li>Workflow retry/pruning behaviour</li>
-                                    <li>Full data residency control</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+        <!-- 05 -->
+        <section id="business" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">05</span>
+                <h2>Business Plan</h2>
+            </div>
 
-                    <!-- EXECUTION REALITY CHECK -->
-                    <h2>Execution Reality Check</h2>
-                    <p>The execution numbers on the pricing page look generous until you map them to real workflows. Here is what common automation patterns actually consume:</p>
+            <div class="g-plan-card">
+                <div class="g-plan-card-head">
+                    <h3>Business</h3>
+                    <span class="price">$800/mo ($667 annual)</span>
+                </div>
+                <div class="g-plan-card-body">
+                    <ul>
+                        <li>40,000 executions/month</li>
+                        <li>200+ concurrent executions</li>
+                        <li>6 shared projects</li>
+                        <li>SSO, SAML, and LDAP authentication</li>
+                        <li>Git-based version control</li>
+                        <li>Multiple deployment environments (dev, staging, production)</li>
+                        <li>Workflow diff (compare versions visually)</li>
+                        <li>30-day insights retention</li>
+                        <li>Queue mode and scaling options</li>
+                        <li>Self-hosted (you manage infrastructure; n8n provides the license)</li>
+                    </ul>
+                </div>
+            </div>
 
-                    <div style="overflow-x: auto; margin: 1.5rem 0; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;">
-                        <table style="width:100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans);">
-                            <thead>
-                                <tr style="background: rgba(0,68,255,0.05); border-bottom: 2px solid rgba(0,68,255,0.15);">
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Workflow Type</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Frequency</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Executions/Month</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Fits On</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="border-bottom: 1px solid var(--border); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 500;">Polling trigger (every 5 min)</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">288x/day</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">~8,640</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(245,158,11,0.1); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Pro only</span></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 500;">Webhook-triggered (50x/day)</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">50x/day</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">~1,500</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Starter</span></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--border); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 500;">Daily report (1x/day)</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">1x/day</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">~30</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Starter</span></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 500;">AI chatbot (moderate traffic)</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">Unpredictable</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">500–50k+</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(239,68,68,0.1); color: #ef4444; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Pro-2 / Business</span></td>
-                                </tr>
-                                <tr style="transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text); font-weight: 500;">5 workflows, mixed triggers</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">Varies</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">2k–15k</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(245,158,11,0.1); color: #f59e0b; font-size: 0.72rem; font-weight: 700; padding: 0.2em 0.6em; border-radius: 6px; font-family: var(--font-mono);">Starter–Pro</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="g-callout warn">
+                <p><strong>Business is self-hosted.</strong> Unlike Starter and Pro, the Business plan runs on your own infrastructure. You pay n8n for the license key and you pay separately for your servers. This gives you full data control and the ability to deploy on-premises or in your own cloud, which is often a hard requirement for regulated industries like healthcare, fintech, and legal.</p>
+            </div>
 
-                    <div style="background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; display: flex; gap: 1rem; align-items: flex-start;">
-                        <span style="font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem;">🛑</span>
-                        <p style="margin:0; font-size: 0.9rem; color: var(--text-mid);"><strong style="color:var(--text);">What happens when you run out:</strong> On n8n Cloud, exhausting your monthly execution allowance stops all workflows. Cron jobs, webhooks, scheduled automations, everything. They resume when your billing period resets on the 1st of the month, or immediately if you upgrade. There is no grace period or soft limit.</p>
-                    </div>
+            <p class="g-text"><strong>Startup discount:</strong> If your company has fewer than 20 employees, n8n's Startup Program gives you 50% off the Business plan, bringing it down to roughly $333/month billed annually. That is a significant unlock for smaller teams that need SSO or multi-environment support before they have grown into the full price.</p>
+            <p class="g-text"><strong>Who it is for:</strong> Companies with under 100 employees that need SSO, version control, and environment management. If your IT team requires single sign-on for compliance, or your engineering team needs a proper dev/staging/prod workflow, Business is the minimum viable plan.</p>
+        </section>
 
-                    <!-- n8n vs ZAPIER vs MAKE -->
-                    <h2>n8n vs Zapier vs Make: The Cost Reality</h2>
-                    <p>The execution model is what makes n8n pricing genuinely different. Zapier charges per task (each individual step in a workflow). Make charges per operation (each action). n8n charges per execution (the entire workflow run, regardless of steps).</p>
+        <!-- 06 -->
+        <section id="enterprise" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">06</span>
+                <h2>Enterprise Plan</h2>
+            </div>
 
-                    <div style="overflow-x: auto; margin: 1.5rem 0; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;">
-                        <table style="width:100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-sans);">
-                            <thead>
-                                <tr style="background: rgba(0,68,255,0.05); border-bottom: 2px solid rgba(0,68,255,0.15);">
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Platform</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Billing Unit</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">10-step workflow x 1,000 runs</th>
-                                    <th style="text-align:left; padding: 0.85rem 1.1rem; font-family: var(--font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 700;">Approx. Monthly Cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="border-bottom: 1px solid var(--border); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">n8n Cloud Pro</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">Per execution</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">1,000 executions</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(34,197,94,0.1); color: #22c55e; font-size: 0.82rem; font-weight: 700; font-family: var(--font-mono);">~$60</span></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background='rgba(255,255,255,0.02)'">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">Zapier Professional</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">Per task (step)</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">10,000 tasks</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(239,68,68,0.1); color: #ef4444; font-size: 0.82rem; font-weight: 700; font-family: var(--font-mono);">~$69–$299</span></td>
-                                </tr>
-                                <tr style="transition: background 0.15s;" onmouseover="this.style.background='rgba(0,68,255,0.03)'" onmouseout="this.style.background=''">
-                                    <td style="padding: 0.85rem 1.1rem; font-weight: 700; color: var(--text);">Make Pro</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid);">Per operation</td>
-                                    <td style="padding: 0.85rem 1.1rem; color: var(--text-mid); font-family: var(--font-mono); font-size: 0.82rem;">10,000 operations</td>
-                                    <td style="padding: 0.85rem 1.1rem;"><span style="background: rgba(245,158,11,0.1); color: #f59e0b; font-size: 0.82rem; font-weight: 700; font-family: var(--font-mono);">~$16–$79</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p>The gap widens with every additional step and every additional run. At 5,000 runs of a 10-step workflow per month, n8n stays at $60. Zapier climbs to $299+. Make reaches $79+. Over a year, that difference compounds into thousands of dollars.</p>
-                    <p>The one scenario where n8n is not the cheapest: very simple, low-volume automations with 2 to 3 steps running a few hundred times per month. Make's $9/month entry point wins there. The n8n cost advantage kicks in as soon as workflows get complex, which is exactly when automation delivers the most business value.</p>
+            <div class="g-plan-card">
+                <div class="g-plan-card-head">
+                    <h3>Enterprise</h3>
+                    <span class="price">Custom pricing</span>
+                </div>
+                <div class="g-plan-card-body">
+                    <ul>
+                        <li>Everything in Business</li>
+                        <li>Unlimited shared projects</li>
+                        <li>200+ concurrent executions (configurable)</li>
+                        <li>365-day insights retention</li>
+                        <li>Extended data retention</li>
+                        <li>External secret store integration (HashiCorp Vault, AWS Secrets Manager)</li>
+                        <li>Log streaming (Datadog, Splunk)</li>
+                        <li>1,000 AI Workflow Builder credits/month (Cloud Enterprise only)</li>
+                        <li>Dedicated SLA support</li>
+                        <li>Invoice billing</li>
+                        <li>SOC 2 compliance (continuous evaluation and annual audits)</li>
+                        <li>Available as n8n Cloud hosted or fully self-hosted</li>
+                    </ul>
+                </div>
+            </div>
 
-                    <!-- WHICH PLAN -->
-                    <h2>Which Plan Should You Pick?</h2>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0;">
-                        <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden;">
-                            <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15);">
-                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">Pick Starter if...</span>
-                            </div>
-                            <div style="padding: 0.9rem 1.1rem;">
-                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
-                                    <li>You are a solo builder or freelancer</li>
-                                    <li>Your workflows are event-driven, not polling-heavy</li>
-                                    <li>You want zero infrastructure overhead</li>
-                                    <li>You are validating n8n before committing</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div style="border: 1px solid rgba(0,68,255,0.2); border-radius: 10px; overflow: hidden;">
-                            <div style="background: rgba(0,68,255,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,68,255,0.15);">
-                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue);">Pick Pro if...</span>
-                            </div>
-                            <div style="padding: 0.9rem 1.1rem;">
-                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
-                                    <li>You have a small team editing workflows</li>
-                                    <li>You need workflow history and admin roles</li>
-                                    <li>You are running 5 to 20 production workflows</li>
-                                    <li>You have outgrown Starter's execution limit</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div style="border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; overflow: hidden;">
-                            <div style="background: rgba(245,158,11,0.06); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(245,158,11,0.2);">
-                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #f59e0b;">Pick Business if...</span>
-                            </div>
-                            <div style="padding: 0.9rem 1.1rem;">
-                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
-                                    <li>Your IT team requires SSO/SAML</li>
-                                    <li>You need dev/staging/prod environments</li>
-                                    <li>You want Git-based version control</li>
-                                    <li>You have DevOps capacity to self-host</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div style="border: 1px solid rgba(139,92,246,0.25); border-radius: 10px; overflow: hidden;">
-                            <div style="background: rgba(139,92,246,0.07); padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(139,92,246,0.2);">
-                                <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #8b5cf6;">Pick Enterprise if...</span>
-                            </div>
-                            <div style="padding: 0.9rem 1.1rem;">
-                                <ul style="margin:0; padding-left: 1.1rem; font-size: 0.82rem; color: var(--text-mid); line-height: 1.9;">
-                                    <li>You need SOC 2, HIPAA, or data residency</li>
-                                    <li>You require log streaming and audit trails</li>
-                                    <li>You need a dedicated SLA and support team</li>
-                                    <li>You are migrating from large Zapier/Make deployments</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <p class="g-text"><strong>What Enterprise pricing looks like in practice:</strong> n8n does not publish Enterprise pricing publicly. Community discussions suggest contracts typically start at $1,000+/year and scale significantly with execution volume and support tier. Contact sales directly with your expected monthly execution count, team size, and compliance requirements.</p>
 
-                    <!-- COMMUNITY EDITION NOTE -->
-                    <h2>What About the Community Edition?</h2>
-                    <p>The Community Edition is free, self-hosted, and has no execution limits. You can run unlimited workflows, unlimited executions, and use every integration commercially. The only cost is your own server infrastructure, typically €5 to €30/month for a basic VPS, plus the time to manage it.</p>
-                    <p>What it does not include: SSO, Git version control, multi-environment support, advanced insights, or dedicated support. For solo developers and small technical teams comfortable with Docker and server management, it is the most cost-effective option at any execution volume. For teams that need the governance features, it is not a substitute for a paid plan.</p>
+            <p class="g-text"><strong>Questions worth asking sales before signing:</strong></p>
+            <ul class="g-list">
+                <li>How are executions counted and billed for self-hosted Enterprise?</li>
+                <li>Is there a base fee plus per-execution charges, or purely per-execution?</li>
+                <li>What happens if you exceed your execution quota mid-month?</li>
+                <li>Are upgrades and downgrades possible without long-term contract lock-in?</li>
+                <li>What does the dedicated SLA actually guarantee (uptime, response time)?</li>
+                <li>Does the contract include a dedicated customer success manager?</li>
+            </ul>
 
-                    <div style="background:var(--bg-off); border:1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;">
-                        <p style="margin:0 0 0.75rem 0; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Related reading</p>
-                        <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
-                            <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" style="color:var(--blue);text-decoration:underline;">n8n Cloud vs. Self-Hosted: Full Comparison</a></li>
-                            <li><a href="https://axshul.site/n8n/guide/n8n-community-edition/" style="color:var(--blue);text-decoration:underline;">n8n Community Edition: Features, Limits, and Free Unlocks</a></li>
-                            <li><a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" style="color:var(--blue);text-decoration:underline;">VPS Self-Hosting for n8n</a></li>
-                            <li><a href="https://axshul.site/n8n/guide/what-is-n8n/" style="color:var(--blue);text-decoration:underline;">What is n8n?</a></li>
+            <p class="g-text"><strong>Who it is for:</strong> Organizations with 100+ employees, strict compliance requirements (HIPAA, SOC 2, data residency), or those migrating from large Zapier/Make deployments at scale.</p>
+
+            <div class="g-enterprise-form">
+                <div class="g-enterprise-form-head">n8n Enterprise Enquiry Form</div>
+                <iframe
+                    src="https://n8n-community.typeform.com/to/y9X2YuGa?utm_campaign=upgrade-insights&utm_medium=embed&utm_source=n8n_app"
+                    style="width:100%; height:520px; border:none;"
+                    title="n8n Enterprise Enquiry Form"
+                    loading="lazy"
+                    allow="camera; microphone; autoplay; encrypted-media;"
+                ></iframe>
+            </div>
+        </section>
+
+        <!-- 07 -->
+        <section id="executions" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">07</span>
+                <h2>Execution Reality Check</h2>
+            </div>
+            <p class="g-text">The execution numbers on the pricing page look generous until you map them to real workflows. Here is what common automation patterns actually consume:</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Workflow Type</th>
+                            <th>Frequency</th>
+                            <th>Executions/Month</th>
+                            <th>Fits On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="plan-name">Polling trigger (every 5 min)</td>
+                            <td class="mono">288x/day</td>
+                            <td class="mono">~8,640</td>
+                            <td>Pro only</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Webhook-triggered (50x/day)</td>
+                            <td class="mono">50x/day</td>
+                            <td class="mono">~1,500</td>
+                            <td>Starter</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Daily report (1x/day)</td>
+                            <td class="mono">1x/day</td>
+                            <td class="mono">~30</td>
+                            <td>Starter</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">AI chatbot (moderate traffic)</td>
+                            <td class="mono">Unpredictable</td>
+                            <td class="mono">500 - 50k+</td>
+                            <td>Pro-2 / Business</td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">5 workflows, mixed triggers</td>
+                            <td class="mono">Varies</td>
+                            <td class="mono">2k - 15k</td>
+                            <td>Starter - Pro</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="g-callout warn">
+                <p><strong>What happens when you run out:</strong> On n8n Cloud, exhausting your monthly execution allowance stops all workflows. Cron jobs, webhooks, scheduled automations, everything. They resume when your billing period resets on the 1st of the month, or immediately if you upgrade. There is no grace period or soft limit.</p>
+            </div>
+        </section>
+
+        <!-- 08 -->
+        <section id="vs" class="g-section wide g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">08</span>
+                <h2>n8n vs Zapier vs Make</h2>
+            </div>
+            <p class="g-text">The execution model is what makes n8n pricing genuinely different. Zapier charges per task (each individual step in a workflow). Make charges per operation (each action). n8n charges per execution (the entire workflow run, regardless of steps).</p>
+
+            <div class="g-table-wrap">
+                <table class="g-table">
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Billing Unit</th>
+                            <th>10-Step Workflow x 1,000 Runs</th>
+                            <th>Approx. Monthly Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="plan-name">n8n Cloud Pro</td>
+                            <td>Per execution</td>
+                            <td class="mono">1,000 executions</td>
+                            <td><strong style="color:#1a8a4a;">~$60</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Zapier Professional</td>
+                            <td>Per task (step)</td>
+                            <td class="mono">10,000 tasks</td>
+                            <td><strong style="color:#ef4444;">~$69 - $299</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="plan-name">Make Pro</td>
+                            <td>Per operation</td>
+                            <td class="mono">10,000 operations</td>
+                            <td><strong style="color:#f59e0b;">~$16 - $79</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="g-text">The gap widens with every additional step and every additional run. At 5,000 runs of a 10-step workflow per month, n8n stays at $60. Zapier climbs to $299+. Make reaches $79+. Over a year, that difference compounds into thousands of dollars.</p>
+            <p class="g-text">The one scenario where n8n is not the cheapest: very simple, low-volume automations with 2 to 3 steps running a few hundred times per month. Make's $9/month entry point wins there. The n8n cost advantage kicks in as soon as workflows get complex, which is exactly when automation delivers the most business value.</p>
+        </section>
+
+        <!-- 09 -->
+        <section id="pick" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">09</span>
+                <h2>Which Plan to Pick</h2>
+            </div>
+
+            <div class="g-plan-grid">
+                <div class="g-plan-pick">
+                    <div class="g-plan-pick-head"><span>Pick Starter if...</span></div>
+                    <div class="g-plan-pick-body">
+                        <ul>
+                            <li>You are a solo builder or freelancer</li>
+                            <li>Your workflows are event-driven, not polling-heavy</li>
+                            <li>You want zero infrastructure overhead</li>
+                            <li>You are validating n8n before committing</li>
                         </ul>
                     </div>
-
                 </div>
-            </main>
-
-            <aside class="reader-sidebar stagger-in" style="animation-delay: 0.3s; height: fit-content; position: sticky; top: 7rem; overflow: hidden; background: var(--bg-off);">
-                <div style="position: relative; z-index: 1;">
-                    <div class="read-progress-container" style="margin-bottom: 2rem;">
-                        <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
-                            <span>READING PROGRESS</span>
-                            <span>10 MIN</span>
-                        </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
-                            <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
-                        </div>
+                <div class="g-plan-pick">
+                    <div class="g-plan-pick-head"><span>Pick Pro if...</span></div>
+                    <div class="g-plan-pick-body">
+                        <ul>
+                            <li>You have a small team editing workflows</li>
+                            <li>You need workflow history and admin roles</li>
+                            <li>You are running 5 to 20 production workflows</li>
+                            <li>You have outgrown Starter's execution limit</li>
+                        </ul>
                     </div>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
-                    <a href="../../../" style="text-decoration: none; display: block;" class="author-link-hover">
-                        <div class="reader-author">
-                            <div class="ra-av tag-pulse" style="background: none; padding: 0; overflow: hidden;"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%;"></div>
-                            <div>
-                                <div class="ra-name" style="text-decoration: underline; text-decoration-color: transparent; transition: 0.3s;">Anshul Namdev</div>
-                                <div class="ra-role">AI / Automation Eng.</div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
-
-                    <div class="sec-label" style="margin-bottom: 1rem;">Related</div>
-                    <ul class="sidebar-links" style="list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; gap: 0.75rem;">
-                        <li><a href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/" class="sb-link">Cloud vs Self-Hosted</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/n8n-community-edition/" class="sb-link">Community Edition Guide</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/vps-self-hosting-n8n/" class="sb-link">VPS Self-Hosting</a></li>
-                        <li><a href="https://axshul.site/n8n/guide/what-is-n8n/" class="sb-link">What is n8n?</a></li>
-                    </ul>
-
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
-
-                    <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
-                        <span class="bt">Share Article</span>
-                        <span class="bi" style="font-family: var(--font-sans); font-style: normal;">↗</span>
-                    </button>
-
-                    <a href="../" class="ib-btn outline" style="justify-content:center;">
-                        <span class="bt" style="padding:0">Back to Archive</span>
-                    </a>
                 </div>
-            </aside>
+                <div class="g-plan-pick">
+                    <div class="g-plan-pick-head"><span>Pick Business if...</span></div>
+                    <div class="g-plan-pick-body">
+                        <ul>
+                            <li>Your IT team requires SSO/SAML</li>
+                            <li>You need dev/staging/prod environments</li>
+                            <li>You want Git-based version control</li>
+                            <li>You have DevOps capacity to self-host</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="g-plan-pick">
+                    <div class="g-plan-pick-head"><span>Pick Enterprise if...</span></div>
+                    <div class="g-plan-pick-body">
+                        <ul>
+                            <li>You need SOC 2, HIPAA, or data residency</li>
+                            <li>You require log streaming and audit trails</li>
+                            <li>You need a dedicated SLA and support team</li>
+                            <li>You are migrating from large Zapier/Make deployments</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="g-callout">
+                <p><strong>What about the Community Edition?</strong> The Community Edition is free, self-hosted, and has no execution limits. You can run unlimited workflows commercially. The only cost is your own server (typically $5 to $30/month). It does not include SSO, Git version control, or dedicated support. For details, see our <a href="/n8n/guide/n8n-community-edition/">Community Edition guide</a>. For hosting setup, see the <a href="/n8n/guide/vps-self-hosting-n8n/">VPS self-hosting guide</a>.</p>
+            </div>
+        </section>
+
+        <!-- 10 -->
+        <section id="faq" class="g-section g-reveal">
+            <div class="g-section-head">
+                <span class="g-num">10</span>
+                <h2>FAQ</h2>
+            </div>
+            <div class="g-faq">
+                <details>
+                    <summary>Can I switch plans at any time?</summary>
+                    <div class="faq-body">
+                        <p>Yes. You can upgrade or downgrade your n8n Cloud plan at any time from the Admin panel. When upgrading, the change takes effect immediately and you are billed the prorated difference. When downgrading, the change takes effect at the start of your next billing cycle.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What counts as one execution?</summary>
+                    <div class="faq-body">
+                        <p>One execution is one complete run of a workflow from trigger to final node. It does not matter how many nodes (steps) the workflow contains. A 3-node workflow and a 50-node workflow both count as one execution. Sub-workflows triggered by a parent workflow each count as separate executions.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Do test runs count against my execution quota?</summary>
+                    <div class="faq-body">
+                        <p>Yes. Manual test executions from the workflow editor count toward your monthly execution limit. This is important to keep in mind when actively developing and debugging workflows.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>What happens if I hit my execution limit mid-month?</summary>
+                    <div class="faq-body">
+                        <p>All active workflows stop immediately. No grace period, no soft limit. Workflows resume when your billing period resets on the 1st of the next month, or immediately if you upgrade to a higher plan or purchase additional executions (available on Pro monthly).</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Is the free trial really free?</summary>
+                    <div class="faq-body">
+                        <p>Yes. The n8n Cloud free trial does not require a credit card. You get access to the full feature set of your chosen plan for the trial duration. If you do not add payment details before the trial ends, your instance pauses but your workflows and data are preserved.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Can I self-host for free instead?</summary>
+                    <div class="faq-body">
+                        <p>Yes. The n8n Community Edition is free and has no execution limits. You need your own server (a VPS starting at $5/month), Docker, and basic Linux knowledge. See our <a href="/n8n/guide/vps-self-hosting-n8n/">VPS self-hosting guide</a> for a complete setup walkthrough. The tradeoff is that you handle all maintenance, backups, and security yourself.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Why is the Business plan self-hosted only?</summary>
+                    <div class="faq-body">
+                        <p>Business targets organizations that need infrastructure control (data residency, custom networking, on-premises deployment). These requirements are fundamentally incompatible with a managed cloud service. n8n provides the license; you provide the servers. For managed hosting with Enterprise features, the Enterprise Cloud plan is the option.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- ENDCAP -->
+        <div class="g-endcap">
+            <a href="../../../" class="g-endcap-author">
+                <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
+                <div>
+                    <div class="ec-name">Anshul Namdev</div>
+                    <div class="ec-role">AI / Automation Eng.</div>
+                </div>
+            </a>
+            <div class="g-endcap-actions">
+                <button id="shareBtn">Share Article</button>
+                <a href="../">&#8592; Back to Archive</a>
+            </div>
         </div>
 
-        <footer class="auto-footer stagger-in" style="animation-delay: 0.5s; margin-top: 8rem; border-top: 1px solid var(--border); padding-top: 3rem;">
-            <div class="footer-copy">
-                2026 <a href="../../../">Anshul Namdev</a>
-            </div>
+        <footer class="auto-footer" style="margin-top:4rem;border-top:1px solid var(--border);padding-top:3rem;">
+            <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
         </footer>
     </div>
 
-    <style>
-        .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
-    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const _OrigMBM = THREE.MeshBasicMaterial;
+        THREE.MeshBasicMaterial = function(p) {
+            if (p && p.color === 0x0044FF) p.color = 0xD72638;
+            return new _OrigMBM(p);
+        };
+        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
+    </script>
     <script src="../../../assets/js/3d-anim.js"></script>
     <script src="../../../assets/js/text-highlight-share.js" defer></script>
     <script>
         document.getElementById('navToggle').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('open');
         });
-
-        document.addEventListener("scroll", () => {
-            const contentBlock = document.querySelector('.reader-main');
-            let progress = 0;
-            if (contentBlock) {
-                const scrollPos = window.scrollY;
-                const totalScroll = contentBlock.offsetHeight - window.innerHeight + 300;
-                progress = Math.min((scrollPos / totalScroll) * 100, 100);
-            }
-            const bar = document.getElementById('read-progress-bar');
-            if (bar) bar.style.width = progress + '%';
+        document.addEventListener('scroll', () => {
+            const total = document.body.scrollHeight - window.innerHeight;
+            const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
+            document.getElementById('progressFill').style.width = pct + '%';
         });
-
-        const shareBtn = document.getElementById('share-btn');
+        const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {
-                        shareBtn.querySelector('.bt').textContent = 'Link Copied!';
-                        setTimeout(() => { shareBtn.querySelector('.bt').textContent = 'Share Article'; }, 2000);
+                        shareBtn.textContent = 'Link Copied!';
+                        setTimeout(() => { shareBtn.textContent = 'Share Article'; }, 2000);
                     });
                 }
             });
         }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

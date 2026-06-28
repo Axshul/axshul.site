@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>n8n Cloud vs Self-Hosted - n8n Guide</title>
     <meta name="description" content="A technical breakdown of the differences between n8n Cloud and n8n Self-Hosted, and how to choose the right deployment for your specific use cases.">
+    <meta name="author" content="Anshul Namdev">
+    <meta name="keywords" content="n8n cloud vs self-hosted, n8n hosting comparison, n8n data residency, n8n scalability, self-host n8n vs cloud">
+    <link rel="canonical" href="https://axshul.site/n8n/guide/n8n-cloud-vs-self-hosted/">
     <meta property="og:title" content="n8n Cloud vs Self-Hosted - n8n Guide">
     <meta property="og:description" content="A technical breakdown of the differences between n8n Cloud and n8n Self-Hosted, and how to choose the right deployment for your specific use cases.">
     <meta property="og:type" content="article">
@@ -181,7 +184,7 @@
         const shareBtn = document.getElementById('share-btn');
         if (shareBtn) {
             shareBtn.addEventListener('click', () => {
-                if (navigator.share) {
+                if (false) {
                     navigator.share({ title: document.title, url: window.location.href });
                 } else {
                     navigator.clipboard.writeText(window.location.href).then(() => {

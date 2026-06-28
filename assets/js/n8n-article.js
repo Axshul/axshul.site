@@ -30,5 +30,5 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     
     contentDiv.innerHTML = html;
-    document.title = `${article.title} — n8n Guide`;
+    document.title = `${article.title} - n8n Guide`;
 });

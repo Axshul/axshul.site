@@ -1,4 +1,4 @@
-/* blog.js — Blog page logic: renders personal posts & fetches Hacker News */
+/* blog.js - Blog page logic: renders personal posts & fetches Hacker News */
 
 /* ════════════════════════════════════════
    PERSONAL WRITINGS

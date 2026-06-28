@@ -3183,7 +3183,7 @@ Enjoy using NeuralNotes!`,
                 childFolders.forEach(folder => {
                     const option = document.createElement('option');
                     option.value = folder.id;
-                    option.textContent = '—'.repeat(level) + ' ' + folder.name;
+                    option.textContent = '-'.repeat(level) + ' ' + folder.name;
                     selectElement.appendChild(option);
 
                     // Recursively add child folders
