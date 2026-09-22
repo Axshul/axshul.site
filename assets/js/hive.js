@@ -89,7 +89,7 @@
             var offY = sy * P;
             var r0 = Math.floor(offY / VS) - 1, r1 = r0 + rows + 1;
             var cy = H / 2;
-            var baseA = 0.055 + energy * 0.05;
+            var baseA = 0.05 + energy * 0.05;
             var rad = 230 + energy * 150;
             var r, c, x, y;
 

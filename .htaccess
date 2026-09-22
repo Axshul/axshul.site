@@ -1,13 +1,11 @@
 # axshul.site (Hostinger / LiteSpeed)
 ErrorDocument 404 /404.html
 
-# keep the source-only files out of the public site
-<FilesMatch "^(CLAUDE\.md|\.gitignore|\.gitattributes)$">
-  Require all denied
-</FilesMatch>
+# keep source-only files out of the public site
+RedirectMatch 404 ^/(CLAUDE\.md|\.gitignore|\.gitattributes)$
 RedirectMatch 404 ^/\.(git|claude|kiro|vscode)(/|$)
 
-# long cache for photos, short for everything else
+# long cache for photos
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/jpeg "access plus 30 days"
