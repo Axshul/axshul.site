@@ -86,7 +86,7 @@ Every page: canonical, Open Graph, Twitter card, JSON-LD (Person / BreadcrumbLis
 - **n8n hub** (`/n8n/`): certificate verifier, ecosystem links, workflow showcase, Three.js hero.
 - **n8n guide** (`/n8n/guide/`): one directory per article, academy template (`n8n.css`, `3d-anim.js`, `text-highlight-share.js`). Keep model lists current; only list models that are live on each provider.
 - **Thoughts** (`/thoughts/`): opinion pieces, same template.
-- **Blog**: `/blog/` page plus external `https://blog.axshul.site`. The subdomain is a separate Hostinger host with its own copy of the page and none of the repo assets, so the repo copy `/blog/index.html` uses relative paths, and the builder also writes an absolute-URL copy to `_uploads/blog.axshul.site/index.html` (git-ignored) that must be uploaded to that host by hand after changes.
+- **Blog**: `/blog/` page plus external `https://blog.axshul.site`. The subdomain is a separate Hostinger host with its own copy of the page and none of the repo assets, whose document root is this repo's `blog/` folder, so `/blog/index.html` uses absolute `https://axshul.site/...` URLs for every asset and link (it is served from two hosts).
 
 ## Social Links
 - GitHub `https://github.com/axshul`
@@ -103,7 +103,7 @@ Source photos live in `drive-download-*/` at the repo root (git-ignored, never d
 ## Development Notes
 
 - Preview: `python3 -m http.server 8890` from the repo root (the desktop app's launch config serves the same folder on 8888).
-- Release: `_uploads/axshul.site-release.zip` (repo minus dev files) and `_uploads/DELETE-ON-HOST.txt` (paths removed since the last deploy); `blog.axshul.site` gets `_uploads/blog.axshul.site/index.html`.
+- Release: `_uploads/axshul.site-release.zip` (repo minus dev files) and `_uploads/DELETE-ON-HOST.txt` (paths removed since the last deploy).
 - When adding a page: copy the homepage head boilerplate, link `assets/css/hive.css` + `assets/js/hive.js`, reuse the nav block verbatim, add JSON-LD, add the URL to `sitemap.xml`.
 - When adding a guide article: create `/n8n/guide/<slug>/index.html`, add it to the guide index and to `sitemap.xml`.
 - Commit style: short imperative subject (e.g. `Fix hero image CDN 404`, `+ Article + sitemap updated`).
