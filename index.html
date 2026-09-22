@@ -7,6 +7,7 @@
     <meta name="description" content="Anshul Namdev is a Technical Architect and AI Automation Engineer specializing in n8n workflows, AI agents, and intelligent systems. n8n community moderator, co-founder at Qixazow, and author of an in-depth n8n guide.">
     <meta name="author" content="Anshul Namdev">
     <meta name="keywords" content="Anshul Namdev, AI automation engineer, technical architect, n8n developer, n8n consultant, AI agents, workflow automation, n8n community moderator, Qixazow">
+    <meta name="theme-color" content="#050505">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://axshul.site/">
     <meta property="og:title" content="Anshul Namdev | Technical Architect & AI Automation Engineer">
@@ -36,165 +37,15 @@
     }
     </script>
 
+    <!-- Skip the loader on repeat visits within a session -->
+    <script>try{if(sessionStorage.getItem('hive'))document.documentElement.classList.add('fast');else sessionStorage.setItem('hive','1')}catch(e){}</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/hive.css">
+    <noscript><style>.rv,.h-in{opacity:1;transform:none}.rl>span,.h-rl>span{transform:none}.sec-line{transform:none}.cell{opacity:1;transform:none}.loader{display:none}</style></noscript>
 
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        /* ── HERO ENHANCEMENTS ── */
-        .hero { position: relative; overflow: hidden; }
-
-        /* Blueprint grid overlay */
-        .hero-bp-grid {
-            position: absolute; inset: 0; z-index: 0; pointer-events: none;
-            background-image:
-                linear-gradient(rgba(215,38,56,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(215,38,56,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.5) 0%, transparent 70%);
-            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.5) 0%, transparent 70%);
-        }
-
-        /* Soft red glow */
-        .hero-glow {
-            position: absolute; top: 15%; left: 5%;
-            width: 40vw; height: 40vw; max-width: 600px; max-height: 600px;
-            background: radial-gradient(circle, rgba(215,38,56,0.045) 0%, transparent 65%);
-            pointer-events: none; z-index: 0;
-        }
-
-
-
-        /* Corner frame decorations */
-        .hero::before {
-            content: ''; position: absolute;
-            top: calc(var(--nav-h) + 1.5rem); left: 2rem;
-            width: 30px; height: 30px;
-            border-top: 2px solid var(--red); border-left: 2px solid var(--red);
-            opacity: 0.15; z-index: 2; pointer-events: none;
-        }
-        .hero::after {
-            content: ''; position: absolute;
-            bottom: 5rem; right: 2rem;
-            width: 30px; height: 30px;
-            border-bottom: 2px solid var(--red); border-right: 2px solid var(--red);
-            opacity: 0.15; z-index: 2; pointer-events: none;
-        }
-
-        /* Glitch effect on headline reveal */
-        .hero-glitch.revealed {
-            animation: glitchText 0.6s steps(4) 0.2s;
-        }
-        @keyframes glitchText {
-            0%, 100% { text-shadow: none; }
-            10% { text-shadow: 3px 0 rgba(215,38,56,0.7), -3px 0 rgba(0,180,255,0.4); }
-            20% { text-shadow: -2px -1px rgba(215,38,56,0.5), 2px 1px rgba(0,180,255,0.25); }
-            35% { text-shadow: none; }
-            45% { text-shadow: 2px 1px rgba(215,38,56,0.6), -1px -1px rgba(0,180,255,0.3); }
-            55% { text-shadow: -1px 2px rgba(215,38,56,0.3), 1px -2px rgba(0,180,255,0.15); }
-            70% { text-shadow: none; }
-        }
-
-        /* Status chips */
-        .hero-chips {
-            display: flex; gap: 0.6rem; margin-bottom: 1.2rem; flex-wrap: wrap;
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-        }
-        .hero-chips.revealed { opacity: 1; transform: translateY(0); }
-        .hero-chip {
-            font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            padding: 0.3rem 0.8rem; border: 1px solid var(--gray-border);
-            clip-path: var(--px-clip-sm); color: var(--gray);
-            display: inline-flex; align-items: center; gap: 0.4rem;
-        }
-        .hchip-dot {
-            width: 5px; height: 5px; border-radius: 50%; background: #22c55e;
-            animation: dotPulse 1.5s ease infinite;
-        }
-
-        /* Content accent line */
-        .hero-content { position: relative; z-index: 3; }
-        .hero-content::before {
-            content: ''; position: absolute; top: 0; left: -1.5rem;
-            width: 3px; height: 80px;
-            background: linear-gradient(to bottom, var(--red), transparent);
-        }
-
-        /* Bigger headline */
-        .hero-headline { font-size: clamp(3.2rem, 7vw, 5.5rem) !important; }
-
-        /* Tech marquee */
-        .hero-marquee {
-            position: absolute; bottom: 4.5rem; left: 0; right: 0;
-            overflow: hidden; pointer-events: none; z-index: 1;
-            opacity: 0; transform: translateY(10px);
-            transition: opacity 1s var(--ease), transform 0.7s var(--ease);
-        }
-        .hero-marquee.revealed { opacity: 1; transform: translateY(0); }
-        .marquee-track {
-            display: flex; align-items: center; gap: 2rem;
-            white-space: nowrap; width: max-content;
-            animation: marqueeScroll 30s linear infinite;
-        }
-        @keyframes marqueeScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .mq-item {
-            font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
-            letter-spacing: 0.2em; color: rgba(215,38,56,0.1);
-        }
-        .mq-diamond {
-            width: 5px; height: 5px; flex-shrink: 0;
-            background: rgba(215,38,56,0.06);
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        }
-
-        /* Scroll indicator */
-        .hero-scroll-cue {
-            position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-            z-index: 5;
-            opacity: 0; transition: opacity 0.7s var(--ease);
-        }
-        .hero-scroll-cue.revealed { opacity: 1; }
-        .scroll-label {
-            font-family: var(--font-mono); font-size: 0.45rem;
-            letter-spacing: 0.3em; color: var(--gray);
-        }
-        .scroll-track {
-            width: 1px; height: 28px; background: var(--gray-border);
-            overflow: hidden; position: relative;
-        }
-        .scroll-thumb {
-            position: absolute; top: -50%; width: 100%; height: 50%;
-            background: var(--red);
-            animation: scrollThumb 2s ease-in-out infinite;
-        }
-        @keyframes scrollThumb {
-            0% { top: -50%; }
-            100% { top: 150%; }
-        }
-
-        /* 3D photo tilt */
-        .hero-visual { transform-style: preserve-3d; }
-        .hero-right { z-index: 3; }
-
-        /* Mobile overrides */
-        @media (max-width: 768px) {
-            .hero-bp-grid, .hero-glow { display: none; }
-            .hero::before, .hero::after { display: none; }
-            .hero-marquee { bottom: 3rem; }
-            .hero-scroll-cue { bottom: 0.5rem; }
-            .hero-headline { font-size: clamp(2.4rem, 10vw, 3.2rem) !important; }
-            .hero-content::before { display: none; }
-            .hero-chips { justify-content: center; }
-        }
-    </style>
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
@@ -203,433 +54,434 @@
 </head>
 <body>
 
-    <!-- Noise -->
-    <div class="noise"></div>
-
-    <!-- Full-page geometric grid -->
-    <div class="geo-grid" id="geoGrid" aria-hidden="true">
-        <svg class="geo-grid-svg" preserveAspectRatio="none">
-            <defs>
-                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="var(--red)" stop-opacity="0.6"/>
-                    <stop offset="100%" stop-color="var(--red)" stop-opacity="0"/>
-                </radialGradient>
-            </defs>
-            <g class="geo-grid-lines" id="geoLines"></g>
-            <g class="geo-grid-nodes" id="geoNodes"></g>
-        </svg>
-    </div>
-
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
-
-    <!-- LOADER -->
-    <div class="loader" id="loader">
-        <div class="loader-inner">
-            <div class="loader-blocks">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="loader-text">LOADING<span class="blink">_</span></div>
+    <!-- Loader: a single cell draws itself -->
+    <div class="loader" aria-hidden="true">
+        <div class="loader-in">
+            <svg viewBox="0 0 60 69"><polygon points="30,.5 59.5,17.5 59.5,51.5 30,68.5 .5,51.5 .5,17.5"/></svg>
+            <span>Anshul Namdev</span>
         </div>
     </div>
+
+    <!-- Honeycomb -->
+    <div class="hive" id="hive" aria-hidden="true"><canvas></canvas></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="prog" aria-hidden="true"></div>
+    <div class="cur" aria-hidden="true"></div>
+    <div class="cur-ring" aria-hidden="true"><svg viewBox="0 0 30 34"><polygon points="15,1 29,8.5 29,25.5 15,33 1,25.5 1,8.5"/></svg></div>
 
     <!-- NAV -->
-    <nav class="nav" id="nav">
-        <div class="nav-inner">
-            <a href="#" class="nav-logo">
-                <span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span>
+    <nav class="nav" id="nav" aria-label="Primary">
+        <div class="nav-in">
+            <a href="./" class="brand" aria-label="Anshul Namdev, home">
+                <span class="brand-hex"><span>AN</span></span>
+                <span class="brand-name">Anshul Namdev</span>
             </a>
-            <div class="nav-center" id="navLinks">
-                <a href="about/" class="nav-link"><span class="nav-index">01</span>About</a>
-                <a href="work/" class="nav-link"><span class="nav-index">02</span>Work</a>
-                <a href="experience/" class="nav-link"><span class="nav-index">03</span>Journey</a>
-                <a href="n8n/" class="nav-link"><span class="nav-index">04</span>N8N</a>
-                <a href="blog/" class="nav-link"><span class="nav-index">05</span>Blog</a>
+            <div class="nav-links">
+                <a href="about/" class="nav-link"><i>01</i>About</a>
+                <a href="work/" class="nav-link"><i>02</i>Work</a>
+                <a href="experience/" class="nav-link"><i>03</i>Journey</a>
+                <a href="n8n/" class="nav-link"><i>04</i>N8N</a>
+                <a href="blog/" class="nav-link"><i>05</i>Blog</a>
             </div>
-            <a href="contact/" class="pixel-btn pixel-btn-sm nav-cta-btn">
-                <span class="pixel-btn-inner">
-                    <span class="pixel-btn-text">Let's Talk</span>
-                    <span class="pixel-btn-icon">&rsaquo;</span>
-                </span>
+            <a href="contact/" class="btn btn-sm nav-cta">Let's Talk
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg>
             </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span><span></span>
-            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
         </div>
     </nav>
+    <div class="menu" id="menu">
+        <a href="about/" style="--i:0"><i>01</i>About</a>
+        <a href="work/" style="--i:1"><i>02</i>Work</a>
+        <a href="experience/" style="--i:2"><i>03</i>Journey</a>
+        <a href="n8n/" style="--i:3"><i>04</i>N8N</a>
+        <a href="blog/" style="--i:4"><i>05</i>Blog</a>
+        <a href="contact/" class="menu-cta" style="--i:5">Let's talk &rarr;</a>
+    </div>
 
-    <!-- =============================================
-         HERO - ENHANCED SPLIT
-    ============================================= -->
-    <section class="hero" id="hero">
-        <!-- Effect layers -->
-        <div class="hero-bp-grid" aria-hidden="true"></div>
-        <div class="hero-glow" aria-hidden="true"></div>
+    <main class="page">
 
-        <div class="hero-inner">
-
-            <!-- Left: Content -->
-            <div class="hero-content">
-                <div class="hero-intro" data-hero>
-                    <span class="hero-name-label">Anshul Namdev</span>
-                    <span class="hero-name-sep">/</span>
-                    <span class="hero-role-text" id="heroRole">Technical Architect</span>
-                </div>
-
-                <h1 class="hero-headline hero-glitch" data-hero>
-                    AI Engineered<br><em>the right way.</em>
-                </h1>
-
-                <div class="hero-chips" data-hero>
-                    <span class="hero-chip"><span class="hchip-dot"></span>Open to Work</span>
-                    <span class="hero-chip">India / Remote</span>
-                </div>
-
-                <p class="hero-desc" data-hero>
-                    I engineer AI systems, automations, and products that do the work of entire teams. From architecture to deployment.
+        <!-- =============================================
+             HERO
+        ============================================= -->
+        <header class="hero wrap" id="hero">
+            <div class="hero-copy">
+                <p class="hero-eyebrow h-in" style="--i:0">
+                    <svg viewBox="0 0 10 11" aria-hidden="true"><polygon points="5,0 10,2.75 10,8.25 5,11 0,8.25 0,2.75"/></svg>
+                    <b>Anshul Namdev</b><span class="role" id="role" data-roles="Technical Architect|Software Engineer|Developer|Community Engineer|n8n Community Moderator|Co-founder, Qixazow" aria-label="Technical Architect, Software Engineer, Developer, Community Engineer, n8n Community Moderator, Co-founder of Qixazow">Technical Architect</span>
                 </p>
-
-                <div class="hero-actions" data-hero>
-                    <a href="#work" class="pixel-btn pixel-btn-primary">
-                        <span class="pixel-btn-inner">
-                            <span class="pixel-btn-text">View My Work</span>
-                            <svg class="pixel-btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="2"/></svg>
-                        </span>
+                <h1>
+                    <span class="h-rl" style="--i:1"><span>AI engineered</span></span>
+                    <span class="h-rl" style="--i:2"><span><em>the right way.</em></span></span>
+                </h1>
+                <p class="hero-sub h-in" style="--i:3">I design AI systems, automations and products that do the work of entire teams. <strong>From architecture to deployment.</strong></p>
+                <div class="hero-cta h-in" style="--i:4">
+                    <a href="#work" class="btn btn-primary">View work
+                        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg>
                     </a>
-                    <a href="#contact" class="pixel-btn pixel-btn-outline">
-                        <span class="pixel-btn-inner">
-                            <span class="pixel-btn-text">Get in Touch</span>
-                        </span>
-                    </a>
+                    <a href="#contact" class="btn">Get in touch</a>
                 </div>
-
-                <div class="hero-socials-row" data-hero>
-                    <a href="https://github.com/axshul" target="_blank" class="social-icon" aria-label="GitHub">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    </a>
-                    <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank" class="social-icon" aria-label="LinkedIn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    </a>
-                    <a href="https://twitter.com/Anshul_Namdev0" target="_blank" class="social-icon" aria-label="Twitter/X">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </a>
-                    <a href="https://community.n8n.io/u/Anshul_Namdev" target="_blank" class="social-icon" aria-label="n8n">
-                        <span style="font-family:var(--font-mono);font-size:0.55rem;font-weight:700;">n8n</span>
-                    </a>
+                <div class="hero-meta h-in" style="--i:5">
+                    <span class="socials">
+                        <a href="https://github.com/axshul" target="_blank" rel="noopener" class="soc" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                        <a href="https://www.linkedin.com/in/anshul-namdev-b149b5329/" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="https://twitter.com/Anshul_Namdev0" target="_blank" rel="noopener" class="soc" aria-label="Twitter / X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="https://community.n8n.io/u/Anshul_Namdev" target="_blank" rel="noopener" class="soc" aria-label="n8n community profile"><b>n8n</b></a>
+                    </span>
                 </div>
             </div>
 
-            <!-- Right: Photo + 3D Element -->
-            <div class="hero-right" data-hero>
-                <div class="hero-visual" id="heroVisual">
-                    <div class="photo-frame">
-                        <span class="frame-corner frame-tl"></span>
-                        <span class="frame-corner frame-tr"></span>
-                        <span class="frame-corner frame-bl"></span>
-                        <span class="frame-corner frame-br"></span>
-                        <span class="frame-line frame-line-top"></span>
-                        <span class="frame-line frame-line-right"></span>
-                        <span class="frame-line frame-line-bottom"></span>
-                        <span class="frame-line frame-line-left"></span>
+            <div class="hero-right h-in" style="--i:2">
+                <div class="hero-visual">
+                    <svg class="hx-mini a" viewBox="0 0 22 25" aria-hidden="true"><polygon points="11,.5 21.5,6.25 21.5,18.75 11,24.5 .5,18.75 .5,6.25"/></svg>
+                    <svg class="hx-mini b" viewBox="0 0 22 25" aria-hidden="true"><polygon points="11,.5 21.5,6.25 21.5,18.75 11,24.5 .5,18.75 .5,6.25"/></svg>
+                    <svg class="hx-mini c" viewBox="0 0 22 25" aria-hidden="true"><polygon points="11,.5 21.5,6.25 21.5,18.75 11,24.5 .5,18.75 .5,6.25"/></svg>
+                    <div class="hx-frame" aria-hidden="true"></div>
+                    <div class="hx-photo">
+                        <img src="MyMTWphoto.jpeg" alt="Anshul Namdev" width="960" height="1280" loading="eager" decoding="async" fetchpriority="high">
                     </div>
-                    <div class="hero-photo">
-                        <img src="MyMTWphoto.jpeg" alt="Anshul Namdev" width="960" height="1280" loading="eager" decoding="async">
-                        <div class="hero-photo-overlay"></div>
-                    </div>
-                    <div class="photo-tag">
-                        <span class="photo-tag-dot"></span>
-                    </div>
-                </div>
-                <div class="hero-right-meta">
-                    <span class="status-dot"></span>
-                    <span>Available for projects</span>
                 </div>
             </div>
 
-        </div>
+            <div class="hero-word" aria-hidden="true">ANSHUL</div>
+            <div class="hero-cue" aria-hidden="true"><i></i>Scroll</div>
+        </header>
 
-        <!-- Tech Marquee -->
-        <div class="hero-marquee" data-hero aria-hidden="true">
-            <div class="marquee-track">
-                <span class="mq-item">JAVA</span><span class="mq-diamond"></span>
-                <span class="mq-item">SPRING BOOT</span><span class="mq-diamond"></span>
-                <span class="mq-item">RUST</span><span class="mq-diamond"></span>
-                <span class="mq-item">AI AUTOMATION</span><span class="mq-diamond"></span>
-                <span class="mq-item">N8N</span><span class="mq-diamond"></span>
-                <span class="mq-item">PYTHON</span><span class="mq-diamond"></span>
-                <span class="mq-item">LINUX</span><span class="mq-diamond"></span>
-                <span class="mq-item">JAVASCRIPT</span><span class="mq-diamond"></span>
-                <span class="mq-item">SYSTEM DESIGN</span><span class="mq-diamond"></span>
-                <span class="mq-item">CLOUD INFRA</span><span class="mq-diamond"></span>
-                <span class="mq-item">JAVA</span><span class="mq-diamond"></span>
-                <span class="mq-item">SPRING BOOT</span><span class="mq-diamond"></span>
-                <span class="mq-item">RUST</span><span class="mq-diamond"></span>
-                <span class="mq-item">AI AUTOMATION</span><span class="mq-diamond"></span>
-                <span class="mq-item">N8N</span><span class="mq-diamond"></span>
-                <span class="mq-item">PYTHON</span><span class="mq-diamond"></span>
-                <span class="mq-item">LINUX</span><span class="mq-diamond"></span>
-                <span class="mq-item">JAVASCRIPT</span><span class="mq-diamond"></span>
-                <span class="mq-item">SYSTEM DESIGN</span><span class="mq-diamond"></span>
-                <span class="mq-item">CLOUD INFRA</span><span class="mq-diamond"></span>
+        <!-- Skills strip -->
+        <div class="strip" aria-hidden="true">
+            <div class="strip-track">
+                <div class="strip-set">
+                    <span>AI Automation</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>n8n</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>AI Agents</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Java</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Spring Boot</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Rust</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Python</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>JavaScript</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>System Design</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Cloud Infra</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Linux</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                </div>
+                <div class="strip-set">
+                    <span>AI Automation</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>n8n</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>AI Agents</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Java</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Spring Boot</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Rust</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Python</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>JavaScript</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>System Design</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Cloud Infra</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                    <span>Linux</span><svg viewBox="0 0 10 11"><polygon points="5,.5 9.5,2.75 9.5,8.25 5,10.5 .5,8.25 .5,2.75"/></svg>
+                </div>
             </div>
         </div>
 
-        <!-- Scroll indicator -->
-        <div class="hero-scroll-cue" data-hero>
-            <span class="scroll-label">SCROLL</span>
-            <div class="scroll-track"><div class="scroll-thumb"></div></div>
-        </div>
-    </section>
-
-    <!-- =============================================
-         ABOUT
-    ============================================= -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="section-tag" data-reveal>
-                <span class="tag-num">01</span>
-                <span class="tag-pixel-dot"></span>
-                <span class="tag-name">About</span>
-            </div>
-            <div class="about-layout">
-                <div class="about-headline" data-reveal>
-                    <h2>Bridging the gap between <em>concept</em> and <em>execution.</em></h2>
+        <!-- =============================================
+             ABOUT
+        ============================================= -->
+        <section class="sec about" id="about">
+            <div class="wrap">
+                <div class="sec-head rv">
+                    <span class="sec-idx"><svg viewBox="0 0 10 11" aria-hidden="true"><polygon points="5,.7 9.3,2.85 9.3,8.15 5,10.3 .7,8.15 .7,2.85"/></svg>01</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-name">About</span>
                 </div>
-                <div class="about-col-left" data-reveal data-reveal-dir="left">
-                    <p class="about-lead">
-                        I'm Anshul Namdev. A full-stack developer and AI engineer who started programming in the 6th grade and never stopped.
-                    </p>
-                    <p>
-                        Currently a B.Tech CSE student, I combine deep technical expertise with creative problem-solving. My focus spans AI automation, workflow optimization, and scalable architecture.
-                    </p>
-                    <p>
-                        I've worked with <strong>FRVR</strong> as Technical Architect and as Principal Software Engineer at <strong>BlueWizard Digital</strong>. Also co-founder of <strong>Qixazow.com</strong> and a top contributor at the n8n community forum.
-                    </p>
-                </div>
-                <div class="about-col-right" data-reveal data-reveal-dir="right">
-                    <div class="stack-card">
-                        <div class="stack-header">
-                            <span class="stack-dot"></span>
-                            <span class="stack-label">CORE_STACK</span>
-                        </div>
-                        <div class="stack-pills">
-                            <span class="pill">Java</span>
-                            <span class="pill">Spring Boot</span>
-                            <span class="pill">Rust</span>
-                            <span class="pill">JavaScript</span>
-                            <span class="pill">Python</span>
-                            <span class="pill">n8n</span>
-                            <span class="pill">AI Automation</span>
-                            <span class="pill">Linux</span>
+                <div class="about-grid">
+                    <div class="about-copy">
+                        <h2 class="sec-title rv rv-0" style="margin-bottom:2rem">
+                            <span class="rl"><span>Bridging the gap between</span></span>
+                            <span class="rl" style="--d:.12s"><span><em>concept</em> and <em>execution.</em></span></span>
+                        </h2>
+                        <p class="about-lead rv" style="--d:.15s">I'm Anshul Namdev, a full-stack developer and AI engineer who started programming in the <em>6th grade</em> and never stopped.</p>
+                        <p class="rv" style="--d:.22s">I combine deep technical expertise with creative problem-solving. My focus spans AI automation, workflow optimisation and scalable architecture.</p>
+                        <p class="rv" style="--d:.28s">I've worked with <strong>FRVR</strong> as Technical Architect and as Principal Software Engineer at <strong>BlueWizard Digital</strong>. I co-founded <strong>Qixazow.com</strong> and I'm a top contributor and moderator on the n8n community forum.</p>
+                        <div class="facts rv" style="--d:.34s">
+                            <div class="fact"><b>Top contributor</b><span>n8n community forum</span></div>
+                            <div class="fact"><b>Co-founder</b><span>Qixazow.com</span></div>
+                            <div class="fact"><b>Since 6th grade</b><span>Writing code</span></div>
                         </div>
                     </div>
+                    <div class="comb rv rv-0" aria-label="Core stack">
+                        <div class="comb-row">
+                            <div class="cell" style="--i:0"><span>Java</span></div>
+                            <div class="cell" style="--i:1"><span>Spring Boot</span></div>
+                            <div class="cell" style="--i:2"><span>Rust</span></div>
+                        </div>
+                        <div class="comb-row">
+                            <div class="cell" style="--i:3"><span>JavaScript</span></div>
+                            <div class="cell" style="--i:4"><span>TypeScript</span></div>
+                            <div class="cell" style="--i:5"><span>Python</span></div>
+                            <div class="cell" style="--i:6"><span>Node.js</span></div>
+                        </div>
+                        <div class="comb-row">
+                            <div class="cell" style="--i:7"><span>AI Agents</span></div>
+                            <div class="cell" style="--i:8"><span>Automation</span></div>
+                            <div class="cell hot" style="--i:9"><span>n8n</span></div>
+                            <div class="cell" style="--i:10"><span>LLMs</span></div>
+                            <div class="cell" style="--i:11"><span>RAG</span></div>
+                        </div>
+                        <div class="comb-row">
+                            <div class="cell" style="--i:12"><span>REST APIs</span></div>
+                            <div class="cell" style="--i:13"><span>Webhooks</span></div>
+                            <div class="cell" style="--i:14"><span>PostgreSQL</span></div>
+                            <div class="cell" style="--i:15"><span>Docker</span></div>
+                        </div>
+                        <div class="comb-row">
+                            <div class="cell" style="--i:16"><span>Linux</span></div>
+                            <div class="cell" style="--i:17"><span>Cloud Infra</span></div>
+                            <div class="cell" style="--i:18"><span>System Design</span></div>
+                        </div>
+                        <p class="comb-cap">Core stack</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- =============================================
-         WORK
-    ============================================= -->
-    <section class="section section-dark" id="work">
-        <div class="container">
-            <div class="section-tag section-tag-light" data-reveal>
-                <span class="tag-num">02</span>
-                <span class="tag-pixel-dot"></span>
-                <span class="tag-name">Selected Work</span>
-            </div>
-            <h2 class="work-headline" data-reveal>Digital Creations<span class="cursor-block">_</span></h2>
-
-            <article class="featured-card" data-reveal data-reveal-dir="zoom">
-                <div class="fc-content">
-                    <div class="fc-tags">
-                        <span class="fc-tag">Joint Venture</span>
-                        <span class="fc-tag">AI Media</span>
-                        <span class="fc-tag">Consultancy</span>
+        <!-- =============================================
+             ON THE GROUND · n8n Builders Challenge, HCMC
+        ============================================= -->
+        <section class="sec" id="community">
+            <div class="wrap">
+                <div class="sec-head rv">
+                    <span class="sec-idx"><svg viewBox="0 0 10 11" aria-hidden="true"><polygon points="5,.7 9.3,2.85 9.3,8.15 5,10.3 .7,8.15 .7,2.85"/></svg>02</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-name">On the ground</span>
+                </div>
+                <div class="ev-grid">
+                    <div class="rv rv-l">
+                        <h2 class="sec-title">
+                            <span class="rl"><span>In the room,</span></span>
+                            <span class="rl" style="--d:.12s"><span><em>not just the forum.</em></span></span>
+                        </h2>
+                        <p class="ev-lead">n8n Builders Challenge, Ho Chi Minh City. A hackathon for builders, by builders: small teams, real problems, AI automations built with n8n and pitched by the end of the day.</p>
+                        <p class="ev-sub">I was there with the n8n community: on the mic, and at the tables with the teams.</p>
+                        <div class="ev-meta"><span><i class="pulse"></i>19 Sep 2026</span><span>Ho Chi Minh City, Vietnam</span></div>
+                        <a href="n8n/" class="btn btn-sm">More on the n8n hub <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg></a>
                     </div>
-                    <h3 class="fc-title">Qixazow<em>.com</em></h3>
-                    <p class="fc-desc">Co-founded with two fellow AI professionals. A publication and consultancy covering n8n, Claude, and business AI integration.</p>
-                    <a href="https://qixazow.com" target="_blank" rel="noopener" class="pixel-btn pixel-btn-primary pixel-btn-sm">
-                        <span class="pixel-btn-inner">
-                            <span class="pixel-btn-text">Visit Qixazow</span>
-                            <svg class="pixel-btn-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="2"/></svg>
-                        </span>
+                    <figure class="ph ph-54 rv rv-r" style="--d:.1s">
+                        <img src="assets/img/event/hcmc-mic-lg.jpg" srcset="assets/img/event/hcmc-mic-sm.jpg 800w, assets/img/event/hcmc-mic-lg.jpg 1600w" sizes="(max-width: 900px) 100vw, 640px" width="1600" height="1524" loading="lazy" decoding="async" style="object-position: 62% 30%" alt="Anshul Namdev speaking on the mic at the n8n Builders Challenge in Ho Chi Minh City">
+                        <figcaption class="ph-cap"><span>On the mic</span><i>HCMC / 2026</i></figcaption>
+                    </figure>
+                </div>
+                <div class="hxg rv rv-0" aria-label="Photos from the n8n Builders Challenge">
+                    <div class="hxg-row">
+                        <figure class="hx" style="--i:0"><img src="assets/img/event/hcmc-me-laptop-sm.jpg" style="object-position:50% 26%" alt="Anshul at his laptop during the hackathon" loading="lazy" decoding="async"></figure>
+                        <figure class="hx" style="--i:1"><img src="assets/img/event/hcmc-table-smile-sm.jpg" style="object-position:24% 45%" alt="Anshul at the builders table" loading="lazy" decoding="async"></figure>
+                        <figure class="hx red" style="--i:2"><img src="assets/img/event/hcmc-handshake-sm.jpg" style="object-position:78% 38%" alt="Anshul with fellow builders" loading="lazy" decoding="async"></figure>
+                        <figure class="hx" style="--i:3"><img src="assets/img/event/hcmc-banner-group-sm.jpg" style="object-position:22% 45%" alt="Anshul in front of the n8n Builders Challenge banner" loading="lazy" decoding="async"></figure>
+                        <figure class="hx" style="--i:4"><img src="assets/img/event/hcmc-backdrop-sm.jpg" style="object-position:58% 50%" alt="n8n Builders Challenge backdrop" loading="lazy" decoding="async"></figure>
+                    </div>
+                    <div class="hxg-row">
+                        <figure class="hx" style="--i:5"><img src="assets/img/event/hcmc-pair-laptop-sm.jpg" style="object-position:26% 45%" alt="Anshul pairing on a build" loading="lazy" decoding="async"></figure>
+                        <figure class="hx" style="--i:6"><img src="assets/img/event/hcmc-trio-laptops-sm.jpg" style="object-position:50% 45%" alt="Anshul and two builders at their laptops" loading="lazy" decoding="async"></figure>
+                        <figure class="hx" style="--i:7"><img src="assets/img/event/hcmc-trio-smile-sm.jpg" style="object-position:50% 45%" alt="Anshul sharing a laugh with two builders" loading="lazy" decoding="async"></figure>
+                        <figure class="hx" style="--i:8"><img src="assets/img/event/hcmc-signs-first-place-sm.jpg" style="object-position:50% 50%" alt="First place signs at the n8n Builders Challenge" loading="lazy" decoding="async"></figure>
+                    </div>
+                    <p class="hxg-cap">Photos: n8n Builders Challenge, Ho Chi Minh City</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             WORK
+        ============================================= -->
+        <section class="sec" id="work">
+            <div class="wrap">
+                <div class="sec-head rv">
+                    <span class="sec-idx"><svg viewBox="0 0 10 11" aria-hidden="true"><polygon points="5,.7 9.3,2.85 9.3,8.15 5,10.3 .7,8.15 .7,2.85"/></svg>03</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-name">Selected work</span>
+                </div>
+                <h2 class="sec-title rv rv-0" style="margin-bottom:3rem"><span class="rl"><span>Digital <em>creations.</em></span></span></h2>
+
+                <article class="feat rv rv-s">
+                    <div class="feat-body">
+                        <div class="feat-tags"><span class="tag tag-red">Joint venture</span><span class="tag">AI media</span><span class="tag">Consultancy</span></div>
+                        <h3>Qixazow<em>.com</em></h3>
+                        <p>Co-founded with two fellow AI professionals. A publication and consultancy covering n8n, Claude and business AI integration.</p>
+                        <a href="https://qixazow.com" target="_blank" rel="noopener" class="btn btn-sm">Visit Qixazow
+                            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg>
+                        </a>
+                    </div>
+                    <div class="feat-visual" aria-hidden="true">
+                        <div class="tiles">
+                            <div class="tile"><b>Articles &amp; insights</b><span>Expert AI guides and deep-dives</span></div>
+                            <div class="tile"><b>Business AI</b><span>Workflow automation consulting</span></div>
+                            <div class="tile"><b>Video content</b><span>AI tool breakdowns and tutorials</span></div>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="rows">
+                    <a href="n8n/guide/" class="row rv" style="--d:.05s">
+                        <span class="row-idx">01</span>
+                        <span class="row-name">The Guide<small>Knowledge base</small></span>
+                        <span class="row-desc">In-depth n8n articles covering setup, hosting, AI models, licensing and more.</span>
+                        <span class="soc row-go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                    </a>
+                    <a href="https://blog.axshul.site" target="_blank" rel="noopener" class="row rv" style="--d:.1s">
+                        <span class="row-idx">02</span>
+                        <span class="row-name">Blog<small>Writing</small></span>
+                        <span class="row-desc">Long-form technical writing on AI, automation and engineering.</span>
+                        <span class="soc row-go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                    </a>
+                    <a href="thoughts/" class="row rv" style="--d:.15s">
+                        <span class="row-idx">03</span>
+                        <span class="row-name">Thoughts<small>Personal</small></span>
+                        <span class="row-desc">Opinions, hot takes and reflections on tech and AI.</span>
+                        <span class="soc row-go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                    </a>
+                    <a href="Nexus/" class="row rv" style="--d:.2s">
+                        <span class="row-idx">04</span>
+                        <span class="row-name">Nexus<small>Tool</small></span>
+                        <span class="row-desc">An infinite canvas for AI engineers to map systems, prompts and ideas.</span>
+                        <span class="soc row-go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg></span>
                     </a>
                 </div>
-                <div class="fc-visual">
-                    <div class="fc-grid-bg"></div>
-                    <div class="fc-tiles">
-                        <div class="fc-tile"><span class="fc-tile-label">Articles & Insights</span><span class="fc-tile-text">Expert AI guides and deep-dives</span></div>
-                        <div class="fc-tile"><span class="fc-tile-label">Business AI</span><span class="fc-tile-text">Workflow automation consulting</span></div>
-                        <div class="fc-tile"><span class="fc-tile-label">Video Content</span><span class="fc-tile-text">AI tool breakdowns and tutorials</span></div>
-                    </div>
-                </div>
-            </article>
-
-            <div class="project-rows">
-                <a href="n8n/guide/" class="project-row" data-reveal>
-                    <span class="pr-idx">01</span><span class="pr-cat">Knowledge Base</span><span class="pr-name">The Guide</span><span class="pr-desc">In-depth n8n articles covering setup, hosting, AI models, licensing, and more</span>
-                    <span class="pr-arrow"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.5"/></svg></span>
-                </a>
-                <a href="https://blog.axshul.site" target="_blank" rel="noopener" class="project-row" data-reveal>
-                    <span class="pr-idx">02</span><span class="pr-cat">Writing</span><span class="pr-name">Blog</span><span class="pr-desc">Long-form technical writing on AI, automation, and engineering</span>
-                    <span class="pr-arrow"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.5"/></svg></span>
-                </a>
-                <a href="thoughts/" class="project-row" data-reveal>
-                    <span class="pr-idx">03</span><span class="pr-cat">Personal</span><span class="pr-name">Thoughts</span><span class="pr-desc">Opinions, hot takes, and personal reflections on tech and AI</span>
-                    <span class="pr-arrow"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.5"/></svg></span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- =============================================
-         JOURNEY
-    ============================================= -->
-    <section class="section" id="journey">
-        <div class="container">
-            <div class="section-tag" data-reveal>
-                <span class="tag-num">03</span>
-                <span class="tag-pixel-dot"></span>
-                <span class="tag-name">Experience</span>
-            </div>
-            <h2 class="journey-headline" data-reveal>The Journey<span class="cursor-block">_</span></h2>
-
-            <div class="timeline">
-                <div class="timeline-item" data-reveal>
-                    <div class="tl-connector"><div class="tl-dot"></div><div class="tl-line"></div></div>
-                    <div class="tl-card">
-                        <div class="tl-header"><span class="tl-year">2024 / 2028</span><span class="tl-badge">IN PROGRESS</span></div>
-                        <h3 class="tl-title">B.Tech in Computer Science</h3>
-                        <p class="tl-desc">Pursuing Computer Science Engineering. Building a strong foundation in core computing while simultaneously shipping production projects.</p>
-                        <div class="tl-tags"><span class="tl-tag">Algorithms</span><span class="tl-tag">Data Structures</span><span class="tl-tag">System Design</span></div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-reveal>
-                    <div class="tl-connector"><div class="tl-dot"></div><div class="tl-line"></div></div>
-                    <div class="tl-card">
-                        <div class="tl-header"><span class="tl-year">Internship</span></div>
-                        <h3 class="tl-title">Software Engineer at FRVR</h3>
-                        <p class="tl-desc">Gained hands-on experience in game ecosystems and high-performance web architecture at a leading game platform.</p>
-                        <div class="tl-tags"><span class="tl-tag">Game Dev</span><span class="tl-tag">Web Architecture</span><span class="tl-tag">Performance</span></div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-reveal>
-                    <div class="tl-connector"><div class="tl-dot"></div><div class="tl-line"></div></div>
-                    <div class="tl-card">
-                        <div class="tl-header"><span class="tl-year">Growth</span></div>
-                        <h3 class="tl-title">Technical Architect</h3>
-                        <p class="tl-desc">Designing system structures, choosing technology stacks, and ensuring scalability of complex projects across multiple domains.</p>
-                        <div class="tl-tags"><span class="tl-tag">Architecture</span><span class="tl-tag">Scalability</span><span class="tl-tag">Leadership</span></div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-reveal>
-                    <div class="tl-connector"><div class="tl-dot"></div><div class="tl-line"></div></div>
-                    <div class="tl-card">
-                        <div class="tl-header"><span class="tl-year">BlueWizard Digital</span></div>
-                        <h3 class="tl-title">Principal Software Engineer</h3>
-                        <p class="tl-desc">Led core development teams and drove the technical vision for key digital products at BlueWizard Digital.</p>
-                        <div class="tl-tags"><span class="tl-tag">Team Lead</span><span class="tl-tag">Product Dev</span><span class="tl-tag">Strategy</span></div>
-                    </div>
-                </div>
-                <div class="timeline-item tl-active" data-reveal>
-                    <div class="tl-connector"><div class="tl-dot tl-dot-active"><span class="tl-pulse"></span></div><div class="tl-line"></div></div>
-                    <div class="tl-card tl-card-active">
-                        <div class="tl-header"><span class="tl-year">Present</span><span class="tl-badge tl-badge-live"><span class="status-dot"></span>CURRENT</span></div>
-                        <h3 class="tl-title">AI Automations & N8N Community Moderator</h3>
-                        <p class="tl-desc">Building bespoke AI automation workflows and intelligent agents. Co-founder at Qixazow. Moderating the n8n community forum and helping developers master automation.</p>
-                        <div class="tl-tags"><span class="tl-tag">n8n</span><span class="tl-tag">AI Agents</span><span class="tl-tag">Qixazow</span><span class="tl-tag">Community</span></div>
-                    </div>
+                <div class="rows-more rv">
+                    <a href="work/" class="btn">All work
+                        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" stroke-width="1.6"/></svg>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- =============================================
-         CONTACT
-    ============================================= -->
-    <section class="section section-dark" id="contact">
-        <div class="container">
-            <div class="section-tag section-tag-light" data-reveal>
-                <span class="tag-num">04</span>
-                <span class="tag-pixel-dot"></span>
-                <span class="tag-name">Get in Touch</span>
-            </div>
-            <div class="contact-layout">
-                <div class="contact-left" data-reveal data-reveal-dir="left">
-                    <h2 class="contact-headline">Let's work<br><em>together.</em></h2>
-                    <p class="contact-sub">Have a project in mind? Looking for AI automation consulting? Or just want to connect?</p>
-                    <a href="mailto:sales@axshul.site" class="contact-email">sales@axshul.site</a>
-                    <div class="contact-socials">
-                        <a href="https://github.com/axshul" target="_blank" class="social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                        <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank" class="social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                        <a href="https://twitter.com/Anshul_Namdev0" target="_blank" class="social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                    </div>
+        <!-- =============================================
+             JOURNEY
+        ============================================= -->
+        <section class="sec" id="journey">
+            <div class="wrap">
+                <div class="sec-head rv">
+                    <span class="sec-idx"><svg viewBox="0 0 10 11" aria-hidden="true"><polygon points="5,.7 9.3,2.85 9.3,8.15 5,10.3 .7,8.15 .7,2.85"/></svg>04</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-name">Experience</span>
                 </div>
-                <div class="contact-right" data-reveal data-reveal-dir="right">
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" name="Name" required placeholder="Your name">
+                <h2 class="sec-title rv rv-0" style="margin-bottom:3.5rem"><span class="rl"><span>The <em>journey.</em></span></span></h2>
+
+                <div class="tl">
+                    <div class="tl-rail" aria-hidden="true"><div class="tl-fill"></div></div>
+
+                    <div class="tl-item rv rv-l">
+                        <span class="tl-node" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <div class="tl-meta"><span>2024 / Start</span><span class="tag">Dropped out of college</span></div>
+                            <h3>Chose building over lectures</h3>
+                            <p>Enrolled in 2024 and left within the year. The fundamentals were already there from years of writing code, so I went full-time on shipping real systems instead.</p>
+                            <div class="tl-tags"><span class="tag">Self-taught</span><span class="tag">Fundamentals</span><span class="tag">Full-time builder</span></div>
                         </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" name="Email" required placeholder="your@email.com">
+                    </div>
+                    <div class="tl-item rv rv-l" style="--d:.05s">
+                        <span class="tl-node" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <div class="tl-meta"><span>Internship</span></div>
+                            <h3>Software Engineer at FRVR</h3>
+                            <p>Hands-on experience in game ecosystems and high-performance web architecture at a leading game platform.</p>
+                            <div class="tl-tags"><span class="tag">Game Dev</span><span class="tag">Web Architecture</span><span class="tag">Performance</span></div>
                         </div>
-                        <div class="form-group">
-                            <label>Message</label>
-                            <textarea name="Message" rows="5" required placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <div class="tl-item rv rv-l" style="--d:.05s">
+                        <span class="tl-node" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <div class="tl-meta"><span>Growth</span></div>
+                            <h3>Technical Architect</h3>
+                            <p>Designing system structures, choosing technology stacks and ensuring scalability of complex projects across multiple domains.</p>
+                            <div class="tl-tags"><span class="tag">Architecture</span><span class="tag">Scalability</span><span class="tag">Leadership</span></div>
                         </div>
-                        <button type="submit" class="pixel-btn pixel-btn-primary pixel-btn-full" id="submitBtn">
-                            <span class="pixel-btn-inner">
-                                <span class="pixel-btn-text">Send Message</span>
-                                <svg class="pixel-btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
-                            </span>
+                    </div>
+                    <div class="tl-item rv rv-l" style="--d:.05s">
+                        <span class="tl-node" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <div class="tl-meta"><span>BlueWizard Digital</span></div>
+                            <h3>Principal Software Engineer</h3>
+                            <p>Led core development teams and drove the technical vision for key digital products at BlueWizard Digital.</p>
+                            <div class="tl-tags"><span class="tag">Team Lead</span><span class="tag">Product Dev</span><span class="tag">Strategy</span></div>
+                        </div>
+                    </div>
+                    <div class="tl-item now rv rv-l" style="--d:.05s">
+                        <span class="tl-node" aria-hidden="true"></span>
+                        <div class="tl-card">
+                            <div class="tl-meta"><span>Present</span><span class="tag tag-red">Current</span></div>
+                            <h3>AI Automations &amp; n8n Community Moderator</h3>
+                            <p>Building bespoke AI automation workflows and intelligent agents. Co-founder at Qixazow. Moderating the n8n community forum and helping developers master automation.</p>
+                            <div class="tl-tags"><span class="tag">n8n</span><span class="tag">AI Agents</span><span class="tag">Qixazow</span><span class="tag">Community</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             CONTACT
+        ============================================= -->
+        <section class="sec" id="contact">
+            <div class="wrap">
+                <div class="sec-head rv">
+                    <span class="sec-idx"><svg viewBox="0 0 10 11" aria-hidden="true"><polygon points="5,.7 9.3,2.85 9.3,8.15 5,10.3 .7,8.15 .7,2.85"/></svg>05</span>
+                    <span class="sec-line"></span>
+                    <span class="sec-name">Get in touch</span>
+                </div>
+                <div class="contact-grid">
+                    <div class="rv rv-l">
+                        <h2 class="sec-title">
+                            <span class="rl"><span>Let's work</span></span>
+                            <span class="rl" style="--d:.12s"><span><em>together.</em></span></span>
+                        </h2>
+                        <p class="contact-sub">Have a project in mind? Looking for AI automation consulting? Or just want to connect?</p>
+                        <a href="mailto:sales@axshul.site" class="email">sales@axshul.site</a>
+                        <div class="socials">
+                            <a href="https://github.com/axshul" target="_blank" rel="noopener" class="soc" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                            <a href="https://www.linkedin.com/in/anshul-namdev-b149b5329/" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                            <a href="https://twitter.com/Anshul_Namdev0" target="_blank" rel="noopener" class="soc" aria-label="Twitter / X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                            <a href="https://community.n8n.io/u/Anshul_Namdev" target="_blank" rel="noopener" class="soc" aria-label="n8n community profile"><b>n8n</b></a>
+                        </div>
+                    </div>
+                    <form class="form rv rv-r" id="contactForm" style="--d:.1s">
+                        <div class="field">
+                            <label for="f-name">Name</label>
+                            <input id="f-name" type="text" name="Name" required placeholder="Your name" autocomplete="name">
+                        </div>
+                        <div class="field">
+                            <label for="f-email">Email</label>
+                            <input id="f-email" type="email" name="Email" required placeholder="you@company.com" autocomplete="email">
+                        </div>
+                        <div class="field">
+                            <label for="f-msg">Message</label>
+                            <textarea id="f-msg" name="Message" rows="4" required placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                            <span class="btn-text">Send message</span>
+                            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" stroke-width="1.6"/></svg>
                         </button>
+                        <p class="form-note">Replies within a day. No newsletters, no spam.</p>
                     </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-inner">
-                <div class="footer-left">
-                    <span class="footer-logo"><span class="logo-bracket">[</span>AN<span class="logo-bracket">]</span></span>
-                    <span class="footer-copy">&copy; 2026 Anshul Namdev</span>
-                </div>
-                <div class="footer-right">
-                    <a href="https://github.com/axshul" target="_blank">GitHub</a>
-                    <a href="https://linkedin.com/in/anshul-namdev-b149b5329/" target="_blank">LinkedIn</a>
-                    <a href="https://twitter.com/Anshul_Namdev0" target="_blank">Twitter</a>
-                    <a href="https://qixazow.com" target="_blank">Qixazow</a>
+        <!-- FOOTER -->
+        <footer class="foot">
+            <div class="wrap">
+                <div class="foot-word" aria-hidden="true">ANSHUL NAMDEV</div>
+                <div class="foot-row">
+                    <div class="foot-brand">
+                        <span class="brand-hex"><span>AN</span></span>
+                        <span>&copy; 2026 Anshul Namdev</span>
+                    </div>
+                    <div class="foot-links">
+                        <a href="https://github.com/axshul" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://www.linkedin.com/in/anshul-namdev-b149b5329/" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="https://twitter.com/Anshul_Namdev0" target="_blank" rel="noopener">Twitter</a>
+                        <a href="https://community.n8n.io/u/Anshul_Namdev" target="_blank" rel="noopener">n8n Community</a>
+                        <a href="https://qixazow.com" target="_blank" rel="noopener">Qixazow</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var card = document.getElementById('heroVisual');
-            if (!card || window.innerWidth <= 768) return;
+    </main>
 
-            card.addEventListener('mousemove', function(e) {
-                var rect = card.getBoundingClientRect();
-                var x = (e.clientX - rect.left) / rect.width - 0.5;
-                var y = (e.clientY - rect.top) / rect.height - 0.5;
-                card.style.transition = 'transform 0.1s ease-out';
-                card.style.transform = 'perspective(600px) rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) scale(1.02)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                card.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
-                card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
-            });
-        });
-    </script>
+    <script src="assets/js/hive.js"></script>
 </body>
 </html>
