@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Personal portfolio and content hub for Anshul Namdev (axshul.site). A static, multi-page website with no build system or framework: pure HTML, CSS and vanilla JavaScript. Hosted on GitHub Pages at `https://axshul.site` (deploys from `main`).
+Personal portfolio and content hub for Anshul Namdev (axshul.site). A static, multi-page website with no build system or framework: pure HTML, CSS and vanilla JavaScript. Served from Hostinger (LiteSpeed, 148.113.8.71) at `https://axshul.site`. The GitHub repo is the source of truth only: it has **no GitHub Pages deployment**, so a push never changes the live site. Deploy by Hostinger's Git deployment (hPanel → Git) or by uploading the release zip that the build step writes to `_uploads/`.
 
 **Repository:** `https://github.com/Axshul/axshul.site.git`
 
@@ -44,7 +44,8 @@ axshul.site/
 │   └── favicon/
 ├── MyMTWphoto.jpeg          # Hero portrait (local; the old Cloudinary copy was deleted)
 ├── _uploads/                # git-ignored: absolute-URL blog copy for blog.axshul.site
-├── 404.html                 # Branded not-found page (absolute URLs, noindex)
+├── 404.html                 # Branded not-found page (absolute URLs, noindex), wired via .htaccess ErrorDocument
+├── .htaccess                # 404 mapping, hides source-only files, image caching
 ├── robots.txt, sitemap.xml, LICENSE
 ```
 
@@ -102,6 +103,7 @@ Source photos live in `drive-download-*/` at the repo root (git-ignored, never d
 ## Development Notes
 
 - Preview: `python3 -m http.server 8890` from the repo root (the desktop app's launch config serves the same folder on 8888).
+- Release: `_uploads/axshul.site-release.zip` (repo minus dev files) and `_uploads/DELETE-ON-HOST.txt` (paths removed since the last deploy); `blog.axshul.site` gets `_uploads/blog.axshul.site/index.html`.
 - When adding a page: copy the homepage head boilerplate, link `assets/css/hive.css` + `assets/js/hive.js`, reuse the nav block verbatim, add JSON-LD, add the URL to `sitemap.xml`.
 - When adding a guide article: create `/n8n/guide/<slug>/index.html`, add it to the guide index and to `sitemap.xml`.
 - Commit style: short imperative subject (e.g. `Fix hero image CDN 404`, `+ Article + sitemap updated`).
