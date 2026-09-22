@@ -12,13 +12,58 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://axshul.site/MyMTWphoto.jpeg</image:loc>
-      <image:title>Anshul Namdev - Technical Architect &amp; AI Engineer</image:title>
-      <image:caption>Anshul Namdev, Technical Architect and AI Automation Expert based in India</image:caption>
+      <image:title>Anshul Namdev, Technical Architect and AI Engineer</image:title>
+      <image:caption>Portrait of Anshul Namdev, Technical Architect and AI Automation Engineer from India</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
-      <image:title>Anshul Namdev at the n8n Builders Challenge, Ho Chi Minh City</image:title>
-      <image:caption>Anshul Namdev on the mic at the n8n Builders Challenge hackathon in Ho Chi Minh City, September 2026</image:caption>
+      <image:title>Anshul Namdev speaking at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev on the mic at the n8n Builders Challenge hackathon, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-me-laptop-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev working at his laptop during the n8n Builders Challenge in Ho Chi Minh City</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul at the builders table, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul with fellow builders, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul in front of the n8n Builders Challenge banner, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-backdrop-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>n8n Builders Challenge backdrop, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-pair-laptop-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul pairing on a build, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-laptops-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul and two builders at their laptops, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul sharing a laugh with two builders, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-signs-first-place-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>First place signs at the n8n Builders Challenge, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
     </image:image>
   </url>
 
@@ -29,8 +74,23 @@
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-me-laptop-lg.jpg</image:loc>
-      <image:title>About Anshul Namdev</image:title>
-      <image:caption>Anshul Namdev, Technical Architect and AI Engineer, at the n8n Builders Challenge in Ho Chi Minh City</image:caption>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev working at his laptop during the n8n Builders Challenge in Ho Chi Minh City</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
+      <image:title>Anshul Namdev speaking at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev on the mic at the n8n Builders Challenge hackathon, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-pair-laptop-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul working through a build with a teammate, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-focus-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul and two builders heads-down at their laptops, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
     </image:image>
   </url>
 
@@ -39,10 +99,15 @@
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-      <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-signs-community-lg.jpg</image:loc>
-      <image:title>n8n community signs at the Builders Challenge</image:title>
-      <image:caption>I love n8n, AI Agent Builder and Ambassador signs at the n8n Builders Challenge, Ho Chi Minh City</image:caption>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-screen-seat-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev in front of the n8n Builders Challenge screen in Ho Chi Minh City</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul and fellow builders comparing notes in front of the n8n banner, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
     </image:image>
   </url>
 
@@ -51,10 +116,15 @@
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-      <image:image>
+    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
       <image:title>Anshul Namdev speaking at the n8n Builders Challenge</image:title>
-      <image:caption>Anshul Namdev on the mic at the n8n Builders Challenge, Ho Chi Minh City</image:caption>
+      <image:caption>Anshul Namdev on the mic at the n8n Builders Challenge hackathon, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-work-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev working with two builders at the n8n Builders Challenge, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
     </image:image>
   </url>
 
@@ -63,10 +133,10 @@
     <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
-      <image:image>
+    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
-      <image:title>Anshul Namdev with fellow builders</image:title>
-      <image:caption>Anshul Namdev shaking hands with a fellow builder at the n8n Builders Challenge</image:caption>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev (right) with fellow builders at the n8n Builders Challenge, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
     </image:image>
   </url>
 
@@ -93,7 +163,82 @@
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-screen-seat-lg.jpg</image:loc>
       <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
-      <image:caption>Anshul Namdev in front of the n8n Builders Challenge screen, Ho Chi Minh City, September 2026</image:caption>
+      <image:caption>Anshul Namdev in front of the n8n Builders Challenge screen in Ho Chi Minh City</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
+      <image:title>Anshul Namdev speaking at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev on the mic at the n8n Builders Challenge hackathon, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-me-laptop-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul Namdev working at his laptop during the n8n Builders Challenge in Ho Chi Minh City</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-backdrop-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>n8n Builders Challenge backdrop, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul at the builders table, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-signs-community-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>I love n8n and Ambassador signs, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-pair-laptop-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul pairing on a build, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul with fellow builders, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul at the n8n banner, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul and two builders sharing a laugh, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-signs-first-place-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>First place signs, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-focus-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>Heads down at the laptops, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-arrival-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>Arriving at the venue, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-n8n-101-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>n8n 101 booklets, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-room-talk-lg.jpg</image:loc>
+      <image:title>n8n Builders Challenge, Ho Chi Minh City</image:title>
+      <image:caption>The room during a talk, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/event/hcmc-group-table-lg.jpg</image:loc>
+      <image:title>Anshul Namdev at the n8n Builders Challenge</image:title>
+      <image:caption>Anshul with builders at the n8n Builders Challenge tables, n8n Builders Challenge, Ho Chi Minh City, September 2026</image:caption>
     </image:image>
   </url>
 
