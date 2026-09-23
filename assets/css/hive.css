@@ -734,3 +734,22 @@ html.fast .hero h1 em::after { animation-delay: 1.1s; }
 @keyframes daisySpin { to { transform: rotate(360deg); } }
 @media (max-width: 900px) { .hero .daisy { width: 74px; height: 74px; right: 5%; top: calc(var(--nav-h) + .6rem); } .phero .daisy { display: none; } }
 @media (prefers-reduced-motion: reduce) { .daisy { animation: none; } }
+
+/* ── Legal pages ── */
+.legal { max-width: 780px; }
+.legal-meta { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-bottom: 2.4rem; display: flex; gap: 1.6rem; flex-wrap: wrap; }
+.legal h2 { font-family: var(--font-display); font-size: 1.55rem; font-weight: 500; line-height: 1.2; margin: 2.8rem 0 .9rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.legal h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+.legal p { color: var(--muted); margin-bottom: 1rem; line-height: 1.75; }
+.legal strong { color: var(--text); font-weight: 500; }
+.legal a { color: var(--text); border-bottom: 1px solid var(--red); transition: color .3s; }
+.legal a:hover { color: var(--red); }
+.legal table { width: 100%; border-collapse: collapse; margin: .6rem 0 1.6rem; font-size: .92rem; }
+.legal th, .legal td { text-align: left; padding: .7rem .6rem .7rem 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--muted); line-height: 1.5; }
+.legal th { font-family: var(--font-mono); font-size: .54rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); }
+.legal td:first-child { color: var(--text); white-space: nowrap; }
+.legal code { font-family: var(--font-mono); font-size: .82em; color: var(--soft); background: var(--bg-2); padding: .1em .4em; }
+.foot-legal { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1rem; font-family: var(--font-mono); font-size: .56rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+.foot-legal a { transition: color .3s; }
+.foot-legal a:hover { color: var(--text); }
+@media (max-width: 600px) { .legal td:first-child { white-space: normal; } .legal th, .legal td { padding: .55rem .4rem .55rem 0; font-size: .86rem; } }
