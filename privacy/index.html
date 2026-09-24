@@ -89,18 +89,25 @@
         <section class="sec-tight" style="padding-top:1rem">
             <div class="wrap">
                 <div class="legal rv rv-0">
-                    <div class="legal-meta"><span>Last updated: 23 September 2026</span><span>Operator: Anshul Namdev, India</span><span>Contact: sales@axshul.site</span></div>
+                    <div class="legal-meta"><span>Last updated: 24 September 2026</span><span>Operator: Anshul Namdev, India</span><span>Contact: sales@axshul.site</span></div>
 <h2>Who we are</h2>
 <p>axshul.site is the personal portfolio and content site of <strong>Anshul Namdev</strong>, an independent technical architect and AI automation engineer based in India. For the purposes of data protection law, Anshul Namdev is the data controller for anything collected through this site. You can reach us at <a href="mailto:sales@axshul.site">sales@axshul.site</a>.</p><p>This site is a personal project. It is not affiliated with, endorsed by or operated on behalf of n8n GmbH or any other company mentioned on it.</p>
 <h2>What we collect, and why</h2>
 <p>We collect as little as a website can. There are no accounts, no logins, no analytics, no advertising and no tracking pixels anywhere on axshul.site. The complete list of personal data we process is below.</p>
 <table><thead><tr><th>Data</th><th>When</th><th>Why</th><th>Where it goes</th></tr></thead><tbody>
-<tr><td>Name</td><td>When you submit the contact form on the homepage or on <code>/contact/</code></td><td>So we know who we are replying to</td><td>Our automation server, then our mailbox</td></tr>
+<tr><td>Name</td><td>When you submit the contact form on the homepage or on <code>/contact/</code></td><td>So we know who we are replying to</td><td>Our automation server (in the request URL, see below), then our mailbox</td></tr>
 <tr><td>Email address</td><td>Contact form</td><td>So we can reply to you</td><td>Our automation server, then our mailbox</td></tr>
 <tr><td>Message</td><td>Contact form</td><td>The content of your enquiry, so we can answer it</td><td>Our automation server, then our mailbox</td></tr>
 <tr><td>IP address, browser type, requested page, time and referrer</td><td>Every request, automatically</td><td>Web server access logs kept by our hosting provider for security and troubleshooting</td><td>Hostinger web server logs</td></tr>
 </tbody></table>
-<p><strong>How the contact form works, exactly.</strong> When you press Send, your browser sends the three fields over HTTPS to an automation server we run ourselves: an n8n instance on a Hostinger VPS at <code>n8n.srv1419396.hstgr.cloud</code>. That workflow forwards the message to our mailbox at sales@axshul.site. The fields travel as part of the request URL, which means they can also appear in that server's access logs. Nothing is stored in a database, nobody else receives the message, and the form is never used to add you to a mailing list. The form only runs when you submit it; nothing is sent while you type.</p>
+<p><strong>How the contact form works, exactly.</strong> When you press Send, your browser makes an <strong>HTTP GET request over HTTPS</strong> to an automation server we run ourselves: an n8n instance on a Hostinger VPS at <code>n8n.srv1419396.hstgr.cloud</code>. That workflow forwards the message to our mailbox at sales@axshul.site. Nothing is stored in a database, nobody else receives the message, and the form is never used to add you to a mailing list. The form only runs when you submit it; nothing is sent while you type.</p>
+<p><strong>What using GET means for you, stated plainly.</strong> Because the request is a GET, your name, email address and message are encoded into the request URL rather than sent in a hidden request body. The connection itself is encrypted, so nobody can read those values in transit. However, data in a URL is more exposed than data in a request body in three specific ways, and you should know all three:</p>
+<ul class="ul">
+<li>The full URL, including your three fields, is written to the web server's access log on our automation server. We control that server and only Anshul Namdev can read those logs, but the values sit there in plain text until the logs are rotated.</li>
+<li>The URL may be recorded in your own browser history and in any corporate proxy, VPN or network monitoring tool between you and us.</li>
+<li>URLs are generally longer-lived than request bodies: they get copied, bookmarked and cached more easily.</li>
+</ul>
+<p><strong>So please do not put passwords, API keys, card numbers, government identifiers or other confidential information into the contact form.</strong> It is built for ordinary enquiries: who you are, how to reach you, and what you would like to talk about. If you need to send us something sensitive, email {MAIL} directly and we will agree on a secure way to exchange it. We may switch this form to a POST request in future; if we do, we will update this page.</p>
 <p><strong>Legal basis</strong> (for visitors in the EEA and UK): we process contact form data because you asked us to get in touch (steps at your request before any contract, and our legitimate interest in answering enquiries). Server logs are processed on the basis of our legitimate interest in keeping the site secure and working.</p>
 <h2>How long we keep it</h2>
 <p>Contact form messages stay in our mailbox for as long as the conversation is useful, and for a reasonable period afterwards so we can pick it up if you come back. Automation logs on our server are cleared periodically. Hosting access logs are kept by Hostinger for a limited period according to their own retention settings. If you ask us to delete your messages we will do so promptly.</p>
