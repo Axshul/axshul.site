@@ -21,6 +21,15 @@ ROOT = Path(__file__).resolve().parents[1]
 ORIGIN = "https://axshul.site"
 LOCAL_HOSTS = {"axshul.site", "www.axshul.site"}
 LEGAL_PATHS = {"/privacy/", "/cookies/", "/terms/"}
+PRIMARY_ROUTES = {
+    "About": "/about/", "Work": "/work/", "Journey": "/experience/",
+    "n8n": "/n8n/", "Guides": "/n8n/guide/", "Blog": "/blog/",
+}
+DIRECTORY_ROUTES = {
+    "/", *PRIMARY_ROUTES.values(), "/thoughts/", "/#moments",
+    "/Galaxy/", "/Nexus/", "/Notes/", "/Seek/", "/Terminal/",
+    *LEGAL_PATHS,
+}
 EXCLUDED_DIRS = {
     ".git", "node_modules", "uploads", "sourcephotos", "source-photos",
     "source_photos", "photo-source", "__pycache__",
@@ -164,6 +173,107 @@ def is_legal_region(node):
     )
 
 
+def in_class(node, class_name, tag=None):
+    return any(
+        class_name in attrs.get("class", "").split() and (tag is None or parent_tag == tag)
+        for parent_tag, attrs in node["parents"]
+    )
+
+
+def navigation_contract(page, base):
+    """Check that the visible header reaches pages without needing JavaScript."""
+    findings = []
+    primary = [
+        node for node in page.nodes if node["tag"] == "a"
+        and in_class(node, "primary-nav", "nav") and in_class(node, "site-header", "header")
+    ]
+
+    def destination(node):
+        href = node["attrs"].get("href", "")
+        url = urlsplit(urljoin(base, href))
+        if not href or url.scheme != "https" or url.hostname not in LOCAL_HOSTS or url.query:
+            return None
+        return url.path + ("#" + url.fragment if url.fragment else "")
+
+    labels = [" ".join(html.unescape(re.sub(r"<[^>]*>", "", page.contents(n))).split()) for n in primary]
+    actual_primary = dict(zip(labels, (destination(node) for node in primary)))
+    if len(primary) != len(PRIMARY_ROUTES) or actual_primary != PRIMARY_ROUTES:
+        findings.append(("primary_navigation", {
+            "expected": PRIMARY_ROUTES,
+            "actual": [{"label": label, "href": node["attrs"].get("href"), "destination": destination(node)} for label, node in zip(labels, primary)],
+        }))
+    hash_links = [node["attrs"].get("href") for node in primary if node["attrs"].get("href", "").startswith("#")]
+    if hash_links:
+        findings.append(("primary_navigation_hash_links", hash_links))
+    contact = [
+        node for node in page.nodes if node["tag"] == "a"
+        and "contact-nav" in node["attrs"].get("class", "").split()
+        and in_class(node, "site-header", "header")
+    ]
+    if len(contact) != 1 or destination(contact[0]) != "/contact/":
+        findings.append(("contact_navigation", [node["attrs"].get("href") for node in contact]))
+    details = [
+        node for node in page.nodes if node["tag"] == "details"
+        and "site-pages" in node["attrs"].get("class", "").split()
+        and in_class(node, "site-header", "header")
+    ]
+    summaries = [node for node in page.nodes if node["tag"] == "summary" and in_class(node, "site-pages", "details")]
+    panels = [
+        node for node in page.nodes if node["tag"] == "nav"
+        and "site-pages-panel" in node["attrs"].get("class", "").split()
+        and in_class(node, "site-pages", "details")
+    ]
+    if len(details) != 1 or len(summaries) != 1 or len(panels) != 1 or (panels and "hidden" in panels[0]["attrs"]):
+        findings.append(("native_pages_directory", {
+            "details": len(details), "summaries": len(summaries), "panels": len(panels),
+            "requirement": "One native details/summary directory with a visible-on-open nav panel",
+        }))
+    directory = [
+        node for node in page.nodes if node["tag"] == "a"
+        and in_class(node, "site-pages-panel", "nav") and in_class(node, "site-pages", "details")
+    ]
+    destinations = [destination(node) for node in directory]
+    if len(directory) != len(DIRECTORY_ROUTES) or set(destinations) != DIRECTORY_ROUTES:
+        findings.append(("pages_directory_routes", {
+            "expected_count": len(DIRECTORY_ROUTES), "actual_count": len(directory),
+            "missing": sorted(DIRECTORY_ROUTES - set(destinations)),
+            "unexpected": sorted(str(value) for value in set(destinations) - DIRECTORY_ROUTES),
+        }))
+    return findings
+
+
+def navigation_reachability(files, cache):
+    """Follow only real HTML anchors from home, excluding the error document."""
+    public = set(files)
+    graph = {path: set() for path in files}
+    for path in files:
+        for node in cache[path].nodes:
+            if node["tag"] != "a" or not node["attrs"].get("href"):
+                continue
+            try:
+                target, _ = local_target(node["attrs"]["href"], ORIGIN + route(path))
+            except ValueError:
+                continue  # The reference checker reports unsafe paths separately.
+            if target in public:
+                graph[path].add(target)
+    home = ROOT / "index.html"
+    reached = set()
+    pending = [home] if home in public else []
+    while pending:
+        current = pending.pop()
+        if current in reached:
+            continue
+        reached.add(current)
+        pending.extend(graph[current] - reached)
+    required = public - {ROOT / "404.html"}
+    return {
+        "required_routes": len(required),
+        "reachable_routes": len(required & reached),
+        "unreachable": sorted(route(path) for path in required - reached),
+        "html_link_edges": sum(len(targets) for targets in graph.values()),
+    }
+
+
 def original_em_dash_count(relative):
     if not shutil.which("git"):
         return None
@@ -199,6 +309,7 @@ def audit():
             "public_routes": len(files), "local_asset_references": 0,
             "local_anchor_references": 0, "jsonld_blocks": 0,
             "inline_scripts_checked": 0, "external_scripts_checked": 0,
+            "navigation_contracts_checked": 0, "reachable_routes": 0,
             "em_dash_original": 0, "em_dash_current": 0, "failures": 0,
         }), "issues": [], "pages": [],
     }
@@ -235,6 +346,9 @@ def audit():
         noindex = any("noindex" in n["attrs"].get("content", "").lower() for n in page.nodes if n["tag"] == "meta" and n["attrs"].get("name", "").lower() in {"robots", "googlebot"})
         legal_links = set()
         schema_count = 0
+        for check, detail in navigation_contract(page, base):
+            issue(path, check, detail)
+        report["summary"]["navigation_contracts_checked"] += 1
         for node in page.nodes:
             attrs = node["attrs"]
             for reference in asset_references(node):
@@ -301,6 +415,11 @@ def audit():
             report["summary"]["external_scripts_checked"] += 1
             if error:
                 issue(path, "external_javascript", error)
+    coverage = navigation_reachability(files, cache)
+    report["navigation_coverage"] = coverage
+    report["summary"]["reachable_routes"] = coverage["reachable_routes"]
+    if coverage["unreachable"]:
+        issue(ROOT / "index.html", "unreachable_public_routes", coverage["unreachable"])
     report["summary"]["failures"] = len(report["issues"])
     report["passed"] = not report["issues"]
     return report
@@ -320,6 +439,7 @@ def main():
         f"{summary['local_asset_references']} local asset references, "
         f"{summary['local_anchor_references']} local links/fragments, {summary['jsonld_blocks']} JSON-LD blocks, "
         f"{summary['inline_scripts_checked']} inline and {summary['external_scripts_checked']} external scripts checked, "
+        f"{summary['navigation_contracts_checked']} navigation contracts, {summary['reachable_routes']} routes reachable from home, "
         f"{summary['failures']} failures."
     )
     if not report["node_available"]:

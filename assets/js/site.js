@@ -97,16 +97,47 @@
     updateHeader();
   }
 
-  // Static route marks belong to inner pages. Homepage section marks remain
-  // owned by landing.js so the two modules never compete while scrolling.
-  if (inner && header) {
-    var path = location.pathname.replace(/index\.html$/, '').replace(/\/$/, '') || '/';
-    Array.prototype.forEach.call(header.querySelectorAll('.primary-nav a'), function (link) {
+  // Navigation changes pages. The longest matching route wins, so a guide
+  // article marks Guides without also marking its parent n8n hub.
+  if (header) {
+    var path = (location.hostname === 'blog.axshul.site' ? '/blog/' : location.pathname)
+      .replace(/index\.html$/, '').replace(/\/$/, '') || '/';
+    var pageLinks = Array.prototype.slice.call(header.querySelectorAll('.primary-nav a'));
+    var currentLink = null;
+    var currentLength = -1;
+    pageLinks.forEach(function (link) {
       var destination = new URL(link.href, location.href);
       var route = destination.pathname.replace(/\/$/, '') || '/';
-      var active = path === route || (route !== '/' && path.indexOf(route + '/') === 0);
-      if (active && !destination.hash) link.setAttribute('aria-current', 'page');
+      if (!destination.hash && (path === route || (route !== '/' && path.indexOf(route + '/') === 0)) && route.length > currentLength) {
+        currentLink = link;
+        currentLength = route.length;
+      }
     });
+    pageLinks.forEach(function (link) {
+      if (link === currentLink) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+    var pages = header.querySelector('.site-pages');
+    if (pages) {
+      var summary = pages.querySelector('summary');
+      pages.addEventListener('click', function (event) {
+        if (event.target.closest('a[href]')) pages.open = false;
+      });
+      pages.addEventListener('focusout', function (event) {
+        if (event.relatedTarget && !pages.contains(event.relatedTarget)) pages.open = false;
+      });
+      document.addEventListener('click', function (event) {
+        if (pages.open && !pages.contains(event.target)) pages.open = false;
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && pages.open) {
+          event.preventDefault();
+          pages.open = false;
+          summary.focus();
+        }
+      });
+      window.addEventListener('pagehide', function () { pages.open = false; });
+    }
   }
 
   window.addEventListener('scroll', scheduleHeader, { passive: true });

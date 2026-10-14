@@ -1,0 +1,81 @@
+/* Dedicated paper workspaces. Functional canvases and saved preferences stay intact. */
+.site-app {
+  --tool-radius: 18px;
+  --tool-shadow: 0 12px 36px #1112100b;
+}
+.app-galaxy #ui-layer > header > div:first-child {
+  max-width: 580px;
+  padding: 16px 20px;
+  border: 1px solid #d4d5cf;
+  border-radius: var(--tool-radius);
+  background: #fafbf8ee;
+  box-shadow: var(--tool-shadow);
+}
+.app-galaxy #ui-layer h1 { font-size: clamp(28px, 3.4vw, 44px) !important; }
+.app-galaxy #input-ctn { border-radius: 22px !important; padding: 16px 20px !important; }
+.app-galaxy #listPanelEl { border-radius: 22px 0 0 22px; }
+.app-galaxy #viewModalEl { border-radius: 26px !important; }
+.app-galaxy :is(#launchBtnEl, #resetViewBtn, #list-toggle-btn) { min-height: 44px; }
+
+.app-nexus .toolbar,
+.app-nexus .bottom-bar,
+.app-nexus .sidebar {
+  border: 1px solid #d4d5cf;
+  border-radius: var(--tool-radius);
+  box-shadow: var(--tool-shadow);
+}
+.app-nexus .toolbar { padding: 8px; gap: 5px; }
+.app-nexus .tool-btn { width: 44px; height: 44px; border-radius: 12px; }
+.app-nexus .bottom-bar { padding: 9px 12px; }
+.app-nexus .sidebar { padding: 20px; }
+.app-nexus .overlay .modal { border-radius: 26px; border: 1px solid #d4d5cf; }
+
+.app-notes #sidebarHeader { padding-block: 20px; }
+.app-notes #sidebarHeader h1 { font: 900 32px/1 Barlow, sans-serif; letter-spacing: .01em; }
+.app-notes #sidebarHeader h1 i { font-size: 18px; margin-right: 4px; }
+.app-notes #sidebarEl { border-right: 1px solid var(--border-color); }
+.app-notes #editorToolbar { padding-block: 12px; border-bottom: 1px solid var(--border-color); }
+.app-notes #editorToolbar .btn-icon { min-width: 38px; min-height: 38px; border-radius: 10px; }
+.app-notes #editorEl { padding: 26px; }
+.app-notes #previewEl { padding: 26px; }
+.app-notes #viewToggle { border-top: 1px solid var(--border-color); padding-block: 12px; }
+.app-notes .modal-content { border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--tool-shadow); }
+.app-notes #noteListEl .note-item { border-radius: 14px; margin: 6px 10px; }
+
+.app-seek .seek-toolbar { gap: 20px; }
+.app-seek .seek-title { margin: 0; font: 900 44px/1 Barlow, sans-serif; letter-spacing: .025em; }
+.app-seek #audioOverlay h2 { color: #111210 !important; font: 900 clamp(40px, 7vw, 78px)/1 Barlow, sans-serif !important; text-transform: uppercase; text-align: center; }
+.app-seek #galleryCtn { gap: 18px !important; }
+.app-seek .imgItem { position: relative; padding: 9px; border-radius: 20px; transition: box-shadow .25s ease, transform .35s cubic-bezier(.22, 1, .36, 1); }
+.app-seek .imgItem:hover { transform: translateY(-3px); }
+.app-seek .imgItem:focus-visible { outline: 2px solid #d72638; outline-offset: 4px; }
+.app-seek .imgItem img { border-radius: 12px; }
+.app-seek #lightboxImg { border: 8px solid #fff; border-radius: 18px; box-shadow: 0 20px 60px #11121012; max-width: calc(100vw - 32px); }
+
+.app-terminal #terminalHeader { padding-bottom: 20px !important; margin-bottom: 16px; }
+.app-terminal #terminalHeader .app-game-title { font: 900 clamp(24px, 3vw, 36px)/1.2 Barlow, sans-serif; letter-spacing: .02em; }
+.app-terminal #terminalHeader .app-game-title span { font: 400 11px/1.5 Plex, monospace; letter-spacing: 0; }
+.app-terminal #inputContainer { padding-top: 16px; }
+.app-terminal #terminalInputEl { min-height: 44px; }
+.app-terminal #statusDisplayEl { border-radius: 12px; background: #f1f3ed !important; padding: 10px 14px !important; color: #111210 !important; }
+
+.app-galaxy #ui-layer h1,
+.app-notes #sidebarHeader h1,
+.app-seek .seek-title,
+.app-terminal .app-game-title { animation: tool-title-arrive .55s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes tool-title-arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@media (max-width: 700px) {
+  .app-galaxy #ui-layer > header > div:first-child { padding: 12px 14px; width: 100%; }
+  .app-galaxy #ui-layer h1 { font-size: 28px !important; }
+  .app-galaxy #input-ctn { padding: 10px 12px !important; border-radius: 18px !important; }
+  .app-notes #editorEl, .app-notes #previewEl { padding: 20px; }
+  .app-notes #editorToolbar { padding-block: 8px; }
+  .app-seek .seek-toolbar { padding: 18px 16px !important; }
+  .app-seek .seek-title { font-size: 36px; }
+  .app-terminal #terminalHeader .app-game-title { font-size: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-galaxy #ui-layer h1, .app-notes #sidebarHeader h1, .app-seek .seek-title, .app-terminal .app-game-title { animation: none; }
+  .app-seek .imgItem { transition: none; }
+  .app-seek .imgItem:hover { transform: none; }
+}

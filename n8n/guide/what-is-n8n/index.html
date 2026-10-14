@@ -14,7 +14,7 @@
 
 
 
-    <link rel="stylesheet" href="../../../assets/css/n8n.css?v=20261015.1">
+    <link rel="stylesheet" href="../../../assets/css/n8n.css?v=20261015.3">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
@@ -491,21 +491,26 @@
             .g-section-head h2 { font-size: 1.5rem; }
         }
     </style>
-    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
-    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
-    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
-    <script src="/assets/js/site.js?v=20261015.1" defer></script>
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.3">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.3">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.3">
+    <script src="/assets/js/site.js?v=20261015.3" defer></script>
+    <link rel="stylesheet" href="/assets/css/reader-white.css?v=20261015.3">
 </head>
-<body class="site-article">
+<body class="site-article reader-white-page">
     <a class="skip-link" href="#main">Skip to content</a>
 
 
     <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
 
     <header class="masthead wrap site-header">
-        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 24 28" aria-hidden="true"><polygon pathLength="1" points="12,1 23,7.5 23,20.5 12,27 1,20.5 1,7.5"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
-        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog ↗</a></nav>
-        <a class="contact-nav" href="/contact/">Let's talk <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 100 115" fill="none" aria-hidden="true"><path pathLength="1" d="M50 1 99 29v57l-49 28L1 86V29Z"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/about/">About</a><a href="/work/">Work</a><a href="/experience/">Journey</a><a href="/n8n/">n8n</a><a href="/n8n/guide/" aria-current="page">Guides</a><a href="/blog/">Blog</a></nav>
+        <div class="site-header-actions">
+            <details class="site-pages"><summary class="site-pages-toggle">Pages<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary><nav class="site-pages-panel" aria-label="All site pages"><section class="site-pages-group site-pages-group-1" aria-label="The site"><p>The site</p><a href="/">Home</a><a href="/about/">About</a><a href="/work/">Work</a><a href="/experience/">Journey</a><a href="/n8n/">n8n</a><a href="/n8n/guide/">Guides</a><a href="/blog/">Blog</a><a href="/thoughts/">Thoughts</a><a href="/#moments">Photos</a></section><section class="site-pages-group site-pages-group-2" aria-label="The playground"><p>The playground</p><a href="/Galaxy/">Galaxy</a><a href="/Nexus/">Nexus</a><a href="/Notes/">Notes</a><a href="/Seek/">Seek</a><a href="/Terminal/">Terminal</a></section><section class="site-pages-group site-pages-group-3" aria-label="The details"><p>The details</p><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a></section></nav></details>
+            <a class="contact-nav" href="/contact/">Let's talk<svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+        </div>
+
     </header>
 
     <main id="main" class="auto-wrap">
@@ -535,20 +540,22 @@
         </div>
 
         <!-- ════ TABLE OF CONTENTS ════ -->
-        <nav class="g-toc rv">
-            <div class="g-toc-label">In This Guide</div>
+        <div class="reader-white-grid">
+<aside class="reader-white-rail"><details class="reader-white-outline" open><summary>In This Guide</summary><nav aria-label="Article contents" class="g-toc rv">
+
             <div class="g-toc-grid">
-                <a href="#short-answer"><span>01</span> The Short Answer</a>
-                <a href="#who"><span>05</span> Who is n8n For?</a>
-                <a href="#canvas"><span>02</span> How the Canvas Works</a>
-                <a href="#open-source"><span>06</span> Open Source &amp; Self-Hostable</a>
-                <a href="#build"><span>03</span> What You Can Build</a>
-                <a href="#cloud-vs-self"><span>07</span> Cloud vs Self-Hosted</a>
-                <a href="#ai"><span>04</span> AI Agents &amp; the New Wave</a>
-                <a href="#ecosystem"><span>08</span> The Ecosystem</a>
-                <a href="#start"><span>09</span> Getting Started</a>
-            </div>
-        </nav>
+<a href="#short-answer"><span>01</span> The Short Answer</a>
+<a href="#canvas"><span>02</span> How the Canvas Works</a>
+<a href="#build"><span>03</span> What You Can Build</a>
+<a href="#ai"><span>04</span> AI Agents &amp; the New Wave</a>
+<a href="#who"><span>05</span> Who is n8n For?</a>
+<a href="#open-source"><span>06</span> Open Source &amp; Self-Hostable</a>
+<a href="#cloud-vs-self"><span>07</span> Cloud vs Self-Hosted</a>
+<a href="#ecosystem"><span>08</span> The Ecosystem</a>
+<a href="#start"><span>09</span> Getting Started</a>
+</div>
+        </nav></details></aside>
+<div class="reader-white-flow reader-body">
 
         <!-- ════════════════════════════════════════════
              01 - THE SHORT ANSWER
@@ -891,7 +898,9 @@
             </div>
         </div>
 
-        <footer class="auto-footer" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+        </div>
+</div>
+<footer class="auto-footer" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 3rem;">
             <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
             <div class="footer-links"><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a></div>
         </footer>
@@ -900,7 +909,7 @@
 
 
 
-    <script src="../../../assets/js/text-highlight-share.js?v=20261015.1" defer></script>
+    <script src="../../../assets/js/text-highlight-share.js?v=20261015.3" defer></script>
     <script>
 
         document.addEventListener('scroll', () => {
