@@ -1,0 +1,340 @@
+/*
+ * Motion for the approved landing page.
+ * The base layout stays visible without JavaScript. Entrance animations use
+ * backwards fill so their transforms stop governing elements when they finish.
+ */
+
+:root {
+    --landing-motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* One brief entrance, with no loader or typography masks. */
+.name > span {
+    animation: landing-name-enter .92s var(--landing-motion-ease) .06s backwards;
+}
+
+.name > span:nth-child(2) {
+    animation-delay: .18s;
+}
+
+.hero-overline {
+    animation: landing-copy-enter .68s var(--landing-motion-ease) .04s backwards;
+}
+
+.hero-purpose {
+    animation: landing-copy-enter .72s var(--landing-motion-ease) .26s backwards;
+}
+
+.hero-actions {
+    animation: landing-copy-enter .72s var(--landing-motion-ease) .38s backwards;
+}
+
+.hero-photo {
+    animation: landing-photo-enter .9s var(--landing-motion-ease) .16s backwards;
+}
+
+.paper-proof {
+    animation: landing-proof-enter .94s var(--landing-motion-ease) .26s backwards;
+}
+
+.hero-actions:focus-within,
+.paper-proof:focus-within {
+    animation: none;
+    opacity: 1;
+}
+
+@keyframes landing-name-enter {
+    from { opacity: 0; transform: translate3d(0, 24px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes landing-copy-enter {
+    from { opacity: 0; transform: translate3d(0, 10px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes landing-photo-enter {
+    from { opacity: 0; transform: translate3d(0, 18px, 0) rotate(-7deg); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) rotate(-5deg); }
+}
+
+@keyframes landing-proof-enter {
+    from { opacity: 0; transform: translate3d(0, 18px, 0) rotate(10deg); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) rotate(7deg); }
+}
+
+/* The SVG paths use pathLength="1". Their resting stroke is fully visible. */
+.stage-wires path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: landing-wire-enter 1s var(--landing-motion-ease) .2s backwards;
+}
+
+.stage-wires path:nth-of-type(2) { animation-delay: .3s; }
+.stage-wires path:nth-of-type(3) { animation-delay: .4s; }
+.stage-wires path:nth-of-type(4) { animation-delay: .5s; }
+
+@keyframes landing-wire-enter {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+}
+
+/* A single quiet light layer, bounded inside the stage and paused by default. */
+.ambient-light {
+    position: absolute;
+    inset: 8%;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+        ellipse at 78% 24%,
+        rgba(216, 228, 207, .5),
+        rgba(249, 251, 246, .25) 45%,
+        transparent 74%
+    );
+    opacity: .22;
+    transform: translate3d(0, 0, 0) scale(1);
+    animation: landing-light-breathe 10s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+@keyframes landing-light-breathe {
+    0%, 100% {
+        opacity: .22;
+        transform: translate3d(-1%, 1%, 0) scale(.99);
+    }
+    50% {
+        opacity: .38;
+        transform: translate3d(1%, -1%, 0) scale(1.025);
+    }
+}
+
+/* JavaScript adds pending only to content below the initial viewport. */
+.reveal {
+    opacity: 1;
+    transform: none;
+    transition:
+        opacity .58s var(--landing-motion-ease),
+        transform .64s var(--landing-motion-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.reveal-pending {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+}
+
+.reveal.reveal-pending:focus-within {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/* Feedback changes paint and arrow positions, keeping link targets stationary. */
+.project h3 a {
+    transition: color .2s ease, -webkit-text-stroke-color .2s ease;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .12em;
+}
+
+.project h3 a:focus-visible {
+    text-decoration-line: underline;
+    text-decoration-color: var(--red);
+}
+
+.guide-list a {
+    transition: background-color .2s ease, border-color .2s ease;
+}
+
+.guide-list a:focus-visible {
+    background-color: #f2f5ee;
+}
+
+.hero-actions a,
+.contact-nav,
+a.button {
+    transition:
+        background-color .22s ease,
+        border-color .22s ease,
+        color .22s ease,
+        box-shadow .22s ease;
+}
+
+.hero-actions a .arrow,
+.contact-nav .arrow,
+.project-copy .text-link .arrow,
+.guide-list .arrow,
+.email .arrow {
+    transition: transform .26s var(--landing-motion-ease);
+}
+
+/* Pointer depth is a desktop enhancement. JS bounds offsets to 4px and 3deg. */
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .hero-stage {
+        perspective: 1000px;
+    }
+
+    .hero-stage.motion-active .ambient-light {
+        animation-play-state: running;
+    }
+
+    .hero-stage .hero-photo {
+        transform:
+            translate3d(
+                calc(var(--depth-x, 0px) * -.6),
+                calc(var(--depth-y, 0px) * -.6),
+                0
+            )
+            rotate(-5deg)
+            rotateX(calc(var(--depth-rx, 0deg) * .55))
+            rotateY(calc(var(--depth-ry, 0deg) * .55));
+        transition: transform .24s var(--landing-motion-ease);
+    }
+
+    .hero-stage .paper-proof {
+        --proof-lift: 0px;
+        --proof-rotation: 7deg;
+        transform:
+            translate3d(
+                calc(var(--depth-x, 0px) * .7),
+                calc(var(--depth-y, 0px) * .7 + var(--proof-lift)),
+                0
+            )
+            rotate(var(--proof-rotation))
+            rotateX(calc(var(--depth-rx, 0deg) * .45))
+            rotateY(calc(var(--depth-ry, 0deg) * .45));
+        transition: transform .24s var(--landing-motion-ease);
+    }
+
+    .hero-stage .paper-proof:hover,
+    .hero-stage .paper-proof:focus-within {
+        --proof-lift: -3px;
+        --proof-rotation: 5deg;
+    }
+
+    .project h3 a:hover {
+        text-decoration-line: underline;
+        text-decoration-color: var(--red);
+    }
+
+    .guide-list a:hover {
+        background-color: #f2f5ee;
+    }
+
+    .hero-actions a:hover,
+    .contact-nav:hover,
+    a.button:hover {
+        box-shadow: 0 4px 14px rgba(17, 18, 16, .09);
+    }
+
+    .hero-actions a:hover .arrow,
+    .contact-nav:hover .arrow,
+    .project-copy .text-link:hover .arrow,
+    .guide-list a:hover .arrow,
+    .email:hover .arrow {
+        transform: translate3d(2px, -2px, 0);
+    }
+}
+
+/* A hash landing can skip the entrance before the first rendered frame. */
+html.skip-entrance .name > span,
+html.skip-entrance .hero-overline,
+html.skip-entrance .hero-purpose,
+html.skip-entrance .hero-actions,
+html.skip-entrance .hero-photo,
+html.skip-entrance .paper-proof,
+html.skip-entrance .stage-wires path {
+    animation: none;
+}
+
+@media (max-width: 700px), (hover: none), (pointer: coarse) {
+    .ambient-light {
+        animation: none;
+        opacity: .22;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    .name > span,
+    .hero-overline,
+    .hero-purpose,
+    .hero-actions,
+    .hero-photo,
+    .paper-proof,
+    .stage-wires path,
+    .ambient-light,
+    .reveal {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .name > span,
+    .hero-overline,
+    .hero-purpose,
+    .hero-actions,
+    .reveal,
+    .reveal.reveal-pending {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-photo { transform: rotate(-5deg) !important; }
+    .paper-proof { transform: rotate(7deg) !important; }
+    .ambient-light { opacity: .22; transform: none !important; }
+    .stage-wires path { stroke-dashoffset: 0 !important; }
+
+    .hero-actions a,
+    .contact-nav,
+    a.button,
+    .project h3 a,
+    .guide-list a,
+    .hero-actions a .arrow,
+    .contact-nav .arrow,
+    .project-copy .text-link .arrow,
+    .guide-list .arrow,
+    .email .arrow {
+        transition: none !important;
+    }
+
+    .hero-actions a .arrow,
+    .contact-nav .arrow,
+    .project-copy .text-link .arrow,
+    .guide-list .arrow,
+    .email .arrow {
+        transform: none !important;
+    }
+}
+
+@media print {
+    .name > span,
+    .hero-overline,
+    .hero-purpose,
+    .hero-actions,
+    .hero-photo,
+    .paper-proof,
+    .stage-wires path,
+    .ambient-light,
+    .reveal {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .name > span,
+    .hero-overline,
+    .hero-purpose,
+    .hero-actions,
+    .reveal,
+    .reveal.reveal-pending {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-photo { transform: rotate(-5deg) !important; }
+    .paper-proof { transform: rotate(7deg) !important; }
+    .ambient-light { display: none; }
+    .stage-wires path { stroke-dashoffset: 0 !important; }
+}

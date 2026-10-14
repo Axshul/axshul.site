@@ -36,9 +36,9 @@
     }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+
+
 
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -60,9 +60,9 @@
             --red-lt: rgba(215,38,56,0.06);
             --border: #e0e0e0;
             --border-hi: #ccc;
-            --font-body: 'Space Grotesk', sans-serif;
-            --font-mono: 'Space Mono', monospace;
-            --font-display: 'Playfair Display', serif;
+            --font-body: Space, sans-serif;
+            --font-mono: Plex, monospace;
+            --font-display: Barlow, sans-serif;
             --max-w: 1400px;
         }
 
@@ -726,55 +726,46 @@
             .gp-feat-right { flex-direction: column; }
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </head>
-<body>
+<body class="site-inner guide-index">
+    <a class="skip-link" href="#main">Skip to content</a>
 
 <div class="gp">
 
     <!-- Nav -->
-    <nav class="gp-nav">
-        <a href="../../" class="gp-nav-logo">AN. <span>/ Guide</span></a>
-        <div class="gp-nav-right">
-            <span class="gp-count" id="articleCount"> - articles</span>
-            <a href="../">Hub</a>
-        </div>
-    </nav>
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 24 28" aria-hidden="true"><polygon pathLength="1" points="12,1 23,7.5 23,20.5 12,27 1,20.5 1,7.5"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog ↗</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
+    <main id="main">
 
     <!-- Hero -->
     <header class="gp-hero">
-        <div class="gp-hero-nodes">
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-node"></div>
-            <div class="gp-hero-connector"></div>
-            <div class="gp-hero-connector"></div>
-            <div class="gp-hero-connector"></div>
-            <div class="gp-hero-connector"></div>
-            <div class="gp-hero-connector"></div>
-        </div>
+
         <div class="gp-hero-eyebrow">n8n Digital Archive &middot; Updated 2026</div>
+        <span class="gp-count" id="articleCount">11 articles</span>
         <h1>The n8n <em>Guide</em></h1>
         <p class="gp-hero-sub">In-depth n8n guides, solutions, and best practices for 2026. Setup, AI, hosting, pricing, and licensing. Written from real experience by <a href="../../" style="color:var(--red);font-weight:600;">Anshul Namdev</a>, not summaries.</p>
     </header>
+
+    <noscript><p class="gp-hero-sub">Browse all 11 guides below. Search and topic filters are available with JavaScript enabled.</p></noscript>
 
     <!-- Sticky search -->
     <div class="gp-search-bar">
         <div class="gp-search-inner">
             <div class="gp-search-row">
-                <select id="tagFilter" class="gp-tag-select">
+                <select id="tagFilter" class="gp-tag-select" aria-label="Filter guides by topic">
                     <option value="">All tags</option>
                     <option value="__latest__">Latest</option>
                 </select>
                 <div class="gp-input-wrap">
                     <svg class="gp-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    <input type="text" id="searchInput" class="gp-input" placeholder="Search by title, category, or topic..." autocomplete="off" spellcheck="false">
+                    <input type="text" id="searchInput" class="gp-input" aria-label="Search guides" placeholder="Search by title, category, or topic..." autocomplete="off" spellcheck="false">
                 </div>
                 <button class="gp-clear" id="searchClear" aria-label="Clear search">&times;</button>
             </div>
@@ -793,23 +784,90 @@
     </div>
 
     <!-- Featured article -->
-    <div class="gp-featured" id="featuredWrap"></div>
+    <div class="gp-featured" id="featuredWrap">
+        <a href="build-your-first-workflow/" class="gp-feat-card">
+            <div><div class="gp-feat-label">Featured Guide</div><div class="gp-feat-cat">n8n Academy</div><div class="gp-feat-title">n8n Academy: The Complete Guide to Every Course, Certificate &amp; Badge</div><div class="gp-feat-desc">Everything about the n8n Academy: all 4 courses explained, how grading works, certificates, badges, enrollment, and a full support FAQ. The only guide you need.</div><div class="gp-feat-cta">Read Guide <span aria-hidden="true">&rarr;</span></div></div>
+            <div class="gp-feat-right"><div class="gp-feat-date">2026-06-29</div><div class="gp-feat-stats"><div><div class="gp-feat-stat-num">11</div><div class="gp-feat-stat-label">Guides</div></div><div><div class="gp-feat-stat-num">10</div><div class="gp-feat-stat-label">Categories</div></div></div></div>
+        </a>
+    </div>
 
     <!-- Articles grid -->
-    <main class="gp-grid-section">
+    <section class="gp-grid-section rv">
         <div class="gp-grid-header">
             <span class="gp-grid-title" id="gridLabel">All Articles</span>
         </div>
         <div class="gp-grid" id="articlesGrid">
+            <a href="what-is-n8n/" class="gp-card">
+                <span class="gp-card-tag">Overview</span>
+                <span class="gp-card-title">What is n8n? The Complete 2026 Introduction</span>
+                <span class="gp-card-desc">A complete introduction to n8n, the open-source workflow automation platform. Learn what it is, what it can do, who it is for, and how to get started in 2026.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="how-to-setup-n8n/" class="gp-card">
+                <span class="gp-card-tag">Setup</span>
+                <span class="gp-card-title">How To Setup n8n (2026 Step-by-Step)</span>
+                <span class="gp-card-desc">Step-by-step setup for n8n via cloud signup, NPM install, or Docker. Includes environment variables, SSL, and initial configuration for 2026.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="vps-self-hosting-n8n/" class="gp-card">
+                <span class="gp-card-tag">Hosting</span>
+                <span class="gp-card-title">Best VPS for n8n: Provider Comparison &amp; Pricing (2026)</span>
+                <span class="gp-card-desc">Which VPS is best for n8n? Compare Hetzner, Hostinger, DigitalOcean, Vultr, Linode, Contabo, and Oracle Cloud on RAM, storage, and 2026 pricing. Picks by use case.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="license-and-regulations/" class="gp-card">
+                <span class="gp-card-tag">Strategy</span>
+                <span class="gp-card-title">n8n License and Regulations Explained (2026)</span>
+                <span class="gp-card-desc">A complete breakdown of n8n&#x27;s Sustainable Use License, fair-code model, n8n Embed, Enterprise License, and what you can and cannot do commercially.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="choose-right-ai-model/" class="gp-card">
+                <span class="gp-card-tag">AI Models</span>
+                <span class="gp-card-title">How to Choose the Right AI Model for n8n Workflows (2026)</span>
+                <span class="gp-card-desc">Which LLM to use for scanning, OCR, reasoning, coding, creative writing, and tool calling in n8n. Covers GPT, Claude, Gemini, DeepSeek, Llama, and costs.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="where-to-get-n8n-help/" class="gp-card">
+                <span class="gp-card-tag">Community</span>
+                <span class="gp-card-title">Where to Get n8n Help: Forum, Discord &amp; Docs</span>
+                <span class="gp-card-desc">n8n community forum, Discord, GitHub issues, and documentation. When to ask where, and how to get fast answers from the n8n community.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="ai-inference-providers/" class="gp-card">
+                <span class="gp-card-tag">AI Infrastructure</span>
+                <span class="gp-card-title">Best AI Inference Providers for n8n: Pricing &amp; Comparison (2026)</span>
+                <span class="gp-card-desc">Compare 8 AI inference providers for n8n: OpenRouter, Groq, Together AI, Fireworks, Mistral, Hugging Face, Ollama, and OpenAI. Per-token pricing, free tiers, speed, and how to avoid vendor lock-in.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="n8n-community-edition/" class="gp-card">
+                <span class="gp-card-tag">Setup</span>
+                <span class="gp-card-title">n8n Community Edition: Features, Limits, and Free Unlocks</span>
+                <span class="gp-card-desc">What the free self-hosted Community Edition includes, what it excludes, and how to unlock three extra features at no cost by registering your instance.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="n8n-cloud-plans/" class="gp-card">
+                <span class="gp-card-tag">Pricing</span>
+                <span class="gp-card-title">n8n Cloud Plans Breakdown: Starter, Pro, Business &amp; Enterprise (2026)</span>
+                <span class="gp-card-desc">A complete breakdown of every n8n Cloud plan in 2026. Executions, concurrency, AI credits, features, and who each plan is actually for. With a real comparison against Zapier and Make.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-06-29</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
+            <a href="n8n-cloud-vs-self-hosted/" class="gp-card">
+                <span class="gp-card-tag">Architecture</span>
+                <span class="gp-card-title">n8n Cloud vs. Self-Hosted: Which to Choose</span>
+                <span class="gp-card-desc">Compare n8n Cloud with self-hosted options. Covers data residency, scalability, maintenance, and when to choose each approach.</span>
+                <div class="gp-card-footer"><span class="gp-card-date">2026-03-20</span><span class="gp-card-arrow" aria-hidden="true">&rarr;</span></div>
+            </a>
             <div class="gp-empty" id="noResults">
                 <div style="font-size:2.5rem; margin-bottom:0.5rem;">&#128270;</div>
                 <div class="gp-empty-title">No matches found</div>
                 <div class="gp-empty-sub">Try a different keyword or clear the filter.</div>
             </div>
         </div>
-    </main>
+    </section>
 
     <!-- Footer -->
+    </main>
+
     <footer class="gp-footer">
         <div class="gp-footer-copy">&copy; 2026 <a href="../../">Anshul Namdev</a></div>
         <div class="gp-footer-links">

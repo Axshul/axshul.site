@@ -1,0 +1,196 @@
+/* A quiet reading signal and geometric choreography on native scroll. */
+.reading-track {
+    position: fixed;
+    inset: 0 0 auto;
+    height: 2px;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.scroll-choreography .reading-track { opacity: 1; }
+
+.reading-track::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    transform: scaleX(var(--reading-progress, 0));
+    transform-origin: left center;
+}
+
+.reading-track-signal {
+    position: absolute;
+    top: 1px;
+    left: clamp(4px, calc(var(--reading-progress, 0) * 100%), calc(100% - 4px));
+    width: 8px;
+    height: 10px;
+    background: var(--red);
+    clip-path: var(--hex);
+    transform: translate(-50%, -50%);
+}
+
+/* The orbit remains behind all words and controls. The stroke draws once. */
+.hero-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(69%, 820px);
+    height: auto;
+    max-height: 110%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+    transform: translate(-50%, -48%) rotate(-8deg);
+    transform-origin: center;
+}
+
+.hero-orbit .orbit-line {
+    fill: none;
+    stroke: #b8c5b1;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    opacity: .5;
+}
+
+.hero-orbit .orbit-line:nth-child(2) { opacity: .3; }
+.hero-orbit .orbit-line:nth-child(3) { stroke: var(--red); opacity: .22; }
+.hero-orbit .orbit-node { fill: var(--red); opacity: .7; }
+.hero-orbit .orbit-node--quiet { opacity: .32; }
+.hero-orbit .orbit-spoke { stroke: #b8c5b1; stroke-width: .8; opacity: .22; }
+
+[data-scroll-section] { position: relative; }
+
+.section-trace {
+    position: absolute;
+    inset: -1px 0 auto;
+    height: 1px;
+    background: var(--red);
+    opacity: .7;
+    pointer-events: none;
+    transform: scaleX(var(--section-progress, 0));
+    transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .hero-orbit {
+        transform:
+            translate(-50%, -48%)
+            translateY(calc(var(--hero-scroll, 0) * -28px))
+            rotate(calc(-8deg + var(--hero-scroll, 0) * 18deg));
+    }
+
+    .hero-orbit .orbit-line {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 0;
+        animation: landing-orbit-draw 1.35s var(--landing-motion-ease) .18s backwards;
+    }
+
+    .hero-orbit .orbit-line:nth-child(2) { animation-delay: .3s; }
+    .hero-orbit .orbit-line:nth-child(3) { animation-delay: .42s; }
+
+    .hero-stage .name > span {
+        translate: calc(var(--hero-scroll, 0) * -22px) 0;
+    }
+
+    .hero-stage .name > .surname {
+        translate: calc(var(--hero-scroll, 0) * 22px) 0;
+    }
+
+    .hero-stage .hero-photo {
+        transform:
+            translate3d(
+                calc(var(--depth-x, 0px) * -.6),
+                calc(var(--depth-y, 0px) * -.6 + var(--hero-scroll, 0) * -32px),
+                0
+            )
+            rotate(-5deg)
+            rotateX(calc(var(--depth-rx, 0deg) * .55))
+            rotateY(calc(var(--depth-ry, 0deg) * .55));
+    }
+
+    .hero-stage .paper-proof {
+        --proof-lift: 0px;
+        --proof-rotation: 7deg;
+        transform:
+            translate3d(
+                calc(var(--depth-x, 0px) * .7),
+                calc(var(--depth-y, 0px) * .7 + var(--proof-lift) + var(--hero-scroll, 0) * 32px),
+                0
+            )
+            rotate(var(--proof-rotation))
+            rotateX(calc(var(--depth-rx, 0deg) * .45))
+            rotateY(calc(var(--depth-ry, 0deg) * .45));
+    }
+
+    [data-scroll-heading] {
+        translate: 0 var(--heading-shift, 0px);
+    }
+
+    [data-scroll-heading]:focus-within { translate: none; }
+
+    [data-scroll-section] .eyebrow::before {
+        transform: rotate(calc(var(--section-progress, 0) * 60deg));
+    }
+
+    @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+        .hero-stage .name > .surname {
+            background-image: linear-gradient(
+                90deg,
+                var(--ink) calc(var(--hero-scroll, 0) * 100%),
+                transparent calc(var(--hero-scroll, 0) * 100% + .6%)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        [data-scroll-section] [data-scroll-heading] .outline {
+            background-image: linear-gradient(
+                90deg,
+                var(--ink) calc(var(--section-progress, 0) * 100%),
+                transparent calc(var(--section-progress, 0) * 100% + .6%)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+    }
+}
+
+@keyframes landing-orbit-draw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+    .hero-stage .name > span { translate: calc(var(--hero-scroll, 0) * -7px) 0; }
+    .hero-stage .name > .surname { translate: calc(var(--hero-scroll, 0) * 7px) 0; }
+    .hero-stage .hero-photo { transform: translateY(calc(var(--hero-scroll, 0) * -12px)) rotate(-5deg); }
+    .hero-stage .paper-proof { transform: translateY(calc(var(--hero-scroll, 0) * 12px)) rotate(7deg); }
+    .hero-orbit { width: 92%; opacity: .7; }
+}
+
+html.skip-entrance .hero-orbit .orbit-line { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .reading-track,
+    .section-trace { display: none; }
+    .hero-orbit { transform: translate(-50%, -48%) rotate(-8deg); }
+    .hero-orbit .orbit-line { animation: none; stroke-dashoffset: 0; }
+    .hero-stage .name > span,
+    [data-scroll-heading] { translate: none; }
+    .hero-stage .name > .surname,
+    [data-scroll-section] [data-scroll-heading] .outline { background-image: none; }
+    [data-scroll-section] .eyebrow::before { transform: none; }
+}
+
+@media print {
+    .reading-track,
+    .section-trace,
+    .hero-orbit { display: none; }
+    .hero-stage .name > span,
+    [data-scroll-heading] { translate: none; }
+    .hero-stage .name > .surname,
+    [data-scroll-section] [data-scroll-heading] .outline { background-image: none; }
+    .hero-stage .hero-photo { transform: rotate(-5deg); }
+    .hero-stage .paper-proof { transform: rotate(7deg); }
+}

@@ -27,12 +27,29 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <meta name="theme-color" content="#fafbf8">
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/apps-white.css?v=20261015.1">
 </head>
 
-<body>
+<body class="site-app app-seek">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 100 115" fill="none" aria-hidden="true"><path pathLength="1" d="M50 1 99 29v57l-49 28L1 86V29Z"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk<svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
+    <main id="main" class="app-workspace">
+    <noscript>
+        <style>.app-galaxy #loadingScreenEl,.app-seek #audioOverlay{display:none!important}</style>
+        <div class="app-noscript-notice"><strong>This interactive tool needs JavaScript.</strong><p>Enable JavaScript to use the workspace, or <a href="/n8n/guide/">read the n8n guides</a>.</p></div>
+    </noscript>
 
-    <!-- Header with Branding -->
-    <header style="
+    <!-- Gallery controls -->
+    <header class="seek-toolbar" style="
   position: sticky; 
   top: 0; 
   z-index: 100; 
@@ -64,7 +81,7 @@
     " onmouseover="this.style.background='#fff'; this.style.color='#000'"
                 onmouseout="this.style.background='transparent'; this.style.color='#ccc'"
                 title="Click to play/pause, double-click to change track">
-                <span id="soundIcon">🔊</span>
+                <span id="soundIcon">🔇</span>
                 <span id="currentTrackName">Track 1</span>
             </button>
             <a href="https://axshul.site" target="_blank" id="axshulLink" style="
@@ -85,19 +102,19 @@
     </header>
 
     <!-- Audio Elements (Hidden) -->
-    <audio id="ambientAudio1" loop preload="auto">
+    <audio id="ambientAudio1" loop preload="none">
         <!-- Using a calm, royalty-free ambient sound -->
         <source
             src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=forest-lullaby-110624.mp3"
             type="audio/mpeg">
     </audio>
-    <audio id="ambientAudio2" loop preload="auto">
+    <audio id="ambientAudio2" loop preload="none">
         <!-- Using another calm track -->
         <source
             src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=relaxing-piano-110855.mp3"
             type="audio/mpeg">
     </audio>
-    <audio id="ambientAudio3" loop preload="auto">
+    <audio id="ambientAudio3" loop preload="none">
         <!-- Using another calm track -->
         <source
             src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=meditation-impulse-3000.mp3"
@@ -128,9 +145,10 @@
     transition: all 0.3s;
   " onmouseover="this.style.background='#fff'; this.style.color='#000'"
             onmouseout="this.style.background='transparent'; this.style.color='#fff'">
-            Enter Gallery
+            Enter with sound
         </button>
-        <p style="color: #666; margin-top: 20px; font-size: 0.9rem;">Click to enable sound & experience</p>
+        <button id="quietStartBtn" type="button">Browse quietly</button>
+        <p style="color: #666; margin-top: 20px; font-size: 0.9rem;">A little inspiration. Sound is optional.</p>
     </div>
 
     <!-- Main Gallery Container -->
@@ -143,7 +161,7 @@
     <div id="loadingIndicatorEl" hidden style="text-align:center; padding:20px; color:#666;">Loading...</div>
 
     <!-- Lightbox Modal for Viewing and Exporting -->
-    <div id="lightbox" hidden style="
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Gallery image viewer" hidden style="
   position: fixed; 
   top: 0; left: 0; width: 100%; height: 100%; 
   background: rgba(0, 0, 0, 0.9); 
@@ -155,7 +173,7 @@
   opacity: 0; 
   transition: opacity 0.3s ease;
 ">
-        <button id="closeLightboxBtn" style="
+        <button id="closeLightboxBtn" type="button" aria-label="Close image" style="
     position: absolute; 
     top: 20px; 
     right: 20px; 
@@ -299,6 +317,8 @@
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const downloadBtn = document.getElementById('downloadBtn');
+        const closeLightboxButton = document.getElementById('closeLightboxBtn');
+        let lightboxTrigger = null;
         const soundToggleBtn = document.getElementById('soundToggleBtn');
         const soundIcon = document.getElementById('soundIcon');
         const currentTrackName = document.getElementById('currentTrackName');
@@ -321,10 +341,16 @@
         startBtn.onclick = () => {
             audioTracks[currentTrackIndex].play().catch(e => console.log("Audio play failed (interaction needed):", e));
             isPlaying = true;
+            soundIcon.textContent = '🔊';
             audioOverlay.style.opacity = '0';
             setTimeout(() => {
                 audioOverlay.style.display = 'none';
             }, 800);
+        };
+
+        document.getElementById('quietStartBtn').onclick = () => {
+            audioOverlay.style.opacity = '0';
+            setTimeout(() => { audioOverlay.style.display = 'none'; }, 800);
         };
 
         // Toggle between sound tracks (play/pause on single click)
@@ -364,19 +390,31 @@
             toggleTrack();
         };
 
-        // Close Lightbox
-        closeLightboxBtn.onclick = () => {
+        function closeLightbox() {
             lightbox.hidden = true;
             lightbox.style.opacity = '0';
-        };
+            if (lightboxTrigger && lightboxTrigger.isConnected) lightboxTrigger.focus();
+        }
 
-        // Close on background click
-        lightbox.onclick = (e) => {
-            if (e.target === lightbox) {
-                lightbox.hidden = true;
-                lightbox.style.opacity = '0';
-            }
+        closeLightboxButton.onclick = closeLightbox;
+        lightbox.onclick = event => {
+            if (event.target === lightbox) closeLightbox();
         };
+        document.addEventListener('keydown', event => {
+            if (lightbox.hidden) return;
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeLightbox();
+            } else if (event.key === 'Tab') {
+                if (event.shiftKey && document.activeElement === closeLightboxButton) {
+                    event.preventDefault();
+                    downloadBtn.focus();
+                } else if (!event.shiftKey && document.activeElement === downloadBtn) {
+                    event.preventDefault();
+                    closeLightboxButton.focus();
+                }
+            }
+        });
 
         // Configuration
         const BATCH_SIZE = 10; // Slightly smaller batch for smoother infinite scroll performance
@@ -425,6 +463,9 @@
                 // Create container
                 let item = document.createElement('div');
                 item.className = 'imgItem';
+                item.tabIndex = 0;
+                item.setAttribute('role', 'button');
+                item.setAttribute('aria-label', 'Open gallery image');
 
                 // Create image
                 let img = document.createElement('img');
@@ -440,7 +481,13 @@
                 img.src = src;
 
                 // Add click event for Lightbox
-                item.onclick = () => openLightbox(src);
+                item.onclick = () => openLightbox(src, item);
+                item.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openLightbox(src, item);
+                    }
+                });
 
                 item.appendChild(img);
                 galleryCtn.appendChild(item);
@@ -450,13 +497,15 @@
         }
 
         // Lightbox Logic
-        function openLightbox(src) {
+        function openLightbox(src, trigger) {
+            lightboxTrigger = trigger || document.activeElement;
             lightboxImg.src = src;
             downloadBtn.href = src;
             lightbox.hidden = false;
             // Force reflow for transition
             void lightbox.offsetWidth;
             lightbox.style.opacity = '1';
+            closeLightboxButton.focus();
         }
 
         // Infinite Scroll Logic using IntersectionObserver
@@ -479,7 +528,9 @@
         });
     </script>
     <!-- legal links (site-wide) -->
-    <div id="site-legal" style="position:fixed;right:12px;bottom:12px;z-index:2147483000;font:10px/1 'Space Mono',ui-monospace,SFMono-Regular,monospace;letter-spacing:.09em;text-transform:uppercase;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:rgba(8,8,8,.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);box-shadow:0 2px 12px rgba(0,0,0,.4);pointer-events:auto"><a href="/privacy/" style="color:rgba(255,255,255,.78);text-decoration:none">Privacy</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/cookies/" style="color:rgba(255,255,255,.78);text-decoration:none">Cookies</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/terms/" style="color:rgba(255,255,255,.78);text-decoration:none">Terms</a></div>
+        </main>
+    <nav id="site-legal" aria-label="Legal links"><a href="/privacy/">Privacy</a><span aria-hidden="true">·</span><a href="/cookies/">Cookies</a><span aria-hidden="true">·</span><a href="/terms/">Terms</a></nav>
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </body>
 
 </html>

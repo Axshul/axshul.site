@@ -14,10 +14,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="@Anshul_Namdev0">
     <link rel="canonical" href="https://axshul.site/n8n/guide/ai-inference-providers/">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+
+
+
+    <link rel="stylesheet" href="../../../assets/css/n8n.css?v=20261015.1">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
@@ -103,8 +103,6 @@
         .g-faq .faq-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; margin: 0 0 0.75rem; }
         .g-faq .faq-body p:last-child { margin: 0; }
         .g-faq .faq-body code { background: var(--bg-off); border: 1px solid var(--border); padding: 0.1rem 0.35rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--blue); }
-        .g-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s, transform 0.7s; }
-        .g-reveal.visible { opacity: 1; transform: translateY(0); }
         .g-pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
         .g-pick-card { border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; transition: border-color 0.3s; }
         .g-pick-card:hover { border-color: var(--blue); }
@@ -137,27 +135,27 @@
             .g-toc { padding: 0 1rem; }
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </head>
-<body>
+<body class="site-article">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
-    <div id="canvas-container" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-10;opacity:0.35;pointer-events:none;"></div>
 
-    <nav class="auto-nav">
-        <div class="inner">
-            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
-            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-            </button>
-            <ul class="nav-links-list" id="navLinks">
-                <li><a href="../">Back to Archive</a></li>
-                <li><a href="../../">Hub</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <div class="auto-wrap" style="padding-top:5rem;">
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 24 28" aria-hidden="true"><polygon pathLength="1" points="12,1 23,7.5 23,20.5 12,27 1,20.5 1,7.5"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog ↗</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
 
-        <section class="g-hero">
+    <main id="main" class="auto-wrap">
+        <nav class="site-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/n8n/guide/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Article</span></nav>
+
+
+        <section class="g-hero rv">
             <div class="g-hero-tags">
                 <span class="g-tag">AI Infrastructure</span>
                 <span class="g-tag">Pricing</span>
@@ -167,7 +165,7 @@
             <p class="g-hero-sub">The model you pick matters less than who serves it. Compare current pricing, speed, free tiers, and native n8n nodes across every major inference provider, refreshed for the gpt-oss, Llama 4, and DeepSeek era.</p>
             <div class="g-hero-meta">Updated Aug 20, 2026 &middot; By <a href="../../../">Anshul Namdev</a></div>
 
-            <div class="g-stats">
+            <div class="g-stats rv">
                 <div class="g-stat"><div class="g-stat-num">11</div><div class="g-stat-label">Providers Compared</div></div>
                 <div class="g-stat"><div class="g-stat-num">$0</div><div class="g-stat-label">Free Tiers Available</div></div>
                 <div class="g-stat"><div class="g-stat-num">400+</div><div class="g-stat-label">Models via One Key</div></div>
@@ -175,7 +173,7 @@
             </div>
         </section>
 
-        <nav class="g-toc">
+        <nav class="g-toc rv">
             <div class="g-toc-label">In This Article</div>
             <div class="g-toc-grid">
                 <a href="#why"><span>01</span> Why Providers Matter</a>
@@ -192,7 +190,7 @@
         </nav>
 
         <!-- 01 -->
-        <section id="why" class="g-section g-reveal">
+        <section id="why" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">01</span>
                 <h2>Why Providers Matter</h2>
@@ -213,7 +211,7 @@
         </section>
 
         <!-- 02 -->
-        <section id="pricing" class="g-section wide g-reveal">
+        <section id="pricing" class="g-section wide rv">
             <div class="g-section-head">
                 <span class="g-num">02</span>
                 <h2>The 2026 Pricing Landscape</h2>
@@ -316,7 +314,7 @@
         </section>
 
         <!-- 03 -->
-        <section id="openrouter" class="g-section g-reveal">
+        <section id="openrouter" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">03</span>
                 <h2>OpenRouter (The Aggregator)</h2>
@@ -337,7 +335,7 @@
         </section>
 
         <!-- 04 -->
-        <section id="speed" class="g-section g-reveal">
+        <section id="speed" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">04</span>
                 <h2>The Speed Tier: Groq &amp; Cerebras</h2>
@@ -358,7 +356,7 @@
         </section>
 
         <!-- 05 -->
-        <section id="budget" class="g-section g-reveal">
+        <section id="budget" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">05</span>
                 <h2>The Budget Tier: DeepInfra &amp; Novita</h2>
@@ -422,7 +420,7 @@
         </section>
 
         <!-- 06 -->
-        <section id="together" class="g-section g-reveal">
+        <section id="together" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">06</span>
                 <h2>Together AI &amp; Fireworks</h2>
@@ -446,7 +444,7 @@
         </section>
 
         <!-- 07 -->
-        <section id="mistral" class="g-section g-reveal">
+        <section id="mistral" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">07</span>
                 <h2>Mistral &amp; Hugging Face</h2>
@@ -502,7 +500,7 @@
         </section>
 
         <!-- 08 -->
-        <section id="ollama" class="g-section g-reveal">
+        <section id="ollama" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">08</span>
                 <h2>Ollama (Local Inference)</h2>
@@ -565,7 +563,7 @@
         </section>
 
         <!-- 09 -->
-        <section id="pick" class="g-section g-reveal">
+        <section id="pick" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">09</span>
                 <h2>Which to Pick</h2>
@@ -611,7 +609,7 @@
         </section>
 
         <!-- 10 -->
-        <section id="faq" class="g-section g-reveal">
+        <section id="faq" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">10</span>
                 <h2>FAQ</h2>
@@ -679,7 +677,7 @@
         </section>
 
         <!-- ENDCAP -->
-        <div class="g-endcap">
+        <div class="g-endcap rv">
             <a href="../../../" class="g-endcap-author">
                 <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
                 <div>
@@ -697,23 +695,13 @@
             <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
             <div class="footer-links"><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a></div>
         </footer>
-    </div>
+    </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+
+    <script src="../../../assets/js/text-highlight-share.js?v=20261015.1" defer></script>
     <script>
-        const _OrigMBM = THREE.MeshBasicMaterial;
-        THREE.MeshBasicMaterial = function(p) {
-            if (p && p.color === 0x0044FF) p.color = 0xD72638;
-            return new _OrigMBM(p);
-        };
-        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
-    </script>
-    <script src="../../../assets/js/3d-anim.js"></script>
-    <script src="../../../assets/js/text-highlight-share.js" defer></script>
-    <script>
-        document.getElementById('navToggle').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('open');
-        });
         document.addEventListener('scroll', () => {
             const total = document.body.scrollHeight - window.innerHeight;
             const pct = total > 0 ? Math.min((window.scrollY / total) * 100, 100) : 0;
@@ -728,10 +716,6 @@
                 });
             });
         }
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-        }, { threshold: 0.08 });
-        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

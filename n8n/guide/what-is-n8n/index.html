@@ -11,10 +11,10 @@
     <meta property="og:title" content="What is n8n? The Complete Introduction">
     <meta property="og:description" content="Everything you need to know about n8n: the open-source workflow automation platform with 500+ integrations, AI agent capabilities, and self-hosting.">
     <meta property="og:type" content="article">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+
+
+
+    <link rel="stylesheet" href="../../../assets/css/n8n.css?v=20261015.1">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
@@ -479,12 +479,6 @@
         .g-bleed > .g-section { padding-bottom: 0; }
 
         /* ── REVEAL ANIMATION ── */
-        .g-reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-        }
-        .g-reveal.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
@@ -497,35 +491,31 @@
             .g-section-head h2 { font-size: 1.5rem; }
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </head>
-<body>
-    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
+<body class="site-article">
+    <a class="skip-link" href="#main">Skip to content</a>
+
 
     <div class="g-progress"><div class="g-progress-fill" id="progressFill"></div></div>
 
-    <nav class="auto-nav">
-        <div class="inner">
-            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
-            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
-            </button>
-            <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">&#8592; Back to Archive</a></li>
-                <li><a href="../../">Hub</a></li>
-            </ul>
-        </div>
-    </nav>
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 24 28" aria-hidden="true"><polygon pathLength="1" points="12,1 23,7.5 23,20.5 12,27 1,20.5 1,7.5"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog ↗</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
 
-    <div class="auto-wrap" style="padding-top: 5rem;">
+    <main id="main" class="auto-wrap">
+        <nav class="site-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/n8n/guide/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Article</span></nav>
+
 
         <!-- ════════════════════════════════════════════
              HERO
         ════════════════════════════════════════════ -->
-        <header class="g-hero g-reveal">
+        <header class="g-hero rv">
             <div class="g-hero-tags">
                 <span class="g-tag">Overview</span>
                 <span class="g-tag">Automation</span>
@@ -537,7 +527,7 @@
         </header>
 
         <!-- ════ STATS STRIP ════ -->
-        <div class="g-stats g-reveal">
+        <div class="g-stats rv">
             <div class="g-stat"><div class="g-stat-num">500+</div><div class="g-stat-label">Integrations</div></div>
             <div class="g-stat"><div class="g-stat-num">OSS</div><div class="g-stat-label">Open Source</div></div>
             <div class="g-stat"><div class="g-stat-num">50K+</div><div class="g-stat-label">GitHub Stars</div></div>
@@ -545,7 +535,7 @@
         </div>
 
         <!-- ════ TABLE OF CONTENTS ════ -->
-        <nav class="g-toc g-reveal">
+        <nav class="g-toc rv">
             <div class="g-toc-label">In This Guide</div>
             <div class="g-toc-grid">
                 <a href="#short-answer"><span>01</span> The Short Answer</a>
@@ -563,7 +553,7 @@
         <!-- ════════════════════════════════════════════
              01 - THE SHORT ANSWER
         ════════════════════════════════════════════ -->
-        <section id="short-answer" class="g-section g-reveal">
+        <section id="short-answer" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">01</span>
                 <h2>The Short Answer</h2>
@@ -580,7 +570,7 @@
         <!-- ════════════════════════════════════════════
              02 - HOW THE CANVAS WORKS
         ════════════════════════════════════════════ -->
-        <section id="canvas" class="g-section g-reveal">
+        <section id="canvas" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">02</span>
                 <h2>How the Canvas Works</h2>
@@ -597,7 +587,7 @@
         <!-- ════════════════════════════════════════════
              03 - WHAT YOU CAN BUILD
         ════════════════════════════════════════════ -->
-        <section id="build" class="g-section wide g-reveal">
+        <section id="build" class="g-section wide rv">
             <div class="g-section-head">
                 <span class="g-num">03</span>
                 <h2>What You Can Build</h2>
@@ -649,7 +639,7 @@
              04 - AI AGENTS AND THE NEW WAVE
         ════════════════════════════════════════════ -->
         <div class="g-bleed">
-        <section id="ai" class="g-section g-reveal">
+        <section id="ai" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">04</span>
                 <h2>AI Agents &amp; the New Wave</h2>
@@ -673,7 +663,7 @@
         <!-- ════════════════════════════════════════════
              05 - WHO IS N8N FOR?
         ════════════════════════════════════════════ -->
-        <section id="who" class="g-section wide g-reveal">
+        <section id="who" class="g-section wide rv">
             <div class="g-section-head">
                 <span class="g-num">05</span>
                 <h2>Who is n8n For?</h2>
@@ -704,7 +694,7 @@
         <!-- ════════════════════════════════════════════
              06 - OPEN SOURCE AND SELF-HOSTABLE
         ════════════════════════════════════════════ -->
-        <section id="open-source" class="g-section g-reveal">
+        <section id="open-source" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">06</span>
                 <h2>Open Source &amp; Self-Hostable</h2>
@@ -727,7 +717,7 @@
         <!-- ════════════════════════════════════════════
              07 - N8N CLOUD VS SELF-HOSTED
         ════════════════════════════════════════════ -->
-        <section id="cloud-vs-self" class="g-section wide g-reveal">
+        <section id="cloud-vs-self" class="g-section wide rv">
             <div class="g-section-head">
                 <span class="g-num">07</span>
                 <h2>n8n Cloud vs Self-Hosted</h2>
@@ -776,7 +766,7 @@
              08 - THE ECOSYSTEM
         ════════════════════════════════════════════ -->
         <div class="g-bleed">
-        <section id="ecosystem" class="g-section wide g-reveal">
+        <section id="ecosystem" class="g-section wide rv">
             <div class="g-section-head">
                 <span class="g-num">08</span>
                 <h2>The Ecosystem</h2>
@@ -854,7 +844,7 @@
         <!-- ════════════════════════════════════════════
              09 - GETTING STARTED
         ════════════════════════════════════════════ -->
-        <section id="start" class="g-section g-reveal">
+        <section id="start" class="g-section rv">
             <div class="g-section-head">
                 <span class="g-num">09</span>
                 <h2>Getting Started</h2>
@@ -878,7 +868,7 @@
         </section>
 
         <!-- ════ THE SHORT VERSION ════ -->
-        <section class="g-section g-reveal" style="border-top:1px solid var(--border); padding-top:3rem;">
+        <section class="g-section rv" style="border-top:1px solid var(--border); padding-top:3rem;">
             <div class="g-section-head">
                 <span class="g-num">&Sigma;</span>
                 <h2>The Short Version</h2>
@@ -887,7 +877,7 @@
         </section>
 
         <!-- ════ ENDCAP ════ -->
-        <div class="g-endcap">
+        <div class="g-endcap rv">
             <a href="../../../" class="g-endcap-author">
                 <div class="g-endcap-av"><img src="../../../assets/img/anshul-namdev.jpg" alt="Anshul Namdev"></div>
                 <div>
@@ -905,24 +895,13 @@
             <div class="footer-copy">&copy; 2026 <a href="../../../">Anshul Namdev</a></div>
             <div class="footer-links"><a href="/privacy/">Privacy</a><a href="/cookies/">Cookies</a><a href="/terms/">Terms</a></div>
         </footer>
-    </div>
+    </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+
+    <script src="../../../assets/js/text-highlight-share.js?v=20261015.1" defer></script>
     <script>
-        // Patch MeshBasicMaterial to swap blue → red before 3d-anim.js runs
-        const _OrigMBM = THREE.MeshBasicMaterial;
-        THREE.MeshBasicMaterial = function(p) {
-            if (p && p.color === 0x0044FF) p.color = 0xD72638;
-            return new _OrigMBM(p);
-        };
-        THREE.MeshBasicMaterial.prototype = _OrigMBM.prototype;
-    </script>
-    <script src="../../../assets/js/3d-anim.js"></script>
-    <script src="../../../assets/js/text-highlight-share.js" defer></script>
-    <script>
-        document.getElementById('navToggle').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('open');
-        });
 
         document.addEventListener('scroll', () => {
             const body = document.body;
@@ -944,11 +923,6 @@
                 }
             });
         }
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-        }, { threshold: 0.08 });
-        document.querySelectorAll('.g-reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
