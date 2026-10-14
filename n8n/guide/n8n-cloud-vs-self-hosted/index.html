@@ -11,41 +11,36 @@
     <meta property="og:title" content="n8n Cloud vs Self-Hosted - n8n Guide">
     <meta property="og:description" content="A technical breakdown of the differences between n8n Cloud and n8n Self-Hosted, and how to choose the right deployment for your specific use cases.">
     <meta property="og:type" content="article">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../../assets/css/n8n.css">
+
+
+
+    <link rel="stylesheet" href="../../../assets/css/n8n.css?v=20261015.1">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </head>
-<body>
+<body class="site-article">
+    <a class="skip-link" href="#main">Skip to content</a>
     <!-- Global 3D Roaming Geometry -->
-    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -10; opacity: 0.35; pointer-events: none;"></div>
-    <nav class="auto-nav">
-        <div class="inner">
-            <a href="../../../" class="nav-logo">AN. <span style="font-style:normal;font-size:.6em;letter-spacing:.14em;vertical-align:middle;font-family:var(--font-sans);font-weight:700;text-transform:uppercase;color:var(--text-dim);">/ Automations</span></a>
-            
-            <button class="nav-mob-btn" id="navToggle" aria-label="Menu">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
-            </button>
-            <ul class="nav-links-list" id="navLinks">
-                <li><a href="../../">← Back to Archive</a></li>
-                <li><a href="../../">Hub</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <div class="auto-wrap" style="padding-top: 5rem;">
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 24 28" aria-hidden="true"><polygon pathLength="1" points="12,1 23,7.5 23,20.5 12,27 1,20.5 1,7.5"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog ↗</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
+
+    <div class="auto-wrap">
         
         <div class="reader-layout">
-            <main class="reader-main">
+            <main id="main" class="reader-main">
+        <nav class="site-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/n8n/guide/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Article</span></nav>
+
                 <header class="reader-header stagger-in">
                     <div class="reader-tags">
                         <span class="ar-tag tag-pulse" style="background:var(--bg-off); border:1px solid var(--border); color:var(--text-mid); padding:0.3rem 0.8rem; border-radius:100px; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em;">Architecture</span>
@@ -106,12 +101,12 @@
                             <span>READING PROGRESS</span>
                             <span>4 MIN</span>
                         </div>
-                        <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+                        <div style="width: 100%; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden;">
                             <div id="read-progress-bar" style="width: 0%; height: 100%; background: var(--blue); transition: width 0.1s;"></div>
                         </div>
                     </div>
                     
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+                    <hr style="border:0; border-top:1px solid var(--border); margin: 0 0 2rem 0;">
 
                     <!-- Written By Section (Moved UP) -->
                     <div class="sec-label" style="margin-bottom: 1.5rem;">Written By</div>
@@ -125,7 +120,7 @@
                         </div>
                     </a>
 
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 2rem 0;">
+                    <hr style="border:0; border-top:1px solid var(--border); margin: 2rem 0;">
 
                     <!-- Quick Links Section (Moved DOWN) -->
                     <div class="sec-label" style="margin-bottom: 1rem;">Resources</div>
@@ -136,7 +131,7 @@
                         <li><a href="https://community.n8n.io/" target="_blank" class="sb-link">n8n Community Forum ↗</a></li>
                     </ul>
 
-                    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.05); margin: 0 0 2rem 0;">
+                    <hr style="border:0; border-top:1px solid var(--border); margin: 0 0 2rem 0;">
                     
                     <button id="share-btn" class="ib-btn" style="width: 100%; margin-bottom: 1rem; justify-content:space-between;">
                         <span class="bt">Share Article</span>
@@ -162,14 +157,11 @@
         .author-link-hover:hover .ra-name { color: var(--blue); text-decoration-color: var(--blue) !important; }
     </style>
     <!-- 3D Geometry Animation for Sidebar -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="../../../assets/js/3d-anim.js"></script>
-    <script src="../../../assets/js/text-highlight-share.js" defer></script>
+
+
+    <script src="../../../assets/js/text-highlight-share.js?v=20261015.1" defer></script>
     
     <script>
-        document.getElementById('navToggle').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('open');
-        });
         document.addEventListener("scroll", () => {
             const contentBlock = document.querySelector('.reader-main');
             let progress = 0;

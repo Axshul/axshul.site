@@ -1,0 +1,270 @@
+/* White paper shells for the existing interactive tools. App state stays local. */
+html:has(body.site-app) { height: 100%; background: #fafbf8; scroll-padding-top: 0; }
+body.site-app {
+  --app-header-height: 86px;
+  --app-border: #d4d5cf;
+  --app-surface: #fff;
+  --app-shadow: 0 12px 32px #1721120c;
+  margin: 0;
+  padding: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: #fafbf8 !important;
+  color: #111210;
+  font: 400 14px/1.5 Space, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.site-app .masthead.site-header {
+  position: relative;
+  top: 0;
+  flex: 0 0 var(--app-header-height);
+  height: var(--app-header-height);
+  min-height: var(--app-header-height);
+  padding-block: 9px;
+  z-index: 500;
+  color: #111210;
+  user-select: auto;
+}
+.site-app .masthead * { font-family: inherit; }
+.site-app .masthead::before { inset: 0 -20px; background: #fafbf8; }
+.site-app .masthead .wordmark { font-family: Space, Arial, sans-serif; }
+.site-app .masthead .primary-nav { font-family: Space, Arial, sans-serif; }
+.site-app .masthead .contact-nav { color: white; }
+.site-app .app-workspace {
+  position: relative;
+  isolation: isolate;
+  height: calc(100dvh - var(--app-header-height) - 26px);
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  border-block: 1px solid var(--app-border);
+}
+.site-app .app-noscript-notice {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  width: min(600px, calc(100% - 32px));
+  padding: 24px;
+  border: 1px solid #d4d5cf;
+  border-radius: 18px;
+  background: #fff;
+  color: #111210;
+  box-shadow: var(--app-shadow);
+  font: 400 16px/1.6 Space, Arial, sans-serif;
+}
+.site-app .app-noscript-notice strong { display: block; margin-bottom: 8px; }
+.site-app .app-noscript-notice a { color: #111210; text-decoration: underline; text-decoration-color: #d72638; text-underline-offset: 4px; }
+.site-app #site-legal {
+  position: relative;
+  flex: 0 0 26px;
+  min-height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #fafbf8;
+  color: #62665e;
+  font: 10px/1.4 Plex, monospace;
+  letter-spacing: .06em;
+}
+.site-app #site-legal a { color: #62665e; text-decoration: none; }
+.site-app #site-legal a:hover { color: #d72638; }
+.site-app .app-workspace ::-webkit-scrollbar-thumb { background: #aeb6a6; }
+.site-app :is(button, a, input, textarea, select):focus-visible { outline: 2px solid #d72638; outline-offset: 3px; }
+
+/* Galaxy: retain the WebGL model and invert its rendered surface only. */
+.app-galaxy #canvasContainerEl { background: white !important; }
+.app-galaxy #canvasContainerEl canvas { filter: invert(1) hue-rotate(180deg); }
+.app-galaxy #loadingScreenEl { position: absolute !important; background: #fafbf8 !important; color: #111210 !important; }
+.app-galaxy #loadingScreenEl :is(h1, h2) { font: 900 clamp(24px, 5vw, 44px)/1 Barlow, sans-serif !important; text-shadow: none !important; }
+.app-galaxy .spinner { border-color: #d4d5cf; border-top-color: #d72638; box-shadow: none; clip-path: var(--hex); }
+.app-galaxy #ui-layer { padding: 24px !important; }
+.app-galaxy #ui-layer > header { align-items: flex-start !important; gap: 16px; }
+.app-galaxy #ui-layer > header > div:first-child { color: #111210 !important; text-shadow: none !important; }
+.app-galaxy #ui-layer h1 { background: none !important; -webkit-text-fill-color: #111210 !important; font: 900 clamp(22px, 3vw, 38px)/1 Barlow, sans-serif !important; letter-spacing: .025em !important; }
+.app-galaxy #thoughtCountEl { color: #62665e; opacity: 1 !important; }
+.app-galaxy :is(#resetViewBtn, #list-toggle-btn, .action-btn) { color: #111210 !important; background: #fffffff2 !important; border: 1px solid #d4d5cf !important; box-shadow: 0 3px 12px #17211208 !important; }
+.app-galaxy :is(#resetViewBtn, #list-toggle-btn, .action-btn):hover { background: #eef1e9 !important; }
+.app-galaxy #input-ctn { background: #fffffff2 !important; border-color: #d4d5cf !important; box-shadow: var(--app-shadow) !important; }
+.app-galaxy #thoughtInputEl { color: #111210 !important; font-family: Space, Arial, sans-serif !important; min-width: 0; }
+.app-galaxy #thoughtInputEl::placeholder { color: #62665e; font-style: normal; }
+.app-galaxy :is(#launchBtnEl, #close-modal-btn) { background: #111210 !important; color: #fff !important; box-shadow: none !important; }
+.app-galaxy #listPanelEl { position: absolute !important; width: min(380px, 100%) !important; background: #fff !important; color: #111210 !important; border-color: #d4d5cf !important; box-shadow: var(--app-shadow) !important; }
+.app-galaxy #listPanelEl > div { background: #fff !important; border-color: #d4d5cf !important; }
+.app-galaxy #listPanelEl > div:last-child { color: #62665e; opacity: 1 !important; }
+.app-galaxy #listPanelEl :is(h2, #closeListBtn, .list-item-text) { color: #111210 !important; }
+.app-galaxy #listPanelEl p { opacity: 1 !important; color: #62665e; }
+.app-galaxy .list-item { border-bottom-color: #d4d5cf; }
+.app-galaxy .list-item:hover { background: #f1f3ed; }
+.app-galaxy .focus-active { background: #f1f3ed !important; border-color: #d72638 !important; }
+.app-galaxy #viewModalEl { margin: auto; color: #111210 !important; background: #fff !important; border-color: #d4d5cf !important; box-shadow: var(--app-shadow) !important; }
+.app-galaxy #modalTextEl { color: #111210 !important; }
+.app-galaxy #modalDateEl { color: #62665e; opacity: 1 !important; }
+.app-galaxy #viewModalEl::backdrop { background: #11121044; }
+.app-galaxy #toastCtnEl { position: absolute !important; bottom: 20px !important; }
+.app-galaxy #toastCtnEl > div { background: #fff !important; color: #111210 !important; border-color: #d4d5cf !important; box-shadow: var(--app-shadow) !important; }
+
+/* Nexus: the saved Fabric objects keep their own colors and coordinates. */
+body.app-nexus {
+  --bg-color: #fff;
+  --panel-bg: #fffffff5;
+  --panel-border: #d4d5cf;
+  --accent-color: #111210;
+  --accent-green: #39714c;
+  --text-main: #111210;
+  --text-dim: #62665e;
+  --shadow-lg: 0 8px 24px #17211210;
+}
+.app-nexus #canvas-container { position: relative; width: 100%; height: 100%; background: #fff; background-image: radial-gradient(circle, #d4d5cf 1px, transparent 1px); }
+.app-nexus .toolbar { max-width: calc(100% - 125px); flex-wrap: nowrap; overflow-x: auto; }
+.app-nexus .toolbar .tool-btn { flex-shrink: 0; }
+.app-nexus .tool-btn.active { background: #111210; box-shadow: none; color: white; }
+.app-nexus .tool-btn:hover { background: #eef1e9; }
+.app-nexus .tool-btn.active:hover { background: #d72638; }
+.app-nexus :is(select, #edit-textarea, .node-search) { background: #fafbf8 !important; color: #111210; }
+.app-nexus .sidebar { max-height: calc(100% - 150px); }
+.app-nexus .overlay { position: absolute; background: #fafbf8dc; }
+.app-nexus .modal { width: min(440px, calc(100% - 32px)); max-height: calc(100% - 32px); overflow: auto; box-shadow: var(--app-shadow); }
+.app-nexus .creator-badge { color: #62665e; }
+.app-nexus #empty-state { color: #62665e; }
+.app-nexus #empty-state > div { color: #62665e !important; }
+.app-nexus .nexus-watermark > :is(h1, div) { color: #62665e !important; }
+.app-nexus .nexus-watermark h1 { font-family: Barlow, sans-serif; }
+.app-nexus .node-lib-item:hover { background: #eef1e9; }
+.app-nexus :is(.properties-toggle, .properties-close) { display: none; }
+
+/* Notes: light is the default; saved user theme and editor fonts still work. */
+body.app-notes:not(.dark-theme) {
+  --primary-color: #111210;
+  --primary-dark: #d72638;
+  --primary-light: #eef1e9;
+  --secondary-color: #d72638;
+  --secondary-dark: #b51e2e;
+  --secondary-light: #fff0f2;
+  --text-color: #111210;
+  --text-light: #62665e;
+  --text-muted: #62665e;
+  --bg-color: #fafbf8;
+  --bg-light: #fff;
+  --bg-dark: #f1f3ed;
+  --border-color: #d4d5cf;
+  --border-light: #e7eae2;
+}
+.app-notes :is(#appContainer, #sidebarEl, #mainContent) { height: 100%; min-height: 0; }
+.app-notes #appContainer { width: 100%; max-width: 100%; grid-template-columns: var(--sidebar-width) minmax(0, 1fr); }
+.app-notes #mainContent { min-width: 0; width: 100%; flex: 1; }
+.app-notes #editorToolbar { min-width: 0; width: 100%; max-width: 100%; flex-shrink: 0; flex-wrap: nowrap; overflow-x: auto; }
+.app-notes #editorContainer { min-width: 0; min-height: 0; width: 100%; }
+.app-notes :is(#editorEl, #previewEl) { min-width: 0; max-width: 100%; }
+.app-notes #previewEl { overflow-wrap: anywhere; }
+.app-notes #viewToggle { min-width: 0; width: 100%; flex-shrink: 0; flex-wrap: wrap; }
+.app-notes .toolbar-group { flex-wrap: nowrap; flex-shrink: 0; }
+.app-notes .sidebar-toggle { position: absolute; }
+.app-notes .primary-btn { border-radius: 999px; }
+.app-notes #sidebarHeader h1 { font: 900 28px/1 Barlow, sans-serif; text-transform: uppercase; }
+.app-notes:not(.dark-theme) .hljs { background: #f1f3ed; color: #111210; }
+.app-notes .app-workspace { isolation: auto; }
+
+/* SEEK is a naturally scrolling gallery, with explicitly optional audio. */
+body.app-seek { height: auto; min-height: 100dvh; overflow: auto; }
+.app-seek .masthead.site-header { position: sticky; flex-basis: auto; }
+.app-seek .app-workspace { height: auto; min-height: calc(100dvh - var(--app-header-height)); overflow: visible; isolation: auto; }
+.app-seek .seek-toolbar { position: relative !important; background: #fafbf8 !important; border-color: #d4d5cf !important; padding: 24px max(20px, calc((100% - 1440px) / 2)) !important; }
+.app-seek .seek-toolbar > div:first-child > div:first-child { color: #111210 !important; font: 900 40px/1 Barlow, sans-serif !important; }
+.app-seek :is(#soundToggleBtn, #axshulLink) { background: white !important; color: #111210 !important; border-color: #d4d5cf !important; min-height: 44px; }
+.app-seek #audioOverlay { background: #fafbf8 !important; top: var(--app-header-height) !important; height: calc(100dvh - var(--app-header-height)) !important; padding: 24px; }
+.app-seek #audioOverlay h1 { color: #111210 !important; font: 900 clamp(40px, 7vw, 78px)/1 Barlow, sans-serif !important; text-transform: uppercase; text-align: center; }
+.app-seek #startBtn { background: #111210 !important; color: white !important; border-color: #111210 !important; }
+.app-seek #quietStartBtn { margin-top: 18px; min-height: 44px; padding: 10px 28px; border: 1px solid #d4d5cf; border-radius: 999px; background: white; color: #111210; cursor: pointer; }
+.app-seek #galleryCtn { padding-block: 8px 28px; }
+.app-seek .imgItem { background: #f1f3ed; padding: 6px; border: 1px solid #d4d5cf; border-radius: 14px; box-shadow: 0 4px 12px #17211208; }
+.app-seek .imgItem:hover { box-shadow: var(--app-shadow); }
+.app-seek .imgItem img { border-radius: 8px; }
+.app-seek #lightbox { background: #fafbf8f5 !important; }
+.app-seek #lightbox[hidden] { display: none !important; }
+.app-seek #closeLightboxBtn { color: #111210 !important; width: 44px; min-height: 44px; }
+.app-seek #downloadBtn { background: #111210 !important; color: #fff !important; border-color: #111210 !important; border-radius: 999px !important; }
+
+/* Terminal: preserve semantic command colors with readable white surfaces. */
+.app-terminal #gameContainer { position: relative; height: 100% !important; background: #fff !important; color: #111210 !important; padding: 24px !important; font-family: Plex, monospace !important; }
+.app-terminal :is(#terminalHeader, #inputContainer) { border-color: #d4d5cf !important; }
+.app-terminal #terminalHeader { padding-bottom: 16px !important; }
+.app-terminal #terminalInputEl { color: #111210 !important; font-family: Plex, monospace !important; min-width: 0; }
+.app-terminal #gameScreenEl { background: #fff !important; color: #111210; }
+.app-terminal #gameScreenEl { overflow: auto; }
+.app-terminal #gameScreenEl > div { min-height: 100%; height: auto !important; }
+.app-terminal .app-game-title { font: inherit; margin: 0; }
+.app-terminal #gameContainer::before { background: #d7263812; animation-duration: 7s; }
+.app-terminal #gameContainer::after { display: none; }
+.app-terminal .success-text { color: #39714c; }
+.app-terminal .error-text { color: #c01e30; }
+.app-terminal .warning-text, .app-terminal .hint-text { color: #95610a; }
+.app-terminal .system-text, .app-terminal .help-text { color: #34606d; }
+.app-terminal .filename-text { color: #794268; }
+.app-terminal .glitch-text { animation: none; }
+.app-terminal .progress-bar { background: #e7eae2; }
+.app-terminal .progress-bar-fill { background: #d72638; }
+.app-terminal #gameScreenEl [style*="background-color: black"],
+.app-terminal #gameScreenEl [style*="background: #000"],
+.app-terminal #gameScreenEl [style*="background: #111"],
+.app-terminal #gameScreenEl [style*="background: #222"] { background: #f1f3ed !important; }
+.app-terminal #gameScreenEl [style*="background-color:#000"],
+.app-terminal #gameScreenEl [style*="background:#000"],
+.app-terminal #gameScreenEl [style*="background:#111"],
+.app-terminal #gameScreenEl [style*="background:#222"] { background: #f1f3ed !important; }
+.app-terminal #gameScreenEl [style*="color: #0f0"] { color: #39714c !important; }
+.app-terminal #gameScreenEl [style*="color: #fff"] { color: #111210 !important; }
+.app-terminal #gameScreenEl [style*="color:#0f0"] { color: #39714c !important; }
+.app-terminal #gameScreenEl [style*="color:#0ff"] { color: #34606d !important; }
+.app-terminal #gameScreenEl [style*="color:#f60"] { color: #95610a !important; }
+.app-terminal #gameScreenEl button { background: #111210 !important; color: white !important; border-radius: 999px; }
+.app-terminal #gameScreenEl :is(#cancelCrackBtn, #cancelBruteBtn, #cancelPuzzleBtn) { background: #d72638 !important; }
+
+@media (max-width: 700px) {
+  body.site-app { --app-header-height: 116px; }
+  .site-app .masthead.site-header { padding-block: 7px; gap: 2px 12px; }
+  .site-app .masthead::before { inset-inline: -16px; }
+  .app-galaxy #ui-layer { padding: 16px !important; }
+  .app-galaxy #ui-layer > header { flex-direction: column; }
+  .app-galaxy #ui-layer > header > div:last-child { gap: 8px !important; }
+  .app-galaxy #input-ctn { padding: 12px !important; gap: 8px !important; }
+  .app-galaxy #thoughtInputEl { font-size: 14px !important; }
+  .app-galaxy #launchBtnEl { padding: 12px 14px !important; font-size: 12px !important; }
+  .app-nexus .bottom-bar { bottom: 12px; left: 12px; right: 12px; gap: 6px; overflow-x: auto; }
+  .app-nexus .bottom-group { gap: 6px; flex-shrink: 0; }
+  .app-nexus .status-indicator { padding: 8px; font-size: 10px; }
+  .app-seek .seek-toolbar { gap: 14px; flex-wrap: wrap; }
+  .app-terminal #gameContainer { padding: 14px !important; font-size: 12px; }
+  .app-terminal #terminalHeader > div:first-child { gap: 10px; flex-wrap: wrap; }
+}
+@media (max-width: 768px) {
+  .app-nexus .toolbar { left: 15px; transform: none; right: 15px; max-width: none; }
+  .app-nexus .help-btn { top: 85px; right: 15px; }
+  .app-nexus:not(.properties-open) .sidebar { display: none; }
+  .app-nexus .sidebar { top: 130px; max-height: calc(100% - 190px); }
+  .app-nexus .properties-toggle { position: absolute; display: flex; top: 85px; right: 65px; z-index: 100; min-height: 44px; padding: 10px 14px; background: #fff; border: 1px solid #d4d5cf; font-size: 12px; }
+  .app-nexus .properties-toggle[aria-expanded=true] { background: #111210; color: white; }
+  .app-nexus .properties-close { display: flex; align-self: flex-end; min-height: 44px; border: 1px solid #d4d5cf; font-size: 12px; }
+  .app-notes #appContainer { grid-template-columns: minmax(0, 1fr); }
+  .app-notes #sidebarEl { position: absolute; top: 0; bottom: 0; }
+  .app-notes #mainContent { padding: 0; }
+  .app-notes #editorToolbar { justify-content: flex-start; padding-left: 56px; }
+  .app-notes .clock-container { width: auto; margin-bottom: 0; flex-shrink: 0; }
+  .app-notes #viewToggle { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 8px 12px; }
+  .app-notes #viewToggle button { min-width: 0; max-width: none; min-height: 44px; margin: 0; }
+  .app-notes #viewToggle .word-count { grid-column: 1 / -1; width: 100%; margin: 0; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-app .app-workspace *, .site-app .app-workspace *::before, .site-app .app-workspace *::after { scroll-behavior: auto !important; }
+  .app-terminal #gameContainer::before, .app-galaxy .spinner { animation: none; }
+  .app-terminal .blink, .app-galaxy #viewModalEl > div:first-child { animation: none !important; }
+  .app-nexus :is(.sidebar, .properties-toggle, .properties-close) { transition: none !important; }
+  .app-galaxy #toastCtnEl > div { animation: none !important; transition: none !important; }
+  .app-seek .imgItem { transition: none; }
+}

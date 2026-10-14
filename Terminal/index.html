@@ -27,9 +27,26 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <meta name="theme-color" content="#fafbf8">
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/apps-white.css?v=20261015.1">
 </head>
 
-<body style="margin: 0; background-color: black; overflow: hidden;">
+<body class="site-app app-terminal">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 100 115" fill="none" aria-hidden="true"><path pathLength="1" d="M50 1 99 29v57l-49 28L1 86V29Z"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk<svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
+    <main id="main" class="app-workspace">
+    <noscript>
+        <style>.app-galaxy #loadingScreenEl,.app-seek #audioOverlay{display:none!important}</style>
+        <div class="app-noscript-notice"><strong>This interactive tool needs JavaScript.</strong><p>Enable JavaScript to use the workspace, or <a href="/n8n/guide/">read the n8n guides</a>.</p></div>
+    </noscript>
 
     <div id="gameContainer" style="
     width: 100%;
@@ -50,8 +67,8 @@
       margin-bottom: 10px;
     ">
             <div style="display: flex; justify-content: space-between">
-                <span>H4CK3R TERMINAL v1.0 <span style="font-size: 0.8em; opacity: 0.7;">| By Anshul
-                        Namdev</span></span>
+                <h1 class="app-game-title">H4CK3R TERMINAL v1.0 <span style="font-size: 0.8em; opacity: 0.7;">| By Anshul
+                        Namdev</span></h1>
                 <span id="statusDisplayEl">STATUS: DISCONNECTED</span>
             </div>
             <div id="ipDisplayEl">IP: ----.----.----.----</div>
@@ -4618,4 +4635,9 @@
     </script>
 
     <!-- legal links (site-wide) -->
-    <div id="site-legal" style="position:fixed;right:12px;bottom:12px;z-index:2147483000;font:10px/1 'Space Mono',ui-monospace,SFMono-Regular,monospace;letter-spacing:.09em;text-transform:uppercase;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:rgba(8,8,8,.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);box-shadow:0 2px 12px rgba(0,0,0,.4);pointer-events:auto"><a href="/privacy/" style="color:rgba(255,255,255,.78);text-decoration:none">Privacy</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/cookies/" style="color:rgba(255,255,255,.78);text-decoration:none">Cookies</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/terms/" style="color:rgba(255,255,255,.78);text-decoration:none">Terms</a></div>
+        </main>
+    <nav id="site-legal" aria-label="Legal links"><a href="/privacy/">Privacy</a><span aria-hidden="true">·</span><a href="/cookies/">Cookies</a><span aria-hidden="true">·</span><a href="/terms/">Terms</a></nav>
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
+
+</body>
+</html>

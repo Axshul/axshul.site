@@ -26,9 +26,26 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <meta name="theme-color" content="#fafbf8">
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/apps-white.css?v=20261015.1">
 </head>
 
-<body style="margin: 0; overflow: hidden; background-color: #000;">
+<body class="site-app app-galaxy">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 100 115" fill="none" aria-hidden="true"><path pathLength="1" d="M50 1 99 29v57l-49 28L1 86V29Z"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk<svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
+    <main id="main" class="app-workspace">
+    <noscript>
+        <style>.app-galaxy #loadingScreenEl,.app-seek #audioOverlay{display:none!important}</style>
+        <div class="app-noscript-notice"><strong>This interactive tool needs JavaScript.</strong><p>Enable JavaScript to use the workspace, or <a href="/n8n/guide/">read the n8n guides</a>.</p></div>
+    </noscript>
 
   <!--
 Project: Galaxy of Thoughts (Enhanced)
@@ -36,7 +53,7 @@ Features:
   - 3D Interactive Galaxy using Three.js
   - Post-processing (Bloom) for "legit" glowing effects
   - Thoughts represented as glowing orbs orbiting a central core
-  - Persistent storage using IndexedDB (via root.kv global)
+  - Persistent storage via a provided adapter or local IndexedDB fallback
   - Side panel list view of all thoughts
   - Click-to-view modal for full text
   - Camera focus animation when selecting from list
@@ -52,9 +69,9 @@ Features:
     style="position:fixed; top:0; left:0; width:100%; height:100%; background:#050505; color:#fff; display:flex; align-items:center; justify-content:center; z-index:9999; font-family:sans-serif; transition:opacity 0.8s;">
     <div style="text-align:center;">
       <div class="spinner"></div>
-      <h1
+      <h2
         style="margin:20px 0 10px; font-family:'Courier New', monospace; letter-spacing:4px; text-shadow:0 0 10px #4f8aff;">
-        GALAXY OF THOUGHTS</h1>
+        GALAXY OF THOUGHTS</h2>
       <p style="opacity:0.7; font-size:0.9rem;">Initializing Universe...</p>
     </div>
   </div>
@@ -73,6 +90,7 @@ Features:
           GALAXY OF THOUGHTS</h1>
         <p id="thoughtCountEl" style="margin:5px 0 0; font-size:0.85rem; opacity:0.7; letter-spacing:1px;">0 thoughts in
           the cosmos <span style="opacity: 0.5;">| By Anshul Namdev</span></p>
+        <p id="storageStatusEl" role="status" style="margin:5px 0 0; font-size:0.75rem; color:#62665e;">Loading thoughts from this device...</p>
       </div>
       <div style="display:flex; gap:10px;">
         <button id="resetViewBtn"
@@ -295,6 +313,8 @@ Features:
       toastCtn: document.getElementById('toastCtnEl')
     };
 
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
     // --- Global Exports for Inline Handlers ---
     window.closeModal = () => els.modal.close();
     window.deleteCurrentThought = deleteCurrentThought;
@@ -308,21 +328,80 @@ Features:
     let animationId;
     let currentFocusedId = null;
 
-    // --- KV Storage Setup ---
+    // Use an existing host adapter when provided. Static hosting stores only
+    // this app's thought array in its own IndexedDB database.
     const STORAGE_KEY = 'galaxyThoughts';
+    const providedStorage = typeof root !== 'undefined' && root.kv && root.kv.galaxy
+      && typeof root.kv.galaxy.get === 'function' && typeof root.kv.galaxy.set === 'function'
+      ? root.kv.galaxy : null;
+    let databasePromise;
+
+    function openThoughtDatabase() {
+      if (!window.indexedDB) return Promise.reject(new Error('IndexedDB unavailable'));
+      if (!databasePromise) {
+        databasePromise = new Promise((resolve, reject) => {
+          const request = indexedDB.open('axshul-galaxy', 1);
+          request.onupgradeneeded = () => {
+            if (!request.result.objectStoreNames.contains('thoughts')) {
+              request.result.createObjectStore('thoughts');
+            }
+          };
+          request.onsuccess = () => {
+            const database = request.result;
+            database.onversionchange = () => { database.close(); databasePromise = null; };
+            resolve(database);
+          };
+          request.onerror = () => { databasePromise = null; reject(request.error); };
+          request.onblocked = () => { databasePromise = null; reject(new Error('Thought storage is blocked')); };
+        });
+      }
+      return databasePromise;
+    }
+
+    async function accessThoughtStorage(mode, key, value) {
+      const database = await openThoughtDatabase();
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction('thoughts', mode);
+        const store = transaction.objectStore('thoughts');
+        const request = mode === 'readonly' ? store.get(key) : store.put(value, key);
+        transaction.oncomplete = () => resolve(request.result);
+        transaction.onerror = () => reject(transaction.error || request.error);
+        transaction.onabort = () => reject(transaction.error || new Error('Thought storage was interrupted'));
+      });
+    }
+
+    const thoughtStorage = providedStorage || {
+      get: key => accessThoughtStorage('readonly', key),
+      set: (key, value) => accessThoughtStorage('readwrite', key, value)
+    };
+
+    function updateStorageStatus(available) {
+      const status = document.getElementById('storageStatusEl');
+      status.textContent = available
+        ? (providedStorage ? 'Saved through the provided storage adapter.' : 'Saved on this device. Nothing is uploaded.')
+        : 'Storage unavailable. Changes stay in this tab and will be lost when it closes.';
+    }
 
     async function loadThoughts() {
       try {
-        const stored = await root.kv.galaxy.get(STORAGE_KEY);
-        if (stored) thoughts = stored;
-        updateThoughtCount();
-      } catch (e) { console.error("Storage error", e); }
+        const stored = await thoughtStorage.get(STORAGE_KEY);
+        if (Array.isArray(stored)) thoughts = stored;
+        updateStorageStatus(true);
+      } catch (error) {
+        updateStorageStatus(false);
+      }
+      updateThoughtCount();
     }
 
     async function saveThoughts() {
       try {
-        await root.kv.galaxy.set(STORAGE_KEY, thoughts);
-      } catch (e) { console.error("Storage save error", e); }
+        await thoughtStorage.set(STORAGE_KEY, thoughts);
+        updateStorageStatus(true);
+        return true;
+      } catch (error) {
+        updateStorageStatus(false);
+        return false;
+      }
     }
 
     // --- Three.js Initialization ---
@@ -332,11 +411,11 @@ Features:
       scene.background = new THREE.Color(0x020205); // Deep space black
       scene.fog = new THREE.FogExp2(0x020205, 0.002);
 
-      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera = new THREE.PerspectiveCamera(60, els.container.clientWidth / els.container.clientHeight, 0.1, 1000);
       camera.position.set(0, 40, 80);
 
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(els.container.clientWidth, els.container.clientHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.1;
@@ -344,7 +423,7 @@ Features:
 
       // Post-Processing (Bloom for the "Legit" Look)
       const renderScene = new RenderPass(scene, camera);
-      const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(els.container.clientWidth, els.container.clientHeight), 1.5, 0.4, 0.85);
       bloomPass.threshold = 0;
       bloomPass.strength = 1.8; // High bloom for glow
       bloomPass.radius = 0.5;
@@ -355,13 +434,18 @@ Features:
 
       // Controls
       controls = new OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
+      controls.enableDamping = !reducedMotion.matches;
       controls.dampingFactor = 0.05;
-      controls.autoRotate = true;
+      controls.autoRotate = !reducedMotion.matches;
       controls.autoRotateSpeed = 0.5;
       controls.maxDistance = 200;
       controls.minDistance = 10;
       controls.enablePan = false;
+      reducedMotion.addEventListener('change', () => {
+        controls.enableDamping = !reducedMotion.matches;
+        controls.autoRotate = !reducedMotion.matches && currentFocusedId === null
+          && els.listPanel.style.transform !== 'translateX(0%)';
+      });
 
       // Interaction
       raycaster = new THREE.Raycaster();
@@ -583,23 +667,25 @@ Features:
 
       const time = Date.now() * 0.001;
 
-      // Rotate starfield slowly
-      if (starField) starField.rotation.y -= 0.0002;
+      if (!reducedMotion.matches) {
+        // Rotate starfield slowly
+        if (starField) starField.rotation.y -= 0.0002;
 
-      // Animate Thoughts
-      thoughtSprites.forEach(sprite => {
-        // Orbit
-        sprite.userData.angle += sprite.userData.rotationSpeed;
-        sprite.position.x = Math.cos(sprite.userData.angle) * sprite.userData.radius;
-        sprite.position.z = Math.sin(sprite.userData.angle) * sprite.userData.radius;
+        // Animate Thoughts
+        thoughtSprites.forEach(sprite => {
+          // Orbit
+          sprite.userData.angle += sprite.userData.rotationSpeed;
+          sprite.position.x = Math.cos(sprite.userData.angle) * sprite.userData.radius;
+          sprite.position.z = Math.sin(sprite.userData.angle) * sprite.userData.radius;
 
-        // Vertical Wobble
-        sprite.position.y = sprite.userData.yBase + Math.sin(time * sprite.userData.wobbleSpeed + sprite.userData.wobbleOffset) * 1;
+          // Vertical Wobble
+          sprite.position.y = sprite.userData.yBase + Math.sin(time * sprite.userData.wobbleSpeed + sprite.userData.wobbleOffset) * 1;
 
-        // Pulsate
-        const scale = 1 + Math.sin(time * 3 + sprite.userData.radius) * 0.1;
-        sprite.scale.setScalar(3 * scale);
-      });
+          // Pulsate
+          const scale = 1 + Math.sin(time * 3 + sprite.userData.radius) * 0.1;
+          sprite.scale.setScalar(3 * scale);
+        });
+      }
 
       controls.update();
 
@@ -610,15 +696,16 @@ Features:
     // --- Interaction Logic ---
 
     function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = els.container.clientWidth / els.container.clientHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(els.container.clientWidth, els.container.clientHeight);
+      composer.setSize(els.container.clientWidth, els.container.clientHeight);
     }
 
     function onPointerMove(event) {
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      const bounds = els.container.getBoundingClientRect();
+      mouse.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+      mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
 
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObjects(thoughtSprites);
@@ -626,7 +713,7 @@ Features:
       if (intersects.length > 0) {
         document.body.style.cursor = 'pointer';
         const target = intersects[0].object;
-        target.scale.multiplyScalar(1.2);
+        if (!reducedMotion.matches) target.scale.multiplyScalar(1.2);
       } else {
         document.body.style.cursor = 'default';
         thoughtSprites.forEach(s => {
@@ -637,6 +724,9 @@ Features:
     }
 
     function onCanvasClick(event) {
+      const bounds = els.container.getBoundingClientRect();
+      mouse.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+      mouse.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObjects(thoughtSprites);
 
@@ -649,7 +739,7 @@ Features:
     function toggleList() {
       const isOpen = els.listPanel.style.transform === 'translateX(0%)';
       els.listPanel.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0%)';
-      controls.autoRotate = isOpen;
+      controls.autoRotate = isOpen && !reducedMotion.matches;
     }
 
     function resetCameraView() {
@@ -659,7 +749,7 @@ Features:
       const endTarget = new THREE.Vector3(0, 0, 0);
 
       animateCamera(startPos, endPos, startTarget, endTarget, 1000);
-      controls.autoRotate = true;
+      controls.autoRotate = !reducedMotion.matches;
       currentFocusedId = null;
     }
 
@@ -682,7 +772,7 @@ Features:
 
       // Update State
       thoughts.push(newThought);
-      await saveThoughts();
+      const saved = await saveThoughts();
       updateThoughtCount();
 
       // Update Scene
@@ -696,7 +786,7 @@ Features:
       els.launchBtn.textContent = 'LAUNCH';
       els.input.focus();
 
-      showToast('✨ Thought launched into the cosmos');
+      showToast(saved ? (providedStorage ? 'Thought launched and saved' : 'Thought launched and saved on this device') : 'Thought launched for this tab only. Storage unavailable.');
 
       setTimeout(() => focusOnThought(newThought.id), 500);
     }
@@ -721,14 +811,14 @@ Features:
         thoughtSprites.splice(spriteIndex, 1);
       }
 
-      await saveThoughts();
+      const saved = await saveThoughts();
       updateThoughtCount();
       renderList();
 
       els.modal.close();
       resetCameraView();
 
-      showToast('Thought dissolved into the void');
+      showToast(saved ? (providedStorage ? 'Thought removed' : 'Thought removed from this device') : 'Removed for this tab only. Storage unavailable.');
     }
 
     function updateThoughtCount() {
@@ -767,18 +857,30 @@ Features:
 
       const color = new THREE.Color().setHSL(thought.hue, 1.0, 0.6);
       const glow = color.getStyle();
+      const content = document.createElement('div');
+      content.style.cssText = 'display:flex; align-items:center; gap:12px; flex:1; min-width:0;';
+      const dot = document.createElement('span');
+      dot.style.cssText = 'width:10px; height:10px; flex-shrink:0; border-radius:50%;';
+      dot.style.background = glow;
+      dot.style.boxShadow = '0 0 10px ' + glow;
+      dot.setAttribute('aria-hidden', 'true');
+      const text = document.createElement('div');
+      text.className = 'list-item-text';
+      text.textContent = String(thought.text ?? '');
+      text.title = String(thought.text ?? '');
+      content.append(dot, text);
 
-      el.innerHTML = `
-      <div style="display:flex; align-items:center; gap:12px; flex:1;">
-        <div style="width:10px; height:10px; border-radius:50%; background:${glow}; box-shadow: 0 0 10px ${glow};"></div>
-        <div class="list-item-text" title="${thought.text}">${thought.text}</div>
-      </div>
-      <div class="list-item-actions">
-        <button class="action-btn" onclick="window.focusOnThought(${thought.id})">Focus</button>
-      </div>
-    `;
+      const actions = document.createElement('div');
+      actions.className = 'list-item-actions';
+      const focus = document.createElement('button');
+      focus.type = 'button';
+      focus.className = 'action-btn';
+      focus.textContent = 'Focus';
+      focus.addEventListener('click', () => focusOnThought(thought.id));
+      actions.appendChild(focus);
+      el.append(content, actions);
 
-      if (animate) {
+      if (animate && !reducedMotion.matches) {
         el.style.animation = 'fadeUp 0.4s ease-out';
       }
 
@@ -786,9 +888,22 @@ Features:
     }
 
     function animateCamera(startPos, endPos, startTarget, endTarget, duration) {
+      function finishImmediately() {
+        camera.position.copy(endPos);
+        controls.target.copy(endTarget);
+        controls.update();
+      }
+      if (reducedMotion.matches) {
+        finishImmediately();
+        return;
+      }
       const startTime = Date.now();
 
       function step() {
+        if (reducedMotion.matches) {
+          finishImmediately();
+          return;
+        }
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
@@ -827,7 +942,7 @@ Features:
       // Resume rotation after 10s
       setTimeout(() => {
         if (currentFocusedId === id) {
-          controls.autoRotate = true;
+          controls.autoRotate = !reducedMotion.matches;
           document.querySelectorAll('.list-item').forEach(el => el.classList.remove('focus-active'));
         }
       }, 10000);
@@ -846,7 +961,9 @@ Features:
     init();
   </script>
     <!-- legal links (site-wide) -->
-    <div id="site-legal" style="position:fixed;right:12px;bottom:12px;z-index:2147483000;font:10px/1 'Space Mono',ui-monospace,SFMono-Regular,monospace;letter-spacing:.09em;text-transform:uppercase;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:rgba(8,8,8,.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);box-shadow:0 2px 12px rgba(0,0,0,.4);pointer-events:auto"><a href="/privacy/" style="color:rgba(255,255,255,.78);text-decoration:none">Privacy</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/cookies/" style="color:rgba(255,255,255,.78);text-decoration:none">Cookies</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/terms/" style="color:rgba(255,255,255,.78);text-decoration:none">Terms</a></div>
+        </main>
+    <nav id="site-legal" aria-label="Legal links"><a href="/privacy/">Privacy</a><span aria-hidden="true">·</span><a href="/cookies/">Cookies</a><span aria-hidden="true">·</span><a href="/terms/">Terms</a></nav>
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </body>
 
 </html>

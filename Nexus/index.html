@@ -68,9 +68,6 @@
     }
     </script>
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Roboto+Mono&family=Playfair+Display&display=swap"
-        rel="stylesheet">
     <!-- Fabric.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://unpkg.com/fabric-eraser-brush@1.1.0/dist/index.js"></script>
@@ -102,7 +99,7 @@
             height: 100%;
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Space', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
             user-select: none;
         }
@@ -542,9 +539,26 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
     <link rel="manifest" href="/assets/favicon/site.webmanifest">
+
+    <meta name="theme-color" content="#fafbf8">
+    <link rel="stylesheet" href="/assets/css/landing.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/landing-motion.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261015.1">
+    <link rel="stylesheet" href="/assets/css/apps-white.css?v=20261015.1">
 </head>
 
-<body>
+<body class="site-app app-nexus">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead wrap site-header">
+        <a class="wordmark" href="/" aria-label="Anshul Namdev, home"><svg class="hex" viewBox="0 0 100 115" fill="none" aria-hidden="true"><path pathLength="1" d="M50 1 99 29v57l-49 28L1 86V29Z"/></svg><span class="wordmark-text">AXSHUL.SITE</span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a href="/work/">Work</a><a href="/n8n/guide/">Guides</a><a href="/about/">About</a><a href="/blog/">Blog</a></nav>
+        <a class="contact-nav" href="/contact/">Let's talk<svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+    </header>
+    <main id="main" class="app-workspace">
+    <noscript>
+        <style>.app-galaxy #loadingScreenEl,.app-seek #audioOverlay{display:none!important}</style>
+        <div class="app-noscript-notice"><strong>This interactive tool needs JavaScript.</strong><p>Enable JavaScript to use the workspace, or <a href="/n8n/guide/">read the n8n guides</a>.</p></div>
+    </noscript>
     <div id="canvas-container">
         <canvas id="nexus-canvas"></canvas>
     </div>
@@ -626,6 +640,7 @@
 
     <!-- Sidebar Property Panel -->
     <div class="sidebar hidden" id="sidebar">
+        <button class="tool-btn properties-close" id="properties-close" type="button">Close properties</button>
         <!-- Content Editor (Contextual) -->
         <div class="sidebar-section" id="edit-section"
             style="display:none; background: rgba(0, 119, 255, 0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 119, 255, 0.2);">
@@ -776,10 +791,10 @@
     </a>
 
     <!-- Permanent Branding -->
-    <div
+    <div class="nexus-watermark"
         style="position: absolute; top: 100px; right: 80px; font-family: 'Inter', sans-serif; text-align: right; pointer-events: none; user-select: none; z-index: 1;">
-        <div style="font-weight: 800; font-size: 42px; letter-spacing: 0.4em; color: rgba(255,255,255,0.12);">NEXUS
-        </div>
+        <h1 style="font-weight: 800; font-size: 42px; letter-spacing: 0.4em; color: rgba(255,255,255,0.12);">NEXUS
+        </h1>
         <div
             style="font-weight: 400; font-size: 12px; letter-spacing: 0.2em; color: rgba(255,255,255,0.2); margin-top: -4px;">
             FOR AI ENGINEERS</div>
@@ -789,6 +804,7 @@
     <button class="tool-btn help-btn" id="help-toggle">
         <i data-lucide="help-circle"></i>
     </button>
+    <button class="tool-btn properties-toggle" id="properties-toggle" type="button" aria-expanded="false" aria-controls="sidebar">Properties</button>
 
     <!-- Slide Navigation (Presentation Mode Only) -->
     <div id="slide-nav"
@@ -804,7 +820,7 @@
     <div class="overlay" id="help-overlay">
         <div class="modal">
             <h2 style="margin-top:0; color: var(--accent-color)">Nexus</h2>
-            <p>Draw, type, and create on an infinite dark canvas.</p>
+            <p>Draw, type, and create on an infinite white canvas.</p>
             <p style="font-size: 12px; color: var(--text-dim); margin: 10px 0;">Created by <strong>Axshul</strong></p>
             <div style="text-align: left; margin: 20px 0; font-size: 14px; color: var(--text-dim)">
                 <p>• <b>JSON Workflow:</b> Import and export your projects via JSON files.</p>
@@ -825,9 +841,10 @@
 
     <script>
         // --- Core Setup ---
+        const canvasWorkspace = document.getElementById('canvas-container');
         const canvas = new fabric.Canvas('nexus-canvas', {
-            width: window.innerWidth,
-            height: window.innerHeight,
+            width: canvasWorkspace.clientWidth,
+            height: canvasWorkspace.clientHeight,
             backgroundColor: 'transparent',
             preserveObjectStacking: true,
             selection: true,
@@ -1035,7 +1052,8 @@
 
             // Global Resize
             window.onresize = () => {
-                canvas.setDimensions({ width: window.innerWidth, height: window.innerHeight });
+                canvas.setDimensions({ width: canvasWorkspace.clientWidth, height: canvasWorkspace.clientHeight });
+                canvas.getObjects('workflow-node').forEach(node => node.syncDOM());
                 canvas.renderAll();
             };
         }
@@ -1237,7 +1255,7 @@
                 this.domElement = document.createElement('n8n-demo');
                 this.domElement.id = 'node-overlay-' + this.id;
                 this.domElement.className = 'workflow-overlay';
-                this.domElement.style.position = 'fixed';
+                this.domElement.style.position = 'absolute';
                 this.domElement.style.zIndex = '50';
                 this.domElement.style.pointerEvents = 'all';
                 this.domElement.style.borderRadius = '12px';
@@ -1245,7 +1263,7 @@
                 this.domElement.style.boxSizing = 'border-box';
                 this.domElement.style.background = '#121212';
                 this.domElement.setAttribute('workflow', JSON.stringify(this.workflowData));
-                document.body.appendChild(this.domElement);
+                canvasWorkspace.appendChild(this.domElement);
                 this.syncDOM();
             },
             removeDOMElement: function () {
@@ -1273,7 +1291,7 @@
 
                 // Toggle visibility if off-screen
                 const isOffScreen = screenPoint.x + width / 2 < 0 || screenPoint.y + height / 2 < 0 ||
-                    screenPoint.x - width / 2 > window.innerWidth || screenPoint.y - height / 2 > window.innerHeight;
+                    screenPoint.x - width / 2 > canvasWorkspace.clientWidth || screenPoint.y - height / 2 > canvasWorkspace.clientHeight;
                 this.domElement.style.display = isOffScreen ? 'none' : 'block';
             },
             toObject: function () {
@@ -1878,7 +1896,7 @@
             if (url && url.trim()) {
                 fabric.Image.fromURL(url.trim(), img => {
                     if (img.width && img.height) {
-                        img.scaleToWidth(Math.min(400, window.innerWidth * 0.4));
+                        img.scaleToWidth(Math.min(400, canvasWorkspace.clientWidth * 0.4));
                         canvas.add(img).centerObject(img).setActiveObject(img);
                         setTool('select');
                         saveState();
@@ -1903,7 +1921,7 @@
             reader.onload = f => {
                 fabric.Image.fromURL(f.target.result, img => {
                     if (img.width && img.height) {
-                        img.scaleToWidth(Math.min(300, window.innerWidth * 0.3));
+                        img.scaleToWidth(Math.min(300, canvasWorkspace.clientWidth * 0.3));
                         canvas.add(img).centerObject(img).setActiveObject(img);
                         setTool('select');
                         saveState();
@@ -2291,8 +2309,48 @@
         });
     </script>
 
+    <script>
+        // Mobile properties stay behind an explicit drawer, leaving the canvas usable.
+        (function () {
+            const toggle = document.getElementById('properties-toggle');
+            const close = document.getElementById('properties-close');
+            const panel = document.getElementById('sidebar');
+            const mobile = window.matchMedia('(max-width: 768px)');
+
+            function setPropertiesOpen(open, returnFocus) {
+                document.body.classList.toggle('properties-open', open);
+                toggle.setAttribute('aria-expanded', String(open));
+                if (open) {
+                    panel.classList.remove('hidden');
+                    close.focus();
+                } else if (returnFocus && mobile.matches) {
+                    toggle.focus();
+                }
+            }
+
+            toggle.addEventListener('click', () => {
+                setPropertiesOpen(!document.body.classList.contains('properties-open'), true);
+            });
+            close.addEventListener('click', () => setPropertiesOpen(false, true));
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && mobile.matches && document.body.classList.contains('properties-open')) {
+                    event.preventDefault();
+                    setPropertiesOpen(false, true);
+                }
+            });
+            mobile.addEventListener('change', () => setPropertiesOpen(false, false));
+            new MutationObserver(() => {
+                if (panel.classList.contains('hidden') && document.body.classList.contains('properties-open')) {
+                    setPropertiesOpen(false, false);
+                }
+            }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+        })();
+    </script>
+
     <!-- legal links (site-wide) -->
-    <div id="site-legal" style="position:fixed;right:12px;bottom:12px;z-index:2147483000;font:10px/1 'Space Mono',ui-monospace,SFMono-Regular,monospace;letter-spacing:.09em;text-transform:uppercase;display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:rgba(8,8,8,.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);box-shadow:0 2px 12px rgba(0,0,0,.4);pointer-events:auto"><a href="/privacy/" style="color:rgba(255,255,255,.78);text-decoration:none">Privacy</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/cookies/" style="color:rgba(255,255,255,.78);text-decoration:none">Cookies</a><span style="color:rgba(255,255,255,.28)">&middot;</span><a href="/terms/" style="color:rgba(255,255,255,.78);text-decoration:none">Terms</a></div>
+        </main>
+    <nav id="site-legal" aria-label="Legal links"><a href="/privacy/">Privacy</a><span aria-hidden="true">·</span><a href="/cookies/">Cookies</a><span aria-hidden="true">·</span><a href="/terms/">Terms</a></nav>
+    <script src="/assets/js/site.js?v=20261015.1" defer></script>
 </body>
 
 </html>
