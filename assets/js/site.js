@@ -190,5 +190,8 @@
         submit.removeAttribute('aria-busy');
       });
     });
+    // Enable submission only after the webhook handler is attached.
+    // With no script, the HTML email fallback replaces the form.
+    submit.disabled = false;
   }
 })();

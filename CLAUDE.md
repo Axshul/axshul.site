@@ -80,7 +80,7 @@ The shared logo drawing, site-name entrance, hover turn and navbar feedback are 
 ## Key Patterns
 
 ### Contact form
-`#contactForm` on `/contact/` sends Name / Email / Message as GET params to the n8n webhook `https://n8n.srv1419396.hstgr.cloud/webhook/website-form-sendAmessage` with `mode: 'no-cors'`. Handled once in `site.js`, with truthful request feedback because the opaque response cannot verify delivery. Invalid or blank input sends nothing; pending requests disable duplicate submissions; a failed request preserves the draft. The homepage uses a `mailto:` link and has no form. Validation uses stubbed requests, never a real submission.
+`#contactForm` on `/contact/` sends Name / Email / Message as GET params to the n8n webhook `https://n8n.srv1419396.hstgr.cloud/webhook/website-form-sendAmessage` with `mode: 'no-cors'`. Handled once in `site.js`, with truthful request feedback because the opaque response cannot verify delivery. The HTML submit button starts disabled and is enabled by the handler; without JavaScript an email link replaces the form. Invalid or blank input sends nothing; pending requests disable duplicate submissions; a failed request preserves the draft. The homepage uses a `mailto:` link and has no form. Validation uses stubbed requests, never a real submission.
 
 ### SEO
 Every page: canonical, Open Graph, Twitter card, JSON-LD (Person / BreadcrumbList / Article as relevant), the shared favicon set, author "Anshul Namdev". `sitemap.xml` lists every real page with image extensions; `robots.txt` allows everything.

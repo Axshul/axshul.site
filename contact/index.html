@@ -84,12 +84,16 @@
                         <label for="f-msg">Message</label>
                         <textarea id="f-msg" name="Message" rows="5" required placeholder="Tell me about your project..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn" disabled>
                         <span class="btn-text">Send message</span>
                         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" stroke-width="1.6"/></svg>
                     </button>
                     <p class="form-note">Replies within a day. No newsletters, no spam.</p>
                 </form>
+                <noscript>
+                    <style>#contactForm { display: none; }</style>
+                    <p class="form-note">Email <a href="mailto:sales@axshul.site">sales@axshul.site</a> to start a conversation.</p>
+                </noscript>
             </div>
         </header>
 
@@ -129,6 +133,6 @@
 
     </main>
 
-    <script src="/assets/js/site.js?v=20261015.3" defer></script>
+    <script src="/assets/js/site.js?v=20261015.4" defer></script>
 </body>
 </html>
