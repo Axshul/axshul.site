@@ -72,7 +72,10 @@
 
     function showHash(hash) {
       root.classList.add('skip-entrance');
-      showRelated(hashTarget(hash), true);
+      const target = hashTarget(hash);
+      const disclosure = target && target.closest('details');
+      if (disclosure) disclosure.open = true;
+      showRelated(target, true);
     }
 
     function prepareReveals() {

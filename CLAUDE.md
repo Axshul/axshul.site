@@ -8,6 +8,8 @@ Personal portfolio and content hub for Anshul Namdev (axshul.site). A static, mu
 
 ## Hard rules
 
+- Make all changes directly on `main`. Do not create feature branches for this repository.
+- Preserve existing public page URLs, canonicals, article anchors and published media URLs. The homepage must retain `#hero`, `#community` and `#journey` compatibility targets.
 - **No em-dashes anywhere** on the site (HTML, JS, JSON, XML). Use a comma, a colon, or " - ". En-dashes for ranges are fine.
 - Brand colours stay: black / white, red `#D72638`. The approved site uses ink `#111210` and off-white `#FAFBF8` across every public route. Red is a rare signal, never a fill for whole sections.
 - Every public page uses the shared white capsule header (`Work · Guides · About · Blog`) and a "Let's talk" link. The homepage also has Photos and section anchors. Inner routes use page links and a footer site index. Keep the wordmark text and native navigation visible without JavaScript.
