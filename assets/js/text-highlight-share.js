@@ -180,7 +180,11 @@
         mark.className = 'ths-mark';
         range.surroundContents(mark);
 
-        mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Keep an explicit section fragment in charge of navigation.
+        if (!window.location.hash) {
+          var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          mark.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+        }
         return; // only first match
       }
     } catch (e) {

@@ -14,7 +14,7 @@ Personal portfolio and content hub for Anshul Namdev (axshul.site). A static, mu
 - Brand colours stay: black / white, red `#D72638`. The approved site uses ink `#111210` and off-white `#FAFBF8` across every public route. Red is a rare signal, never a fill for whole sections.
 - Every public page uses the same white capsule header with real page links: `About /about/ · Work /work/ · Journey /experience/ · n8n /n8n/ · Guides /n8n/guide/ · Blog /blog/`, plus one "Let's talk" CTA to `/contact/`. The homepage header must open those pages rather than substitute section fragments. Keep the wordmark and native links usable without JavaScript.
 - The native Pages directory uses `details`/`summary` and 17 links: Home, the six primary pages, Thoughts, Photos (`/#moments`), Galaxy, Nexus, Notes, Seek, Terminal, Privacy, Cookies and Terms. Contact remains the header CTA. Articles are reached through Guides or Thoughts. Escape returns focus to the Pages summary; outside clicks and focus leaving the directory close it without trapping focus. The longest matching route wins the active primary marker, so guide articles mark Guides without also marking n8n.
-- Exclude development prototypes, source photos, saved community snapshots and private files from releases. Retain previously published asset URLs even when the current layout no longer references those files.
+- Exclude development prototypes, source photos and private files from releases. The three already published community archive URLs must be included as safe, noindex compatibility directories. Never ship captured current-user, tracking or session data. Retain previously published asset URLs even when the current layout no longer references those files.
 - Legal pages (`/privacy/`, `/cookies/`, `/terms/`) must stay truthful: any new form, storage, embed, analytics or third-party request has to be added to them and the date bumped before it ships. Every page links to all three, including the footer row on portfolio pages, `footer-links` on guide/thoughts pages, and the legal rail below tool workspaces.
 
 ## Architecture
@@ -40,7 +40,7 @@ axshul.site/
 │   ├── index.html           # Automations hub
 │   └── guide/               # Guide index + one directory per article
 ├── Galaxy/ Nexus/ Notes/ Seek/ Terminal/     # Side projects
-├── community-1|2|3/         # Saved n8n community page snapshots (POC, not linked, not in sitemap)
+├── community-1|2|3/         # Public category directories (noindex, outside normal navigation and sitemap)
 ├── assets/
 │   ├── css/                 # Homepage, shared site, pages-white, reader-white and tools-white styles
 │   ├── js/                  # Homepage effects, site.js, article utilities and retained legacy files
@@ -83,12 +83,12 @@ The shared logo drawing, site-name entrance, hover turn and navbar feedback are 
 `#contactForm` on `/contact/` sends Name / Email / Message as GET params to the n8n webhook `https://n8n.srv1419396.hstgr.cloud/webhook/website-form-sendAmessage` with `mode: 'no-cors'`. Handled once in `site.js`, with truthful request feedback because the opaque response cannot verify delivery. The HTML submit button starts disabled and is enabled by the handler; without JavaScript an email link replaces the form. Invalid or blank input sends nothing; pending requests disable duplicate submissions; a failed request preserves the draft. The homepage uses a `mailto:` link and has no form. Validation uses stubbed requests, never a real submission.
 
 ### SEO
-Every page: canonical, Open Graph, Twitter card, JSON-LD (Person / BreadcrumbList / Article as relevant), the shared favicon set, author "Anshul Namdev". `sitemap.xml` lists every real page with image extensions; `robots.txt` allows everything.
+Every regular page: canonical, Open Graph, Twitter card, JSON-LD (Person / BreadcrumbList / Article as relevant), the shared favicon set, author "Anshul Namdev". `sitemap.xml` lists 34 indexable pages, with full-size image URLs for actual page photos; `robots.txt` allows crawling. Compatibility snapshots have noindex metadata and stay out of the sitemap. `.htaccess` preserves both distinct Is n8n Dead essays at their original URLs and maps the old generic article template to the guide archive and the old test form to Contact. The intentionally retired /RESUME.pdf must return HTTP 410 and must never be restored or linked.
 
 ## Content
 
 - **n8n hub** (`/n8n/`): external certificate-verification link, ecosystem links, workflow showcase and a three-photo event strip.
-- **n8n guide** (`/n8n/guide/`): searchable reading-room archive, with one directory per article. Articles retain their structural styles and `text-highlight-share.js`, with `reader-white.css` providing the current layout. Keep model lists current; only list models that are live on each provider.
+- **n8n guide** (`/n8n/guide/`): searchable reading-room archive with 16 guides and articles, including the three recovered historical AI articles, the original opinion essay and the JSON arrays guide, and one directory per article. Articles retain their structural styles and `text-highlight-share.js`, with `reader-white.css` providing the current layout. Keep model lists current; only list models that are live on each provider.
 - **Thoughts** (`/thoughts/`): a dedicated archive and opinion pieces in the reading-room design.
 - **Blog**: `/blog/` page plus external `https://blog.axshul.site`. The subdomain is a separate host with its own copy of the page and none of the repo assets, whose document root is this repo's `blog/` folder, so `/blog/index.html` uses absolute `https://axshul.site/...` URLs for every asset and link (it is served from two hosts).
 
@@ -117,4 +117,4 @@ Source photos live in `drive-download-*/` at the repo root (git-ignored, never d
 
 Run `python3 scripts/check-site.py` for public routes, local references, metadata, legal links and JavaScript syntax. It also requires six actual page URLs in every primary header, the Contact CTA, the native 17-link Pages directory, and HTML-link reachability from home for every public page except 404. This prevents a one-page header from silently replacing the separate pages. See `scripts/README.md` for the report and command options.
 
-Browser validation covers all 30 public HTML documents at desktop and phone widths, navigation and Pages keyboard behavior, guide search, article anchors, the photo viewer, Notes save/reload, Galaxy save/reload, Nexus drawing/properties and Terminal commands. Contact checks use stubs and never send a real message. Community snapshots and source photos are development records and are not included in the release. Keep source changes on `main`. A GitHub push is source publication, not a live hosting deployment.
+Browser validation covers all 35 regular public HTML documents and the three published compatibility directories at desktop and phone widths, navigation and Pages keyboard behavior, guide search, article anchors, the photo viewer, Notes save/reload, Galaxy save/reload, Nexus drawing/properties and Terminal commands. Contact checks use stubs and never send a real message. Include the safe community directory HTML to replace the already live authenticated captures. Retain only allowlisted public category links and owned assets; never restore captured DOM, scripts, preload/session payloads or restricted categories. Source photos are development records and are not included in the release. Keep source changes on `main`. A GitHub push is source publication, not a live hosting deployment.

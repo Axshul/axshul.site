@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://axshul.site/</loc>
@@ -9,43 +9,22 @@
       <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-mic-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-sm.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-group-table-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-group-table-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-sm.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-room-talk-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-room-talk-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-backdrop-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-backdrop-sm.jpg</image:loc>
     </image:image>
   </url>
   <url>
@@ -57,25 +36,13 @@
       <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-mic-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-sm.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-sm.jpg</image:loc>
     </image:image>
   </url>
   <url>
@@ -87,13 +54,7 @@
       <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-sm.jpg</image:loc>
     </image:image>
   </url>
   <url>
@@ -105,13 +66,7 @@
       <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-mic-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-sm.jpg</image:loc>
     </image:image>
   </url>
   <url>
@@ -121,9 +76,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-sm.jpg</image:loc>
     </image:image>
   </url>
   <url>
@@ -141,37 +93,19 @@
       <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-table-smile-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-mic-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-mic-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-sm.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-handshake-lg.jpg</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-sm.jpg</image:loc>
-    </image:image>
-    <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-banner-group-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-sm.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-trio-smile-lg.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://axshul.site/assets/img/event/hcmc-group-table-lg.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://axshul.site/assets/img/event/hcmc-group-table-sm.jpg</image:loc>
     </image:image>
   </url>
   <url>
@@ -341,5 +275,47 @@
     <lastmod>2026-10-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://axshul.site/n8n/guide/ai-agent-node/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/anshul-namdev.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://axshul.site/n8n/guide/automate-n8n-with-claude/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/anshul-namdev.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://axshul.site/n8n/guide/vector-stores-and-rag/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/anshul-namdev.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://axshul.site/n8n/guide/is-n8n-dead/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://axshul.site/assets/img/anshul-namdev.jpg</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://axshul.site/n8n/guide/json-arrays/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

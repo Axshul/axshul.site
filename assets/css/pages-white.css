@@ -116,6 +116,9 @@
 .dedicated-page .cta-band p { max-width: 60ch; margin: 24px auto; color: #62665e; font: 17px/1.8 Space, Arial, sans-serif; }
 .dedicated-page .cta-band .phero-actions { justify-content: center; }
 .dedicated-page .foot { margin-top: 76px; }
+.dedicated-page nav.site-index { display: flex; align-items: center; gap: 6px 12px; }
+.dedicated-page nav.site-index a { min-width: 44px; padding: 4px 8px; font-size: 12px; line-height: 1.5; }
+.dedicated-page :is(.foot-links, .foot-legal) a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
 .dedicated-page .foot-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
 .dedicated-page .foot-brand { display: flex; align-items: center; gap: 10px; }
 .dedicated-page .brand-hex { width: 26px; height: 30px; display: grid; place-items: center; clip-path: var(--hex); background: #eef1e9; color: #d72638; font: 9px Plex, monospace; }

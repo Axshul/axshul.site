@@ -1,8 +1,20 @@
-# axshul.site (Hostinger / LiteSpeed)
+# axshul.site (AquaHost / Apache-compatible hosting)
 ErrorDocument 404 /404.html
 
+# Preserve the legacy archive entrance and explicitly retire the removed PDF.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^resume\.pdf$ - [G,NC]
+  RewriteRule ^n8n/guide/article\.html$ https://axshul.site/n8n/guide/ [R=301,L]
+  RewriteRule ^form\.html$ https://axshul.site/contact/ [R=301,L]
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
 # keep source-only files out of the public site
-RedirectMatch 404 ^/(CLAUDE\.md|\.gitignore|\.gitattributes)$
+RedirectMatch 404 ^/(CLAUDE\.md|\.htaccess|\.gitignore|\.gitattributes)$
 RedirectMatch 404 ^/\.(git|claude|kiro|vscode)(/|$)
 
 # long cache for photos

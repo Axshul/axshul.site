@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import xml.etree.ElementTree as ET
 from urllib.parse import unquote, urljoin, urlsplit
 
 
@@ -89,8 +90,6 @@ def public_html_files():
     for path in ROOT.rglob("*.html"):
         parts = path.relative_to(ROOT).parts
         if any(part.lower() in EXCLUDED_DIRS for part in parts):
-            continue
-        if any(part.startswith("community-") for part in parts[:-1]):
             continue
         result.append(path)
     return sorted(result)
@@ -242,8 +241,8 @@ def navigation_contract(page, base):
     return findings
 
 
-def navigation_reachability(files, cache):
-    """Follow only real HTML anchors from home, excluding the error document."""
+def navigation_reachability(files, cache, excluded=None):
+    """Follow real HTML anchors, excluding the error and compatibility pages."""
     public = set(files)
     graph = {path: set() for path in files}
     for path in files:
@@ -265,7 +264,7 @@ def navigation_reachability(files, cache):
             continue
         reached.add(current)
         pending.extend(graph[current] - reached)
-    required = public - {ROOT / "404.html"}
+    required = public - {ROOT / "404.html"} - set(excluded or ())
     return {
         "required_routes": len(required),
         "reachable_routes": len(required & reached),
@@ -317,6 +316,22 @@ def audit():
     def issue(path, check, detail):
         report["issues"].append({"path": str(path.relative_to(ROOT)), "check": check, "detail": detail})
 
+    contract_path = ROOT / "scripts/published-routes.json"
+    compatibility = set()
+    try:
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+        compatibility = set(contract["compatibility_pages"])
+        required = contract["regular_pages"] + contract["compatibility_pages"]
+        for relative in required:
+            if not (ROOT / relative).is_file():
+                issue(contract_path, "missing_published_page", relative)
+        for relative in contract["retired_files"]:
+            if (ROOT / relative).exists():
+                issue(contract_path, "retired_file_restored", relative)
+        report["summary"]["published_pages_required"] = len(required)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        issue(contract_path, "published_route_contract", str(error))
+
     def reference_check(path, reference, base, anchor=False):
         try:
             target, url = local_target(reference, base)
@@ -351,7 +366,18 @@ def audit():
         report["summary"]["navigation_contracts_checked"] += 1
         for node in page.nodes:
             attrs = node["attrs"]
+            if relative in compatibility:
+                if node["tag"] == "script":
+                    script_url = urlsplit(urljoin(base, attrs.get("src", "")))
+                    if script_url.scheme != "https" or script_url.hostname not in LOCAL_HOSTS or script_url.path != "/assets/js/site.js":
+                        issue(path, "unsafe_archive_script", "Only the owned shared site script is allowed")
+                if node["tag"] in {"iframe", "form"} or any(key.startswith("data-preload") for key in attrs):
+                    issue(path, "captured_archive_payload", "Compatibility pages must contain only static public content")
             for reference in asset_references(node):
+                if relative in compatibility:
+                    asset_url = urlsplit(urljoin(base, reference))
+                    if asset_url.scheme in {"http", "https"} and asset_url.hostname not in LOCAL_HOSTS:
+                        issue(path, "unsafe_archive_asset", "Compatibility pages may load only owned assets")
                 reference_check(path, reference, base)
             if node["tag"] in {"a", "use"} and (attrs.get("href") or attrs.get("xlink:href")):
                 href = attrs.get("href") or attrs["xlink:href"]
@@ -389,8 +415,8 @@ def audit():
             issue(path, "duplicate_ids", duplicates)
         if relative != "404.html" and canonicals != [base]:
             issue(path, "canonical", {"expected": base, "actual": canonicals})
-        if noindex != (relative == "404.html"):
-            issue(path, "robots", "Only 404.html may have noindex")
+        if noindex != (relative == "404.html" or relative in compatibility):
+            issue(path, "robots", "Only the error and declared compatibility pages must have noindex")
         if LEGAL_PATHS - legal_links:
             issue(path, "footer_legal_links", sorted(LEGAL_PATHS - legal_links))
         current_em = html.unescape(page.source).count("\u2014")
@@ -415,11 +441,26 @@ def audit():
             report["summary"]["external_scripts_checked"] += 1
             if error:
                 issue(path, "external_javascript", error)
-    coverage = navigation_reachability(files, cache)
+    coverage = navigation_reachability(files, cache, {ROOT / relative for relative in compatibility})
     report["navigation_coverage"] = coverage
     report["summary"]["reachable_routes"] = coverage["reachable_routes"]
     if coverage["unreachable"]:
         issue(ROOT / "index.html", "unreachable_public_routes", coverage["unreachable"])
+    sitemap_path = ROOT / "sitemap.xml"
+    try:
+        sitemap = ET.parse(sitemap_path).getroot()
+        namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        urls = [node.text for node in sitemap.findall("s:url/s:loc", namespace)]
+        expected = {ORIGIN + page["route"] for page in report["pages"] if not page["noindex"]}
+        if len(urls) != len(set(urls)) or set(urls) != expected:
+            issue(sitemap_path, "sitemap_page_coverage", {
+                "missing": sorted(expected - set(urls)),
+                "unexpected": sorted(set(urls) - expected),
+                "duplicates": [url for url, count in Counter(urls).items() if count > 1],
+            })
+        report["summary"]["sitemap_pages"] = len(urls)
+    except (OSError, ET.ParseError) as error:
+        issue(sitemap_path, "sitemap_xml", str(error))
     report["summary"]["failures"] = len(report["issues"])
     report["passed"] = not report["issues"]
     return report

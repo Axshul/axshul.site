@@ -1,0 +1,49 @@
+{
+  "description": "Published route preservation contract. Update only for an explicitly approved retirement or route addition. Includes historical guides recovered during the October 2026 audit.",
+  "regular_pages": [
+    "404.html",
+    "Galaxy/index.html",
+    "Nexus/index.html",
+    "Notes/index.html",
+    "Seek/index.html",
+    "Terminal/index.html",
+    "about/index.html",
+    "blog/index.html",
+    "contact/index.html",
+    "cookies/index.html",
+    "experience/index.html",
+    "index.html",
+    "n8n/guide/ai-agent-node/index.html",
+    "n8n/guide/ai-inference-providers/index.html",
+    "n8n/guide/automate-n8n-with-claude/index.html",
+    "n8n/guide/build-your-first-workflow/index.html",
+    "n8n/guide/choose-right-ai-model/index.html",
+    "n8n/guide/how-to-setup-n8n/index.html",
+    "n8n/guide/index.html",
+    "n8n/guide/is-n8n-dead/index.html",
+    "n8n/guide/json-arrays/index.html",
+    "n8n/guide/license-and-regulations/index.html",
+    "n8n/guide/n8n-cloud-plans/index.html",
+    "n8n/guide/n8n-cloud-vs-self-hosted/index.html",
+    "n8n/guide/n8n-community-edition/index.html",
+    "n8n/guide/vector-stores-and-rag/index.html",
+    "n8n/guide/vps-self-hosting-n8n/index.html",
+    "n8n/guide/what-is-n8n/index.html",
+    "n8n/guide/where-to-get-n8n-help/index.html",
+    "n8n/index.html",
+    "privacy/index.html",
+    "terms/index.html",
+    "thoughts/index.html",
+    "thoughts/is-n8n-dead/index.html",
+    "work/index.html"
+  ],
+  "compatibility_pages": [
+    "community-1/index.html",
+    "community-2/index.html",
+    "community-3/index.html"
+  ],
+  "retired_files": [
+    "RESUME.pdf",
+    "resume.pdf"
+  ]
+}
